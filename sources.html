@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>출처 목록</title>
+<script>(function(){var t='dark';try{t=localStorage.getItem('docs-index-theme')||'dark'}catch(e){}if(t!=='auto')document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')})();</script>
+<style>
+:root{--bg:#090d16;--fg:#f8fafc;--muted:#94a3b8;--line:#1e293b;--accent:#a5b4fc;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--line:#e2e8f0;--accent:#4338ca;color-scheme:light}
+@media (prefers-color-scheme: light){:root:not([data-theme]){--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--line:#e2e8f0;--accent:#4338ca;color-scheme:light}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+main{max-width:880px;margin:0 auto;padding:24px 16px 64px}
+a{color:var(--accent)}
+h1{font-size:1.6rem;margin:.6rem 0}
+h2{font-size:1.2rem;margin:2.2rem 0 .3rem;padding-top:1rem;border-top:1px solid var(--line)}
+.meta,.lead,.u{color:var(--muted)}
+.u{font-size:.8rem;word-break:break-all}
+li{margin:.35rem 0}
+.toc{font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← 전체 문서 목록</a></p>
+<h1>출처 목록</h1>
+<p class="lead">이 사이트의 문서는 아래 공식 문서를 읽고 한국어로 다시 쓴 것입니다. 원문은 각 링크에서 보세요 (원문 사본은 이 사이트에 두지 않습니다). 모두 356쪽.</p>
+<p class="toc"><a href="#t-agent-goal-eval">에이전트 목표·평가 기준 가이드</a> · <a href="#t-agent-second-brain">에이전트 세컨드 브레인</a> · <a href="#t-ai-agent-system">AI 에이전트 시스템 가이드</a> · <a href="#t-aside">Aside (aside)</a> · <a href="#t-ego-lite">ego(lite) (ego-lite)</a> · <a href="#t-git-basics">git 기초 (git-basics)</a> · <a href="#t-hermes-agent">Hermes Agent 가이드</a> · <a href="#t-orca">Orca 가이드</a> · <a href="#t-paseo">Paseo (paseo)</a> · <a href="#t-web-server">웹 서버 (web-server)</a></p>
+<section id="t-agent-goal-eval"><h2>📘 에이전트 목표·평가 기준 가이드</h2><p class="meta">원문 21쪽 · 수집일 2026-11-10</p><ol>
+<li><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests" rel="noopener">Define success criteria and build evaluations (Anthropic Claude 플랫폼 문서, md, 웹)</a><br><span class="u">https://platform.claude.com/docs/en/test-and-evaluate/develop-tests</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" rel="noopener">Prompting best practices (Anthropic Claude 플랫폼 문서, md, 웹)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" rel="noopener">Prompt engineering overview (Anthropic Claude 플랫폼 문서, md, ai-agent-system 에서 복사)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview</span></li>
+<li><a href="https://platform.claude.com/docs/en/managed-agents/define-outcomes" rel="noopener">Define outcomes (Managed Agents) (Anthropic Claude 플랫폼 문서, md, 웹)</a><br><span class="u">https://platform.claude.com/docs/en/managed-agents/define-outcomes</span></li>
+<li><a href="https://code.claude.com/docs/en/goal" rel="noopener">Keep Claude working toward a goal (Claude Code 문서, md, 웹)</a><br><span class="u">https://code.claude.com/docs/en/goal</span></li>
+<li><a href="https://code.claude.com/docs/en/best-practices" rel="noopener">Best practices for Claude Code (Claude Code 문서, md, 웹)</a><br><span class="u">https://code.claude.com/docs/en/best-practices</span></li>
+<li><a href="https://code.claude.com/docs/en/sub-agents" rel="noopener">Create custom subagents (Claude Code 문서, md, 웹)</a><br><span class="u">https://code.claude.com/docs/en/sub-agents</span></li>
+<li><a href="https://code.claude.com/docs/en/agent-teams" rel="noopener">Orchestrate teams of Claude Code sessions (Claude Code 문서, md, 웹)</a><br><span class="u">https://code.claude.com/docs/en/agent-teams</span></li>
+<li><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" rel="noopener">Demystifying evals for AI agents (Anthropic 엔지니어링 글, html, 웹)</a><br><span class="u">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" rel="noopener">Effective harnesses for long-running agents (Anthropic 엔지니어링 글, html, 웹)</a><br><span class="u">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/multi-agent-research-system" rel="noopener">How we built our multi-agent research system (Anthropic 엔지니어링 글, html, ai-agent-system 에서 복사)</a><br><span class="u">https://www.anthropic.com/engineering/multi-agent-research-system</span></li>
+<li><a href="https://www.anthropic.com/engineering/building-effective-agents" rel="noopener">Building effective agents (Anthropic 엔지니어링 글, html, ai-agent-system 에서 복사)</a><br><span class="u">https://www.anthropic.com/engineering/building-effective-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/writing-tools-for-agents" rel="noopener">Writing effective tools for agents — with agents (Anthropic 엔지니어링 글, html, ai-agent-system 에서 복사)</a><br><span class="u">https://www.anthropic.com/engineering/writing-tools-for-agents</span></li>
+<li><a href="https://www.anthropic.com/research/emergent-misalignment-reward-hacking" rel="noopener">From shortcuts to sabotage: Natural emergent misalignment from reward hacking (Anthropic 연구 글, html, 웹)</a><br><span class="u">https://www.anthropic.com/research/emergent-misalignment-reward-hacking</span></li>
+<li><a href="https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity" rel="noopener">Specification gaming: the flip side of AI ingenuity (Google DeepMind 블로그, html, 웹)</a><br><span class="u">https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agent-evals" rel="noopener">Evaluate agent workflows (OpenAI API 가이드, md, ai-agent-system 에서 복사)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agent-evals</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/evaluation-best-practices" rel="noopener">Evaluation best practices (OpenAI API 가이드, md, 웹)</a><br><span class="u">https://developers.openai.com/api/docs/guides/evaluation-best-practices</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/graders" rel="noopener">Graders (OpenAI API 가이드, md, 웹)</a><br><span class="u">https://developers.openai.com/api/docs/guides/graders</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/trace-grading" rel="noopener">Trace grading (OpenAI API 가이드, md, 웹)</a><br><span class="u">https://developers.openai.com/api/docs/guides/trace-grading</span></li>
+<li><a href="https://adk.dev/evaluate/index" rel="noopener">Why evaluate agents (Google ADK 문서, md, ai-agent-system 에서 복사)</a><br><span class="u">https://adk.dev/evaluate/index</span></li>
+<li><a href="https://adk.dev/evaluate/criteria/index" rel="noopener">Evaluation Criteria (Google ADK 문서, md, 웹)</a><br><span class="u">https://adk.dev/evaluate/criteria/index</span></li>
+</ol></section><section id="t-agent-second-brain"><h2>📘 에이전트 세컨드 브레인</h2><p class="meta">원문 18쪽 · 수집일 2026-11-10</p><ol>
+<li><a href="https://code.claude.com/docs/en/memory" rel="noopener">CLAUDE.md(사람이 쓰는 지침)·자동 메모리, 범위(조직·프로젝트·개인), 불러오는 순서, rules</a><br><span class="u">https://code.claude.com/docs/en/memory</span></li>
+<li><a href="https://code.claude.com/docs/en/sub-agents" rel="noopener">서브에이전트 정의 파일, 자기 컨텍스트, 도구 제한, 지속 메모리</a><br><span class="u">https://code.claude.com/docs/en/sub-agents</span></li>
+<li><a href="https://code.claude.com/docs/en/agent-teams" rel="noopener">에이전트 팀 — 리더·팀원, 공유 작업 목록, 서로 메시지, 팀원이 받는 맥락</a><br><span class="u">https://code.claude.com/docs/en/agent-teams</span></li>
+<li><a href="https://code.claude.com/docs/en/skills" rel="noopener">스킬 — 절차·지식을 폴더로 묶어 필요할 때만 불러옴</a><br><span class="u">https://code.claude.com/docs/en/skills</span></li>
+<li><a href="https://code.claude.com/docs/en/mcp" rel="noopener">MCP 서버 연결, 범위(로컬·프로젝트·사용자), 팀 공유 .mcp.json</a><br><span class="u">https://code.claude.com/docs/en/mcp</span></li>
+<li><a href="https://code.claude.com/docs/en/best-practices" rel="noopener">컨텍스트 관리, CLAUDE.md 잘 쓰기, 여러 세션 병렬 작업</a><br><span class="u">https://code.claude.com/docs/en/best-practices</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool" rel="noopener">메모리 도구 — 대화를 넘어 파일로 기억, 멀티 세션 작업 패턴</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool</span></li>
+<li><a href="https://support.claude.com/en/articles/9517075-what-are-projects" rel="noopener">Claude 프로젝트 — 지식·지침을 묶어 팀과 공유 (코딩 없이)</a><br><span class="u">https://support.claude.com/en/articles/9517075-what-are-projects</span></li>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" rel="noopener">컨텍스트 엔지니어링, 컨텍스트 썩음, 구조화된 메모, 서브에이전트 구조</a><br><span class="u">https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/multi-agent-research-system" rel="noopener">오케스트레이터·작업자 구조, 위임할 때 줄 것, 기억 저장, 비용</a><br><span class="u">https://www.anthropic.com/engineering/multi-agent-research-system</span></li>
+<li><a href="https://www.anthropic.com/engineering/building-effective-agents" rel="noopener">워크플로와 에이전트, 단순하게 시작, 패턴들</a><br><span class="u">https://www.anthropic.com/engineering/building-effective-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" rel="noopener">긴 작업 — 진행 기록 파일·기능 목록·git 으로 세션 사이 인수인계</a><br><span class="u">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</span></li>
+<li><a href="https://agents.md" rel="noopener">AGENTS.md — 여러 에이전트 도구가 함께 읽는 오픈 형식</a><br><span class="u">https://agents.md</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/getting-started/intro" rel="noopener">MCP — AI 앱과 외부 시스템을 잇는 표준 (USB-C 비유)</a><br><span class="u">https://modelcontextprotocol.io/docs/getting-started/intro</span></li>
+<li><a href="https://fortelabs.com/blog/basboverview" rel="noopener">세컨드 브레인 원 개념, CODE(모으기·정리·추리기·표현)</a><br><span class="u">https://fortelabs.com/blog/basboverview</span></li>
+<li><a href="https://fortelabs.com/blog/para" rel="noopener">PARA(프로젝트·영역·자원·보관) 정리법</a><br><span class="u">https://fortelabs.com/blog/para</span></li>
+<li><a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" rel="noopener">안드레 카파시의 LLM 위키 — AI 가 원문을 읽어 마크다운 위키를 쌓고 고침(원문·위키·스키마 3층, 넣기·묻기·점검, index.md·log.md)</a><br><span class="u">https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f</span></li>
+<li><a href="https://en.wikipedia.org/wiki/Personal_knowledge_management" rel="noopener">개인 지식 관리(PKM)의 정의와 배경</a><br><span class="u">https://en.wikipedia.org/wiki/Personal_knowledge_management</span></li>
+</ol></section><section id="t-ai-agent-system"><h2>📘 AI 에이전트 시스템 가이드</h2><p class="meta">원문 86쪽 · 수집일 2026-11-10</p><ol>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro" rel="noopener">What is the Model Context Protocol (MCP)? (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" rel="noopener">Architecture overview (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/server-concepts" rel="noopener">Understanding MCP servers (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/learn/server-concepts</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/client-concepts" rel="noopener">Understanding MCP clients (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/learn/client-concepts</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/clients/client-best-practices" rel="noopener">Client Best Practices (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/develop/clients/client-best-practices</span></li>
+<li><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices" rel="noopener">Security Best Practices (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/index" rel="noopener">Specification (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/changelog" rel="noopener">Key Changes (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/changelog</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/architecture/index" rel="noopener">Architecture (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/architecture/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/index" rel="noopener">Overview (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/basic/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/index" rel="noopener">Overview (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio" rel="noopener">stdio (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http" rel="noopener">Streamable HTTP (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/index" rel="noopener">Authorization (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/server/index" rel="noopener">Overview (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/server/index</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/server/tools" rel="noopener">Tools (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/server/tools</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/server/resources" rel="noopener">Resources (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/server/resources</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/server/prompts" rel="noopener">Prompts (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/server/prompts</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/server/discover" rel="noopener">Discovery (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/server/discover</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/client/sampling" rel="noopener">Sampling (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/client/sampling</span></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation" rel="noopener">Elicitation (MCP 공식 문서·명세(2026-07-28), md)</a><br><span class="u">https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview" rel="noopener">claude-tool-use-overview.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works" rel="noopener">claude-how-tool-use-works.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools" rel="noopener">claude-define-tools.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls" rel="noopener">claude-handle-tool-calls.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool" rel="noopener">claude-tool-search.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool" rel="noopener">claude-memory-tool.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/context-windows" rel="noopener">claude-context-windows.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/context-windows</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/structured-outputs" rel="noopener">claude-structured-outputs.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/structured-outputs</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/extended-thinking" rel="noopener">claude-extended-thinking.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/extended-thinking</span></li>
+<li><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" rel="noopener">PDF Processing (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview</span></li>
+<li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" rel="noopener">claude-prompt-engineering.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview</span></li>
+<li><a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" rel="noopener">claude-mitigate-jailbreaks.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks</span></li>
+<li><a href="https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration" rel="noopener">claude-managed-multiagent.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration</span></li>
+<li><a href="https://platform.claude.com/docs/en/managed-agents/permission-policies" rel="noopener">claude-managed-permissions.md (Anthropic Claude 플랫폼 문서, md)</a><br><span class="u">https://platform.claude.com/docs/en/managed-agents/permission-policies</span></li>
+<li><a href="https://www.anthropic.com/engineering/building-effective-agents" rel="noopener">Building effective agents (Anthropic 엔지니어링 글, html)</a><br><span class="u">https://www.anthropic.com/engineering/building-effective-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" rel="noopener">Effective context engineering for AI agents (Anthropic 엔지니어링 글, html)</a><br><span class="u">https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/writing-tools-for-agents" rel="noopener">Writing effective tools for agents — with agents (Anthropic 엔지니어링 글, html)</a><br><span class="u">https://www.anthropic.com/engineering/writing-tools-for-agents</span></li>
+<li><a href="https://www.anthropic.com/engineering/multi-agent-research-system" rel="noopener">How we built our multi-agent research system (Anthropic 엔지니어링 글, html)</a><br><span class="u">https://www.anthropic.com/engineering/multi-agent-research-system</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/text" rel="noopener">Text generation (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/text</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/prompting" rel="noopener">Prompting (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/prompting</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/function-calling" rel="noopener">Function calling (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/function-calling</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/structured-outputs" rel="noopener">Structured model outputs (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/structured-outputs</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/reasoning" rel="noopener">Reasoning models (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/reasoning</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/conversation-state" rel="noopener">Conversation state (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/conversation-state</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents" rel="noopener">Agents (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agents</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents/orchestration" rel="noopener">Orchestration and handoffs (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agents/orchestration</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents/guardrails-approvals" rel="noopener">Guardrails and human review (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agents/guardrails-approvals</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agent-builder-safety" rel="noopener">Safety in building agents (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agent-builder-safety</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/retrieval" rel="noopener">Retrieval (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/retrieval</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/embeddings" rel="noopener">Vector embeddings (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/embeddings</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agent-evals" rel="noopener">Evaluate agent workflows (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/agent-evals</span></li>
+<li><a href="https://developers.openai.com/api/docs/guides/tools-connectors-mcp" rel="noopener">MCP servers (OpenAI API 가이드, md)</a><br><span class="u">https://developers.openai.com/api/docs/guides/tools-connectors-mcp</span></li>
+<li><a href="https://openai.github.io/openai-agents-python/handoffs" rel="noopener">Handoffs (OpenAI Agents SDK(Python), html)</a><br><span class="u">https://openai.github.io/openai-agents-python/handoffs</span></li>
+<li><a href="https://openai.github.io/openai-agents-python/tracing" rel="noopener">Tracing (OpenAI Agents SDK(Python), html)</a><br><span class="u">https://openai.github.io/openai-agents-python/tracing</span></li>
+<li><a href="https://adk.dev/agents/index" rel="noopener">Agents (Google ADK, md)</a><br><span class="u">https://adk.dev/agents/index</span></li>
+<li><a href="https://adk.dev/agents/llm-agents/index" rel="noopener">Simple agents with LlmAgent (Google ADK, md)</a><br><span class="u">https://adk.dev/agents/llm-agents/index</span></li>
+<li><a href="https://adk.dev/agents/workflow-agents/index" rel="noopener">Template agent workflows (Google ADK, md)</a><br><span class="u">https://adk.dev/agents/workflow-agents/index</span></li>
+<li><a href="https://adk.dev/workflows/collaboration/index" rel="noopener">Build collaborative agent teams (Google ADK, md)</a><br><span class="u">https://adk.dev/workflows/collaboration/index</span></li>
+<li><a href="https://adk.dev/sessions/index" rel="noopener">Conversational Context: Session, State, and Memory (Google ADK, md)</a><br><span class="u">https://adk.dev/sessions/index</span></li>
+<li><a href="https://adk.dev/sessions/state/index" rel="noopener">State: The Session&#x27;s Scratchpad (Google ADK, md)</a><br><span class="u">https://adk.dev/sessions/state/index</span></li>
+<li><a href="https://adk.dev/sessions/memory/index" rel="noopener">Memory: Long-term knowledge with MemoryService (Google ADK, md)</a><br><span class="u">https://adk.dev/sessions/memory/index</span></li>
+<li><a href="https://adk.dev/context/index" rel="noopener">Agent context (Google ADK, md)</a><br><span class="u">https://adk.dev/context/index</span></li>
+<li><a href="https://adk.dev/callbacks/index" rel="noopener">Callbacks: Observe, Customize, and Control Agent Behavior (Google ADK, md)</a><br><span class="u">https://adk.dev/callbacks/index</span></li>
+<li><a href="https://adk.dev/safety/index" rel="noopener">Safety and Security for AI Agents (Google ADK, md)</a><br><span class="u">https://adk.dev/safety/index</span></li>
+<li><a href="https://adk.dev/a2a/intro/index" rel="noopener">Introduction to A2A (Google ADK, md)</a><br><span class="u">https://adk.dev/a2a/intro/index</span></li>
+<li><a href="https://adk.dev/evaluate/index" rel="noopener">Why evaluate agents (Google ADK, md)</a><br><span class="u">https://adk.dev/evaluate/index</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/overview/" rel="noopener">Microsoft Agent Framework (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/overview/</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/agents/" rel="noopener">Agent concepts (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/concepts/agents/</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/" rel="noopener">Workflow concepts (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/agents/conversations/" rel="noopener">Conversations &amp; Memory overview (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/concepts/agents/conversations/</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/agents/middleware/termination" rel="noopener">Termination &amp; Guardrails (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/concepts/agents/middleware/termination</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints" rel="noopener">Microsoft Agent Framework Workflows - Checkpoints (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/agents/tools/tool-approval" rel="noopener">Using function tools with human in the loop approvals (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/agents/tools/tool-approval</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/agents/observability" rel="noopener">Observability (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/agents/observability</span></li>
+<li><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/" rel="noopener">Workflow orchestrations (Microsoft Agent Framework, html)</a><br><span class="u">https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langgraph/overview" rel="noopener">LangGraph overview (LangGraph, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langgraph/overview</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langgraph/workflows-agents" rel="noopener">Workflows and agents (LangGraph, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langgraph/workflows-agents</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langgraph/persistence" rel="noopener">Persistence (LangGraph, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langgraph/persistence</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langgraph/interrupts" rel="noopener">Interrupts (LangGraph, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langgraph/interrupts</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/agents" rel="noopener">Agents (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/agents</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/short-term-memory" rel="noopener">Short-term memory (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/short-term-memory</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/long-term-memory" rel="noopener">Long-term memory (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/long-term-memory</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/multi-agent/index" rel="noopener">Multi-agent (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/multi-agent/index</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/context-engineering" rel="noopener">Context engineering in agents (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/context-engineering</span></li>
+<li><a href="https://docs.langchain.com/oss/python/langchain/guardrails" rel="noopener">Guardrails (LangChain, md)</a><br><span class="u">https://docs.langchain.com/oss/python/langchain/guardrails</span></li>
+</ol></section><section id="t-aside"><h2>📘 Aside (aside)</h2><p class="meta">원문 34쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://docs.aside.com" rel="noopener">문서 — Get help with Aside</a><br><span class="u">https://docs.aside.com</span></li>
+<li><a href="https://docs.aside.com/help/get-started" rel="noopener">문서 — Get started</a><br><span class="u">https://docs.aside.com/help/get-started</span></li>
+<li><a href="https://docs.aside.com/help/browser-basics" rel="noopener">문서 — Use Aside as your browser</a><br><span class="u">https://docs.aside.com/help/browser-basics</span></li>
+<li><a href="https://docs.aside.com/help/side-panel" rel="noopener">문서 — Use the side panel</a><br><span class="u">https://docs.aside.com/help/side-panel</span></li>
+<li><a href="https://docs.aside.com/help/ai" rel="noopener">문서 — Configure AI providers</a><br><span class="u">https://docs.aside.com/help/ai</span></li>
+<li><a href="https://docs.aside.com/help/tasks" rel="noopener">문서 — Run tasks</a><br><span class="u">https://docs.aside.com/help/tasks</span></li>
+<li><a href="https://docs.aside.com/help/ultrabrowse" rel="noopener">문서 — Use Ultrabrowse</a><br><span class="u">https://docs.aside.com/help/ultrabrowse</span></li>
+<li><a href="https://docs.aside.com/help/automation" rel="noopener">문서 — Use routines</a><br><span class="u">https://docs.aside.com/help/automation</span></li>
+<li><a href="https://docs.aside.com/help/memory" rel="noopener">문서 — Manage memory</a><br><span class="u">https://docs.aside.com/help/memory</span></li>
+<li><a href="https://docs.aside.com/help/passwords" rel="noopener">문서 — Configure password autofill</a><br><span class="u">https://docs.aside.com/help/passwords</span></li>
+<li><a href="https://docs.aside.com/help/password-manager" rel="noopener">문서 — Use Password Manager</a><br><span class="u">https://docs.aside.com/help/password-manager</span></li>
+<li><a href="https://docs.aside.com/help/devices" rel="noopener">문서 — Use Aside on multiple devices</a><br><span class="u">https://docs.aside.com/help/devices</span></li>
+<li><a href="https://docs.aside.com/help/privacy" rel="noopener">문서 — Manage privacy and local data</a><br><span class="u">https://docs.aside.com/help/privacy</span></li>
+<li><a href="https://docs.aside.com/help/security" rel="noopener">문서 — Set agent permissions</a><br><span class="u">https://docs.aside.com/help/security</span></li>
+<li><a href="https://docs.aside.com/help/subscription" rel="noopener">문서 — Manage your Aside subscription</a><br><span class="u">https://docs.aside.com/help/subscription</span></li>
+<li><a href="https://docs.aside.com/help/developers" rel="noopener">문서 — Use the CLI, MCP, and REPL</a><br><span class="u">https://docs.aside.com/help/developers</span></li>
+<li><a href="https://docs.aside.com/help/troubleshooting" rel="noopener">문서 — Troubleshoot Aside</a><br><span class="u">https://docs.aside.com/help/troubleshooting</span></li>
+<li><a href="https://docs.aside.com/changelog/components" rel="noopener">문서 — Components</a><br><span class="u">https://docs.aside.com/changelog/components</span></li>
+<li><a href="https://docs.aside.com/changelog/native" rel="noopener">문서 — Aside Browser</a><br><span class="u">https://docs.aside.com/changelog/native</span></li>
+<li><a href="https://aside.com" rel="noopener">사이트 — The most intelligent AI assistant, but it’s a browser. (첫 화면)</a><br><span class="u">https://aside.com</span></li>
+<li><a href="https://aside.com/download" rel="noopener">사이트 — You’re almost there! (내려받기)</a><br><span class="u">https://aside.com/download</span></li>
+<li><a href="https://aside.com/developers" rel="noopener">사이트 — Aside developer documentation</a><br><span class="u">https://aside.com/developers</span></li>
+<li><a href="https://aside.com/pricing" rel="noopener">사이트 — Start free. (요금)</a><br><span class="u">https://aside.com/pricing</span></li>
+<li><a href="https://aside.com/features/browser-agent" rel="noopener">사이트 — The SOTA browser agent</a><br><span class="u">https://aside.com/features/browser-agent</span></li>
+<li><a href="https://aside.com/features/memory" rel="noopener">사이트 — Your browser should remember your work</a><br><span class="u">https://aside.com/features/memory</span></li>
+<li><a href="https://aside.com/features/password-manager" rel="noopener">사이트 — The first password manager built for agents</a><br><span class="u">https://aside.com/features/password-manager</span></li>
+<li><a href="https://aside.com/blog" rel="noopener">사이트 — Blog</a><br><span class="u">https://aside.com/blog</span></li>
+<li><a href="https://aside.com/manifesto" rel="noopener">사이트 — The operating system for AI exists and it&#x27;s the browser. (선언문)</a><br><span class="u">https://aside.com/manifesto</span></li>
+<li><a href="https://aside.com/blog/how-we-built-the-sota-browser-agent-that-outperforms-fable" rel="noopener">사이트 — How we built a browser agent that outperforms Fable</a><br><span class="u">https://aside.com/blog/how-we-built-the-sota-browser-agent-that-outperforms-fable</span></li>
+<li><a href="https://aside.com/blog/developers" rel="noopener">사이트 — Aside for Developers</a><br><span class="u">https://aside.com/blog/developers</span></li>
+<li><a href="https://aside.com/blog/hr" rel="noopener">사이트 — Aside for Hiring Teams</a><br><span class="u">https://aside.com/blog/hr</span></li>
+<li><a href="https://aside.com/blog/operations" rel="noopener">사이트 — Aside for Operations</a><br><span class="u">https://aside.com/blog/operations</span></li>
+<li><a href="https://aside.com/blog/researchers" rel="noopener">사이트 — Aside for Researchers</a><br><span class="u">https://aside.com/blog/researchers</span></li>
+<li><a href="https://aside.com/blog/sales" rel="noopener">사이트 — Aside for Sales</a><br><span class="u">https://aside.com/blog/sales</span></li>
+</ol></section><section id="t-ego-lite"><h2>📘 ego(lite) (ego-lite)</h2><p class="meta">원문 20쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://lite.ego.app" rel="noopener">사이트 첫 화면 — 소개·성능 비교·기능·비교표·FAQ</a><br><span class="u">https://lite.ego.app</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/product-introduce" rel="noopener">What is ego(lite)</a><br><span class="u">https://lite.ego.app/document/en/docs/product-introduce</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/quick-start" rel="noopener">Quick start</a><br><span class="u">https://lite.ego.app/document/en/docs/quick-start</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/windows/quick-start" rel="noopener">Quick start (Windows)</a><br><span class="u">https://lite.ego.app/document/en/docs/windows/quick-start</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/space" rel="noopener">Space</a><br><span class="u">https://lite.ego.app/document/en/docs/space</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/snapshot" rel="noopener">Snapshot</a><br><span class="u">https://lite.ego.app/document/en/docs/snapshot</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/ego-browser" rel="noopener">ego-browser</a><br><span class="u">https://lite.ego.app/document/en/docs/ego-browser</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/skills" rel="noopener">Skills</a><br><span class="u">https://lite.ego.app/document/en/docs/skills</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/claude-code" rel="noopener">How to use ego(lite) with Claude Code</a><br><span class="u">https://lite.ego.app/document/en/docs/claude-code</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/codex" rel="noopener">How to use ego(lite) with Codex</a><br><span class="u">https://lite.ego.app/document/en/docs/codex</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/cursor" rel="noopener">How to use ego(lite) with Cursor</a><br><span class="u">https://lite.ego.app/document/en/docs/cursor</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/opencode" rel="noopener">How to use ego(lite) with OpenCode</a><br><span class="u">https://lite.ego.app/document/en/docs/opencode</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/workbuddy" rel="noopener">How to use ego(lite) with WorkBuddy</a><br><span class="u">https://lite.ego.app/document/en/docs/workbuddy</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/hermes-agent" rel="noopener">How to use ego(lite) with Hermes Agent</a><br><span class="u">https://lite.ego.app/document/en/docs/hermes-agent</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/openclaw" rel="noopener">How to use ego(lite) with OpenClaw</a><br><span class="u">https://lite.ego.app/document/en/docs/openclaw</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/deepseek-harness" rel="noopener">How to use ego(lite) with DeepSeek Harness</a><br><span class="u">https://lite.ego.app/document/en/docs/deepseek-harness</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/custom-agent-harness" rel="noopener">How to use ego(lite) with your own agent harness</a><br><span class="u">https://lite.ego.app/document/en/docs/custom-agent-harness</span></li>
+<li><a href="https://lite.ego.app/document/en/docs/qwen-local" rel="noopener">How to use ego(lite) with local model</a><br><span class="u">https://lite.ego.app/document/en/docs/qwen-local</span></li>
+<li><a href="https://lite.ego.app/use-cases" rel="noopener">What you can automate — 활용 사례 8가지</a><br><span class="u">https://lite.ego.app/use-cases</span></li>
+<li><a href="https://lite.ego.app/changelog" rel="noopener">Changelog — 버전별 변경 내역 (macOS)</a><br><span class="u">https://lite.ego.app/changelog</span></li>
+</ol></section><section id="t-git-basics"><h2>📦 git 기초 (git-basics)</h2><p class="meta">원문 8쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control" rel="noopener">1.1 About Version Control</a><br><span class="u">https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control</span></li>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F" rel="noopener">1.3 What is Git?</a><br><span class="u">https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F</span></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository" rel="noopener">2.2 Recording Changes to the Repository</a><br><span class="u">https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository</span></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes" rel="noopener">2.5 Working with Remotes</a><br><span class="u">https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes</span></li>
+<li><a href="https://git-scm.com/docs/git-add" rel="noopener">git-add</a><br><span class="u">https://git-scm.com/docs/git-add</span></li>
+<li><a href="https://git-scm.com/docs/git-commit" rel="noopener">git-commit</a><br><span class="u">https://git-scm.com/docs/git-commit</span></li>
+<li><a href="https://git-scm.com/docs/git-push" rel="noopener">git-push</a><br><span class="u">https://git-scm.com/docs/git-push</span></li>
+<li><a href="https://git-scm.com/docs/git-status" rel="noopener">git-status</a><br><span class="u">https://git-scm.com/docs/git-status</span></li>
+</ol></section><section id="t-hermes-agent"><h2>📘 Hermes Agent 가이드</h2><p class="meta">원문 20쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://hermes-agent.nousresearch.com/docs/getting-started/installation" rel="noopener">Installation</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/getting-started/installation</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/getting-started/quickstart" rel="noopener">Hermes Agent Quickstart</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/getting-started/quickstart</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs" rel="noopener">Hermes Agent</a><br><span class="u">https://hermes-agent.nousresearch.com/docs</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/reference/faq" rel="noopener">FAQ &amp; Troubleshooting</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/reference/faq</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/checkpoints-and-rollback" rel="noopener">Checkpoints and /rollback</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/checkpoints-and-rollback</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/cli" rel="noopener">CLI Interface</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/cli</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/configuration" rel="noopener">Hermes Agent Configuration</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/configuration</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files" rel="noopener">Context Files</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/cron" rel="noopener">Scheduled Tasks (Cron)</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/cron</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation" rel="noopener">Subagent Delegation</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp" rel="noopener">MCP (Model Context Protocol)</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/memory" rel="noopener">Persistent Memory</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/memory</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/overview" rel="noopener">Features Overview</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/overview</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/personality" rel="noopener">Personality &amp; SOUL.md</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/personality</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/skills" rel="noopener">Skills System</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/skills</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/tools" rel="noopener">Tools &amp; Toolsets</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/features/tools</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging" rel="noopener">Messaging Gateway</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/messaging</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram" rel="noopener">Telegram Setup</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/security" rel="noopener">Security</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/security</span></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/sessions" rel="noopener">Sessions</a><br><span class="u">https://hermes-agent.nousresearch.com/docs/user-guide/sessions</span></li>
+</ol></section><section id="t-orca"><h2>🐋 Orca 가이드</h2><p class="meta">원문 59쪽 · 수집일 2026-11-04</p><ol>
+<li><a href="https://www.onorca.dev/docs/activity" rel="noopener">Agents feed</a><br><span class="u">https://www.onorca.dev/docs/activity</span></li>
+<li><a href="https://www.onorca.dev/docs/android-apk" rel="noopener">Install Orca Mobile on Android</a><br><span class="u">https://www.onorca.dev/docs/android-apk</span></li>
+<li><a href="https://www.onorca.dev/docs/first-session" rel="noopener">Your first 3-agent session</a><br><span class="u">https://www.onorca.dev/docs/first-session</span></li>
+<li><a href="https://www.onorca.dev/docs/github-errors" rel="noopener">Troubleshooting GitHub errors</a><br><span class="u">https://www.onorca.dev/docs/github-errors</span></li>
+<li><a href="https://www.onorca.dev/docs" rel="noopener">What is Orca?</a><br><span class="u">https://www.onorca.dev/docs</span></li>
+<li><a href="https://www.onorca.dev/docs/install" rel="noopener">Install</a><br><span class="u">https://www.onorca.dev/docs/install</span></li>
+<li><a href="https://www.onorca.dev/docs/mobile" rel="noopener">Mobile companion</a><br><span class="u">https://www.onorca.dev/docs/mobile</span></li>
+<li><a href="https://www.onorca.dev/docs/notifications" rel="noopener">Notifications &amp; Inbox</a><br><span class="u">https://www.onorca.dev/docs/notifications</span></li>
+<li><a href="https://www.onorca.dev/docs/remote-servers" rel="noopener">Remote Orca Servers</a><br><span class="u">https://www.onorca.dev/docs/remote-servers</span></li>
+<li><a href="https://www.onorca.dev/docs/settings" rel="noopener">Settings reference</a><br><span class="u">https://www.onorca.dev/docs/settings</span></li>
+<li><a href="https://www.onorca.dev/docs/ssh" rel="noopener">SSH worktrees</a><br><span class="u">https://www.onorca.dev/docs/ssh</span></li>
+<li><a href="https://www.onorca.dev/docs/telemetry" rel="noopener">Privacy &amp; Telemetry</a><br><span class="u">https://www.onorca.dev/docs/telemetry</span></li>
+<li><a href="https://www.onorca.dev/docs/terminal" rel="noopener">Terminal</a><br><span class="u">https://www.onorca.dev/docs/terminal</span></li>
+<li><a href="https://www.onorca.dev/docs/troubleshooting" rel="noopener">Troubleshooting &amp; FAQ</a><br><span class="u">https://www.onorca.dev/docs/troubleshooting</span></li>
+<li><a href="https://www.onorca.dev/docs/ways-to-run" rel="noopener">Ways to run Orca</a><br><span class="u">https://www.onorca.dev/docs/ways-to-run</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/claude-code" rel="noopener">Claude Code in Orca</a><br><span class="u">https://www.onorca.dev/docs/agents/claude-code</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/codex-hot-swap" rel="noopener">Hot-swap Codex accounts</a><br><span class="u">https://www.onorca.dev/docs/agents/codex-hot-swap</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/codex" rel="noopener">Codex in Orca</a><br><span class="u">https://www.onorca.dev/docs/agents/codex</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/cursor-cli" rel="noopener">Cursor CLI in Orca</a><br><span class="u">https://www.onorca.dev/docs/agents/cursor-cli</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/glm-agent" rel="noopener">How to use GLM-5.2 in Orca ADE</a><br><span class="u">https://www.onorca.dev/docs/agents/glm-agent</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/hibernation" rel="noopener">Agent hibernation</a><br><span class="u">https://www.onorca.dev/docs/agents/hibernation</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/hooks-memory" rel="noopener">Agent hooks &amp; memory</a><br><span class="u">https://www.onorca.dev/docs/agents/hooks-memory</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/native-chat" rel="noopener">Chat UI (native chat)</a><br><span class="u">https://www.onorca.dev/docs/agents/native-chat</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/session-history" rel="noopener">Agent session history</a><br><span class="u">https://www.onorca.dev/docs/agents/session-history</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/supported" rel="noopener">Supported agents</a><br><span class="u">https://www.onorca.dev/docs/agents/supported</span></li>
+<li><a href="https://www.onorca.dev/docs/agents/usage-tracking" rel="noopener">Usage &amp; rate-limit tracking</a><br><span class="u">https://www.onorca.dev/docs/agents/usage-tracking</span></li>
+<li><a href="https://www.onorca.dev/docs/browser/design-mode" rel="noopener">Design Mode</a><br><span class="u">https://www.onorca.dev/docs/browser/design-mode</span></li>
+<li><a href="https://www.onorca.dev/docs/browser/overview" rel="noopener">Per-worktree browser</a><br><span class="u">https://www.onorca.dev/docs/browser/overview</span></li>
+<li><a href="https://www.onorca.dev/docs/browser/profiles" rel="noopener">Browser-use profiles</a><br><span class="u">https://www.onorca.dev/docs/browser/profiles</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/automations" rel="noopener">Scheduled automations</a><br><span class="u">https://www.onorca.dev/docs/cli/automations</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/computer-use" rel="noopener">Computer use</a><br><span class="u">https://www.onorca.dev/docs/cli/computer-use</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/orchestration" rel="noopener">Orchestration</a><br><span class="u">https://www.onorca.dev/docs/cli/orchestration</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/overview" rel="noopener">Orca CLI overview</a><br><span class="u">https://www.onorca.dev/docs/cli/overview</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/reference" rel="noopener">Orca CLI reference</a><br><span class="u">https://www.onorca.dev/docs/cli/reference</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/skills" rel="noopener">Orca skills registry &amp; MCP</a><br><span class="u">https://www.onorca.dev/docs/cli/skills</span></li>
+<li><a href="https://www.onorca.dev/docs/cli/worktree-checkpoints" rel="noopener">Worktree checkpoints</a><br><span class="u">https://www.onorca.dev/docs/cli/worktree-checkpoints</span></li>
+<li><a href="https://www.onorca.dev/docs/editing/file-explorer" rel="noopener">File explorer &amp; external drag-drop</a><br><span class="u">https://www.onorca.dev/docs/editing/file-explorer</span></li>
+<li><a href="https://www.onorca.dev/docs/editing/markdown" rel="noopener">Rich markdown editor</a><br><span class="u">https://www.onorca.dev/docs/editing/markdown</span></li>
+<li><a href="https://www.onorca.dev/docs/editing/monaco" rel="noopener">Monaco editor &amp; autosave</a><br><span class="u">https://www.onorca.dev/docs/editing/monaco</span></li>
+<li><a href="https://www.onorca.dev/docs/editing/viewers" rel="noopener">HTML, Mermaid, PDF &amp; image viewers</a><br><span class="u">https://www.onorca.dev/docs/editing/viewers</span></li>
+<li><a href="https://www.onorca.dev/docs/model/agents-sessions" rel="noopener">Agents &amp; sessions</a><br><span class="u">https://www.onorca.dev/docs/model/agents-sessions</span></li>
+<li><a href="https://www.onorca.dev/docs/model/quick-open" rel="noopener">Quick Open &amp; Jump Palette</a><br><span class="u">https://www.onorca.dev/docs/model/quick-open</span></li>
+<li><a href="https://www.onorca.dev/docs/model/session-restore" rel="noopener">Session restore</a><br><span class="u">https://www.onorca.dev/docs/model/session-restore</span></li>
+<li><a href="https://www.onorca.dev/docs/model/tabs-panes-splits" rel="noopener">Tabs, panes &amp; split layouts</a><br><span class="u">https://www.onorca.dev/docs/model/tabs-panes-splits</span></li>
+<li><a href="https://www.onorca.dev/docs/model/worktrees" rel="noopener">Worktrees</a><br><span class="u">https://www.onorca.dev/docs/model/worktrees</span></li>
+<li><a href="https://www.onorca.dev/docs/recipes/design-mode-fix" rel="noopener">Fix a UI bug with Design Mode</a><br><span class="u">https://www.onorca.dev/docs/recipes/design-mode-fix</span></li>
+<li><a href="https://www.onorca.dev/docs/recipes/jump-worktrees" rel="noopener">Jump between 10 worktrees</a><br><span class="u">https://www.onorca.dev/docs/recipes/jump-worktrees</span></li>
+<li><a href="https://www.onorca.dev/docs/recipes/parallel-agents" rel="noopener">Race three agents on the same task</a><br><span class="u">https://www.onorca.dev/docs/recipes/parallel-agents</span></li>
+<li><a href="https://www.onorca.dev/docs/recipes/remote-worktrees" rel="noopener">Work on a remote machine over SSH</a><br><span class="u">https://www.onorca.dev/docs/recipes/remote-worktrees</span></li>
+<li><a href="https://www.onorca.dev/docs/recipes/review-ai-diff" rel="noopener">Review an AI diff line-by-line</a><br><span class="u">https://www.onorca.dev/docs/recipes/review-ai-diff</span></li>
+<li><a href="https://www.onorca.dev/docs/review/annotate-ai-diff" rel="noopener">Annotate AI Diff</a><br><span class="u">https://www.onorca.dev/docs/review/annotate-ai-diff</span></li>
+<li><a href="https://www.onorca.dev/docs/review/attribution" rel="noopener">Attribution</a><br><span class="u">https://www.onorca.dev/docs/review/attribution</span></li>
+<li><a href="https://www.onorca.dev/docs/review/commit-push" rel="noopener">Commit &amp; push from Orca</a><br><span class="u">https://www.onorca.dev/docs/review/commit-push</span></li>
+<li><a href="https://www.onorca.dev/docs/review/diff-viewer" rel="noopener">Diff viewer</a><br><span class="u">https://www.onorca.dev/docs/review/diff-viewer</span></li>
+<li><a href="https://www.onorca.dev/docs/review/github" rel="noopener">Hosted reviews, issues &amp; Actions</a><br><span class="u">https://www.onorca.dev/docs/review/github</span></li>
+<li><a href="https://www.onorca.dev/docs/review/jira" rel="noopener">Jira items drawer</a><br><span class="u">https://www.onorca.dev/docs/review/jira</span></li>
+<li><a href="https://www.onorca.dev/docs/review/linear" rel="noopener">Linear items drawer</a><br><span class="u">https://www.onorca.dev/docs/review/linear</span></li>
+<li><a href="https://www.onorca.dev" rel="noopener">Ship 100x with the agent IDE (사이트 홈)</a><br><span class="u">https://www.onorca.dev</span></li>
+<li><a href="https://www.onorca.dev/changelog" rel="noopener">Changelog</a><br><span class="u">https://www.onorca.dev/changelog</span></li>
+</ol></section><section id="t-paseo"><h2>📘 Paseo (paseo)</h2><p class="meta">원문 73쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://paseo.sh" rel="noopener">Paseo – Run Claude Code, Codex, Copilot, OpenCode from anywhere (사이트 첫 화면)</a><br><span class="u">https://paseo.sh</span></li>
+<li><a href="https://paseo.sh/docs" rel="noopener">Getting started</a><br><span class="u">https://paseo.sh/docs</span></li>
+<li><a href="https://paseo.sh/docs/agent-profiles" rel="noopener">Agent profiles</a><br><span class="u">https://paseo.sh/docs/agent-profiles</span></li>
+<li><a href="https://paseo.sh/docs/browser" rel="noopener">Browser automation</a><br><span class="u">https://paseo.sh/docs/browser</span></li>
+<li><a href="https://paseo.sh/docs/browser-tools" rel="noopener">Browser tools</a><br><span class="u">https://paseo.sh/docs/browser-tools</span></li>
+<li><a href="https://paseo.sh/docs/browser-when" rel="noopener">When to use</a><br><span class="u">https://paseo.sh/docs/browser-when</span></li>
+<li><a href="https://paseo.sh/docs/claude-code" rel="noopener">Claude Code</a><br><span class="u">https://paseo.sh/docs/claude-code</span></li>
+<li><a href="https://paseo.sh/docs/cli" rel="noopener">CLI reference</a><br><span class="u">https://paseo.sh/docs/cli</span></li>
+<li><a href="https://paseo.sh/docs/codex" rel="noopener">Codex</a><br><span class="u">https://paseo.sh/docs/codex</span></li>
+<li><a href="https://paseo.sh/docs/community" rel="noopener">Related projects</a><br><span class="u">https://paseo.sh/docs/community</span></li>
+<li><a href="https://paseo.sh/docs/configuration" rel="noopener">Configuration</a><br><span class="u">https://paseo.sh/docs/configuration</span></li>
+<li><a href="https://paseo.sh/docs/connectivity" rel="noopener">Connectivity</a><br><span class="u">https://paseo.sh/docs/connectivity</span></li>
+<li><a href="https://paseo.sh/docs/custom-providers" rel="noopener">Custom providers</a><br><span class="u">https://paseo.sh/docs/custom-providers</span></li>
+<li><a href="https://paseo.sh/docs/docker" rel="noopener">Docker</a><br><span class="u">https://paseo.sh/docs/docker</span></li>
+<li><a href="https://paseo.sh/docs/hub" rel="noopener">Hub</a><br><span class="u">https://paseo.sh/docs/hub</span></li>
+<li><a href="https://paseo.sh/docs/hub/activity" rel="noopener">Hub activity</a><br><span class="u">https://paseo.sh/docs/hub/activity</span></li>
+<li><a href="https://paseo.sh/docs/hub/api" rel="noopener">Hub public API</a><br><span class="u">https://paseo.sh/docs/hub/api</span></li>
+<li><a href="https://paseo.sh/docs/hub/concepts" rel="noopener">How Hub works</a><br><span class="u">https://paseo.sh/docs/hub/concepts</span></li>
+<li><a href="https://paseo.sh/docs/hub/configuration" rel="noopener">Hub configuration</a><br><span class="u">https://paseo.sh/docs/hub/configuration</span></li>
+<li><a href="https://paseo.sh/docs/hub/configuration/hub-yml" rel="noopener">Hub configuration reference</a><br><span class="u">https://paseo.sh/docs/hub/configuration/hub-yml</span></li>
+<li><a href="https://paseo.sh/docs/hub/daemons" rel="noopener">Daemons in Hub</a><br><span class="u">https://paseo.sh/docs/hub/daemons</span></li>
+<li><a href="https://paseo.sh/docs/hub/faq" rel="noopener">Hub FAQ</a><br><span class="u">https://paseo.sh/docs/hub/faq</span></li>
+<li><a href="https://paseo.sh/docs/hub/github" rel="noopener">GitHub access</a><br><span class="u">https://paseo.sh/docs/hub/github</span></li>
+<li><a href="https://paseo.sh/docs/hub/hosted" rel="noopener">Hosted Hub</a><br><span class="u">https://paseo.sh/docs/hub/hosted</span></li>
+<li><a href="https://paseo.sh/docs/hub/quickstart" rel="noopener">Hub quickstart</a><br><span class="u">https://paseo.sh/docs/hub/quickstart</span></li>
+<li><a href="https://paseo.sh/docs/hub/security" rel="noopener">Hub security</a><br><span class="u">https://paseo.sh/docs/hub/security</span></li>
+<li><a href="https://paseo.sh/docs/hub/self-hosting" rel="noopener">Self-hosting Hub</a><br><span class="u">https://paseo.sh/docs/hub/self-hosting</span></li>
+<li><a href="https://paseo.sh/docs/hub/self-hosting/discord-app" rel="noopener">Discord for Hub</a><br><span class="u">https://paseo.sh/docs/hub/self-hosting/discord-app</span></li>
+<li><a href="https://paseo.sh/docs/hub/self-hosting/github-app" rel="noopener">GitHub for Hub</a><br><span class="u">https://paseo.sh/docs/hub/self-hosting/github-app</span></li>
+<li><a href="https://paseo.sh/docs/hub/self-hosting/slack-app" rel="noopener">Slack for Hub</a><br><span class="u">https://paseo.sh/docs/hub/self-hosting/slack-app</span></li>
+<li><a href="https://paseo.sh/docs/hub/triggers" rel="noopener">Triggers</a><br><span class="u">https://paseo.sh/docs/hub/triggers</span></li>
+<li><a href="https://paseo.sh/docs/hub/triggers/discord" rel="noopener">Discord triggers</a><br><span class="u">https://paseo.sh/docs/hub/triggers/discord</span></li>
+<li><a href="https://paseo.sh/docs/hub/triggers/github" rel="noopener">GitHub triggers</a><br><span class="u">https://paseo.sh/docs/hub/triggers/github</span></li>
+<li><a href="https://paseo.sh/docs/hub/triggers/slack" rel="noopener">Slack triggers</a><br><span class="u">https://paseo.sh/docs/hub/triggers/slack</span></li>
+<li><a href="https://paseo.sh/docs/hub/workflows" rel="noopener">Hub workflows</a><br><span class="u">https://paseo.sh/docs/hub/workflows</span></li>
+<li><a href="https://paseo.sh/docs/mcp" rel="noopener">MCP reference</a><br><span class="u">https://paseo.sh/docs/mcp</span></li>
+<li><a href="https://paseo.sh/docs/metadata-generation" rel="noopener">Metadata generation</a><br><span class="u">https://paseo.sh/docs/metadata-generation</span></li>
+<li><a href="https://paseo.sh/docs/muse-code" rel="noopener">Muse Code</a><br><span class="u">https://paseo.sh/docs/muse-code</span></li>
+<li><a href="https://paseo.sh/docs/orchestration" rel="noopener">Orchestration</a><br><span class="u">https://paseo.sh/docs/orchestration</span></li>
+<li><a href="https://paseo.sh/docs/orchestration-workflows" rel="noopener">Common orchestration workflows</a><br><span class="u">https://paseo.sh/docs/orchestration-workflows</span></li>
+<li><a href="https://paseo.sh/docs/parallel-development" rel="noopener">Run parallel tasks</a><br><span class="u">https://paseo.sh/docs/parallel-development</span></li>
+<li><a href="https://paseo.sh/docs/plugins" rel="noopener">Plugin quickstart</a><br><span class="u">https://paseo.sh/docs/plugins</span></li>
+<li><a href="https://paseo.sh/docs/plugins/hooks" rel="noopener">Plugin hooks</a><br><span class="u">https://paseo.sh/docs/plugins/hooks</span></li>
+<li><a href="https://paseo.sh/docs/plugins/migration" rel="noopener">Migrate a plugin to runtime entries</a><br><span class="u">https://paseo.sh/docs/plugins/migration</span></li>
+<li><a href="https://paseo.sh/docs/plugins/providers" rel="noopener">Build a provider plugin</a><br><span class="u">https://paseo.sh/docs/plugins/providers</span></li>
+<li><a href="https://paseo.sh/docs/plugins/publishing" rel="noopener">Publish a plugin</a><br><span class="u">https://paseo.sh/docs/plugins/publishing</span></li>
+<li><a href="https://paseo.sh/docs/plugins/reference" rel="noopener">Plugin reference</a><br><span class="u">https://paseo.sh/docs/plugins/reference</span></li>
+<li><a href="https://paseo.sh/docs/plugins/sidebar-views" rel="noopener">Build a sidebar view</a><br><span class="u">https://paseo.sh/docs/plugins/sidebar-views</span></li>
+<li><a href="https://paseo.sh/docs/providers" rel="noopener">Providers</a><br><span class="u">https://paseo.sh/docs/providers</span></li>
+<li><a href="https://paseo.sh/docs/schedules" rel="noopener">Schedules</a><br><span class="u">https://paseo.sh/docs/schedules</span></li>
+<li><a href="https://paseo.sh/docs/schedules-chat" rel="noopener">Schedules from chat</a><br><span class="u">https://paseo.sh/docs/schedules-chat</span></li>
+<li><a href="https://paseo.sh/docs/schedules-cli" rel="noopener">Schedules from the CLI</a><br><span class="u">https://paseo.sh/docs/schedules-cli</span></li>
+<li><a href="https://paseo.sh/docs/sdk" rel="noopener">TypeScript SDK</a><br><span class="u">https://paseo.sh/docs/sdk</span></li>
+<li><a href="https://paseo.sh/docs/sdk/agents" rel="noopener">Agents with the SDK</a><br><span class="u">https://paseo.sh/docs/sdk/agents</span></li>
+<li><a href="https://paseo.sh/docs/sdk/events" rel="noopener">SDK events</a><br><span class="u">https://paseo.sh/docs/sdk/events</span></li>
+<li><a href="https://paseo.sh/docs/sdk/provider-options" rel="noopener">Provider options</a><br><span class="u">https://paseo.sh/docs/sdk/provider-options</span></li>
+<li><a href="https://paseo.sh/docs/sdk/providers" rel="noopener">Providers with the SDK</a><br><span class="u">https://paseo.sh/docs/sdk/providers</span></li>
+<li><a href="https://paseo.sh/docs/sdk/quickstart" rel="noopener">SDK quickstart</a><br><span class="u">https://paseo.sh/docs/sdk/quickstart</span></li>
+<li><a href="https://paseo.sh/docs/sdk/recipes" rel="noopener">SDK recipes</a><br><span class="u">https://paseo.sh/docs/sdk/recipes</span></li>
+<li><a href="https://paseo.sh/docs/sdk/reference" rel="noopener">SDK API reference</a><br><span class="u">https://paseo.sh/docs/sdk/reference</span></li>
+<li><a href="https://paseo.sh/docs/sdk/workspaces" rel="noopener">Workspaces with the SDK</a><br><span class="u">https://paseo.sh/docs/sdk/workspaces</span></li>
+<li><a href="https://paseo.sh/docs/security" rel="noopener">Security</a><br><span class="u">https://paseo.sh/docs/security</span></li>
+<li><a href="https://paseo.sh/docs/skills" rel="noopener">Orchestration skills</a><br><span class="u">https://paseo.sh/docs/skills</span></li>
+<li><a href="https://paseo.sh/docs/supported-providers" rel="noopener">Supported providers</a><br><span class="u">https://paseo.sh/docs/supported-providers</span></li>
+<li><a href="https://paseo.sh/docs/troubleshooting" rel="noopener">Troubleshooting</a><br><span class="u">https://paseo.sh/docs/troubleshooting</span></li>
+<li><a href="https://paseo.sh/docs/updates" rel="noopener">Updates</a><br><span class="u">https://paseo.sh/docs/updates</span></li>
+<li><a href="https://paseo.sh/docs/voice" rel="noopener">Voice</a><br><span class="u">https://paseo.sh/docs/voice</span></li>
+<li><a href="https://paseo.sh/docs/web-ui" rel="noopener">Self-hosting the web UI</a><br><span class="u">https://paseo.sh/docs/web-ui</span></li>
+<li><a href="https://paseo.sh/docs/why" rel="noopener">Why Paseo?</a><br><span class="u">https://paseo.sh/docs/why</span></li>
+<li><a href="https://paseo.sh/docs/workspaces" rel="noopener">Workspaces</a><br><span class="u">https://paseo.sh/docs/workspaces</span></li>
+<li><a href="https://paseo.sh/docs/worktrees" rel="noopener">Git worktrees</a><br><span class="u">https://paseo.sh/docs/worktrees</span></li>
+<li><a href="https://paseo.sh/docs/worktrees/worktreeinclude" rel="noopener">.worktreeinclude</a><br><span class="u">https://paseo.sh/docs/worktrees/worktreeinclude</span></li>
+<li><a href="https://paseo.sh/changelog" rel="noopener">Changelog</a><br><span class="u">https://paseo.sh/changelog</span></li>
+</ol></section><section id="t-web-server"><h2>🌐 웹 서버 (web-server)</h2><p class="meta">원문 17쪽 · 수집일 2026-11-09</p><ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works" rel="noopener">클라이언트·서버, 주소를 치면 일어나는 4단계, 패킷, 자주 보는 상태 코드</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview" rel="noopener">HTTP 요청·응답 메시지 구성, 상태 없음(stateless)과 쿠키, 프록시</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server" rel="noopener">웹 서버의 두 뜻(하드웨어·소프트웨어), 전용 서버를 쓰는 이유, 정적·동적, 404</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Publishing_your_website" rel="noopener">호스팅·도메인 임대와 요금 예, 올리는 방법(SFTP·rsync), 무료 게시 도구</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Publishing_your_website</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_domain_name" rel="noopener">도메인 이름 구조, 사는 것이 아니라 빌리는 것</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_domain_name</span></li>
+<li><a href="https://www.cloudflare.com/learning/dns/what-is-dns" rel="noopener">DNS = 인터넷의 전화번호부, 이름 → IP 조회 과정</a><br><span class="u">https://www.cloudflare.com/learning/dns/what-is-dns</span></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" rel="noopener">정적 사이트 호스팅 서비스 예, 기본 주소 형식</a><br><span class="u">https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages</span></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https" rel="noopener">github.io 사이트의 자동 HTTPS, 민감한 거래 주의</a><br><span class="u">https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files" rel="noopener">첫 화면 파일 index.html 과 사이트 폴더 구조</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files</span></li>
+<li><a href="https://letsencrypt.org/how-it-works" rel="noopener">무료·자동 인증서 발급(도메인 제어 증명 → 발급)</a><br><span class="u">https://letsencrypt.org/how-it-works</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL" rel="noopener">URL 의 부분(방식·도메인·포트·경로·매개변수·책갈피), 포트 80·443</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status" rel="noopener">상태 코드 다섯 묶음(100~500번대)과 200·403·500·503</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview" rel="noopener">정적 사이트와 동적 사이트가 요청을 처리하는 차이</a><br><span class="u">https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview</span></li>
+<li><a href="https://nginx.org/en/docs/beginners_guide.html" rel="noopener">nginx 설정 파일, 정적 파일 내보내기, 프록시, 로그</a><br><span class="u">https://nginx.org/en/docs/beginners_guide.html</span></li>
+<li><a href="https://httpd.apache.org/docs/2.4/getting-started.html" rel="noopener">Apache 설정 파일, DocumentRoot, index.html, 가상 호스트, 로그</a><br><span class="u">https://httpd.apache.org/docs/2.4/getting-started.html</span></li>
+<li><a href="https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy" rel="noopener">리버스 프록시 — 부하 분산·보호·캐싱·암호화 대행</a><br><span class="u">https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy</span></li>
+<li><a href="https://www.cloudflare.com/learning/ssl/what-is-https" rel="noopener">HTTPS = TLS 로 암호화한 HTTP, 포트 443, 인증서</a><br><span class="u">https://www.cloudflare.com/learning/ssl/what-is-https</span></li>
+</ol></section>
+</main>
+</body>
+</html>

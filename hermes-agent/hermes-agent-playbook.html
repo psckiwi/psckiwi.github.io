@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes Agent 활용편 — 따라 하기</title>
+<script>(function(){var t='dark';try{t=localStorage.getItem('hermes-agent-guide-theme')||'dark'}catch(e){}if(t!=='auto')document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')})();</script>
+<style>:root{--bg:#0b0b0d;--fg:#ececee;--muted:#9a9aa3;--card:#141418;--card2:#1b1b21;--border:#2a2a31;--accent:#7c83ff;--green:#34d399;--amber:#fbbf24;--pink:#f472b6;--cyan:#22d3ee;--red:#f87171}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}}
+:root[data-theme="light"]{--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}
+:root{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){color-scheme:light}}
+/* 테마 전환 버튼 */
+.theme-toggle{position:fixed;top:12px;right:14px;z-index:30;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.theme-toggle button{font:inherit;font-size:13px;border:0;background:none;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
+.theme-toggle button:hover{color:var(--fg)}
+.theme-toggle button.on{background:var(--accent);color:#fff}
+@media print{.theme-toggle{display:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15.5px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:color-mix(in srgb,var(--accent) 13%,transparent);padding:1px 6px;border-radius:5px;word-break:break-word}
+pre{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;overflow-x:auto;font:12.8px/1.6 ui-monospace,Menlo,monospace}
+pre code{background:none;padding:0}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--card2)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1320px;margin:0 auto}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidenav{display:none}}
+.sidenav{position:sticky;top:0;height:100dvh;overflow-y:auto;padding:24px 14px;border-right:1px solid var(--border);font-size:13.5px}
+.sidenav a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+.sidenav a:hover,.sidenav a.on{color:var(--fg);background:var(--card2)}
+.sidenav .sub a{padding-left:22px;font-size:12.5px}
+main{padding:28px 36px 120px;min-width:0}
+@media (max-width:700px){main{padding:20px 16px 80px}}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--pink));width:0;z-index:20}
+/* chapter */
+.chapter{margin-top:72px;padding-top:12px;border-top:1px solid var(--border)}
+.chapter > .ch-head .ch-no{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--accent)}
+.chapter h2{font-size:30px;line-height:1.25;margin:6px 0 10px;letter-spacing:-.01em}
+.chapter h3{font-size:21px;margin:44px 0 8px}
+.chapter h4{font-size:16px;margin:24px 0 6px;color:var(--accent)}
+.lead{color:var(--muted);font-size:16.5px;max-width:820px}
+.learn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:16px 0}
+.learn > b{display:block;margin-bottom:4px}
+.learn ul{margin:0;padding-left:20px}
+/* building blocks */
+.concept{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-top:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:14px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.card h4,.card h5{margin:0 0 4px;font-size:15px;color:var(--fg)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 26px}
+.kv{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.kv th,.kv td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.kv th{color:var(--muted);font-size:12.5px;font-weight:600;background:var(--card2)}
+.table-wrap{overflow-x:auto}
+ol.steps{list-style:none;counter-reset:st;margin:10px 0;padding:0;display:grid;gap:10px}
+ol.steps > li{counter-increment:st;position:relative;padding-left:40px;min-height:26px}
+ol.steps > li::before{content:counter(st);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+ol.steps > li > b{display:block}
+ol.steps > li span,ol.steps > li p{color:var(--muted);margin:0}
+.note,.tip,.warn,.eli5{margin:14px 0;padding:12px 16px;border-radius:12px;border:1px solid;font-size:14.5px}
+.note{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tip{border-color:color-mix(in srgb,var(--green) 45%,transparent);background:color-mix(in srgb,var(--green) 8%,transparent)}
+.warn{border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:color-mix(in srgb,var(--amber) 9%,transparent)}
+.eli5{border-color:color-mix(in srgb,var(--pink) 45%,transparent);background:color-mix(in srgb,var(--pink) 7%,transparent)}
+.note > b:first-child,.tip > b:first-child,.warn > b:first-child,.eli5 > b:first-child{display:block;margin-bottom:2px}
+.term{border-bottom:1px dashed var(--muted);cursor:help}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted);vertical-align:middle}
+.pill.exp{border-color:var(--amber);color:var(--amber)}
+.muted{color:var(--muted)}
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+.summary-box{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent),color-mix(in srgb,var(--pink) 8%,transparent));border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:28px}
+.sources{font-size:12.5px;color:var(--muted);margin-top:14px}
+/* diagrams */
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0;overflow-x:auto}
+.diagram figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg text{fill:var(--fg);font-family:inherit;font-size:13px}
+.diagram svg .sub{fill:var(--muted);font-size:11px}
+.diagram svg .box{fill:var(--card2);stroke:var(--border);stroke-width:1.2}
+.diagram svg .line{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diagram svg .s-accent{stroke:var(--accent)} .diagram svg .s-green{stroke:var(--green)} .diagram svg .s-amber{stroke:var(--amber)} .diagram svg .s-pink{stroke:var(--pink)} .diagram svg .s-cyan{stroke:var(--cyan)} .diagram svg .s-red{stroke:var(--red)}
+.diagram svg .f-accent{fill:var(--accent)} .diagram svg .f-green{fill:var(--green)} .diagram svg .f-amber{fill:var(--amber)} .diagram svg .f-pink{fill:var(--pink)} .diagram svg .f-cyan{fill:var(--cyan)} .diagram svg .f-red{fill:var(--red)} .diagram svg .f-muted{fill:var(--muted)}
+/* animation utilities */
+@keyframes dash{to{stroke-dashoffset:-24}}
+.anim-flow{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.08)}}
+.anim-pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim-spin{animation:spin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.anim-blink{animation:blink 1.1s step-end infinite}
+.reveal{transform:translateY(14px);transition:transform .6s ease}
+.reveal.in{transform:none}
+/* interactive stepper: <div class="stepper" data-stepper> with .stepper-stage > [data-step="1..n"] and auto buttons */
+.stepper{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.stepper [data-step]{display:none}
+.stepper [data-step].active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stepper-nav{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.stepper-nav button,.tabs button{font:inherit;font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--fg);cursor:pointer}
+.stepper-nav button:hover,.tabs button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stepper-nav .dots{display:flex;gap:5px}
+.stepper-nav .dots i{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.stepper-nav .dots i.on{background:var(--accent)}
+/* tabs: <div class="tabs" data-tabs><div class="tab-bar"><button data-tab="a">..</button></div><div data-panel="a">..</div></div> */
+.tabs{margin:14px 0}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tabs [data-panel]{display:none}
+.tabs [data-panel].on{display:block;animation:fadein .3s ease}
+/* 활용편은 JS가 없어도 모든 절차를 읽을 수 있고, 좁은 화면에서도 그림 글자를 유지한다. */
+.chapter[id^="pb"] .stepper > [data-step],.chapter[id^="pb"] .tabs > [data-panel]{display:block}
+.chapter[id^="pb"] .stepper-ready > [data-step]:not(.active),.chapter[id^="pb"] .tabs-ready > [data-panel]:not(.on){display:none}
+.chapter[id^="pb"] .stepper-ready.show-all > [data-step]{display:block}
+.chapter[id^="pb"] .stepper-tools{padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.chapter[id^="pb"] .stepper-tools label{display:block;font-size:13px;font-weight:600}
+.chapter[id^="pb"] .stepper-tools select{display:block;width:100%;max-width:100%;font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px;margin:5px 0 10px}
+.chapter[id^="pb"] .stepper-tools button{font:inherit;font-size:13px;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer}
+.chapter[id^="pb"] .stepper-nav button{min-height:40px}
+.chapter[id^="pb"] .stepper-nav button:disabled{opacity:.5;cursor:default}
+.chapter[id^="pb"] .stepper-nav [role="status"]{flex-basis:100%;font-size:13px}
+.chapter[id^="pb"] .diagram{overflow-x:auto}
+.chapter[id^="pb"] .diagram svg{min-width:660px}
+.chapter[id^="pb"] .diagram-scroll{overflow-x:auto;max-width:100%;padding:4px 0 8px}
+.chapter[id^="pb"] .diagram-hint{font-size:12px;color:var(--muted);margin:6px 0}
+.chapter[id^="pb"] .diagram-scroll:focus-visible,.chapter[id^="pb"] button:focus-visible,.chapter[id^="pb"] select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.chapter[id^="pb"] [id]{scroll-margin-top:64px}
+@media (max-width:700px){.chapter[id^="pb"] .two{grid-template-columns:1fr}.chapter[id^="pb"] .grid{grid-template-columns:1fr}.chapter[id^="pb"] .stepper{padding:12px}.chapter[id^="pb"] .diagram{padding:10px}}
+@media print{.chapter[id^="pb"] .stepper-ready > [data-step],.chapter[id^="pb"] .tabs-ready > [data-panel]{display:block!important}.chapter[id^="pb"] .stepper-tools,.chapter[id^="pb"] .stepper-nav,.chapter[id^="pb"] .diagram-hint{display:none}.chapter[id^="pb"] .diagram{overflow:visible}.chapter[id^="pb"] .diagram-scroll{overflow:visible}.chapter[id^="pb"] .diagram svg{min-width:0!important}}
+/* mock UI frame */
+.mock{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card2);margin:14px 0}
+.mock .bar{display:flex;gap:6px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block}
+.mock .body{padding:12px;font-size:13px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* 2층 구조: 고급·참고 접기 */
+details.adv{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:10px 16px;margin:14px 0}
+details.adv > summary{font-weight:600;color:var(--muted);list-style:none}
+details.adv > summary::before{content:"🔧 개발자용 참고 · ";color:var(--amber)}
+details.adv > summary::after{content:" — 처음엔 건너뛰어도 됩니다 (펼치기 ▾)";font-weight:400;font-size:13px}
+details.adv[open] > summary::after{content:" (접기 ▴)"}
+details.adv[open]{border-style:solid}
+.start-here{background:color-mix(in srgb,var(--green) 10%,transparent);border:1px solid color-mix(in srgb,var(--green) 50%,transparent);border-radius:14px;padding:14px 18px;margin:16px 0}
+.start-here > b:first-child{display:block;margin-bottom:4px}
+.start-here > b:first-child::before{content:"🚩 "}
+.gl{color:var(--muted);font-size:.92em}
+
+.sidenav .brand{font-weight:700;padding:0 10px 12px;display:block;color:var(--fg)}
+.sidenav .sub{display:none}
+.sidenav a.on + .sub{display:block}
+.sidenav a[data-ch]{margin-top:2px}
+
+.docnav{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 14px}
+.docnav a{padding:3px 9px!important;border-radius:999px!important;border:1px solid var(--border);font-size:12px!important;display:inline-block!important}
+.docnav a.cur{background:var(--accent);color:#fff!important;border-color:var(--accent)}
+.home-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted)!important;text-decoration:none;padding:4px 10px 4px 8px!important;border-radius:999px;border:1px solid var(--border)}
+.home-link:hover{color:var(--fg)!important;border-color:var(--accent)}
+.home-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.docnav-wrap{padding:0 6px 10px}
+.sidenav a.home-link{display:inline-flex!important;border-radius:999px!important;padding:4px 11px 4px 9px!important;color:var(--muted)!important}
+.sidenav a.home-link:hover{background:none;color:var(--fg)!important}
+.home-top{display:none;margin:0 0 14px}
+@media (max-width:900px){.home-top{display:inline-flex}}
+@media print{.home-link{display:none!important}}
+</style></head>
+<body><div class="progress"></div><div class="theme-toggle" role="group" aria-label="화면 테마"><button data-theme-set="auto" title="시스템 설정 따라가기">🖥 자동</button><button data-theme-set="light" title="밝은 화면">☀️ 라이트</button><button data-theme-set="dark" title="어두운 화면">🌙 다크</button></div>
+<div class="layout"><nav class="sidenav"><span class="brand">Hermes Agent 활용편</span><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="hermes-agent-easy.html" class="">쉬운 설명</a><a href="hermes-agent-overview.html" class="">한눈에 보기</a><a href="hermes-agent-essentials.html" class="">필수판</a><a href="hermes-agent-playbook.html" class="cur">활용편</a><a href="hermes-agent-guide.html" class="">완전 가이드</a></div><a href="#pb0" data-ch="pb0"><b>시작하기</b></a><div class="sub"><a href="#pb0-prep">준비물과 완료 기준</a><a href="#pb0-steps">따라 하기</a><a href="#pb0-stuck">막히면</a><a href="#pb0-next">다음에 할 것</a></div><a href="#pb1" data-ch="pb1"><b>1. 첫 결과</b></a><div class="sub"><a href="#pb1-prep">준비물과 완료 기준</a><a href="#pb1-steps">따라 하기</a><a href="#pb1-stuck">막히면</a><a href="#pb1-next">다음에 할 것</a></div><a href="#pb2" data-ch="pb2"><b>2. 이어서 하기</b></a><div class="sub"><a href="#pb2-prep">준비물과 완료 기준</a><a href="#pb2-steps">따라 하기</a><a href="#pb2-stuck">막히면</a><a href="#pb2-next">다음에 할 것</a></div><a href="#pb3" data-ch="pb3"><b>3. 나를 기억시키기</b></a><div class="sub"><a href="#pb3-prep">준비물과 완료 기준</a><a href="#pb3-steps">따라 하기</a><a href="#pb3-stuck">막히면</a><a href="#pb3-next">다음에 할 것</a></div><a href="#pb4" data-ch="pb4"><b>4. 스킬 찾아 설치하고 슬래시 명령으로 써 보기</b></a><div class="sub"><a href="#pb4-prep">준비물과 완료 기준</a><a href="#pb4-steps">따라 하기</a><a href="#pb4-stuck">막히면</a><a href="#pb4-next">다음에 할 것</a></div><a href="#pb5" data-ch="pb5"><b>5. 실수 되돌리기</b></a><div class="sub"><a href="#pb5-prep">준비물과 완료 기준</a><a href="#pb5-steps">따라 하기</a><a href="#pb5-stuck">막히면</a><a href="#pb5-next">다음에 할 것</a></div><a href="#pb6" data-ch="pb6"><b>6. 매일 아침 브리핑 예약하기</b></a><div class="sub"><a href="#pb6-prep">준비물과 완료 기준</a><a href="#pb6-steps">따라 하기</a><a href="#pb6-stuck">막히면</a><a href="#pb6-next">다음에 할 것</a></div><a href="#pb7" data-ch="pb7"><b>7. Telegram 으로 Hermes 와 대화하기</b></a><div class="sub"><a href="#pb7-prep">준비물과 완료 기준</a><a href="#pb7-steps">따라 하기</a><a href="#pb7-stuck">막히면</a><a href="#pb7-next">다음에 할 것</a></div><a href="#pb8" data-ch="pb8"><b>8. 일을 나눠 맡기기</b></a><div class="sub"><a href="#pb8-prep">준비물과 완료 기준</a><a href="#pb8-steps">따라 하기</a><a href="#pb8-stuck">막히면</a><a href="#pb8-next">다음에 할 것</a></div><a href="#pb9" data-ch="pb9"><b>9. 막힘 해결 ①</b></a><div class="sub"><a href="#pb9-prep">준비물과 완료 기준</a><a href="#pb9-steps">따라 하기</a><a href="#pb9-stuck">막히면 — 오류 문구로 찾기</a><a href="#pb9-next">다음에 할 것</a></div><a href="#pb10" data-ch="pb10"><b>10. 막힘 해결 ②</b></a><div class="sub"><a href="#pb10-prep">준비물과 완료 기준</a><a href="#pb10-steps">따라 하기</a><a href="#pb10-stuck">막히면</a><a href="#pb10-next">다음에 할 것</a></div></nav>
+<main><a class="home-link home-top" href="../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a><section class="chapter" id="pb0">
+<div class="ch-head"><div class="ch-no">START</div><h2>시작 전 준비 — 설치하고, 제공자를 고르고, 대화가 되는지 확인하기</h2><p class="lead">Hermes Agent 는 Nous Research 가 만든, 쓸수록 스스로 배우는 AI 에이전트<span class="gl">(말만 하는 챗봇과 달리, 도구를 써서 내 대신 일을 해 주는 AI 프로그램)</span>입니다. 실습 1~10 을 하기 전에 딱 세 가지만 끝냅니다. 설치하고, 두뇌가 될 모델을 빌려줄 곳을 고르고, 말을 걸어 답이 오는지 봅니다.</p></div>
+<div class="learn"><b>이 준비로 할 수 있게 되는 것</b><ul><li>터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에 명령 한 줄을 넣어 Hermes 를 설치합니다.</li><li><code>hermes model</code> 로 제공자<span class="gl">(provider — AI 모델을 빌려주는 서비스)</span>와 모델<span class="gl">(에이전트의 두뇌 역할을 하는 AI)</span>을 고릅니다.</li><li><code>hermes</code> 로 첫 대화를 열고, 원문이 적은 성공 기준 네 가지로 확인합니다.</li></ul><p class="muted">예상 소요 시간: 15~20분 (원문은 설치 자체는 2분 안쪽이라고 적습니다. 제공자 가입·로그인에 드는 시간은 따로입니다.)</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb0-prep">준비물</a>을 확인한 뒤 <a href="#pb0-steps">따라 하기</a> 1~4단계를 순서대로 진행하세요. 막히면 <a href="#pb0-stuck">막히면</a>에서 같은 증상을 찾습니다. 원문의 원칙은 하나입니다 — 평범한 대화 한 번이 깨끗하게 되기 전에는 다른 기능을 얹지 않습니다.</p></div>
+<h3 id="pb0-prep">준비물과 완료 기준</h3><ul><li><b>macOS 또는 Linux 컴퓨터와 터미널.</b> 이 실습은 터미널에서 설치하는 길을 따라갑니다. 터미널은 macOS 라면 기본 앱 <b>터미널</b>(Spotlight 에서 “터미널” 검색)을 열면 됩니다 — 이 안내는 Hermes 문서가 아니라 운영체제의 일반 사용법입니다. 데스크톱 앱 설치·Windows·Android 는 1단계의 접힌 상자에 원문이 적은 만큼만 옮겼습니다.</li><li><b>인터넷 연결.</b> 설치 스크립트가 프로그램을 내려받고, 대화할 때도 제공자와 통신합니다.</li><li><b>제공자 계정 하나.</b> 원문이 처음 쓰는 사람에게 권하는 길은 Nous Portal 구독입니다. 이미 쓰는 서비스(OpenRouter·Anthropic 등)가 있으면 그 계정이나 API 키<span class="gl">(서비스가 나를 알아보는 비밀 문자열)</span>를 준비합니다.</li><li>설치 스크립트가 쓰는 기본 프로그램 — Git, curl, tar, SHA-256 유틸리티. 원문은 macOS·Linux 스크립트에 이 넷이 필요하다고 적습니다.</li></ul><div class="note"><b>완료 기준 (원문의 "성공한 모습" 네 가지)</b><p>① 배너에 내가 고른 모델·제공자가 보입니다. ② Hermes 가 오류 없이 답합니다. ③ 필요할 때 도구<span class="gl">(tool — 터미널 실행·파일 읽기·웹 검색 같은 기능 하나)</span>를 쓸 수 있습니다. ④ 대화가 한 번 넘게 정상으로 이어집니다. 원문은 여기까지 되면 "가장 어려운 고비를 넘었다"고 적습니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="설치 → 제공자 고르기 → 대화 확인 순서입니다.">
+<rect class="box s-accent" x="20" y="30" width="210" height="90" rx="12"/><text x="125" y="65" text-anchor="middle">① 설치</text><text class="sub" x="125" y="92" text-anchor="middle">터미널에 명령 한 줄</text>
+<path class="line s-accent anim-flow" d="M230 75 H255"/>
+<rect class="box s-accent" x="255" y="30" width="210" height="90" rx="12"/><text x="360" y="65" text-anchor="middle">② 제공자 고르기</text><text class="sub" x="360" y="92" text-anchor="middle">hermes model</text>
+<path class="line s-accent anim-flow" d="M465 75 H490"/>
+<rect class="box s-green" x="490" y="30" width="210" height="90" rx="12"/><text x="595" y="65" text-anchor="middle">③ 대화 확인</text><text class="sub" x="595" y="92" text-anchor="middle">hermes 로 말 걸기</text>
+</svg><figcaption>설치 → 제공자 고르기 → 대화 확인. 이 셋이 끝나야 실습 1 로 넘어갑니다.</figcaption></figure>
+<h3 id="pb0-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb0-s1">1단계 · 터미널에 설치 명령 한 줄 넣기</h4>
+<p>터미널을 열고 아래 한 줄을 그대로 붙여 넣은 뒤 <kbd>Enter</kbd> 를 누릅니다. macOS·Linux·WSL2 공통입니다.</p><pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre><p>뜻: 공식 설치 스크립트를 내려받아 바로 실행합니다. 스크립트는 프로그램을 내려받고, 필요한 부품(Python·Node.js 등)을 스스로 준비하고, <code>hermes</code> 라는 실행 명령을 만들고, 내 설정과 기록이 쌓일 데이터 폴더를 준비합니다.</p><ul><li>진행 중에는 단계마다 상태 줄이 하나씩 나옵니다. 어떤 단계가 실패하면 그 단계의 마지막 줄들과 기록 파일(<code>logs/install.log</code>) 위치를 알려 줍니다.</li><li>터미널에서 직접 실행하면 설치 끝에 설정 질문이 바로 이어질 수 있습니다. 그때는 3단계 설명을 보며 답하면 됩니다.</li></ul><div class="warn"><b>명령 앞에 sudo 를 붙이지 않습니다</b><p>원문은 설치 프로그램을 <code>sudo</code><span class="gl">(관리자 권한으로 실행하는 명령)</span>와 함께 쓰지 말라고 적습니다. 실행 명령은 내 홈 폴더 아래 <code>~/.local/bin</code> 에 놓이기 때문입니다. <code>~</code> 는 "내 홈 폴더"를 뜻하는 기호입니다.</p></div><p><b>확인:</b> 실패했다는 줄 없이 스크립트가 끝났습니다. 실패 줄이 보이면 그 문구와 기록 파일 위치를 적어 두고 <a href="#pb9">실습 9</a>로 갑니다.</p>
+<details class="adv"><summary>다른 설치 길 — 데스크톱 앱 · Windows · Android</summary><div class="table-wrap"><table class="kv"><thead><tr><th>환경</th><th>원문이 적은 방법</th></tr></thead><tbody><tr><td>데스크톱 앱 (macOS)</td><td>Hermes 웹사이트에서 받은 DMG 를 열고 <b>Hermes.app</b> 을 Applications 로 복사합니다. 원문은 macOS 설치 파일이 Apple Silicon 전용이고, Intel 프로세서 Mac 은 지원 플랫폼이 아니라고 적습니다.</td></tr><tr><td>데스크톱 앱 (Windows)</td><td>내려받은 <code>.appinstaller</code> 를 Windows App Installer 로 엽니다.</td></tr><tr><td>Windows (명령 줄만)</td><td>PowerShell 에서 <code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></td></tr><tr><td>Android</td><td>aarch64 기기에서 Termux APT 패키지를 씁니다. 위 스크립트는 Termux 용이 아닙니다.</td></tr><tr><td>명령 줄 설치 뒤 데스크톱 앱도 쓰고 싶을 때</td><td><code>hermes desktop</code></td></tr></tbody></table></div><p>데스크톱 앱의 화면 구성은 받은 원문에 설명이 거의 없어 이 실습은 터미널만 다룹니다. 설치 방법별 상세는 <a href="hermes-agent-guide.html#ch01-install">완전 가이드 1장 설치</a>·<a href="hermes-agent-guide.html#ch01-prereq">미리 갖출 것</a>.</p></details>
+</div><div data-step="2"><h4 id="pb0-s2">2단계 · 터미널이 hermes 명령을 알아보게 하기</h4>
+<p>방금 만든 <code>hermes</code> 명령을 지금 열려 있는 터미널은 아직 모릅니다. 터미널의 설정을 다시 읽게 합니다.</p><pre><code>source ~/.bashrc   # or: source ~/.zshrc</code></pre><p>뜻: 셸<span class="gl">(터미널 안에서 명령을 받아 실행하는 프로그램)</span> 설정 파일을 다시 읽습니다. 쓰는 셸이 bash 면 앞의 것, zsh 면 <code>source ~/.zshrc</code> 를 넣습니다. 어느 쪽인지 모르겠으면 터미널 창을 닫고 새로 열어도 같은 효과입니다(원문: 새 터미널은 바뀐 경로를 자동으로 읽습니다).</p><pre><code>which hermes
+ls ~/.local/bin/hermes</code></pre><p>뜻: <code>hermes</code> 명령이 어디에 있는지 묻고, 설치 위치에 실제로 파일이 있는지 봅니다.</p><p><b>확인:</b> <code>which hermes</code> 가 경로 한 줄을 내놓습니다. 설치 스크립트 기준으로 그 자리는 <code>~/.local/bin/hermes</code> 입니다. <code>hermes: command not found</code> 가 나오면 <a href="#pb0-stuck">막히면</a> 첫 줄을 봅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 230" role="img" aria-label="설치 스크립트가 세 곳에 무엇을 두는지 보여 줍니다. 프로그램 코드, hermes 실행 명령, 내 설정과 기록입니다.">
+<rect class="box s-accent" x="20" y="80" width="170" height="70" rx="12"/><text x="105" y="110" text-anchor="middle">설치 스크립트</text><text class="sub" x="105" y="132" text-anchor="middle">install.sh</text>
+<path class="line s-accent anim-flow" d="M190 115 C240 115 240 47 290 47"/>
+<path class="line s-accent anim-flow" d="M190 115 H290"/>
+<path class="line s-accent anim-flow" d="M190 115 C240 115 240 183 290 183"/>
+<rect class="box" x="290" y="20" width="410" height="54" rx="10"/><text x="306" y="43">~/.hermes/hermes-agent/</text><text class="sub" x="306" y="62">프로그램 코드가 놓이는 곳</text>
+<rect class="box s-green" x="290" y="88" width="410" height="54" rx="10"/><text x="306" y="111">~/.local/bin/hermes</text><text class="sub" x="306" y="130">내가 부르는 명령 hermes — 2단계에서 확인하는 자리</text>
+<rect class="box s-amber" x="290" y="156" width="410" height="54" rx="10"/><text x="306" y="179">~/.hermes/</text><text class="sub" x="306" y="198">내 설정·대화 기록이 쌓이는 곳 (지우지 않습니다)</text>
+</svg><figcaption>macOS·Linux 설치 스크립트가 두는 자리(원문 Install layout 표). 원문은 프로그램이 이상하다고 데이터 폴더를 지워 고치려 하지 말라고 적습니다.</figcaption></figure>
+</div><div data-step="3"><h4 id="pb0-s3">3단계 · 제공자와 모델 고르기</h4>
+<p>원문이 "가장 중요한 설정 단계"라고 부르는 곳입니다. Hermes 는 스스로 생각하는 두뇌가 없고, 제공자가 빌려주는 모델을 두뇌로 씁니다. 내 상황에 맞는 탭 하나를 고릅니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="portal">처음이고 가장 쉬운 길</button><button data-tab="model">쓰는 제공자가 있음</button><button data-tab="setup">전부 한 번에 설정</button></div>
+<div data-panel="portal"><pre><code>hermes setup --portal</code></pre><p>뜻: Nous Portal 에 로그인하고, Nous 를 제공자로 정하고, Tool Gateway<span class="gl">(웹 검색·그림 만들기·음성·클라우드 브라우저 도구 묶음)</span>까지 명령 하나로 켭니다. 원문은 구독 하나로 300개 넘는 모델과 Tool Gateway 를 함께 쓴다고 적습니다. API 키를 따로 관리하지 않아도 됩니다.</p></div>
+<div data-panel="model"><pre><code>hermes model</code></pre><p>뜻: 제공자와 모델을 묻고 답하는 방식으로 차례차례 고릅니다. 제공자에 따라 브라우저 로그인(OAuth)이나 API 키 입력을 요구합니다. 원문의 조언은 "제공자를 고르고, 바꿔야 할 이유를 아는 것이 아니면 기본값을 그대로 받아들이라"입니다.</p></div>
+<div data-panel="setup"><pre><code>hermes setup</code></pre><p>뜻: 모든 설정을 한 번에 묻는 설정 마법사를 엽니다. 처음 설치한 상태라면 세 가지 방식 중 하나를 고르게 됩니다 — 아래 접힌 상자 참고.</p></div></div>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="hermes model 이나 hermes config set 으로 넣은 값이 비밀 값은 .env 파일로, 그 밖의 설정은 config.yaml 파일로 나뉘어 저장됩니다.">
+<rect class="box s-accent" x="20" y="70" width="220" height="80" rx="12"/><text x="130" y="103" text-anchor="middle">hermes model</text><text class="sub" x="130" y="126" text-anchor="middle">또는 hermes config set</text>
+<path id="pb0-p-env" class="line s-amber" d="M240 110 C340 110 340 58 440 58"/>
+<path id="pb0-p-cfg" class="line s-green" d="M240 110 C340 110 340 162 440 162"/>
+<circle class="f-amber" r="5"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#pb0-p-env"/></animateMotion></circle>
+<circle class="f-green" r="5"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath href="#pb0-p-cfg"/></animateMotion></circle>
+<rect class="box s-amber" x="440" y="20" width="260" height="76" rx="12"/><text x="570" y="52" text-anchor="middle">~/.hermes/.env</text><text class="sub" x="570" y="76" text-anchor="middle">비밀 값 — API 키·토큰</text>
+<rect class="box s-green" x="440" y="124" width="260" height="76" rx="12"/><text x="570" y="156" text-anchor="middle">~/.hermes/config.yaml</text><text class="sub" x="570" y="180" text-anchor="middle">그 밖의 설정 — 모델 이름 등</text>
+<text class="sub" x="130" y="176" text-anchor="middle">값마다 알맞은 파일로 자동 저장</text>
+</svg><figcaption>Hermes 는 비밀 값과 보통 설정을 다른 파일에 둡니다. 명령으로 넣으면 알맞은 파일에 알아서 들어가므로 파일을 직접 열 일은 없습니다.</figcaption></figure>
+<div class="note"><b>모델은 컨텍스트 64K 토큰 이상이어야 합니다</b><p>컨텍스트<span class="gl">(문맥 창 — 모델이 한 번에 기억하며 볼 수 있는 글의 양)</span>가 64,000 토큰<span class="gl">(AI 가 읽고 쓰는 글의 양을 세는 단위)</span>보다 작은 모델은 시작할 때 거부됩니다. 원문은 Claude·GPT·Gemini·Qwen·DeepSeek 같은 대부분의 호스팅 모델은 이 기준을 쉽게 넘는다고 적습니다. 제공자는 나중에 <code>hermes model</code> 로 언제든 바꿀 수 있습니다.</p></div>
+<pre><code>hermes config show | head -20</code></pre><p>뜻: 지금 저장된 설정의 앞 20줄을 보여 줍니다. 어떤 모델과 제공자가 잡혀 있는지 확인하는 용도입니다.</p><p><b>확인:</b> 설정 과정이 오류 없이 끝났고, 위 명령의 결과에 내가 고른 모델·제공자가 보입니다. 진짜 확인은 다음 단계의 배너와 첫 답입니다.</p>
+<details class="adv"><summary>hermes setup 의 세 가지 방식과 다른 도구에서 옮겨 오기</summary><div class="table-wrap"><table class="kv"><thead><tr><th>방식</th><th>무엇을 하나</th></tr></thead><tbody><tr><td>Quick Setup (Nous Portal)</td><td>브라우저 로그인만으로 모델과 Tool Gateway 도구를 설정합니다. 관리할 API 키가 없고 요금은 Nous Portal 구독으로 청구됩니다. 원문이 권하는 빠른 길입니다.</td></tr><tr><td>Full Setup</td><td>제공자·도구·옵션을 하나씩 직접 고릅니다(내 키를 가져와 씁니다).</td></tr><tr><td>Blank Slate</td><td>에이전트를 돌리는 최소한(제공자와 모델, 파일 작업·터미널 툴셋<span class="gl">(toolset — 도구 꾸러미)</span>)만 켜고 나머지는 모두 끈 채 시작합니다. 필요한 것만 골라 켜려는 사람용입니다. 나중에 <code>hermes tools</code> 로 다시 켤 수 있습니다.</td></tr></tbody></table></div><p>OpenClaw·Claude Code·Codex CLI·Cursor 가 컴퓨터에 있으면, 처음 실행한 <code>hermes setup</code> 이 먼저 그 설정을 가져올지 묻습니다. 제공자 전체 목록은 <a href="hermes-agent-guide.html#ch01-provider">완전 가이드 1장 제공자 고르기</a>, 두 설정 파일은 <a href="hermes-agent-guide.html#ch01-settings-files">설정이 저장되는 곳</a>.</p></details>
+</div><div data-step="4"><h4 id="pb0-s4">4단계 · 첫 대화 열고 말 걸어 보기</h4>
+<p>Hermes 는 터미널 화면이 두 가지입니다. 둘은 세션<span class="gl">(대화 한 묶음)</span>·슬래시 명령·설정을 똑같이 함께 씁니다.</p><pre><code>hermes            # classic CLI
+hermes --tui      # modern TUI (recommended)</code></pre><p>뜻: 첫 줄은 기본 화면인 클래식 CLI<span class="gl">(터미널에서 글자로 쓰는 프로그램 화면)</span>, 둘째 줄은 새 터미널 화면인 TUI 를 엽니다. 원문은 TUI 를 권합니다. 이 실습도 <code>hermes --tui</code> 를 기준으로 삼습니다.</p><p>화면이 열리면 맨 위에 환영 배너가 나옵니다. 배너에는 내 모델, 쓸 수 있는 도구, 스킬<span class="gl">(특정 일을 하는 방법을 적은 설명서)</span>이 보입니다. 입력 칸에 아래처럼 넣고 <kbd>Enter</kbd> 를 누릅니다.</p><pre><code>Hello</code></pre><p>뜻: 인사 한마디입니다. 답이 오는지만 보는 것이므로 한국어로 인사해도 됩니다.</p><p><b>확인:</b> 배너에 3단계에서 고른 모델·제공자가 보이고, Hermes 가 오류 없이 답합니다. 답이 비어 있거나 깨져 보이면 <a href="#pb0-stuck">막히면</a>으로 갑니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 300" role="img" aria-label="화면 흉내: 위에 환영 배너, 가운데 대화, 아래 입력 칸이 있고 오른쪽에 성공 기준 네 가지가 있습니다.">
+<rect class="box" x="20" y="20" width="440" height="260" rx="12"/>
+<rect class="box s-accent" x="36" y="36" width="408" height="84" rx="8"/><text x="50" y="62">환영 배너</text><text class="sub" x="50" y="84">내가 고른 모델 · 제공자</text><text class="sub" x="50" y="104">쓸 수 있는 도구 · 스킬</text>
+<text x="50" y="152">❯ Hello</text><text x="50" y="184">☤ Hermes 의 답이 여기에 이어집니다</text>
+<rect class="box s-green" x="36" y="220" width="408" height="40" rx="8"/><text x="50" y="245">❯</text><rect class="f-accent anim-blink" x="68" y="232" width="8" height="16"/><text class="sub" x="86" y="245">여기에 입력하고 Enter</text>
+<text x="482" y="46">성공 기준 네 가지</text>
+<circle class="f-green anim-pulse" cx="490" cy="84" r="6"/><text x="506" y="89">배너에 내 모델·제공자</text>
+<circle class="f-green" cx="490" cy="124" r="6"/><text x="506" y="129">오류 없이 답이 옴</text>
+<circle class="f-green" cx="490" cy="164" r="6"/><text x="506" y="169">필요하면 도구를 씀</text>
+<circle class="f-green" cx="490" cy="204" r="6"/><text x="506" y="209">대화가 한 번 넘게 이어짐</text>
+<text class="sub" x="482" y="250">셋째·넷째는 5단계에서 확인</text>
+</svg><figcaption>화면 흉내 — 배너·대화·입력 칸이 놓이는 큰 틀만 그렸습니다. 실제 글자와 배치는 화면 종류와 버전에 따라 다릅니다.</figcaption></figure>
+</div><div data-step="5"><h4 id="pb0-s5">5단계 · 한 번 더 주고받고 끝내기</h4>
+<p>대화가 이어지는지, 도구를 쓸 수 있는지 보려고 한 번 더 말을 겁니다. 원문이 "터미널 써 보기" 예시로 드는 문장입니다.</p><pre><code>What's my disk usage? Show the top 5 largest directories.</code></pre><p>뜻: 내 디스크를 얼마나 쓰고 있어? 가장 큰 폴더 다섯 개를 보여 줘. — 에이전트가 내 대신 터미널 명령을 실행하고 결과를 보여 줍니다.</p><ul><li>너무 오래 걸리면 새 메시지를 입력하고 <kbd>Enter</kbd> 를 누릅니다. 하던 일을 멈추고 새 지시로 넘어갑니다. <kbd>Ctrl</kbd>+<kbd>C</kbd> 도 됩니다.</li><li>입력 칸에 <code>/</code> 를 치면 슬래시 명령<span class="gl">(입력 칸에 /로 시작해 넣는 명령)</span> 목록이 뜹니다. <code>/help</code> 는 쓸 수 있는 명령을 모두 보여 줍니다.</li><li>끝낼 때는 <code>/quit</code> 을 넣습니다.</li></ul><p><b>확인:</b> 두 번째 질문에도 오류 없이 답이 왔습니다. 완료 기준 네 가지가 모두 채워졌다면 준비 끝입니다.</p>
+</div></div>
+<h3 id="pb0-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td><code>hermes: command not found</code></td><td>셸이 바뀐 경로를 아직 읽지 않았습니다. <code>source ~/.bashrc</code>(zsh 는 <code>source ~/.zshrc</code>)를 넣거나 터미널을 새로 엽니다. 그래도 안 되면 <code>which hermes</code>·<code>ls ~/.local/bin/hermes</code> 로 설치 위치를 봅니다.</td></tr><tr><td>설치 중 <code>Permission denied</code></td><td><code>sudo</code> 로 설치했는지 봅니다. 고치는 순서는 <a href="#pb9">실습 9</a>에 있습니다.</td></tr><tr><td><code>API key not set</code></td><td><code>hermes model</code> 로 제공자를 다시 설정합니다. 키를 직접 넣으려면 <code>hermes config set OPENROUTER_API_KEY your_key</code> 처럼 씁니다(<code>your_key</code> 자리에 내 키).</td></tr><tr><td>Hermes 는 열리는데 답이 비거나 깨짐</td><td>원문이 꼽는 원인은 제공자 로그인이나 모델 선택이 잘못된 것입니다. <code>hermes model</code> 을 다시 실행해 제공자·모델·로그인을 확인합니다.</td></tr><tr><td>시작하자마자 모델이 거부됨</td><td>컨텍스트가 64K 토큰보다 작은 모델일 수 있습니다. <code>hermes model</code> 로 다른 모델을 고릅니다.</td></tr><tr><td>슬래시 명령에 <code>Unsupported gateway CLI command; use /help</code></td><td>클래식 CLI 에서는 일부 슬래시 명령만 됩니다. 원문은 전체 명령을 쓰려면 <code>hermes --tui</code> 를 쓰라고 적습니다.</td></tr><tr><td>무엇이 문제인지 모르겠음</td><td><code>hermes doctor</code> 를 실행합니다. 원문은 이 명령이 무엇이 빠졌고 어떻게 고치는지 정확히 알려 준다고 적습니다. 이어서 <a href="#pb9">실습 9</a>의 순서를 따릅니다.</td></tr></tbody></table></div>
+<h3 id="pb0-next">다음에 할 것</h3><ul><li><a href="#pb1">실습 1</a> — 내 폴더를 살펴보게 하고 요약을 받습니다. 첫 "쓸모 있는 결과"입니다.</li><li><a href="#pb2">실습 2</a> — 오늘 한 대화에 이름을 붙이고 다음 날 다시 불러옵니다.</li><li>메신저 연결·예약 작업·스킬 설치는 그다음입니다. 원문은 기본 대화가 되고 난 뒤에만 한 겹씩 얹으라고 적습니다. 무엇을 얹을 수 있는지는 <a href="hermes-agent-guide.html#ch01-next-layer">완전 가이드 1장 다음에 얹을 것</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>설치는 터미널에 명령 한 줄. <code>sudo</code> 는 붙이지 않습니다.</li><li>설치 뒤 <code>source ~/.bashrc</code>(또는 <code>~/.zshrc</code>)나 새 터미널로 <code>hermes</code> 명령을 알아보게 합니다.</li><li>제공자는 <code>hermes model</code>, 가장 쉬운 길은 <code>hermes setup --portal</code>. 모델은 컨텍스트 64K 토큰 이상.</li><li><code>hermes --tui</code> 로 열어 말을 걸고, 성공 기준 네 가지를 확인합니다.</li><li>평범한 대화가 되기 전에는 다른 기능을 얹지 않습니다. 모르겠으면 <code>hermes doctor</code>.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/getting-started/installation · getting-started/quickstart · user-guide/cli(Interface Layout 의 슬래시 명령 범위) · reference/faq(Installation Issues). 수집일 2026-11-09. 가이드 <a href="hermes-agent-guide.html#ch01-install">1장 설치</a>·<a href="hermes-agent-guide.html#ch01-first-chat">첫 대화</a>·<a href="hermes-agent-guide.html#ch01-failures">자주 겪는 실패</a>. 예상 소요 시간은 이 활용편의 어림값입니다.</p></section>
+<section class="chapter" id="pb1">
+<div class="ch-head"><div class="ch-no">SCENARIO 1</div><h2>첫 결과 — 내 폴더를 살펴보게 하고 요약 받기</h2><p class="lead">Hermes Agent 에게 첫 일을 맡깁니다. 내 컴퓨터의 폴더 하나를 직접 들여다보게 하고, 무엇이 들어 있는지 요약을 받습니다. 말만 하는 챗봇과 달리 도구를 써서 실제로 폴더를 읽는다는 점을 눈으로 확인하는 실습입니다.</p></div>
+<div class="learn"><b>이 시나리오로 할 수 있게 되는 것</b><ul><li>살펴볼 폴더에서 Hermes 를 열고, 지금 어느 폴더를 보고 있는지 배너에서 확인합니다.</li><li>에이전트<span class="gl">(도구를 써서 내 대신 일을 해 주는 AI 프로그램)</span>가 도구를 쓰는 과정을 화면에서 읽습니다.</li><li>요약을 받고, 일이 길어지면 중간에 바로잡습니다.</li></ul><p class="muted">예상 소요 시간: 10~15분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb1-prep">준비물</a>을 확인한 뒤 <a href="#pb1-steps">따라 하기</a> 1~3단계만 해도 완료입니다. 4·5단계는 익숙해지려고 해 보는 것입니다. 막히면 <a href="#pb1-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb1-prep">준비물과 완료 기준</h3><ul><li><a href="#pb0">시작 전 준비</a>를 끝낸 상태 — <code>hermes</code> 로 대화가 됩니다.</li><li>살펴볼 폴더 하나. 코드 저장소든 문서 폴더든 괜찮습니다. 이번 실습은 읽기만 부탁하지만, 처음에는 남에게 보여도 되는 내용의 폴더로 연습합니다 — 폴더 내용이 내가 고른 제공자<span class="gl">(provider — AI 모델을 빌려주는 서비스)</span>에게 전달되기 때문입니다(원문: API 호출은 내가 설정한 제공자에게만 갑니다).</li><li>그 폴더의 위치(경로). 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에서 그 폴더로 이동할 수 있어야 합니다.</li></ul><div class="note"><b>완료 기준</b><p>Hermes 가 오류 없이 답했고, 답에 나온 파일 이름이 내 폴더에 실제로 있으며, 이어서 한 번 더 물었을 때도 정상으로 답하면 완료입니다. 원문이 첫 대화에 "구체적이고 확인하기 쉬운" 부탁을 쓰라고 하는 이유가 이 대조입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="폴더에서 열기 → 살펴보기 부탁 → 요약 받기 순서입니다.">
+<rect class="box s-accent" x="20" y="30" width="210" height="90" rx="12"/><text x="125" y="65" text-anchor="middle">폴더에서 열기</text><text class="sub" x="125" y="92" text-anchor="middle">배너에서 폴더 확인</text>
+<path class="line s-accent anim-flow" d="M230 75 H255"/>
+<rect class="box s-accent" x="255" y="30" width="210" height="90" rx="12"/><text x="360" y="65" text-anchor="middle">살펴보기 부탁</text><text class="sub" x="360" y="92" text-anchor="middle">도구가 폴더를 읽음</text>
+<path class="line s-accent anim-flow" d="M465 75 H490"/>
+<rect class="box s-green" x="490" y="30" width="210" height="90" rx="12"/><text x="595" y="65" text-anchor="middle">요약 받기</text><text class="sub" x="595" y="92" text-anchor="middle">내 폴더와 대조</text>
+</svg><figcaption>폴더에서 열기 → 살펴보기 부탁 → 요약 받기. 받은 답은 꼭 실제 폴더와 대조합니다.</figcaption></figure>
+<h3 id="pb1-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb1-s1">1단계 · 살펴볼 폴더에서 Hermes 열기</h4>
+<p>Hermes 는 자기가 시작된 폴더를 "작업 폴더"로 삼습니다. 그래서 먼저 터미널에서 살펴볼 폴더로 이동한 다음 Hermes 를 엽니다.</p><pre><code>cd 살펴볼-폴더-경로
+hermes --tui</code></pre><p>뜻: 첫 줄은 터미널의 기본 명령으로, 그 폴더로 이동합니다(<code>살펴볼-폴더-경로</code> 자리에 실제 경로). 둘째 줄은 Hermes 를 TUI<span class="gl">(hermes --tui 로 여는 새 터미널 화면)</span>로 엽니다. <code>hermes</code> 만 넣어 기본 화면으로 열어도 이 실습은 똑같이 됩니다.</p><p>화면 맨 위 환영 배너를 읽습니다. 원문은 배너가 모델<span class="gl">(에이전트의 두뇌 역할을 하는 AI)</span>, 터미널 백엔드<span class="gl">(에이전트의 명령이 실제로 실행되는 곳)</span>, 작업 폴더, 쓸 수 있는 도구<span class="gl">(tool — 터미널 실행·파일 읽기 같은 기능 하나)</span>, 설치된 스킬을 한눈에 보여 준다고 적습니다.</p><p><b>확인:</b> 배너의 작업 폴더가 내가 살펴보려는 폴더입니다. 다르면 <code>/quit</code> 으로 나가 폴더를 옮긴 뒤 다시 엽니다 — 작업 폴더는 세션<span class="gl">(대화 한 묶음)</span>을 만들 때 정해지고 그 뒤로는 바뀌지 않습니다.</p>
+<details class="adv"><summary>폴더를 옮기지 않고 여는 방법</summary><p>원문은 <code>--in &lt;dir&gt;</code> 를 주면 시작하거나 이어 하기 전에 그 폴더로 들어간다고 적습니다. 원문의 예시는 이어 하기와 함께 쓴 <code>hermes --tui --resume latest --in ./my-project</code>(그 폴더의 가장 최근 세션을 이어서 열기)입니다. 실행 방법 전체는 <a href="hermes-agent-guide.html#ch02-run">완전 가이드 2장 실행하기</a>.</p></details>
+</div><div data-step="2"><h4 id="pb1-s2">2단계 · 폴더를 살펴보라고 부탁하기</h4>
+<p>입력 칸에 아래 문장을 넣고 <kbd>Enter</kbd> 를 누릅니다. 원문이 첫 대화 예시로 드는 문장입니다.</p><pre><code>Check my current directory and tell me what looks like the main project file.</code></pre><p>뜻: 지금 폴더를 확인하고, 중심이 되는 파일이 무엇으로 보이는지 알려 줘. — 같은 뜻의 한국어로 물어도 됩니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 210" role="img" aria-label="내 부탁이 Hermes 로 가고, Hermes 가 도구로 내 폴더를 읽은 뒤, 결과가 돌아와 답이 됩니다.">
+<rect class="box" x="20" y="50" width="110" height="70" rx="12"/><text x="75" y="80" text-anchor="middle">나</text><text class="sub" x="75" y="102" text-anchor="middle">부탁 한 줄</text>
+<path class="line s-accent anim-flow" d="M130 85 H190"/>
+<rect class="box s-accent" x="190" y="50" width="150" height="70" rx="12"/><text x="265" y="80" text-anchor="middle">Hermes</text><text class="sub" x="265" y="102" text-anchor="middle">모델이 할 일을 정함</text>
+<path class="line s-accent anim-flow" d="M340 85 H400"/>
+<rect class="box s-amber" x="400" y="50" width="150" height="70" rx="12"/><text x="475" y="80" text-anchor="middle">도구</text><text class="sub" x="475" y="102" text-anchor="middle">터미널 · 파일 읽기</text>
+<path class="line s-accent anim-flow" d="M550 85 H600"/>
+<rect class="box s-green" x="600" y="50" width="100" height="70" rx="12"/><text x="650" y="80" text-anchor="middle">내 폴더</text><text class="sub" x="650" y="102" text-anchor="middle">읽기</text>
+<path id="pb1-p-back" class="line" d="M650 120 V165 H75 V120"/>
+<circle class="f-green" r="5"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#pb1-p-back"/></animateMotion></circle>
+<text class="sub" x="362" y="190" text-anchor="middle">읽은 결과가 돌아와 답이 됩니다</text>
+</svg><figcaption>챗봇은 아는 것으로만 답하지만, 에이전트는 도구로 내 폴더를 실제로 읽고 답합니다.</figcaption></figure>
+<p>Hermes 가 일하는 동안 화면에 진행 줄이 생깁니다. 원문은 에이전트가 터미널 명령을 내 대신 실행하고 결과를 보여 준다고 적습니다. 기본 화면(클래식 CLI 의 modern 배치)에서는 줄 맨 앞 기호로 종류를 구분합니다. TUI 의 줄 모양은 받은 원문에 따로 적혀 있지 않습니다. 기호가 조금 달라도 "내 말 → 도구가 한 일 → 답" 순서로 읽으면 됩니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 250" role="img" aria-label="화면에 쌓이는 줄의 맨 앞 기호 읽는 법: 화살괄호는 내 말, 책 그림은 파일 읽기, 컴퓨터 그림은 터미널 명령, 지팡이 기호는 Hermes 의 답, 가로줄은 요약 줄입니다.">
+<rect class="box" x="20" y="20" width="680" height="210" rx="12"/>
+<text x="40" y="54">❯ Check my current directory …</text><text class="sub" x="330" y="54">❯ = 내가 보낸 말</text>
+<text x="40" y="92">📖 Read …</text><text class="sub" x="330" y="92">📖 = 파일을 읽은 도구 한 줄</text>
+<text x="40" y="130">💻 $ …</text><text class="sub" x="330" y="130">💻 $ = 터미널 명령 한 줄 (실패하면 ✗ 와 종료 코드)</text>
+<circle class="f-accent anim-pulse" cx="28" cy="164" r="4"/><text x="40" y="168">☤ Hermes</text><text class="sub" x="330" y="168">☤ = 답. 여기부터 읽으면 됩니다</text>
+<text x="40" y="206">─ …</text><text class="sub" x="330" y="206">─ = 이번 차례 요약 줄 (걸린 시간 · 읽은 파일 수 등)</text>
+</svg><figcaption>줄 맨 앞 기호 읽는 법(원문 Layout styles). 실제 줄의 내용은 내 폴더와 부탁에 따라 달라집니다.</figcaption></figure>
+<p><b>확인:</b> 오류 없이 답이 왔고, 답에 나온 파일·폴더 이름이 내 폴더에 실제로 있습니다. 파일 탐색기(Finder 등)로 폴더를 열어 한두 개만 대조해 봅니다.</p>
+<details class="adv"><summary>진행 표시를 더 자세히 또는 덜 보기</summary><p>원문이 보여 주는 도구 진행 줄 예시는 <code>┊ 💻 terminal `ls -la` (0.3s)</code> 같은 모양입니다. <code>/verbose</code> 를 넣을 때마다 표시 단계가 off → new → all → verbose 순으로 바뀝니다. 화면 구성 전체는 <a href="hermes-agent-guide.html#ch02-layout">완전 가이드 2장 화면 구성</a>, 도구가 무엇인지는 <a href="hermes-agent-guide.html#ch04-what">4장 도구란</a>.</p></details>
+</div><div data-step="3"><h4 id="pb1-s3">3단계 · 다섯 줄 요약 받기</h4>
+<p>같은 대화에서 이어서 묻습니다. 새로 설명할 필요가 없습니다 — 앞에서 읽은 내용이 대화에 남아 있습니다.</p><pre><code>Summarize this repo in 5 bullets and tell me what the main entrypoint is.</code></pre><p>뜻: 이 저장소를 다섯 줄로 요약하고, 시작점이 되는 파일이 무엇인지 알려 줘. — "저장소(repo)"는 코드를 모아 둔 폴더를 가리키는 말입니다. 문서 폴더라면 같은 뜻의 한국어로 "이 폴더를 다섯 줄로 요약해 줘"처럼 바꿔 물어도 됩니다.</p><p>답을 읽을 때는 세 가지를 봅니다. 다섯 줄이 맞는지, 각 줄이 내 폴더의 실제 내용과 맞는지, 모르는 것을 아는 척 채우지 않았는지입니다. 어긋난 줄이 있으면 몇 번째 줄이 어떻게 틀렸는지 그대로 짚고, 그 파일을 다시 읽어 고쳐 달라고 합니다.</p><p><b>확인:</b> 요약이 왔고 내용이 폴더와 맞습니다. 이것으로 원문의 성공 기준 "대화가 한 번 넘게 정상으로 이어진다"까지 채웠습니다.</p>
+</div><div data-step="4"><h4 id="pb1-s4">4단계 · 길어지거나 방향이 틀리면 중간에 바로잡기</h4>
+<p>에이전트가 너무 오래 걸리거나 엉뚱한 쪽으로 가면 끝나기를 기다릴 필요가 없습니다.</p><ol class="steps"><li><b>새 메시지를 입력하고 Enter</b><span>진행 중인 일을 멈추고 새 지시로 방향을 바꿉니다. 이미 끝낸 도구 작업과 화면에 나온 생각은 대화에 그대로 남습니다.</span></li><li><b>또는 Ctrl+C</b><span>입력 칸에 쓰던 글이 있으면 먼저 그 글을 지우고, 입력 칸이 비어 있으면 에이전트를 멈춥니다. 2초 안에 두 번 누르면 Hermes 가 강제로 끝납니다.</span></li></ol>
+<figure class="diagram"><svg viewBox="0 0 720 190" role="img" aria-label="Hermes 가 일하는 중에 새 메시지를 보내면 하던 일을 멈추고 새 지시대로 다시 답합니다.">
+<path class="line" d="M40 80 H500"/>
+<circle class="line s-accent anim-spin" cx="190" cy="80" r="16" stroke-dasharray="20 12"/><text x="190" y="44" text-anchor="middle">Hermes 가 일하는 중</text><text class="sub" x="190" y="120" text-anchor="middle">끝낸 도구 작업은 대화에 남음</text>
+<path class="line s-amber anim-flow" d="M380 142 V88"/><text x="380" y="160" text-anchor="middle">새 메시지 + Enter</text><text class="sub" x="380" y="178" text-anchor="middle">또는 Ctrl+C</text>
+<rect class="box s-green" x="500" y="52" width="200" height="56" rx="12"/><text x="600" y="76" text-anchor="middle">새 지시대로 다시 답함</text><text class="sub" x="600" y="96" text-anchor="middle">처음부터 다시 설명할 필요 없음</text>
+</svg><figcaption>일하는 중에 끼어들어도 됩니다. 실행 중이던 도구는 안전하게 멈출 수 있는 지점까지 간 뒤에 새 지시가 적용됩니다.</figcaption></figure>
+<p>이 단계는 지금 꼭 해 보지 않아도 됩니다. 2·3단계가 금방 끝났다면 방법만 읽고 넘어갑니다.</p><p><b>확인:</b> (해 봤다면) 새 메시지를 보낸 뒤 Hermes 가 그 지시에 맞춰 답했습니다.</p>
+<details class="adv"><summary>Enter 가 하는 일을 바꾸기 — /busy</summary><p>일하는 중에 <kbd>Enter</kbd> 를 눌렀을 때의 동작은 세 가지 가운데 고를 수 있습니다. 기본값 <code>interrupt</code> 는 지금 차례의 방향을 바꾸고, <code>queue</code> 는 지금 일이 끝난 뒤 다음 차례로 줄을 세우고, <code>steer</code> 는 멈추지 않고 다음 도구 호출 뒤에 끼워 넣습니다. 대화 안에서 <code>/busy queue</code>·<code>/busy steer</code>·<code>/busy interrupt</code>·<code>/busy status</code> 로 바꾸고 확인합니다. 지금 차례와 하던 작업을 아예 취소하려면 <code>/stop</code>. 자세한 것은 <a href="hermes-agent-guide.html#ch02-interrupt">완전 가이드 2장 중간에 끼어들기</a>.</p></details>
+</div><div data-step="5"><h4 id="pb1-s5">5단계 · 상태 줄을 읽고 대화 끝내기</h4>
+<p>입력 칸 근처의 상태 줄에는 지금 쓰는 모델, 컨텍스트<span class="gl">(문맥 창 — 모델이 한 번에 기억하며 볼 수 있는 글의 양)</span>를 얼마나 썼는지, 작업 폴더가 보입니다. 폴더를 많이 읽을수록 컨텍스트 사용률이 올라갑니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 170" role="img" aria-label="상태 줄 예시와 읽는 법: 모델 이름, 컨텍스트 사용률, 작업 폴더가 차례로 보입니다.">
+<rect class="box" x="20" y="24" width="680" height="46" rx="8"/><text x="36" y="52">gpt-5-mini · ctx [░░░░░░░░] 4% · ~/project (main)</text>
+<rect class="box s-accent" x="20" y="100" width="210" height="50" rx="10"/><text x="125" y="130" text-anchor="middle">① 모델 이름</text>
+<rect class="box s-amber" x="255" y="100" width="210" height="50" rx="10"/><text x="360" y="130" text-anchor="middle">② 컨텍스트 사용률</text>
+<rect class="box s-green" x="490" y="100" width="210" height="50" rx="10"/><text x="595" y="130" text-anchor="middle">③ 작업 폴더</text>
+</svg><figcaption>윗줄은 원문에 실린 상태 줄 예시의 왼쪽 부분입니다. 왼쪽부터 모델 이름 · 컨텍스트 사용률 · 작업 폴더 순서로 읽습니다.</figcaption></figure>
+<p>다 봤으면 <code>/quit</code> 을 넣어 끝냅니다. 원문은 CLI 세션을 끝낼 때 <code>hermes --resume …</code> 로 시작하는 "이어 하기 명령"과 세션 ID 가 출력된다고 적습니다. 지우지 말고 그대로 둡니다 — <a href="#pb2">실습 2</a>에서 씁니다.</p><p><b>확인:</b> 상태 줄에서 모델 이름과 컨텍스트 사용률을 찾았고, 대화를 끝냈습니다.</p>
+<details class="adv"><summary>컨텍스트 색이 뜻하는 것</summary><div class="table-wrap"><table class="kv"><thead><tr><th>색</th><th>사용률</th><th>뜻</th></tr></thead><tbody><tr><td>초록</td><td>50% 미만</td><td>여유 있음</td></tr><tr><td>노랑</td><td>50~80%</td><td>차고 있음</td></tr><tr><td>주황</td><td>80~95%</td><td>한도에 가까움</td></tr><tr><td>빨강</td><td>95% 이상</td><td>넘치기 직전 — <code>/compress</code>(대화 압축)를 고려</td></tr></tbody></table></div><p>숫자 앞의 <code>~</code> 는 어림값이 섞였다는 표시입니다. 자세한 내역은 <code>/usage</code> 로 봅니다.</p></details>
+</div></div>
+<h3 id="pb1-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td>답이 비어 있거나 깨져 보임</td><td>제공자 로그인이나 모델 선택이 잘못됐을 가능성이 큽니다. 나가서 <code>hermes model</code> 을 다시 실행합니다. 순서는 <a href="#pb9">실습 9</a>.</td></tr><tr><td>엉뚱한 폴더를 살펴봄</td><td>배너의 작업 폴더를 확인합니다. 작업 폴더는 세션을 만들 때 정해지므로, <code>/quit</code> 으로 나가 원하는 폴더로 이동한 뒤 새로 엽니다.</td></tr><tr><td>명령을 실행해도 되느냐고 물음</td><td>위험할 수 있는 명령(예: <code>rm -rf</code>)을 실행하기 전에 Hermes 가 먼저 묻는 승인 절차입니다. 화면에 실행될 명령이 그대로 보이니 읽고, 괜찮으면 <code>y</code> 로 승인합니다. 읽기만 부탁했는데 지우는 명령이 보이면 승인하지 말고 더 안전한 방법을 쓰라고 부탁합니다. <a href="hermes-agent-guide.html#ch09-approval">9장 승인</a>.</td></tr><tr><td>답이 너무 느림</td><td>4단계 방법으로 끼어들 수 있습니다. 원문이 꼽는 원인은 큰 모델, 먼 서버, 도구가 많아 무거워진 요청입니다. 더 빠른 모델로 바꾸거나 네트워크 상태를 확인합니다.</td></tr><tr><td>429 오류(요청 한도 초과)</td><td>제공자의 사용 한도를 넘은 것입니다. 잠시 기다렸다가 다시 보냅니다.</td></tr><tr><td>슬래시 명령<span class="gl">(입력 칸에 /로 시작해 넣는 명령)</span>에 <code>Unsupported gateway CLI command; use /help</code></td><td>클래식 CLI 에서는 일부 슬래시 명령만 됩니다. <code>hermes --tui</code> 로 열면 전체를 쓸 수 있습니다.</td></tr></tbody></table></div>
+<h3 id="pb1-next">다음에 할 것</h3><ul><li><a href="#pb2">실습 2</a> — 방금 한 대화에 이름을 붙이고 다시 불러옵니다.</li><li>같은 방법으로 다른 폴더도 살펴보게 해 봅니다. 폴더마다 Hermes 를 새로 열면 됩니다.</li><li>파일을 고치는 일을 맡기기 전에는 <a href="#pb5">실습 5</a>(실수 되돌리기)를 먼저 해 두면 마음이 놓입니다.</li><li>입력 칸에서 쓸 수 있는 단축키와 명령은 <a href="hermes-agent-guide.html#ch02-keys">완전 가이드 2장 단축키</a>·<a href="hermes-agent-guide.html#ch02-slash">슬래시 명령</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>살펴볼 폴더로 이동한 뒤 Hermes 를 열고, 배너에서 작업 폴더를 확인합니다.</li><li>구체적이고 확인하기 쉬운 부탁을 하고, 답을 실제 폴더와 대조합니다.</li><li>줄 맨 앞 기호로 내 말(❯)·도구가 한 일(📖 💻)·답(☤)을 구분합니다.</li><li>길어지면 새 메시지 + Enter 나 Ctrl+C 로 끼어듭니다.</li><li>끝낼 때 나오는 이어 하기 명령은 실습 2에서 씁니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/getting-started/quickstart(3. Run Your First Chat · 5. Try Key Features) · user-guide/cli(Interface Layout · Status Bar · Redirecting the Agent Mid-Turn · Tool Progress Display · Session Management) · reference/faq(Is my data sent anywhere? · Terminal Issues · Performance Issues). 수집일 2026-11-09. 가이드 <a href="hermes-agent-guide.html#ch01-first-chat">1장 첫 대화</a>·<a href="hermes-agent-guide.html#ch01-try">써 보기</a>. <code>cd</code> 는 터미널 기본 명령이고, 폴더 경로와 한국어로 바꿔 묻는 문장은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb2">
+<div class="ch-head"><div class="ch-no">SCENARIO 2</div><h2>이어서 하기 — 세션에 이름 붙이고 다시 불러오기</h2><p class="lead">Hermes Agent 는 대화를 끝내도 내용을 버리지 않습니다. 대화 한 묶음을 세션이라고 부르고, 모든 세션을 내 컴퓨터에 저장해 둡니다. 세션에 이름을 붙여 두면 다음 날 그 이름으로 불러 하던 일을 그대로 이어 갈 수 있습니다.</p></div>
+<div class="learn"><b>이 시나리오로 할 수 있게 되는 것</b><ul><li>대화 중에 <code>/title</code> 로 세션에 알아보기 쉬운 이름을 붙입니다.</li><li><code>hermes sessions list</code> 로 지난 세션을 찾습니다.</li><li>가장 최근 것 · 이름 · 세션 ID, 세 가지 방법으로 다시 불러옵니다.</li></ul><p class="muted">예상 소요 시간: 10분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb2-prep">준비물</a>을 확인한 뒤 <a href="#pb2-steps">따라 하기</a>를 순서대로 진행하세요. 급하면 1단계(이름 붙이기)와 4단계(이름으로 다시 열기)만 해도 됩니다. 막히면 <a href="#pb2-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb2-prep">준비물과 완료 기준</h3><ul><li><a href="#pb0">시작 전 준비</a>를 끝낸 상태. <a href="#pb1">실습 1</a>을 했다면 그때 쓴 폴더를 그대로 씁니다.</li><li>세션에 붙일 이름 하나. 이 실습은 원문 예시인 <code>my project</code> 를 씁니다. 규칙은 셋입니다 — 다른 세션과 겹치지 않을 것, 100자 이하, 한글·이모지도 됨.</li><li>터미널<span class="gl">(글자로 명령을 입력하는 창)</span> 창 하나. 처음부터 끝까지 같은 창에서 합니다.</li></ul><div class="note"><b>완료 기준</b><p>이름 붙인 세션이 목록에 보이고, 그 이름으로 다시 열었을 때 지난 대화 요약이 나오며, 앞 내용을 다시 설명하지 않고 한 번 더 주고받으면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="이름 붙이기 → 끝내기 → 목록에서 찾기 → 다시 열기 순서입니다.">
+<rect class="box s-accent" x="20" y="30" width="155" height="90" rx="12"/><text x="97" y="65" text-anchor="middle">이름 붙이기</text><text class="sub" x="97" y="92" text-anchor="middle">/title</text>
+<path class="line s-accent anim-flow" d="M175 75 H195"/>
+<rect class="box s-accent" x="195" y="30" width="155" height="90" rx="12"/><text x="272" y="65" text-anchor="middle">끝내기</text><text class="sub" x="272" y="92" text-anchor="middle">/quit</text>
+<path class="line s-accent anim-flow" d="M350 75 H370"/>
+<rect class="box s-accent" x="370" y="30" width="155" height="90" rx="12"/><text x="447" y="65" text-anchor="middle">목록에서 찾기</text><text class="sub" x="447" y="92" text-anchor="middle">hermes sessions list</text>
+<path class="line s-accent anim-flow" d="M525 75 H545"/>
+<rect class="box s-green" x="545" y="30" width="155" height="90" rx="12"/><text x="622" y="65" text-anchor="middle">다시 열기</text><text class="sub" x="622" y="92" text-anchor="middle">hermes -c "이름"</text>
+</svg><figcaption>이름 붙이기 → 끝내기 → 목록에서 찾기 → 다시 열기. 이름은 나중에 나를 위한 꼬리표입니다.</figcaption></figure>
+<h3 id="pb2-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb2-s1">1단계 · 대화를 열고 이름 붙이기</h4>
+<p>연습할 폴더에서 Hermes 를 열고, 대화에 내용이 생기도록 한마디 부탁합니다. <a href="#pb1">실습 1</a>에서 쓴 문장을 그대로 써도 됩니다.</p><pre><code>hermes --tui</code></pre><p>뜻: Hermes 를 TUI<span class="gl">(hermes --tui 로 여는 새 터미널 화면)</span>로 엽니다. 슬래시 명령<span class="gl">(입력 칸에 /로 시작해 넣는 명령)</span> 전체를 쓸 수 있는 화면이라 이 실습은 TUI 로 합니다.</p><pre><code>Check my current directory and tell me what looks like the main project file.</code></pre><p>뜻: 지금 폴더를 확인하고, 중심이 되는 파일이 무엇으로 보이는지 알려 줘.</p><p>답이 오면 입력 칸에 아래처럼 넣습니다.</p><pre><code>/title my project</code></pre><p>뜻: 지금 세션의 이름을 <code>my project</code> 로 정합니다. 원문은 이름이 바로 적용된다고 적습니다.</p><ul><li>이름을 붙이지 않아도 첫 주고받기가 끝나면 Hermes 가 3~7 단어짜리 제목을 자동으로 만들어 붙입니다. 내가 직접 붙이면 자동 제목은 건너뜁니다.</li><li>자동 제목은 무슨 대화였는지는 알려 주지만 내가 기억하는 말이 아닐 수 있습니다. 다시 찾을 대화라면 직접 붙이는 편이 찾기 쉽습니다.</li></ul><p><b>확인:</b> 오류 문구 없이 명령이 받아들여졌습니다. 클래식 CLI 에서는 제목이 생기면 상태 표시줄 오른쪽 끝에 제목이 나타난다고 원문이 적습니다. 화면에서 찾지 못해도 괜찮습니다 — 3단계 목록에서 다시 확인합니다.</p>
+</div><div data-step="2"><h4 id="pb2-s2">2단계 · 대화 끝내고 이어 하기 명령 받아 두기</h4>
+<p>입력 칸에 <code>/quit</code> 을 넣어 대화를 끝냅니다. 원문은 CLI 세션을 끝내면 아래와 같은 안내가 출력된다고 적습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="세션을 끝낼 때 나오는 안내 예시. 이어 하기 명령, 세션 ID, 대화한 시간, 메시지 수가 적혀 있습니다.">
+<rect class="box" x="20" y="20" width="680" height="180" rx="12"/>
+<text x="40" y="52">Resume this session with:</text>
+<circle class="f-green anim-pulse" cx="46" cy="74" r="5"/><text x="60" y="78">hermes --resume 20260225_143052_a1b2c3</text><text class="sub" x="400" y="78">← 이 줄이 이어 하기 명령</text>
+<text x="40" y="112">Session: 20260225_143052_a1b2c3</text><text class="sub" x="400" y="112">← 세션 ID (날짜_시각_여섯 글자)</text>
+<text x="40" y="140">Duration: 12m 34s</text><text class="sub" x="400" y="140">← 대화한 시간</text>
+<text x="40" y="168">Messages: 28 (5 user, 18 tool calls)</text><text class="sub" x="400" y="168">← 주고받은 메시지 수</text>
+</svg><figcaption>원문에 실린 예시입니다. 내 화면에는 내 세션의 ID·시간·메시지 수가 나옵니다.</figcaption></figure>
+<p>세션 ID 는 세션마다 하나씩 붙는 고유 번호입니다. 이름을 잊어도 이 번호로 다시 열 수 있으니 메모장에 복사해 둡니다.</p><p><b>확인:</b> <code>hermes --resume …</code> 로 시작하는 줄을 찾아 복사해 두었습니다. 안내가 보이지 않았다면 건너뜁니다 — 다음 단계 목록에서도 ID 를 볼 수 있습니다.</p>
+</div><div data-step="3"><h4 id="pb2-s3">3단계 · 목록에서 내 세션 찾기</h4>
+<p>터미널에 아래 명령을 넣습니다. Hermes 대화 안이 아니라 터미널에 넣는 명령입니다.</p><pre><code>hermes sessions list</code></pre><p>뜻: 최근 세션을 보여 줍니다(기본 20개). 제목이 붙은 세션이 있으면 아래 같은 모양입니다 — 원문 예시입니다.</p><pre><code>Title                  Preview                                  Last Active   ID
+────────────────────────────────────────────────────────────────────────────────────────────────
+refactoring auth       Help me refactor the auth module please   2h ago        20250305_091523_a
+my project #3          Can you check the test failures?          yesterday     20250304_143022_e
+—                      What's the weather in Las Vegas?          3d ago        20250303_101500_f</code></pre><p>읽는 법: <b>Title</b>(제목) · <b>Preview</b>(대화 미리 보기) · <b>Last Active</b>(마지막으로 쓴 때) · <b>ID</b>(세션 ID 앞부분). 제목이 없는 세션은 <code>—</code> 로 나옵니다.</p><p><b>확인:</b> Title 칸에 <code>my project</code> 가 있습니다. 같은 줄의 Preview 와 Last Active 를 보고 방금 한 대화가 맞는지 대조합니다.</p>
+<details class="adv"><summary>목록 좁히기 · 터미널에서 이름 바꾸기</summary><div class="table-wrap"><table class="kv"><thead><tr><th>명령</th><th>하는 일</th></tr></thead><tbody><tr><td><code>hermes sessions list --limit 50</code></td><td>더 많이 봅니다. 다 못 보여 줬을 때는 목록 끝에 더 있다는 안내가 붙습니다.</td></tr><tr><td><code>hermes sessions list --workspace my-project</code></td><td>작업 폴더 이름(또는 경로 일부)이 맞는 세션만 봅니다.</td></tr><tr><td><code>hermes sessions list --source telegram</code></td><td>어디에서 한 대화인지로 거릅니다(예: Telegram).</td></tr><tr><td><code>hermes sessions rename 20250305_091523_a1b2c3d4 "refactoring auth module"</code></td><td>세션 ID 를 지정해 제목을 붙이거나 바꿉니다. 대화 안에서 <code>/title</code> 이 되지 않을 때도 이 방법을 씁니다.</td></tr></tbody></table></div><p>세션 관리 명령 전체는 <a href="hermes-agent-guide.html#ch02-sessions">완전 가이드 2장 세션</a>·<a href="hermes-agent-guide.html#ch02-naming">이름 붙이기</a>.</p></details>
+</div><div data-step="4"><h4 id="pb2-s4">4단계 · 세 가지 방법으로 다시 불러오기</h4>
+<p>다시 여는 방법은 세 가지입니다. 탭을 눌러 하나씩 읽고, 오늘은 <b>이름으로</b>를 해 봅니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="name">이름으로</button><button data-tab="last">가장 최근 것</button><button data-tab="id">세션 ID 로</button></div>
+<div data-panel="name"><pre><code>hermes -c "my project"</code></pre><p>뜻: <code>my project</code> 라는 이름의 세션을 이어서 엽니다. 이름에 띄어쓰기가 있으므로 큰따옴표로 감쌉니다.</p></div>
+<div data-panel="last"><pre><code>hermes --continue    # Resume the most recent session
+hermes -c            # Short form</code></pre><p>뜻: 가장 최근 세션을 이어서 엽니다. 둘째 줄은 같은 명령의 짧은 꼴입니다. 방금 하던 일을 바로 이을 때 가장 빠릅니다.</p></div>
+<div data-panel="id"><pre><code>hermes --resume 20260225_143052_a1b2c3</code></pre><p>뜻: 세션 ID 를 지정해 그 세션을 엽니다. 2단계에서 복사해 둔 줄을 그대로 붙여 넣으면 됩니다(숫자는 내 것으로). 짧은 꼴은 <code>-r</code> 입니다.</p></div></div>
+<figure class="diagram"><svg viewBox="0 0 720 250" role="img" aria-label="가장 최근 것, 이름, 세션 ID 세 가지 방법이 모두 같은 세션 저장소에서 대화를 꺼내 지난 대화 그대로 돌려줍니다.">
+<rect class="box" x="20" y="20" width="240" height="50" rx="10"/><text x="36" y="42">hermes -c</text><text class="sub" x="36" y="60">가장 최근 세션</text>
+<rect class="box s-accent" x="20" y="95" width="240" height="50" rx="10"/><text x="36" y="117">hermes -c "my project"</text><text class="sub" x="36" y="135">이름으로</text>
+<rect class="box" x="20" y="170" width="240" height="50" rx="10"/><text x="36" y="192">hermes --resume &lt;ID&gt;</text><text class="sub" x="36" y="210">세션 ID 로</text>
+<path id="pb2-p-a" class="line" d="M260 45 C305 45 305 108 350 108"/>
+<path id="pb2-p-b" class="line s-accent" d="M260 120 H350"/>
+<path id="pb2-p-c" class="line" d="M260 195 C305 195 305 132 350 132"/>
+<circle class="f-muted" r="4"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#pb2-p-a"/></animateMotion></circle>
+<circle class="f-accent" r="5"><animateMotion dur="2.8s" begin="0.9s" repeatCount="indefinite"><mpath href="#pb2-p-b"/></animateMotion></circle>
+<circle class="f-muted" r="4"><animateMotion dur="2.8s" begin="1.8s" repeatCount="indefinite"><mpath href="#pb2-p-c"/></animateMotion></circle>
+<rect class="box s-amber" x="350" y="80" width="150" height="80" rx="12"/><text x="425" y="114" text-anchor="middle">세션 저장소</text><text class="sub" x="425" y="138" text-anchor="middle">~/.hermes/state.db</text>
+<path class="line s-green anim-flow" d="M500 120 H560"/>
+<rect class="box s-green" x="560" y="80" width="140" height="80" rx="12"/><text x="630" y="114" text-anchor="middle">지난 대화 그대로</text><text class="sub" x="630" y="138" text-anchor="middle">요약 패널 + 입력 칸</text>
+</svg><figcaption>어느 방법이든 같은 저장소에서 대화 전체를 꺼냅니다. <code>~</code> 는 내 홈 폴더, <code>state.db</code> 는 Hermes 가 세션을 모아 두는 파일입니다.</figcaption></figure>
+<p>다시 열면 입력 칸 위에 <b>Previous Conversation</b>(지난 대화) 패널이 나옵니다. 내가 한 말(금색 ●)과 Hermes 의 답(초록 ◆)을 최근 10번 주고받은 것까지 줄여 보여 주고, 도구 호출은 개수와 이름만 한 줄로 접어 보여 줍니다. 패널은 요약일 뿐이고, 에이전트<span class="gl">(도구를 써서 내 대신 일을 해 주는 AI 프로그램)</span>는 이전 메시지·도구 호출·응답을 전부 봅니다. 원문 표현으로는 "자리를 뜬 적이 없는 것처럼"입니다.</p><p><b>확인:</b> 지난 대화 패널에 1단계에서 보낸 문장이 보입니다. <code>↪ restored workspace dir: …</code> 줄이 나오면 그 세션의 작업 폴더로 돌아갔다는 뜻입니다.</p>
+<details class="adv"><summary>이어 하기에서 알아 둘 세부</summary><ul><li><b>터미널마다 따로 기억합니다.</b> 이름 없이 쓴 <code>hermes -c</code> 는 같은 터미널 창(또는 칸)에서 마지막으로 하던 세션을 엽니다. 창 두 개에서 각각 다른 대화를 했다면 각자 자기 대화로 돌아갑니다. 그 터미널의 기록이 없으면 전체에서 가장 최근 세션을 엽니다. <code>-c "이름"</code> 과 <code>--resume</code> 은 이 규칙과 무관합니다.</li><li><b>작업 폴더도 돌아갑니다.</b> 이어 하기는 그 세션이 기록해 둔 작업 폴더로 이동합니다. 원문 Sessions 쪽은 지금 폴더에 머물려면 <code>--no-restore-cwd</code> 를 주라고 적고, CLI 쪽은 클래식 CLI 가 이 옵션을 거절할 수 있으며 거절 메시지가 대신 쓸 방법을 알려 준다고 적습니다.</li><li><b>ID 는 앞부분만 넣어도 됩니다.</b> 다른 세션과 겹치지 않는 앞부분이면 됩니다. <code>latest</code> 는 "가장 최근"을 뜻하는 예약어라 <code>hermes --resume latest</code> 는 <code>hermes -c</code> 와 같습니다.</li><li><b>TUI 로 이어 열기.</b> 원문의 예시는 <code>hermes --tui --resume latest --in ./my-project</code>(그 폴더의 가장 최근 세션을 TUI 로) 하나입니다.</li><li>요약 패널을 끄고 한 줄만 보려면 <code>~/.hermes/config.yaml</code> 의 <code>display:</code> 아래에 <code>resume_display: minimal</code> 을 둡니다(기본값 <code>full</code>).</li></ul><p><a href="hermes-agent-guide.html#ch02-resume">완전 가이드 2장 이어 하기</a>.</p></details>
+</div><div data-step="5"><h4 id="pb2-s5">5단계 · 이어서 한마디 주고받기</h4>
+<p>다시 열린 대화에서 하던 이야기를 이어서 한마디 보냅니다. 폴더가 어디인지, 앞에서 무엇을 봤는지 다시 설명하지 않습니다. 그래도 답이 앞 내용과 이어지는지가 이 단계에서 볼 것입니다. <a href="#pb1">실습 1</a>의 두 번째 문장을 써도 됩니다.</p><pre><code>Summarize this repo in 5 bullets and tell me what the main entrypoint is.</code></pre><p>뜻: 이 저장소를 다섯 줄로 요약하고, 시작점이 되는 파일이 무엇인지 알려 줘.</p><p><b>확인:</b> Hermes 가 폴더를 다시 묻지 않고 앞 대화에 이어서 답했습니다. 끝낼 때는 <code>/quit</code> — 이름은 그대로 남으므로 다음에도 <code>hermes -c "my project"</code> 로 엽니다.</p>
+<p>참고로, 대화가 아주 길어지면 목록의 이름이 아래처럼 바뀌어 보일 수 있습니다. 고장이 아닙니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="대화가 길어져 압축되면 같은 이름 뒤에 번호가 붙은 새 세션으로 이어지고, 이름으로 부르면 가장 최근 것이 열립니다.">
+<rect class="box" x="20" y="40" width="180" height="60" rx="12"/><text x="110" y="75" text-anchor="middle">my project</text>
+<path class="line anim-flow" d="M200 70 H270"/><text class="sub" x="235" y="58" text-anchor="middle">압축</text>
+<rect class="box" x="270" y="40" width="180" height="60" rx="12"/><text x="360" y="75" text-anchor="middle">my project #2</text>
+<path class="line anim-flow" d="M450 70 H520"/><text class="sub" x="485" y="58" text-anchor="middle">압축</text>
+<rect class="box s-green" x="520" y="40" width="180" height="60" rx="12"/><circle class="f-green anim-pulse" cx="540" cy="70" r="5"/><text x="618" y="75" text-anchor="middle">my project #3</text>
+<text class="sub" x="610" y="124" text-anchor="middle">이름으로 부르면 가장 최근 것</text>
+</svg><figcaption>대화가 길어져 압축<span class="gl">(대화 가운데 부분을 요약해 자리를 비우는 일)</span>되면 Hermes 는 새 세션을 만들어 잇고, 제목 뒤에 번호를 붙입니다. <code>hermes -c "my project"</code> 는 그중 가장 최근 것을 엽니다.</figcaption></figure>
+</div></div>
+<h3 id="pb2-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td><code>hermes --continue</code> 가 지난 세션을 찾지 못함</td><td>원문이 꼽는 원인은 프로필<span class="gl">(설정·기억·세션을 따로 쓰는 별도 Hermes 환경)</span>을 바꿨거나 세션이 저장되지 않은 경우입니다. <code>hermes sessions list</code> 로 목록을 보고, 같은 프로필에서 실행했는지 확인합니다.</td></tr><tr><td><code>hermes -c</code> 가 다른 대화를 엶</td><td>이름 없는 <code>-c</code> 는 그 터미널 창에서 하던 세션을 엽니다. 원하는 세션을 이름(<code>-c "이름"</code>)이나 ID(<code>--resume</code>)로 지정합니다.</td></tr><tr><td><code>No session found matching '…'</code></td><td>그 이름이나 ID 의 세션이 없다는 뜻입니다. <code>hermes sessions list</code> 에서 제목 철자를 확인합니다.</td></tr><tr><td><code>/title</code> 에 <code>Unsupported gateway CLI command; use /help</code></td><td>클래식 CLI 에서는 일부 슬래시 명령만 됩니다. <code>hermes --tui</code> 로 열어 다시 넣거나, 터미널에서 <code>hermes sessions rename</code> 으로 이름을 붙입니다(3단계 접힌 상자).</td></tr><tr><td>이름이 이미 쓰이고 있다는 오류</td><td>제목은 세션마다 달라야 합니다. 날짜나 주제를 덧붙여 다른 이름을 씁니다.</td></tr><tr><td>제목 뒤에 <code>#2</code>·<code>#3</code> 이 붙어 있음</td><td>정상입니다. 압축으로 이어진 세션입니다. 번호 없이 원래 이름으로 부르면 가장 최근 것이 열립니다.</td></tr><tr><td><code>~/.hermes/sessions/sessions.json</code> 을 열어 보니 내 세션이 없음</td><td>정상입니다. 그 파일은 메신저 연결용 기록이고 세션 목록이 아닙니다. 목록은 <code>hermes sessions list</code> 로 봅니다.</td></tr><tr><td>목록에 정말로 세션이 없음</td><td>Hermes 를 열 때 <code>⚠ Session store unavailable</code> 경고가 나오는지 봅니다. 고치는 순서는 <a href="#pb10">실습 10</a>.</td></tr></tbody></table></div>
+<h3 id="pb2-next">다음에 할 것</h3><ul><li><a href="#pb3">실습 3</a> — 세션이 달라도 나를 기억하도록 말투와 취향을 남깁니다. 이어 하기는 "그 대화"를 되살리고, 기억은 "모든 대화"에 따라옵니다.</li><li>일을 시작할 때마다 이름을 먼저 붙이는 습관을 들입니다. 한 주제에 한 세션, 한 이름이 찾기 쉽습니다.</li><li>지난 세션을 내용으로 찾는 법과 저장 위치는 <a href="hermes-agent-guide.html#ch02-search">완전 가이드 2장 세션 검색</a>·<a href="hermes-agent-guide.html#ch02-storage">저장 위치</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>세션은 대화 한 묶음이고, 끝내도 내 컴퓨터에 남습니다.</li><li>대화 중 <code>/title 이름</code> 으로 이름을 붙입니다. 이름은 겹치지 않게, 100자 이하.</li><li><code>hermes sessions list</code> 로 찾고, <code>hermes -c "이름"</code> 으로 다시 엽니다.</li><li>방금 하던 것은 <code>hermes -c</code>, 정확히 하나를 고를 때는 <code>hermes --resume ID</code>.</li><li>다시 열면 지난 대화 요약이 보이고, 에이전트는 앞 내용을 전부 압니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/sessions(How Sessions Work · CLI Session Resume · Session Naming · Session Management Commands · Storage Locations) · user-guide/cli(Interface Layout · Status Bar · Session Management) · getting-started/quickstart(4. Verify Sessions Work · Common Failure Modes). 수집일 2026-11-09. 가이드 <a href="hermes-agent-guide.html#ch01-resume">1장 이어 하기 확인</a>·<a href="hermes-agent-guide.html#ch02-sessions">2장 세션</a>. 세션 ID·목록 출력은 원문 예시이고, 예상 소요 시간은 이 활용편의 어림값입니다.</p></section>
+<section class="chapter" id="pb3">
+<div class="ch-head"><div class="ch-no">SCENARIO 3</div><h2>나를 기억시키기 — 기억과 SOUL.md 로 말투·취향 남기기</h2><p class="lead">Hermes Agent 에게 내 취향 한 가지를 기억시키고, 그것이 정말 파일에 적혔는지 눈으로 확인한 뒤, 새 대화에서도 기억하는지 봅니다. 이어서 <code>SOUL.md</code> 파일에 원하는 말투를 적어 Hermes 의 기본 성격을 정합니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>취향 한 가지를 기억시키고, 기억 파일을 열어 실제로 저장됐는지 확인합니다.</li><li>방금 저장한 기억이 왜 <b>새 세션</b>에서야 보이는지 이해합니다.</li><li><code>SOUL.md</code> 로 기본 말투를 정하고, <code>/personality</code> 로 잠깐만 다른 말투를 씁니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb3-prep">준비물</a>을 확인한 뒤 <a href="#pb3-steps">따라 하기</a> 1~3단계(기억)만 먼저 해도 됩니다. 4~5단계(말투)는 이어서 하거나 나중에 합니다. 기억이 안 남은 것 같으면 <a href="#pb3-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb3-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">실습 0</a>·<a href="#pb1">실습 1</a>을 마쳐 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에서 <code>hermes</code> 로 대화가 되는 상태.</li><li>터미널 창 2개 — 하나는 Hermes 와 대화하는 창, 다른 하나는 파일 내용을 확인하는 창입니다.</li><li>기억시킬 내용 한 가지. 오래 변하지 않는 취향이 좋습니다(예: 짧은 답을 좋아한다, 미터법 단위를 쓴다).</li><li>평소 쓰는 글 편집기(4단계에서 <code>SOUL.md</code> 를 고칠 때 씁니다).</li></ul>
+<div class="note"><b>완료 기준</b><p>① 기억 파일(<code>USER.md</code> 또는 <code>MEMORY.md</code>)에 내가 말한 내용이 적혀 있고, ② 새 세션<span class="gl">(대화 한 묶음 — 시작부터 끝까지의 기록)</span>에서 다시 알려 주지 않아도 Hermes 가 그 내용을 알고 있으며, ③ <code>~/.hermes/SOUL.md</code> 에 내가 쓴 말투 지침이 저장돼 있으면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="말로 부탁하기, 파일에 저장, 새 세션에서 기억 순서입니다.">
+<rect class="box s-accent" x="20" y="30" width="210" height="90" rx="12"/><text x="125" y="65" text-anchor="middle">말로 부탁</text><text class="sub" x="125" y="92" text-anchor="middle">Remember that …</text>
+<path class="line s-accent anim-flow" d="M230 75 H255"/>
+<rect class="box s-green" x="255" y="30" width="210" height="90" rx="12"/><text x="360" y="65" text-anchor="middle">파일에 저장</text><text class="sub" x="360" y="92" text-anchor="middle">~/.hermes/memories/</text>
+<path class="line s-accent anim-flow" d="M465 75 H490"/>
+<rect class="box s-accent" x="490" y="30" width="210" height="90" rx="12"/><text x="595" y="65" text-anchor="middle">새 세션에서 기억</text><text class="sub" x="595" y="92" text-anchor="middle">시작할 때 파일을 읽음</text>
+</svg><figcaption>이 실습의 흐름 — 말로 부탁하면 Hermes 가 파일에 적고, 다음 세션이 시작될 때 그 파일을 읽어 옵니다.</figcaption></figure>
+<div class="eli5"><b>쉽게 말하면</b><p>Hermes 는 작은 공책 두 권을 갖고 있습니다. 대화가 끝나면 머릿속은 비워지지만 공책은 남고, 다음 대화를 시작할 때 공책부터 읽습니다. 이 실습은 그 공책에 한 줄을 적게 하고, 정말 적혔는지 들여다보는 연습입니다.</p></div>
+<h3 id="pb3-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb3-s1">1단계 · 기억시킬 내용을 말로 부탁하기</h4>
+<p>첫 번째 터미널 창에서 <code>hermes</code> 를 실행해 대화를 시작하고, 아래처럼 한 줄을 보냅니다.</p>
+<pre><code>Remember that I prefer metric units.</code></pre>
+<p>뜻: "나는 미터법 단위(m, kg)를 더 좋아한다는 걸 기억해 줘." 원문이 드는 요청 형식 <code>Remember that …</code>(…를 기억해 줘)에 원문의 기억 예시 <code>User prefers metric units</code> 를 넣은 연습 문장입니다. <code>that</code> 뒤를 내 취향으로 바꿉니다.</p>
+<p>원문에 따르면 Hermes 는 부탁하지 않아도 취향·환경 사실·바로잡은 내용을 스스로 저장합니다. 다만 지나가듯 말한 것까지 다 남기지는 않으므로, 꼭 남길 것은 이렇게 분명히 부탁합니다.</p>
+<p><b>확인:</b> Hermes 가 오류 없이 답했습니다. "기억했다"는 말이 보여도 아직 믿지 않습니다 — 그 문장은 글일 뿐이고, 실제 저장은 다음 단계에서 파일로 확인합니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 270" role="img" aria-label="기억 파일 두 개. MEMORY.md 는 에이전트의 메모장, USER.md 는 사용자 프로필이며 둘 다 세션 시작 때 시스템 프롬프트에 들어갑니다.">
+<rect class="box s-accent" x="20" y="24" width="310" height="124" rx="12"/><text x="175" y="52" text-anchor="middle">MEMORY.md</text><text class="sub" x="175" y="74" text-anchor="middle">에이전트의 메모장</text><text x="175" y="104" text-anchor="middle">컴퓨터 환경 · 규칙 · 배운 점</text><text class="sub" x="175" y="128" text-anchor="middle">2,200자까지 (약 800 토큰)</text>
+<rect class="box s-green" x="390" y="24" width="310" height="124" rx="12"/><text x="545" y="52" text-anchor="middle">USER.md</text><text class="sub" x="545" y="74" text-anchor="middle">사용자 프로필 — 나에 대한 것</text><text x="545" y="104" text-anchor="middle">이름 · 취향 · 말투 · 싫어하는 것</text><text class="sub" x="545" y="128" text-anchor="middle">1,375자까지 (약 500 토큰)</text>
+<path class="line s-accent anim-flow" d="M175 148 V196"/><path class="line s-green anim-flow" d="M545 148 V196"/>
+<rect class="box s-amber" x="110" y="196" width="500" height="50" rx="10"/><text x="360" y="218" text-anchor="middle">세션을 시작할 때 두 파일이 함께 읽힘</text><text class="sub" x="360" y="236" text-anchor="middle">시스템 프롬프트(대화 전에 모델에게 건네는 안내문)에 들어감</text>
+</svg><figcaption>기억은 <code>~/.hermes/memories/</code> 폴더의 두 파일입니다. 취향처럼 "나"에 대한 것은 USER.md, 환경·규칙처럼 "일"에 대한 것은 MEMORY.md 에 적힙니다.</figcaption></figure>
+<details class="adv"><summary>무엇이 기억되고 무엇은 안 되나 (원문 기준)</summary><div class="table-wrap"><table class="kv"><thead><tr><th>저장하는 것</th><th>저장하지 않는 것</th></tr></thead><tbody><tr><td>사용자 취향, 환경 사실, 바로잡아 준 내용, 프로젝트 규칙, 끝낸 일, 분명히 부탁한 것</td><td>너무 뻔하거나 막연한 정보, 다시 찾기 쉬운 사실, 긴 코드·로그 같은 큰 자료, 그 세션에서만 쓰는 임시 정보, 이미 <code>SOUL.md</code>·<code>AGENTS.md</code> 에 있는 내용</td></tr></tbody></table></div><p>글자 수 한도를 넘는 저장은 조용히 버려지지 않고 오류로 돌아오며, Hermes 가 낡은 항목을 줄이거나 지워 자리를 만든 뒤 다시 저장합니다. 자세한 내용은 <a href="hermes-agent-guide.html#ch05-memory-targets">완전 가이드 5장 · 두 가지 기억</a>.</p></details>
+</div>
+<div data-step="2"><h4 id="pb3-s2">2단계 · 파일에 정말 적혔는지 확인하기</h4>
+<p>두 번째 터미널 창을 열고 아래 두 줄을 차례로 실행합니다. <code>cat</code> 은 파일 내용을 화면에 보여 주는 명령이고, <code>~</code> 는 내 홈 폴더를 뜻합니다.</p>
+<pre><code>cat ~/.hermes/memories/MEMORY.md
+cat ~/.hermes/memories/USER.md</code></pre>
+<p>뜻: 에이전트의 메모장과 사용자 프로필을 차례로 보여 줍니다. 취향은 보통 <code>USER.md</code> 쪽에 적힙니다.</p>
+<p><b>확인:</b> 둘 중 한 파일에 내가 말한 내용(예: metric units)이 한 줄로 보입니다.</p>
+<p>보이지 않는다면 Hermes 가 저장 도구를 쓰지 않고 말로만 답한 것입니다. 원문은 이럴 때 도구를 쓰라고 분명히 부탁하라고 합니다. 원문 예시는 아래와 같고, <code>save</code> 뒤를 내 내용으로 바꿔 보냅니다.</p>
+<pre><code>use the memory tool to save the vault path /srv/vault</code></pre>
+<p>뜻: "memory 도구를 써서 보관함 경로 /srv/vault 를 저장해 줘." 보낸 뒤 위의 <code>cat</code> 두 줄을 다시 실행해 확인합니다.</p>
+</div>
+<div data-step="3"><h4 id="pb3-s3">3단계 · 새 세션에서 기억하는지 확인하기</h4>
+<p>대화 창으로 돌아와 입력 칸에 슬래시 명령<span class="gl">(<code>/</code> 로 시작해 넣는 명령)</span> <code>/new</code> 를 넣어 새 세션을 시작합니다. 지금 대화를 닫는 명령이라, 정말 진행할지 확인을 물을 수 있습니다.</p>
+<pre><code>/new</code></pre>
+<p>새 세션에서 기억시킨 내용이 드러날 만한 질문을 하나 합니다. 단위를 기억시켰다면 거리나 무게를 묻는 식입니다. 이번에는 취향을 다시 알려 주지 않습니다.</p>
+<p><b>확인:</b> 다시 말하지 않았는데도 답에 내 취향이 반영돼 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 240" role="img" aria-label="지금 세션에서 저장한 기억은 파일에는 바로 적히지만, 새 세션이 시작될 때에야 읽힙니다.">
+<rect class="box s-accent" x="20" y="30" width="310" height="84" rx="12"/><text x="175" y="58" text-anchor="middle">지금 세션</text><text class="sub" x="175" y="80" text-anchor="middle">① 기억해 줘 → ② 파일에 바로 적음</text><text class="sub" x="175" y="100" text-anchor="middle">이 세션이 읽어 둔 내용은 그대로</text>
+<rect class="box s-green" x="390" y="30" width="310" height="84" rx="12"/><text x="545" y="58" text-anchor="middle">새 세션 ( /new )</text><text class="sub" x="545" y="80" text-anchor="middle">③ 시작할 때 파일을 새로 읽음</text><text class="sub" x="545" y="100" text-anchor="middle">방금 적은 줄이 이제 보임</text>
+<rect class="box s-amber" x="260" y="164" width="200" height="50" rx="10"/><text x="360" y="186" text-anchor="middle">USER.md · MEMORY.md</text><text class="sub" x="360" y="204" text-anchor="middle">기억 파일</text>
+<path class="line s-accent anim-flow" d="M175 114 V189 H260"/><path class="line s-green anim-flow" d="M460 189 H545 V114"/>
+<circle r="5" class="f-accent"><animateMotion dur="4s" repeatCount="indefinite" path="M175 114 V189 H545 V114"/></circle>
+</svg><figcaption>기억은 세션이 시작될 때 한 번 읽혀 고정됩니다. 그래서 방금 저장한 내용은 파일에는 있어도, 이미 열려 있던 세션에는 보이지 않습니다.</figcaption></figure>
+<div class="note"><b>창을 하나 더 띄우지 말고 /new</b><p>원문은 같은 Hermes 홈 폴더에 에이전트 두 개를 동시에 붙이지 말라고 합니다. 기억이 자동으로 적히기 때문에 서로의 메모가 뒤섞입니다. 두 번째 창은 <code>cat</code> 확인에만 쓰고, 새 세션은 대화 창에서 <code>/new</code> 로 엽니다.</p></div>
+</div>
+<div data-step="4"><h4 id="pb3-s4">4단계 · SOUL.md 에 기본 말투 적기</h4>
+<p>기억이 "사실과 취향"을 적는 공책이라면, <code>SOUL.md</code> 는 Hermes 가 <b>어떤 말투와 태도로 말할지</b>를 정하는 파일입니다. Hermes 는 이 파일이 없으면 기본 파일을 자동으로 만들어 두고, 이미 있는 내 파일은 덮어쓰지 않습니다. 먼저 지금 내용을 봅니다.</p>
+<pre><code>cat ~/.hermes/SOUL.md</code></pre>
+<p>뜻: 지금의 성격 파일 내용을 보여 줍니다. 이제 평소 쓰는 글 편집기로 이 파일을 열어 원하는 말투를 적고 저장합니다. 아래는 원문 예시에서 고른 줄입니다.</p>
+<pre><code># Personality
+
+## Style
+- Be direct without being cold
+- Prefer substance over filler
+- Admit uncertainty plainly
+- Keep explanations compact unless depth is useful
+
+## What to avoid
+- Sycophancy
+- Hype language
+- Overexplaining obvious things</code></pre>
+<p>뜻: [말투] 차갑지 않게, 그러나 돌려 말하지 않기 · 군말보다 알맹이 · 모르는 것은 모른다고 말하기 · 깊이가 필요할 때가 아니면 설명은 짧게. [피할 것] 아첨 · 과장된 표현 · 뻔한 것을 길게 설명하기.</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>SOUL.md 에 적을 것</th><th>적지 않을 것 (프로젝트 폴더의 <code>AGENTS.md</code> 로)</th></tr></thead><tbody><tr><td>어조, 말하는 방식, 얼마나 직설적일지, 피할 표현, 확실하지 않거나 의견이 다를 때의 태도</td><td>한 번뿐인 작업 지시, 파일 경로, 특정 프로젝트의 규칙, 잠깐 쓰는 작업 절차</td></tr></tbody></table></div>
+<p>원문의 구분법은 간단합니다. <b>어디서나 나를 따라와야 하면 SOUL.md</b>, 한 프로젝트에만 해당하면 AGENTS.md 입니다.</p>
+<p>저장한 뒤 대화 창에서 <code>/new</code> 로 새 세션을 열고 아무 질문이나 해 봅니다.</p>
+<p><b>확인:</b> <code>cat ~/.hermes/SOUL.md</code> 에 내가 쓴 줄이 보이고, 새 세션의 답이 적어 둔 말투에 가까워졌습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 250" role="img" aria-label="맨 아래 바탕은 SOUL.md, 그 위에 기억, 맨 위에 잠깐 덧씌우는 /personality 가 쌓여 Hermes 의 답을 만듭니다.">
+<rect class="box s-pink" x="40" y="20" width="400" height="56" rx="10" stroke-dasharray="6 4"/><text x="240" y="44" text-anchor="middle">/personality — 잠깐 덧씌우는 말투</text><text class="sub" x="240" y="62" text-anchor="middle">이번 대화의 분위기만 바꿈</text>
+<rect class="box s-green" x="40" y="92" width="400" height="56" rx="10"/><text x="240" y="116" text-anchor="middle">기억 — MEMORY.md · USER.md</text><text class="sub" x="240" y="134" text-anchor="middle">사실과 취향</text>
+<rect class="box s-accent" x="40" y="164" width="400" height="60" rx="10"/><text x="240" y="190" text-anchor="middle">SOUL.md — 기본 성격과 말투</text><text class="sub" x="240" y="208" text-anchor="middle">시스템 프롬프트의 맨 첫 자리 (바탕)</text>
+<path class="line s-accent anim-flow" d="M440 120 H520"/>
+<rect class="box s-amber anim-pulse" x="520" y="86" width="180" height="68" rx="12"/><text x="610" y="116" text-anchor="middle">Hermes 의 답</text><text class="sub" x="610" y="136" text-anchor="middle">세 층이 함께 반영됨</text>
+</svg><figcaption>SOUL.md 가 바탕이고 나머지가 그 위에 쌓입니다. 원문은 이 밖에도 도구 안내·스킬 안내·맥락 파일 등이 함께 들어간다고 적습니다.</figcaption></figure>
+<details class="adv"><summary>SOUL.md 가 읽히는 규칙</summary><ul><li>Hermes 는 <code>~/.hermes/SOUL.md</code>(정확히는 그 Hermes 의 홈 폴더 <code>$HERMES_HOME/SOUL.md</code>)만 읽습니다. 지금 작업 중인 폴더에 둔 <code>SOUL.md</code> 는 읽지 않습니다 — 프로젝트를 옮길 때마다 성격이 바뀌지 않게 하기 위해서입니다.</li><li>파일이 비어 있거나 읽을 수 없으면 Hermes 에 내장된 기본 성격으로 돌아갑니다.</li><li>내용은 보안 검사를 거치고, 너무 길면 잘린 뒤 그대로 들어갑니다. 성격·말투에 집중해 적습니다.</li></ul><p><a href="hermes-agent-guide.html#ch05-soul">완전 가이드 5장 · SOUL.md</a>.</p></details>
+</div>
+<div data-step="5"><h4 id="pb3-s5">5단계 · 잠깐만 다른 말투 쓰기 — /personality</h4>
+<p>기본 말투는 그대로 두고 이번 대화에서만 분위기를 바꾸고 싶을 때는 <code>/personality</code> 를 씁니다. SOUL.md 가 평소 목소리라면 이것은 잠깐 켜는 모드입니다.</p>
+<pre><code>/personality
+/personality concise
+/personality none</code></pre>
+<p>뜻: 첫 줄은 고를 수 있는 말투 목록 보기, 둘째 줄은 <code>concise</code>(짧고 요점만) 말투 켜기, 셋째 줄은 덧씌운 말투를 끄고 SOUL.md 의 기본으로 돌아가기입니다. 한 줄씩 넣어 봅니다.</p>
+<p><b>확인:</b> <code>/personality</code> 만 넣으면 목록에 <code>none</code> 과 함께 고를 수 있는 이름이 나오고 지금 켜진 것이 표시됩니다. <code>/personality none</code> 을 넣으면 다음 메시지부터 기본 말투로 돌아옵니다.</p>
+<details class="adv"><summary>기본으로 들어 있는 말투 14가지</summary><p><code>helpful</code>(친근한 도우미) · <code>concise</code>(짧게) · <code>technical</code>(자세하고 정확한 기술 전문가) · <code>creative</code>(틀 밖의 발상) · <code>teacher</code>(예시를 드는 참을성 있는 선생님) · <code>kawaii</code> · <code>catgirl</code> · <code>pirate</code>(해적 선장) · <code>shakespeare</code> · <code>surfer</code> · <code>noir</code>(탐정 소설풍) · <code>uwu</code> · <code>philosopher</code> · <code>hype</code>. 끌 때는 <code>none</code>·<code>default</code>·<code>neutral</code> 가운데 아무거나 씁니다. 나만의 말투를 설정 파일에 추가하는 방법은 <a href="hermes-agent-guide.html#ch05-personality">완전 가이드 5장 · 성격 바꾸기</a>.</p></details>
+</div></div>
+<h3 id="pb3-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>"기억했다"고 답했는데 새 세션에서 모름</td><td>2단계의 <code>cat</code> 으로 파일부터 봅니다. 줄이 없으면 저장이 일어나지 않은 것입니다. <code>use the memory tool to save …</code> 로 분명히 부탁하고 다시 확인합니다. 원문은 작은 로컬 모델(대략 30B 파라미터 미만)이나 도구 호출이 약한 모델에서 흔한 일이며, 계속되면 지시를 늘리기보다 더 강한 모델로 저장하라고 합니다.</td></tr>
+<tr><td>파일에는 있는데 지금 대화가 모름</td><td>기억은 세션 시작 때 한 번 읽힙니다. <code>/new</code> 로 새 세션을 연 뒤 다시 물어봅니다.</td></tr>
+<tr><td>파일이 비어 있거나 다른 내용임</td><td>기억은 프로필<span class="gl">(설정·기억·세션을 따로 쓰는 별도 Hermes 환경)</span>마다 따로입니다. <code>hermes -p work</code> 처럼 프로필을 지정해 썼다면 <code>~/.hermes/profiles/work/memories/</code> 를 봐야 합니다. <code>hermes profile list</code> 로 어떤 프로필이 있는지 확인합니다.</td></tr>
+<tr><td>저장이 대기 중인 것 같음</td><td>설정에서 <code>write_approval: true</code> 를 켰다면 저장 전에 내 허락이 필요합니다. 터미널 대화에서는 그 자리에서 묻고, 그 밖(메신저·백그라운드 검토)에서 생긴 저장은 대기 목록에 쌓여 승인 전에는 파일에 적히지 않습니다. <code>/memory pending</code> 으로 목록을 보고 <code>/memory approve all</code> 로 반영합니다.</td></tr>
+<tr><td>아무리 부탁해도 저장되지 않음</td><td>설정 <code>memory.memory_enabled: false</code> 이면 기억 도구가 아예 없습니다. <code>~/.hermes/config.yaml</code> 을 확인합니다. <code>.env</code> 에 적은 값은 인증 정보·설정일 뿐 기억이 아닙니다.</td></tr>
+<tr><td>SOUL.md 를 고쳤는데 말투가 그대로</td><td>고친 파일이 <code>~/.hermes/SOUL.md</code> 인지(작업 폴더의 것은 읽지 않음), 비어 있지 않은지 봅니다. <code>/personality</code> 로 켜 둔 말투가 있으면 <code>/personality none</code> 으로 끄고, <code>/new</code> 로 새 세션에서 확인합니다.</td></tr>
+</tbody></table></div>
+<div class="tip"><b>매번 필요한 위치·절차는 스킬이 더 맞습니다</b><p>원문은 반복 작업마다 필요한 위치 정보 같은 것은 기억보다 스킬에 두라고 권합니다. 스킬은 필요할 때만 읽히고, 2,200자 한도를 차지하지 않습니다. 스킬은 <a href="#pb4">실습 4</a>에서 다룹니다.</p></div>
+<h3 id="pb3-next">다음에 할 것</h3>
+<ul><li><a href="#pb4">실습 4</a> — 스킬을 찾아 설치하고 슬래시 명령으로 써 봅니다.</li><li>기억이 사라진 것 같은 문제가 계속되면 <a href="#pb10">실습 10</a>의 점검 순서를 따릅니다.</li><li>더 알고 싶다면: <a href="hermes-agent-guide.html#ch05-memory-what">5장 · 기억이란</a>, <a href="hermes-agent-guide.html#ch05-memory-forgot">5장 · 기억했다더니 잊었을 때</a>, <a href="hermes-agent-guide.html#ch05-soul">5장 · SOUL.md</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>기억은 <code>~/.hermes/memories/</code> 의 <code>MEMORY.md</code>(에이전트 메모)와 <code>USER.md</code>(나에 대한 것) 두 파일입니다.</li><li>"기억했다"는 말보다 파일을 믿습니다 — <code>cat</code> 으로 확인합니다.</li><li>저장한 기억은 새 세션부터 보입니다. <code>/new</code> 로 경계를 만듭니다.</li><li>기본 말투는 <code>~/.hermes/SOUL.md</code>, 잠깐 바꾸는 말투는 <code>/personality</code>, 끄기는 <code>/personality none</code>.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/features/memory · user-guide/features/personality · user-guide/security(슬래시 명령 확인 물음). 가이드 <a href="hermes-agent-guide.html#ch05-memory-what">5장 기억</a>·<a href="hermes-agent-guide.html#ch05-soul">5장 SOUL.md</a>. 1단계 문장은 원문의 요청 형식과 기억 예시를 합친 연습용 문장입니다.</p></section>
+<section class="chapter" id="pb4">
+<div class="ch-head"><div class="ch-no">SCENARIO 4</div><h2>스킬 찾아 설치하고 슬래시 명령으로 써 보기</h2><p class="lead">Skills Hub 에서 스킬 하나를 찾아 미리 본 뒤 설치하고, 대화 창에서 <code>/이름</code> 으로 불러 봅니다. 마지막에는 필요 없는 스킬을 지우는 것까지 해 봅니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>지금 가진 스킬을 물어보고, Skills Hub 에서 새 스킬을 찾습니다.</li><li>설치 전에 미리 보고, 설치한 뒤 목록으로 확인합니다.</li><li>설치한 스킬을 슬래시 명령으로 부르고, 필요 없으면 지웁니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb4-prep">준비물</a>을 확인한 뒤 <a href="#pb4-steps">따라 하기</a>를 순서대로 진행하세요. 설치가 막히거나 <code>/이름</code> 이 듣지 않으면 <a href="#pb4-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb4-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">실습 0</a>·<a href="#pb1">실습 1</a>을 마쳐 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에서 <code>hermes</code> 로 대화가 되는 상태.</li><li>인터넷 연결 — Skills Hub<span class="gl">(스킬을 찾아 설치하는 곳)</span>는 온라인 저장소에서 스킬을 가져옵니다.</li><li>스킬<span class="gl">(skill — 특정 일을 하는 방법을 적은 설명서. <code>SKILL.md</code> 라는 파일)</span>이 무엇인지 한 줄로만 알면 됩니다.</li></ul>
+<div class="note"><b>완료 기준</b><p>① <code>hermes skills list --source hub</code> 목록에 내가 설치한 스킬이 보이고, ② 대화 창에서 <code>/k8s</code> 처럼 스킬 이름을 슬래시 명령<span class="gl">(<code>/</code> 로 시작해 넣는 명령)</span>으로 넣었을 때 Hermes 가 무엇이 필요한지 되물으면 완료입니다.</p></div>
+<div class="note"><b>예시 스킬에 대해</b><p>이 실습은 원문이 예로 드는 <code>openai/skills/k8s</code> 를 그대로 씁니다. k8s(Kubernetes)는 서버 프로그램을 배포하는 도구라 직접 쓸 일이 없을 수 있지만, 여기서는 "찾기 → 설치 → 부르기"만 연습하므로 괜찮습니다. 2단계 목록에서 마음에 드는 다른 스킬로 바꿔도 됩니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="찾기, 미리 보기, 설치, 슬래시 명령으로 쓰기 네 단계입니다.">
+<rect class="box s-accent" x="20" y="30" width="155" height="90" rx="12"/><text x="97" y="65" text-anchor="middle">① 찾기</text><text class="sub" x="97" y="92" text-anchor="middle">browse · search</text>
+<path class="line s-accent anim-flow" d="M175 75 H195"/>
+<rect class="box s-accent" x="195" y="30" width="155" height="90" rx="12"/><text x="272" y="65" text-anchor="middle">② 미리 보기</text><text class="sub" x="272" y="92" text-anchor="middle">inspect</text>
+<path class="line s-accent anim-flow" d="M350 75 H370"/>
+<rect class="box s-amber" x="370" y="30" width="155" height="90" rx="12"/><text x="447" y="65" text-anchor="middle">③ 설치</text><text class="sub" x="447" y="92" text-anchor="middle">install · 보안 검사</text>
+<path class="line s-accent anim-flow" d="M525 75 H545"/>
+<rect class="box s-green" x="545" y="30" width="155" height="90" rx="12"/><text x="622" y="65" text-anchor="middle">④ 쓰기</text><text class="sub" x="622" y="92" text-anchor="middle">/스킬이름</text>
+</svg><figcaption>이 실습의 흐름 — 찾고, 미리 보고, 설치한 뒤, 대화 창에서 슬래시 명령으로 부릅니다.</figcaption></figure>
+<h3 id="pb4-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb4-s1">1단계 · 지금 가진 스킬 물어보기</h4>
+<p>Hermes Agent 는 설치할 때 기본 스킬 묶음을 <code>~/.hermes/skills/</code>(<code>~</code> 는 내 홈 폴더)에 넣어 둡니다. 무엇이 있는지 Hermes 에게 물어봅니다. 터미널에서 아래 한 줄을 실행합니다.</p>
+<pre><code>hermes chat --toolsets skills -q "What skills do you have?"</code></pre>
+<p>뜻: 스킬 툴셋<span class="gl">(toolset — 도구 꾸러미)</span>을 지정해 "어떤 스킬을 갖고 있어?"라고 한 번 묻는 명령입니다. <code>-q</code> 는 질문 하나만 하고 끝낸다는 뜻입니다.</p>
+<p><b>확인:</b> 답에 스킬 이름이 하나 이상 나옵니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 200" role="img" aria-label="스킬은 세 단계로 읽힙니다. 평소에는 목록만, 필요할 때 본문, 더 필요할 때 참고 파일.">
+<rect class="box s-green" x="20" y="100" width="210" height="70" rx="12"/><text x="125" y="130" text-anchor="middle">0단계 · 목록</text><text class="sub" x="125" y="152" text-anchor="middle">이름 · 설명만 (약 3천 토큰)</text>
+<path class="line s-accent anim-flow" d="M230 135 H243 V95 H255"/>
+<rect class="box s-accent" x="255" y="60" width="210" height="70" rx="12"/><text x="360" y="90" text-anchor="middle">1단계 · 본문</text><text class="sub" x="360" y="112" text-anchor="middle">필요할 때 SKILL.md 전체</text>
+<path class="line s-accent anim-flow" d="M465 95 H478 V55 H490"/>
+<rect class="box s-amber" x="490" y="20" width="210" height="70" rx="12"/><text x="595" y="50" text-anchor="middle">2단계 · 참고 파일</text><text class="sub" x="595" y="72" text-anchor="middle">더 필요할 때 한 파일씩</text>
+<text class="sub" x="20" y="60">평소에는 맨 아래 목록만 읽습니다.</text><text class="sub" x="20" y="78">일이 스킬과 맞을 때만 위로 올라갑니다.</text>
+</svg><figcaption>스킬은 필요한 만큼만 꺼내 읽습니다. 그래서 스킬을 많이 설치해도 매 요청이 무거워지지 않습니다. 토큰은 AI 가 읽고 쓰는 글의 양을 세는 단위입니다.</figcaption></figure>
+</div>
+<div data-step="2"><h4 id="pb4-s2">2단계 · Skills Hub 에서 찾기</h4>
+<p>더 필요한 스킬은 Skills Hub 에서 찾습니다. 전체를 둘러보거나 낱말로 검색합니다.</p>
+<pre><code>hermes skills browse
+hermes skills search kubernetes</code></pre>
+<p>뜻: 첫 줄은 Hub 의 스킬 전체 둘러보기(공식 스킬이 먼저 나옴), 둘째 줄은 <code>kubernetes</code> 라는 낱말로 검색하기입니다. 검색어는 찾고 싶은 일로 바꿉니다.</p>
+<p>목록에서 볼 것은 설치할 때 그대로 쓰는 이름입니다. 원문은 이를 slug 라고 부르며 "출처/경로" 모양입니다. <code>openai/skills/k8s</code> 는 OpenAI 의 스킬 모음에 있는 <code>k8s</code> 스킬이라는 뜻입니다.</p>
+<p><b>확인:</b> 목록에서 설치하고 싶은 스킬의 slug 를 하나 골라 적어 두었습니다(이 실습의 예: <code>openai/skills/k8s</code>).</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="slug openai/skills/k8s 의 앞부분은 출처, 끝은 스킬 이름이며 설치 뒤 /k8s 슬래시 명령이 됩니다.">
+<text x="40" y="34">hermes skills install</text>
+<rect class="box s-accent" x="40" y="50" width="250" height="64" rx="10"/><text x="165" y="78" text-anchor="middle">openai/skills</text><text class="sub" x="165" y="98" text-anchor="middle">출처 — OpenAI 의 스킬 모음</text>
+<text x="300" y="88" text-anchor="middle">/</text>
+<rect class="box s-green" x="310" y="50" width="150" height="64" rx="10"/><text x="385" y="78" text-anchor="middle">k8s</text><text class="sub" x="385" y="98" text-anchor="middle">스킬 이름</text>
+<path class="line s-green anim-flow" d="M385 114 V172 H470"/>
+<circle r="5" class="f-green"><animateMotion dur="3s" repeatCount="indefinite" path="M385 114 V172 H470"/></circle>
+<rect class="box s-green anim-pulse" x="470" y="146" width="230" height="52" rx="10"/><text x="585" y="168" text-anchor="middle">/k8s</text><text class="sub" x="585" y="186" text-anchor="middle">설치하면 생기는 슬래시 명령</text>
+<text class="sub" x="40" y="150">slug = 설치할 때 쓰는 "출처/경로" 이름</text><text class="sub" x="40" y="168">browse 목록에 정확한 slug 가 나옵니다.</text>
+</svg><figcaption>slug 의 마지막 부분이 스킬 이름이고, 설치하면 그 이름이 곧 슬래시 명령이 됩니다.</figcaption></figure>
+</div>
+<div data-step="3"><h4 id="pb4-s3">3단계 · 설치하기 전에 미리 보기</h4>
+<p>스킬은 Hermes 가 따라 할 지시문이므로, 설치 전에 어떤 스킬인지 먼저 봅니다.</p>
+<pre><code>hermes skills inspect openai/skills/k8s</code></pre>
+<p>뜻: 설치하지 않고 이 스킬의 정보를 미리 봅니다. 원문에 따르면 가능한 경우 저장소 주소, 설치 명령, 주간 설치 수, 원 저장소의 보안 점검 상태 같은 정보도 함께 보여 줍니다.</p>
+<p><b>확인:</b> 스킬이 무슨 일을 하는지, 어디서 온 것인지 읽고 내가 찾던 것이 맞는지 판단했습니다.</p>
+</div>
+<div data-step="4"><h4 id="pb4-s4">4단계 · 설치하고 목록으로 확인하기</h4>
+<pre><code>hermes skills install openai/skills/k8s</code></pre>
+<p>뜻: 이 스킬을 설치합니다. 설치 전에 보안 검사가 자동으로 먼저 돌아갑니다. 설치된 스킬은 <code>~/.hermes/skills/</code> 에 들어갑니다.</p>
+<pre><code>hermes skills list --source hub</code></pre>
+<p>뜻: Hub 에서 설치한 스킬 목록을 보여 줍니다.</p>
+<p><b>확인:</b> 목록에 방금 설치한 스킬(<code>k8s</code>)이 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="Hub 에서 받은 스킬은 보안 검사를 거쳐 통과하면 설치되고, 위험 판정이면 막힙니다.">
+<rect class="box s-accent" x="20" y="70" width="160" height="80" rx="12"/><text x="100" y="104" text-anchor="middle">Skills Hub</text><text class="sub" x="100" y="126" text-anchor="middle">받아 온 스킬</text>
+<path class="line s-accent anim-flow" d="M180 110 H240"/>
+<rect class="box s-amber anim-pulse" x="240" y="56" width="200" height="108" rx="12"/><text x="340" y="92" text-anchor="middle">보안 검사</text><text class="sub" x="340" y="116" text-anchor="middle">정보 유출 · 프롬프트 주입</text><text class="sub" x="340" y="134" text-anchor="middle">파괴적 명령 등을 살핌</text>
+<path class="line s-green anim-flow" d="M440 92 H470 V54 H500"/><path class="line s-red" d="M440 128 H470 V166 H500"/>
+<rect class="box s-green" x="500" y="24" width="200" height="60" rx="10"/><text x="600" y="50" text-anchor="middle">통과 → 설치</text><text class="sub" x="600" y="68" text-anchor="middle">~/.hermes/skills/ 에 저장</text>
+<rect class="box s-red" x="500" y="136" width="200" height="60" rx="10"/><text x="600" y="162" text-anchor="middle">위험 판정 → 막힘</text><text class="sub" x="600" y="180" text-anchor="middle">--force 로도 넘을 수 없음</text>
+</svg><figcaption>Hub 에서 설치하는 모든 스킬은 보안 검사를 거칩니다. 프롬프트 주입은 글 속에 몰래 숨긴 지시로 AI 를 속이는 수법입니다.</figcaption></figure>
+<details class="adv"><summary>출처에 따라 믿는 정도가 다릅니다 (신뢰 단계)</summary><div class="table-wrap"><table class="kv"><thead><tr><th>단계</th><th>어디서 온 스킬</th><th>다루는 방식</th></tr></thead><tbody><tr><td><code>builtin</code></td><td>Hermes 에 기본으로 들어 있는 것</td><td>항상 신뢰</td></tr><tr><td><code>official</code></td><td>Hermes 가 제공하는 선택 스킬(<code>official/…</code>)</td><td>기본 스킬처럼 신뢰, 외부 스킬 경고 없음</td></tr><tr><td><code>trusted</code></td><td><code>openai/skills</code>, <code>anthropics/skills</code> 등 신뢰하는 저장소</td><td>커뮤니티 출처보다 너그러운 기준</td></tr><tr><td><code>community</code></td><td>그 밖의 모든 곳(skills.sh, 개인 GitHub 저장소 등)</td><td>위험하지 않은 지적은 <code>--force</code> 로 넘길 수 있고, 위험 판정은 계속 막힘</td></tr></tbody></table></div><p><a href="hermes-agent-guide.html#ch06-safety">완전 가이드 6장 · 스킬 안전</a>.</p></details>
+</div>
+<div data-step="5"><h4 id="pb4-s5">5단계 · 슬래시 명령으로 불러 쓰기</h4>
+<p>설치한 스킬은 모두 자동으로 슬래시 명령이 됩니다. <code>hermes</code> 로 대화를 시작하고 입력 칸에 스킬 이름을 넣습니다.</p>
+<pre><code>/k8s</code></pre>
+<p>뜻: 이름만 넣으면 스킬을 불러온 뒤 무엇이 필요한지 Hermes 가 묻습니다. 연습에서는 여기까지만 합니다.</p>
+<p><b>확인:</b> Hermes 가 이 스킬로 무엇을 도울지 되묻습니다.</p>
+<p>실제로 일을 시킬 때는 이름 뒤에 요청을 붙입니다. 원문 예시는 아래와 같습니다(실제 Kubernetes 환경이 있을 때만 의미가 있으므로 따라 하지 않아도 됩니다).</p>
+<pre><code>/k8s deploy the staging manifest</code></pre>
+<p>뜻: "k8s 스킬로, 시험용(staging) 환경의 배포 설정을 배포해 줘."</p>
+<div class="tip"><b>부르지 않아도 알아서 씁니다</b><p>원문에 따르면 평소 대화에서 일이 기본 스킬과 맞으면 Hermes 가 스스로 알맞은 스킬을 골라 씁니다. 슬래시 명령은 "이 스킬로 해 줘"라고 직접 지정하고 싶을 때 씁니다. 그래서 스킬을 미리 다 설치해 둘 필요는 없습니다.</p></div>
+<details class="adv"><summary>대화 창을 열어 둔 채 설치했다면 · 여러 스킬을 한 번에</summary><ul><li>대화가 열려 있는 동안 스킬을 설치하면, 다음에 보내는 메시지에 새 스킬 이름과 설명을 알리는 짧은 쪽지가 함께 전달됩니다. <code>/스킬이름</code> 명령 목록을 새로 고치려면 대화 창에 <code>/reload-skills</code> 를 넣습니다.</li><li>메시지 맨 앞에 <code>/스킬</code> 을 여러 개(최대 5개) 이어 쓰면 모두 불러옵니다. 설치된 스킬이 아닌 첫 낱말부터는 지시문으로 읽습니다. 원문 예: <code>/github-pr-workflow /test-driven-development fix issue #123 and open a PR</code></li><li>대화 창 안에서도 <code>/skills browse</code>, <code>/skills search …</code>, <code>/skills inspect …</code>, <code>/skills install …</code>, <code>/skills list</code> 처럼 같은 명령을 쓸 수 있습니다.</li></ul><p><a href="hermes-agent-guide.html#ch06-use">완전 가이드 6장 · 스킬 쓰기</a>.</p></details>
+</div>
+<div data-step="6"><h4 id="pb4-s6">6단계 · 필요 없으면 지우기</h4>
+<p>연습용으로 설치한 스킬을 계속 쓸 생각이 없다면 지웁니다. 계속 쓸 것이라면 이 단계는 건너뜁니다.</p>
+<pre><code>hermes skills uninstall k8s</code></pre>
+<p>뜻: Hub 에서 설치한 <code>k8s</code> 스킬을 지웁니다. 지울 때는 slug 전체가 아니라 스킬 이름만 씁니다.</p>
+<p><b>확인:</b> <code>hermes skills list --source hub</code> 를 다시 실행하면 목록에서 사라져 있습니다.</p>
+<details class="adv"><summary>설치한 스킬을 최신으로 유지하기</summary><pre><code>hermes skills check
+hermes skills update</code></pre><p>뜻: 첫 줄은 설치한 Hub 스킬 가운데 원본이 바뀐 것이 있는지 알려 주고, 둘째 줄은 바뀐 것만 다시 설치합니다. 내가 직접 고친 스킬은 덮어쓰지 않도록 건너뜁니다.</p></details>
+</div></div>
+<h3 id="pb4-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>설치가 보안 검사에서 막힘</td><td>처음이라면 그 스킬은 두고 다른 스킬을 고릅니다. 원문은 외부 스킬을 직접 검토한 뒤에만 <code>--force</code> 를 붙여 경고 수준의 차단을 넘기라고 하며, 위험(dangerous) 판정은 <code>--force</code> 로도 넘을 수 없습니다.</td></tr>
+<tr><td>검색·설치 중 요청 한도(rate limit) 오류</td><td>Hub 는 GitHub 를 거치는데, 로그인하지 않은 사용은 한 시간에 60번까지입니다. 잠시 뒤 다시 하거나, <code>~/.hermes/.env</code>(비밀 값을 두는 설정 파일)에 <code>GITHUB_TOKEN</code> 을 넣으면 한 시간 5,000번으로 늘어납니다.</td></tr>
+<tr><td>검색 결과에 원하는 것이 없음</td><td>검색어를 바꾸거나 줄입니다. <code>hermes skills browse --source official</code> 로 공식 선택 스킬만 보거나, <code>hermes skills search react --source skills-sh</code> 처럼 <code>--source</code> 로 찾을 곳을 지정합니다.</td></tr>
+<tr><td><code>/k8s</code> 를 넣어도 스킬이 불리지 않음</td><td><code>hermes skills list --source hub</code> 로 설치됐는지, 이름이 정확한지 봅니다. 대화를 열어 둔 채 설치했다면 <code>/reload-skills</code> 를 넣고 다시 해 봅니다.</td></tr>
+<tr><td>웹사이트의 <b>Install in Hermes</b> 버튼이 듣지 않음</td><td>이 버튼은 Hermes Desktop 앱을 여는 방식이며 최신 Desktop 이 필요합니다. 앱이 없거나 링크를 알아보지 못하면, 원문 안내대로 카드를 펼쳐 CLI 설치 명령을 복사해 터미널에 넣습니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb4-next">다음에 할 것</h3>
+<ul><li><a href="#pb5">실습 5</a> — Hermes 가 파일을 잘못 고쳤을 때 되돌리는 법을 연습합니다.</li><li>반복하는 내 일을 스킬로 만들고 싶다면 <a href="hermes-agent-guide.html#ch06-learn">6장 · 스킬 배우게 하기(/learn)</a>를 봅니다.</li><li>더 알고 싶다면: <a href="hermes-agent-guide.html#ch06-what">6장 · 스킬이란</a>, <a href="hermes-agent-guide.html#ch06-hub">6장 · Skills Hub</a>, <a href="hermes-agent-guide.html#ch06-disclosure">6장 · 필요한 만큼만 읽기</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>찾기 <code>hermes skills browse</code> · <code>search</code> → 미리 보기 <code>inspect</code> → 설치 <code>install</code> → 확인 <code>list --source hub</code>.</li><li>설치할 때는 slug(<code>openai/skills/k8s</code>), 부를 때와 지울 때는 스킬 이름(<code>/k8s</code>, <code>uninstall k8s</code>)을 씁니다.</li><li>Hub 스킬은 모두 보안 검사를 거치고, 위험 판정은 <code>--force</code> 로도 설치되지 않습니다.</li><li>스킬은 목록만 먼저 읽히고 본문은 필요할 때 읽힙니다. 미리 다 설치할 필요가 없습니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/features/skills · getting-started/quickstart(Skills). 가이드 <a href="hermes-agent-guide.html#ch06-use">6장 스킬 쓰기</a>·<a href="hermes-agent-guide.html#ch06-hub">6장 Skills Hub</a>. 명령과 예시 스킬(<code>openai/skills/k8s</code>)은 원문 그대로입니다.</p></section>
+<section class="chapter" id="pb5">
+<div class="ch-head"><div class="ch-no">SCENARIO 5</div><h2>실수 되돌리기 — 체크포인트 확인하고 /rollback</h2><p class="lead">Hermes Agent 가 파일을 바꾸기 직전에 자동으로 찍어 두는 체크포인트를 켜고, 연습용 파일을 일부러 고치게 한 뒤 <code>/rollback</code> 으로 되돌려 봅니다. 위험한 명령 앞에서 뜨는 승인 물음을 읽는 법도 함께 익힙니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>체크포인트를 켠 채 대화를 시작합니다(기본은 꺼져 있습니다).</li><li><code>/rollback</code> 으로 목록을 보고, 차이를 미리 본 뒤, 원하는 시점으로 되돌립니다.</li><li>위험한 명령의 승인 물음에서 네 가지 답을 구분합니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb5-prep">준비물</a>에서 연습용 폴더 조건을 꼭 확인한 뒤 <a href="#pb5-steps">따라 하기</a>를 진행하세요. <code>/rollback</code> 목록이 비어 있으면 <a href="#pb5-stuck">막히면</a>의 첫 줄을 봅니다.</p></div>
+<h3 id="pb5-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">실습 0</a>·<a href="#pb1">실습 1</a>을 마쳐 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에서 <code>hermes</code> 로 대화가 되는 상태.</li><li><b>연습용 폴더</b> — 내 홈 폴더 <b>아래에 따로 만든</b> 폴더여야 합니다. 홈 폴더 자체나 컴퓨터 맨 위 폴더(<code>/</code>)에서는 범위가 너무 넓어 체크포인트를 찍지 않습니다. 중요한 파일이 없는 빈 폴더를 씁니다.</li><li>git 이 설치돼 있을 것 — 체크포인트는 git 이라는 버전 관리 프로그램으로 저장되며, 없으면 체크포인트가 조용히 꺼집니다. 터미널에 <code>git --version</code> 을 넣어 버전이 나오면 설치된 것입니다.</li><li>터미널 백엔드<span class="gl">(에이전트의 명령이 실제로 실행되는 곳)</span>를 Docker 같은 컨테이너로 바꿔 두지 않은 상태. 바꿨다면 <a href="#pb5-stuck">막히면</a>을 먼저 봅니다.</li></ul>
+<div class="note"><b>완료 기준</b><p><code>/rollback</code> 목록에서 체크포인트<span class="gl">(checkpoint — 파일을 바꾸기 전에 찍어 두는 자동 스냅샷)</span>를 확인하고, <code>/rollback 1</code> 로 되돌린 뒤 연습 파일이 고치기 전 내용으로 돌아온 것을 직접 확인하면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 160" role="img" aria-label="체크포인트 켜고 시작, 파일 변경, 목록과 미리 보기, 되돌리기 네 단계입니다.">
+<rect class="box s-accent" x="20" y="30" width="155" height="90" rx="12"/><text x="97" y="65" text-anchor="middle">① 켜고 시작</text><text class="sub" x="97" y="92" text-anchor="middle">--checkpoints</text>
+<path class="line s-accent anim-flow" d="M175 75 H195"/>
+<rect class="box s-amber" x="195" y="30" width="155" height="90" rx="12"/><text x="272" y="65" text-anchor="middle">② 파일 변경</text><text class="sub" x="272" y="92" text-anchor="middle">직전에 자동 스냅샷</text>
+<path class="line s-accent anim-flow" d="M350 75 H370"/>
+<rect class="box s-accent" x="370" y="30" width="155" height="90" rx="12"/><text x="447" y="65" text-anchor="middle">③ 목록 · 미리 보기</text><text class="sub" x="447" y="92" text-anchor="middle">/rollback · diff</text>
+<path class="line s-accent anim-flow" d="M525 75 H545"/>
+<rect class="box s-green" x="545" y="30" width="155" height="90" rx="12"/><text x="622" y="65" text-anchor="middle">④ 되돌리기</text><text class="sub" x="622" y="92" text-anchor="middle">/rollback 1</text>
+</svg><figcaption>이 실습의 흐름 — 체크포인트를 켜 두면 Hermes 가 파일을 바꾸기 직전마다 스냅샷이 남고, 나중에 그 시점으로 돌아갈 수 있습니다.</figcaption></figure>
+<div class="eli5"><b>쉽게 말하면</b><p>체크포인트는 게임의 자동 저장과 같습니다. Hermes 가 파일에 손대기 직전에 "지금 상태"를 사진처럼 찍어 두고, 결과가 마음에 들지 않으면 그 사진의 상태로 돌아갑니다.</p></div>
+<h3 id="pb5-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb5-s1">1단계 · 연습용 폴더에서 체크포인트를 켜고 시작하기</h4>
+<p>터미널에서 아래 세 줄을 차례로 실행합니다. 폴더 이름 <code>hermes-practice</code> 는 예시이며, 이미 쓰는 연습용 폴더가 있다면 그 폴더로 이동해도 됩니다.</p>
+<pre><code>mkdir ~/hermes-practice
+cd ~/hermes-practice
+hermes chat --checkpoints</code></pre>
+<p>뜻: 홈 폴더(<code>~</code>) 아래에 연습용 폴더를 만들고, 그 폴더로 이동한 뒤, 체크포인트를 켠 채 Hermes 와 대화를 시작합니다. <code>--checkpoints</code> 는 이번 세션<span class="gl">(대화 한 묶음)</span>에만 적용됩니다.</p>
+<p>체크포인트는 기본으로 꺼져 있습니다. 원문은 대부분의 사용자가 <code>/rollback</code> 을 쓰지 않고 스냅샷이 저장 공간을 차지하기 때문에, 필요할 때만 켜도록 했다고 설명합니다.</p>
+<p><b>확인:</b> 환영 화면과 입력 칸이 나타나 대화를 시작할 수 있습니다.</p>
+<details class="adv"><summary>매번 옵션을 붙이지 않고 항상 켜 두려면</summary><p>설정 파일 <code>~/.hermes/config.yaml</code> 에 아래를 적습니다.</p><pre><code>checkpoints:
+  enabled: true</code></pre><p>스냅샷은 <code>~/.hermes/checkpoints/store/</code> 한곳에 따로 보관되며, 내 프로젝트의 <code>.git</code> 폴더는 건드리지 않습니다. 프로젝트마다 최대 20개, 전체 500MB 까지 보관하고 오래된 것은 자동으로 정리됩니다. 설정값은 <a href="hermes-agent-guide.html#ch09-checkpoints">완전 가이드 9장 · 체크포인트</a>.</p></details>
+</div>
+<div data-step="2"><h4 id="pb5-s2">2단계 · 파일을 만들게 하고, 이어서 고치게 하기</h4>
+<p>되돌릴 거리를 만듭니다. 아래 두 문장을 <b>한 번에 하나씩</b> 보냅니다. 첫 번째 답이 끝난 뒤에 두 번째를 보냅니다. (원문에 정해진 문장은 없습니다 — 파일을 만들고, 그다음 고치게 하는 연습용 예시입니다.)</p>
+<pre><code>notes.md 파일을 만들고 "첫 번째 줄"이라고 써 줘.</code></pre>
+<pre><code>notes.md 의 내용을 "바뀐 줄"로 바꿔 줘.</code></pre>
+<p>두 번에 나눠 보내는 이유가 있습니다. 체크포인트는 한 차례(내가 한 번 말하고 Hermes 가 답을 마칠 때까지)에 폴더당 최대 하나만 찍힙니다. 나눠 보내야 "만들기 직전"과 "고치기 직전" 두 개가 남습니다.</p>
+<p><b>확인:</b> 다른 터미널 창에서 <code>cat ~/hermes-practice/notes.md</code>(파일 내용을 보여 주는 명령)를 실행하면 "바뀐 줄"이 보입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="빈 폴더에서 파일이 생기고 고쳐지는 사이마다 체크포인트가 찍히고, /rollback 1 은 고치기 직전으로 돌아갑니다.">
+<rect class="box" x="40" y="36" width="160" height="58" rx="10"/><text x="120" y="60" text-anchor="middle">빈 폴더</text><text class="sub" x="120" y="80" text-anchor="middle">시작</text>
+<path class="line" d="M200 65 H280"/>
+<rect class="box s-accent" x="280" y="36" width="160" height="58" rx="10"/><text x="360" y="60" text-anchor="middle">notes.md 생김</text><text class="sub" x="360" y="80" text-anchor="middle">내용: 첫 번째 줄</text>
+<path class="line" d="M440 65 H520"/>
+<rect class="box s-amber" x="520" y="36" width="160" height="58" rx="10"/><text x="600" y="60" text-anchor="middle">notes.md 고쳐짐</text><text class="sub" x="600" y="80" text-anchor="middle">내용: 바뀐 줄</text>
+<circle class="f-amber anim-pulse" cx="240" cy="65" r="8"/><text x="240" y="116" text-anchor="middle">체크포인트 2</text><text class="sub" x="240" y="132" text-anchor="middle">만들기 직전</text>
+<circle class="f-amber anim-pulse" cx="480" cy="65" r="8"/><text x="480" y="116" text-anchor="middle">체크포인트 1</text><text class="sub" x="480" y="132" text-anchor="middle">고치기 직전</text>
+<path class="line s-green anim-flow" d="M600 94 V168 H360 V94"/>
+<circle r="5" class="f-green"><animateMotion dur="3.5s" repeatCount="indefinite" path="M600 94 V168 H360 V94"/></circle>
+<text x="480" y="192" text-anchor="middle">/rollback 1 — 고치기 직전으로 돌아감</text>
+</svg><figcaption>주황 점이 체크포인트가 찍히는 순간입니다. 번호는 최근 것이 1번입니다(원문 예시 기준).</figcaption></figure>
+<details class="adv"><summary>어떤 때 체크포인트가 찍히나</summary><ul><li>파일 도구로 파일을 쓰거나(<code>write_file</code>) 일부를 고치기(<code>patch</code>) 직전.</li><li>파일을 지우거나 덮어쓸 수 있는 터미널 명령 직전 — <code>rm</code>, <code>rmdir</code>, <code>cp</code>, <code>install</code>, <code>mv</code>, <code>sed -i</code>, <code>truncate</code>, <code>dd</code>, <code>shred</code>, 출력 덮어쓰기(<code>&gt;</code>), <code>git reset</code>/<code>clean</code>/<code>checkout</code>.</li><li>지난 스냅샷 뒤로 바뀐 것이 없으면 찍지 않습니다.</li></ul></details>
+</div>
+<div data-step="3"><h4 id="pb5-s3">3단계 · /rollback 으로 체크포인트 목록 보기</h4>
+<p>대화 입력 칸에 슬래시 명령<span class="gl">(<code>/</code> 로 시작해 넣는 명령)</span>을 넣습니다.</p>
+<pre><code>/rollback</code></pre>
+<p>뜻: 지금 폴더의 체크포인트 목록을 변경 통계와 함께 보여 줍니다. 아직 아무것도 되돌리지 않습니다. 원문의 예시 출력은 아래와 같은 모양입니다(앞머리 그림 문자는 생략).</p>
+<pre><code>Checkpoints for /path/to/project:
+  1. 4270a8c  2026-03-16 04:36  before patch  (1 file, +1/-0)
+  2. eaf4c1f  2026-03-16 04:35  before write_file
+  3. b3f9d2e  2026-03-16 04:34  before terminal: sed -i s/old/new/ config.py  (1 file, +1/-1)</code></pre>
+<p><b>확인:</b> 번호가 붙은 줄이 하나 이상 보이고, 줄마다 <code>before write_file</code>·<code>before patch</code> 처럼 무엇을 하기 직전인지 적혀 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="목록 한 줄은 번호, 식별 코드, 찍힌 시각, 무엇을 하기 직전인지, 바뀐 파일과 줄 수로 이루어집니다.">
+<rect class="box s-accent anim-pulse" x="20" y="30" width="60" height="50" rx="8"/><text x="50" y="60" text-anchor="middle">1.</text><text class="sub" x="50" y="104" text-anchor="middle">번호</text><text class="sub" x="50" y="120" text-anchor="middle">되돌릴 때 씀</text>
+<rect class="box" x="90" y="30" width="110" height="50" rx="8"/><text x="145" y="60" text-anchor="middle">4270a8c</text><text class="sub" x="145" y="104" text-anchor="middle">식별 코드</text>
+<rect class="box" x="210" y="30" width="170" height="50" rx="8"/><text x="295" y="60" text-anchor="middle">2026-03-16 04:36</text><text class="sub" x="295" y="104" text-anchor="middle">찍힌 시각</text>
+<rect class="box s-amber" x="390" y="30" width="150" height="50" rx="8"/><text x="465" y="60" text-anchor="middle">before patch</text><text class="sub" x="465" y="104" text-anchor="middle">무엇을 하기 직전인지</text><text class="sub" x="465" y="120" text-anchor="middle">(여기서는 고치기 직전)</text>
+<rect class="box" x="550" y="30" width="150" height="50" rx="8"/><text x="625" y="60" text-anchor="middle">(1 file, +1/-0)</text><text class="sub" x="625" y="104" text-anchor="middle">바뀐 파일 수</text><text class="sub" x="625" y="120" text-anchor="middle">더한 줄 / 뺀 줄</text>
+</svg><figcaption>목록 한 줄 읽는 법. 되돌릴 때는 맨 앞 번호만 쓰면 됩니다.</figcaption></figure>
+</div>
+<div data-step="4"><h4 id="pb5-s4">4단계 · 되돌리기 전에 차이 미리 보기</h4>
+<p>원문은 되돌리기 전에 먼저 미리 보라고 권합니다. 어느 체크포인트가 맞는지 고르는 데 도움이 됩니다.</p>
+<pre><code>/rollback diff 1</code></pre>
+<p>뜻: 체크포인트 1 과 지금 상태 사이에 무엇이 달라졌는지 보여 줍니다. 바뀐 파일 요약이 먼저 나오고 실제로 달라진 줄이 이어집니다. 이 명령도 아무것도 바꾸지 않습니다.</p>
+<p><b>확인:</b> 차이에 <code>notes.md</code> 가 보이고, 그것이 내가 되돌리려는 변경이 맞습니다.</p>
+</div>
+<div data-step="5"><h4 id="pb5-s5">5단계 · /rollback 1 로 되돌리기</h4>
+<pre><code>/rollback 1</code></pre>
+<p>뜻: 체크포인트 1 의 상태로 파일을 되돌립니다. 원문에 따르면 Hermes 는 이때 ① 그 체크포인트가 있는지 확인하고, ② <b>되돌리기 직전의 지금 상태도 스냅샷으로 남기고</b>(되돌린 것을 다시 되돌릴 수 있게), ③ 파일을 복원하고, ④ 대화의 마지막 차례도 함께 취소해 Hermes 가 아는 내용과 파일 상태를 맞춥니다.</p>
+<p><b>확인:</b> 다른 터미널 창에서 <code>cat ~/hermes-practice/notes.md</code> 를 다시 실행하면 "첫 번째 줄"로 돌아와 있습니다. 원문 예시에서는 화면에 <code>Restored to checkpoint …</code> 로 시작하는 줄이 나옵니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 210" role="img" aria-label="/rollback 은 Hermes 가 쓴 파일만 되돌리고 내가 손으로 고친 파일은 그대로 둡니다. --all 을 붙이면 함께 되돌립니다.">
+<rect class="box s-accent" x="20" y="75" width="160" height="60" rx="12"/><text x="100" y="110" text-anchor="middle">/rollback 1</text>
+<path class="line s-green anim-flow" d="M180 95 H220 V55 H260"/><path class="line s-amber" d="M180 115 H220 V155 H260"/>
+<rect class="box s-green" x="260" y="20" width="440" height="70" rx="12"/><text x="480" y="50" text-anchor="middle">Hermes 가 쓴 파일</text><text class="sub" x="480" y="72" text-anchor="middle">체크포인트 때의 내용으로 되돌림</text>
+<rect class="box s-amber" x="260" y="120" width="440" height="70" rx="12"/><text x="480" y="150" text-anchor="middle">그 뒤에 내가 손으로 고친 파일</text><text class="sub" x="480" y="172" text-anchor="middle">그대로 둠 — 함께 되돌리려면 /rollback 1 --all</text>
+</svg><figcaption>기본 동작은 Hermes 가 바꾼 것만 되돌리는 것입니다. 건너뛴 파일은 화면에 <code>Kept your hand-edits: …</code> 줄로 알려 줍니다.</figcaption></figure>
+<details class="adv"><summary>한 파일만 되돌리기 · 전부 되돌리기 · /undo 와의 차이</summary><div class="table-wrap"><table class="kv"><thead><tr><th>명령</th><th>하는 일</th></tr></thead><tbody><tr><td><code>/rollback 1 src/broken_file.py</code></td><td>체크포인트 1 에서 그 파일 하나만 되돌립니다. 폴더의 나머지는 그대로입니다.</td></tr><tr><td><code>/rollback 1 --all</code></td><td>내가 손으로 고친 것까지 모두 덮어써 되돌립니다.</td></tr><tr><td><code>/undo</code></td><td>대화만 되감습니다. 파일은 건드리지 않습니다. 체크포인트가 켜져 있으면 되감은 차례에서 바뀐 파일 이름을 알려 주고 <code>/rollback</code> 을 안내합니다.</td></tr></tbody></table></div><p><a href="hermes-agent-guide.html#ch09-rollback">완전 가이드 9장 · 되돌리기</a> · <a href="hermes-agent-guide.html#ch09-rollback-diff">9장 · 미리 보기</a>.</p></details>
+</div>
+<div data-step="6"><h4 id="pb5-s6">6단계 · 승인 물음이 뜨면 — 네 가지 답 읽기</h4>
+<p>체크포인트가 "일이 벌어진 뒤"의 안전망이라면, 승인<span class="gl">(approval — 위험한 명령을 실행하기 전에 나에게 묻는 것)</span>은 "벌어지기 전"의 안전망입니다. Hermes 는 명령을 실행하기 전에 위험한 유형(폴더째 지우기 등)인지 살피고, 해당하면 실행 전에 묻습니다. 이 단계는 일부러 띄우지 않고 읽는 법만 익힙니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 230" role="img" aria-label="화면 흉내: 위험한 명령 승인 물음. once, session, always, deny 네 가지 답이 있고 기본값은 deny 입니다.">
+<rect class="box" x="20" y="20" width="680" height="190" rx="12"/>
+<text x="40" y="50">DANGEROUS COMMAND: recursive delete</text><text class="sub" x="330" y="50">위험한 명령: 폴더째 지우기</text>
+<text x="40" y="82">rm -rf ~/old-project</text><text class="sub" x="330" y="82">실행하려는 명령</text>
+<rect class="box s-accent" x="40" y="104" width="150" height="56" rx="8"/><text x="115" y="128" text-anchor="middle">[o]nce</text><text class="sub" x="115" y="148" text-anchor="middle">이번 한 번만 허용</text>
+<rect class="box s-amber" x="205" y="104" width="150" height="56" rx="8"/><text x="280" y="128" text-anchor="middle">[s]ession</text><text class="sub" x="280" y="148" text-anchor="middle">이 세션 동안 허용</text>
+<rect class="box s-red" x="370" y="104" width="150" height="56" rx="8"/><text x="445" y="128" text-anchor="middle">[a]lways</text><text class="sub" x="445" y="148" text-anchor="middle">앞으로 항상 허용</text>
+<rect class="box s-green anim-pulse" x="535" y="104" width="150" height="56" rx="8"/><text x="610" y="128" text-anchor="middle">[d]eny</text><text class="sub" x="610" y="148" text-anchor="middle">막기 (기본값)</text>
+<text x="40" y="190">Choice [o/s/a/D]:</text><rect class="f-accent anim-blink" x="160" y="178" width="8" height="15"/>
+</svg><figcaption>화면 흉내 — 원문의 승인 물음 예시를 옮긴 것입니다(앞머리 그림 문자 생략). 글자 하나(o·s·a·d)로 답합니다.</figcaption></figure>
+<div class="table-wrap"><table class="kv"><thead><tr><th>답</th><th>뜻</th></tr></thead><tbody><tr><td><code>once</code></td><td>이번 실행 한 번만 허용합니다.</td></tr><tr><td><code>session</code></td><td>이 세션이 끝날 때까지 같은 유형의 명령을 허용합니다.</td></tr><tr><td><code>always</code></td><td>영구 허용 목록에 넣습니다(<code>config.yaml</code> 에 저장). 신중하게 고릅니다.</td></tr><tr><td><code>deny</code> (기본값)</td><td>명령을 막습니다. 무슨 명령인지 모르겠다면 이것을 고릅니다.</td></tr></tbody></table></div>
+<p>기본 설정(<code>smart</code>)에서는 보조 AI 가 먼저 위험도를 가늠해, 위험이 낮으면 그 명령만 자동으로 허용하고, 정말 위험하면 자동으로 막고, 애매할 때만 나에게 묻습니다. 정해진 시간(기본 300초) 안에 답하지 않으면 막힌 것으로 처리됩니다.</p>
+<p><b>확인:</b> 네 가지 답 가운데 어느 것이 "이번 한 번만"이고 어느 것이 기본값인지 말할 수 있습니다.</p>
+<div class="warn"><b>연습 중에는 YOLO 를 켜지 않습니다</b><p><code>/yolo</code> 명령이나 <code>hermes --yolo</code> 로 시작하면 그 세션의 승인 물음을 모두 건너뜁니다. 원문은 명령을 완전히 믿을 수 있는, 버려도 되는 환경에서만 쓰라고 경고합니다.</p></div>
+</div></div>
+<h3 id="pb5-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td><code>/rollback</code> 목록이 비어 있음</td><td>차례로 봅니다. ① <code>hermes chat --checkpoints</code> 로 시작했는지(기본은 꺼짐). ② 지금 폴더가 홈 폴더 자체, <code>/</code>, 또는 홈 폴더를 품은 폴더(<code>/Users</code>·<code>/home</code>)가 아닌지. ③ <code>git --version</code> 이 되는지. ④ Hermes 가 실제로 파일을 바꿨는지 — 바뀐 것이 없으면 찍지 않습니다. 파일이 5만 개를 넘는 폴더와 10MB 를 넘는 파일도 건너뜁니다.</td></tr>
+<tr><td>되돌렸는데 어떤 파일은 그대로임</td><td>Hermes 가 쓴 뒤 내가 손으로 고친 파일은 보존됩니다. 화면의 <code>Kept your hand-edits</code> 줄을 확인하고, 그것까지 되돌리려면 <code>/rollback 1 --all</code> 을 씁니다.</td></tr>
+<tr><td>잘못된 시점으로 되돌림</td><td>되돌리기 직전 상태도 스냅샷으로 남아 있습니다. <code>/rollback</code> 으로 목록을 다시 열고, <code>/rollback diff 번호</code> 로 확인한 뒤 그 항목으로 되돌립니다.</td></tr>
+<tr><td>미리 보기와 복원이 거부됨</td><td>터미널 백엔드가 컨테이너(<code>docker</code> 등)이면 파일이 격리된 공간에 있어 체크포인트를 찍지 않으며, 목록은 보여도 미리 보기·복원은 거부됩니다. 내 컴퓨터(local)와 SSH 백엔드는 해당하지 않습니다. 폴더 안에 또 다른 git 저장소가 들어 있을 때도 전체 복원은 거부되고, 그 저장소와 무관한 파일 하나씩은 되돌릴 수 있습니다.</td></tr>
+<tr><td><code>/undo</code> 를 했는데 파일이 그대로임</td><td><code>/undo</code> 는 대화만 되감습니다. 파일은 <code>/rollback</code> 으로 되돌립니다.</td></tr>
+<tr><td>승인 물음에 답하기 전에 시간이 지남</td><td>시간이 지난 물음은 다시 열 수 없고 명령은 실행되지 않습니다. 그래도 실행하려면 새 메시지로 다시 부탁합니다(원문 예: <code>go ahead and run that now</code> — "이제 그걸 실행해 줘"). 새 승인 물음이 뜹니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb5-next">다음에 할 것</h3>
+<ul><li>기본 순서(실습 1~5)를 마쳤습니다. 필요에 따라 <a href="#pb6">실습 6</a>(매일 아침 브리핑 예약), <a href="#pb7">실습 7</a>(Telegram), <a href="#pb8">실습 8</a>(일 나눠 맡기기) 가운데 골라 이어 갑니다.</li><li>연습이 끝났으면 연습용 폴더는 그대로 두거나 직접 지웁니다. 체크포인트 저장 공간이 궁금하면 터미널에서 <code>hermes checkpoints</code> 로 전체 크기와 폴더별 현황을 봅니다.</li><li>더 알고 싶다면: <a href="hermes-agent-guide.html#ch09-checkpoints">9장 · 체크포인트</a>, <a href="hermes-agent-guide.html#ch09-approval">9장 · 위험한 명령 승인</a>, <a href="hermes-agent-guide.html#ch09-guards">9장 · 체크포인트가 찍히지 않는 경우</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>체크포인트는 기본으로 꺼져 있습니다. <code>hermes chat --checkpoints</code> 로 켜고, 홈 폴더 아래의 폴더에서 씁니다.</li><li><code>/rollback</code>(목록) → <code>/rollback diff 1</code>(미리 보기) → <code>/rollback 1</code>(되돌리기) 순서로 합니다.</li><li>되돌리기는 Hermes 가 바꾼 파일만 되돌리고 내 손 수정은 남깁니다. 전부는 <code>--all</code>.</li><li><code>/undo</code> 는 대화만, <code>/rollback</code> 은 파일을 되돌립니다.</li><li>승인 물음의 기본값은 <code>deny</code>(막기)입니다. 모르면 막습니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/checkpoints-and-rollback · user-guide/security(Dangerous Command Approval). 가이드 <a href="hermes-agent-guide.html#ch09-checkpoints">9장 체크포인트</a>·<a href="hermes-agent-guide.html#ch09-approval">9장 승인</a>. 폴더 이름(<code>hermes-practice</code>)과 2단계의 두 문장, <code>mkdir</code>·<code>cd</code>·<code>cat</code>·<code>git --version</code> 은 연습을 위한 일반 터미널 명령·예시로 원문에 없습니다.</p></section>
+<section class="chapter" id="pb6">
+<div class="ch-head"><div class="ch-no">SCENARIO 6</div><h2>매일 아침 브리핑 예약하기</h2><p class="lead">정해 둔 시간에 Hermes 가 혼자 소식을 살펴 요약을 남기게 합니다. 예약을 하나 만들고, 아침까지 기다리지 않고 한 번 시험 실행해 결과가 어디에 남는지 확인합니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>매일 아침 9시에 실행되는 예약 작업<span class="gl">(cron — 정해 둔 시간에 자동 실행)</span> 하나를 만듭니다.</li><li>기다리지 않고 한 번 실행해 보고, 결과 파일을 찾아 읽습니다.</li><li>일정을 바꾸고, 잠시 멈추고, 지울 수 있습니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb6-prep">준비물</a>을 확인한 뒤 <a href="#pb6-steps">따라 하기</a>를 1단계부터 진행하세요. 예약한 시간이 지났는데 아무 일도 없으면 <a href="#pb6-stuck">막히면</a>을 봅니다. 처음에는 결과를 내 컴퓨터 파일로만 받습니다.</p></div>
+<h3 id="pb6-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">시작 전 준비</a>를 마쳐 Hermes Agent<span class="gl">(Nous Research 가 만든, 쓸수록 스스로 배우는 AI 에이전트 — 에이전트는 도구를 써서 내 대신 일을 해 주는 AI 프로그램)</span>와 대화가 되는 상태. 이 뒤로는 Hermes 라고 부릅니다.</li><li>터미널<span class="gl">(글자로 명령을 입력하는 창)</span> 창 2개. 하나는 게이트웨이<span class="gl">(gateway — 계속 켜 두는 Hermes 프로그램. 메신저 연결과 예약 실행을 맡습니다)</span>를 켜 두는 데 쓰고, 다른 하나에 명령을 입력합니다.</li><li>아침마다 받고 싶은 소식 한 가지. 이 실습은 공식 문서의 예시대로 "Hacker News 의 AI 소식"을 씁니다.</li><li>(선택) 결과를 Telegram 으로 받고 싶다면 <a href="#pb7">실습 7</a>을 먼저 마칩니다. 이 실습은 Telegram 없이도 끝낼 수 있습니다.</li></ul>
+<div class="note"><b>완료 기준</b><p><code>hermes cron list</code> 에 내가 만든 예약이 보이고, 한 번 시험 실행한 뒤 <code>~/.hermes/cron/output/</code> 폴더 아래에 생긴 결과 파일에서 요약을 읽으면 완료입니다. <code>~</code> 는 내 홈 폴더를 뜻합니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 760 150" role="img" aria-label="이 실습의 네 단계 흐름">
+<rect class="box s-accent" x="20" y="30" width="165" height="90" rx="12"/><text x="102" y="68" text-anchor="middle">게이트웨이 켜기</text><text class="sub" x="102" y="94" text-anchor="middle">예약을 실행하는 쪽</text>
+<path class="line s-accent anim-flow" d="M185 75 H205"/>
+<rect class="box s-accent" x="205" y="30" width="165" height="90" rx="12"/><text x="287" y="68" text-anchor="middle">예약 만들기</text><text class="sub" x="287" y="94" text-anchor="middle">매일 아침 9시</text>
+<path class="line s-accent anim-flow" d="M370 75 H390"/>
+<rect class="box s-amber" x="390" y="30" width="165" height="90" rx="12"/><text x="472" y="68" text-anchor="middle">한 번 시험 실행</text><text class="sub" x="472" y="94" text-anchor="middle">아침까지 안 기다림</text>
+<path class="line s-accent anim-flow" d="M555 75 H575"/>
+<rect class="box s-green" x="575" y="30" width="165" height="90" rx="12"/><text x="657" y="68" text-anchor="middle">결과 읽기</text><text class="sub" x="657" y="94" text-anchor="middle">파일로 저장됨</text>
+</svg><figcaption>이 실습의 흐름 — 게이트웨이를 켜고, 예약을 만들고, 한 번 시험 실행한 뒤 결과 파일을 읽습니다.</figcaption></figure>
+<h3 id="pb6-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb6-s1">1단계 · 게이트웨이를 켜 두기</h4>
+<p>예약 작업은 만들어 두기만 해서는 실행되지 않습니다. 공식 문서는 예약 실행을 게이트웨이가 맡고, 게이트웨이가 60초마다 한 번씩 실행할 때가 된 예약이 있는지 점검한다고 적습니다. 그래서 가장 먼저 게이트웨이를 켭니다.</p>
+<pre><code>hermes gateway             # 지금 이 창에서 바로 켜기
+hermes gateway install     # 또는 사용자 서비스로 설치해 두기</code></pre>
+<p>처음 연습할 때는 첫 번째 터미널 창에 <code>hermes gateway</code> 를 입력하고 그 창을 그대로 둡니다. 그다음 두 번째 창에서 아래 명령으로 상태를 봅니다.</p>
+<pre><code>hermes cron status</code></pre>
+<p>이 명령은 스케줄러<span class="gl">(예약 시간을 점검하는 부분)</span>가 살아 있는지 — 게이트웨이 프로세스, 점검 신호, 마지막으로 성공한 점검 — 와 가장 가까운 다음 실행을 알려 줍니다. <b>확인:</b> <code>hermes cron status</code> 가 스케줄러가 살아 있다고 알려 줍니다. 정확한 출력 문구는 받은 원문에 없으므로, 게이트웨이가 꺼져 있다는 경고가 없는지를 봅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 230" role="img" aria-label="게이트웨이가 점검할 때마다 하는 일">
+<rect class="box s-accent" x="20" y="30" width="200" height="170" rx="12"/><text x="120" y="60" text-anchor="middle">게이트웨이</text><text class="sub" x="120" y="80" text-anchor="middle">계속 켜 두는 프로그램</text>
+<g transform="translate(120,125)"><g class="anim-spin"><circle cx="0" cy="0" r="16" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="26 76"/></g></g>
+<text class="sub" x="120" y="175" text-anchor="middle">60초마다 점검</text>
+<path class="line s-accent anim-flow" d="M220 65 H280"/>
+<rect class="box" x="280" y="30" width="200" height="70" rx="10"/><text x="380" y="60" text-anchor="middle">예약 목록 읽기</text><text class="sub" x="380" y="82" text-anchor="middle">~/.hermes/cron/jobs.json</text>
+<path class="line s-accent anim-flow" d="M380 100 V130"/>
+<rect class="box" x="280" y="130" width="200" height="70" rx="10"/><text x="380" y="160" text-anchor="middle">시간이 됐는지 비교</text><text class="sub" x="380" y="182" text-anchor="middle">다음 실행 시각 ↔ 지금</text>
+<path class="line s-accent anim-flow" d="M480 165 H510 V65 H540"/>
+<rect class="box s-amber" x="540" y="30" width="200" height="70" rx="10"/><text x="640" y="60" text-anchor="middle">새 세션에서 실행</text><text class="sub" x="640" y="82" text-anchor="middle">프롬프트를 끝까지 수행</text>
+<path class="line s-accent anim-flow" d="M640 100 V130"/>
+<rect class="box s-green" x="540" y="130" width="200" height="70" rx="10"/><text x="640" y="160" text-anchor="middle">결과 전달</text><text class="sub" x="640" y="182" text-anchor="middle">파일 또는 메신저</text>
+</svg><figcaption>게이트웨이가 점검할 때마다 하는 일. 게이트웨이가 꺼져 있으면 이 순서 전체가 멈춥니다.</figcaption></figure>
+<details class="adv"><summary>계속 켜 두려면: 서비스로 설치</summary><p><code>hermes gateway install</code> 은 게이트웨이를 사용자 서비스로 설치합니다. Linux 서버에서 부팅할 때부터 켜 두려면 <code>sudo hermes gateway install --system</code> 을 씁니다. <a href="hermes-agent-guide.html#ch08-setup">8장 게이트웨이 설정</a> · <a href="hermes-agent-guide.html#ch08-service">서비스로 켜 두기</a>.</p></details>
+</div>
+<div data-step="2"><h4 id="pb6-s2">2단계 · 혼자 읽어도 알 수 있는 프롬프트 쓰기</h4>
+<p>예약 작업은 실행될 때마다 완전히 새로운 세션<span class="gl">(대화 한 묶음)</span>에서 시작합니다. 지금 나와 나눈 대화를 전혀 모릅니다. 그래서 프롬프트 한 장에 필요한 것이 모두 들어 있어야 합니다. 공식 문서의 나쁜 예와 좋은 예는 이렇습니다.</p>
+<pre><code>BAD:  "Check on that server issue"
+GOOD: "SSH into server 192.168.1.100 as user 'deploy', check if nginx is running with 'systemctl status nginx', and verify https://example.com returns HTTP 200."</code></pre>
+<p>뜻: 나쁜 예는 "그 서버 문제 확인해 줘"입니다. 새 세션은 "그 서버"가 무엇인지 모릅니다. 좋은 예는 어느 서버에 누구로 들어가 무엇을 확인할지를 전부 적었습니다.</p>
+<p>이 실습에서 쓸 브리핑 프롬프트는 아래 한 줄입니다.</p>
+<pre><code>Check Hacker News for AI news and give me a summary</code></pre>
+<p>뜻: Hacker News 에서 AI 소식을 확인하고 요약해 줘. 공식 문서의 예시 문장("Every morning at 9am, check Hacker News for AI news and send me a summary on Telegram.")에서 시간과 보낼 곳을 뺀 연습용 문장입니다. 시간은 일정 칸에, 보낼 곳은 전달 대상 설정에 따로 적기 때문입니다. 에이전트의 마지막 답이 정해 둔 전달 대상으로 자동으로 보내지므로, 프롬프트 안에서 "보내라"고 시킬 일은 없습니다.</p>
+<p><b>확인:</b> 프롬프트만 따로 떼어 읽어도 어디에서, 무엇을 확인해, 무엇을 내놓을지 알 수 있습니다. "그거", "어제 말한" 같은 말이 없습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 220" role="img" aria-label="새 세션은 프롬프트 한 장만 받음">
+<rect class="box s-amber" x="20" y="30" width="300" height="160" rx="12"/><text x="170" y="64" text-anchor="middle">지금 나와 하는 대화</text><text class="sub" x="170" y="96" text-anchor="middle">어제 나눈 이야기를 알고 있음</text><text class="sub" x="170" y="120" text-anchor="middle">"그 서버"가 무엇인지 앎</text><text class="sub" x="170" y="158" text-anchor="middle">→ 짧게 말해도 통함</text>
+<path id="pb6-fresh-path" class="line s-accent anim-flow" d="M320 110 H440"/>
+<text class="sub" x="380" y="96" text-anchor="middle">프롬프트 한 장만</text>
+<circle r="6" class="f-accent"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#pb6-fresh-path"/></animateMotion></circle>
+<rect class="box s-accent" x="440" y="30" width="300" height="160" rx="12"/><text x="590" y="64" text-anchor="middle">예약 작업의 새 세션</text><text class="sub" x="590" y="96" text-anchor="middle">앞선 대화를 전혀 모름</text><text class="sub" x="590" y="120" text-anchor="middle">가진 것은 프롬프트 한 장뿐</text><text class="sub" x="590" y="158" text-anchor="middle">→ 빠짐없이 적어야 통함</text>
+</svg><figcaption>예약 작업으로 건너가는 것은 프롬프트뿐입니다. 대화에서 통하던 줄임말은 통하지 않습니다.</figcaption></figure>
+</div>
+<div data-step="3"><h4 id="pb6-s3">3단계 · 예약 만들기</h4>
+<p>두 번째 터미널 창에 아래 명령을 입력합니다. 첫 따옴표 안이 일정, 둘째 따옴표 안이 프롬프트, <code>--name</code> 뒤가 이 예약의 이름입니다.</p>
+<pre><code>hermes cron create "every day at 9am" "Check Hacker News for AI news and give me a summary" --name "morning-briefing"</code></pre>
+<p>뜻: 매일 오전 9시에 위 프롬프트를 실행하는 예약을 <code>morning-briefing</code> 이라는 이름으로 만듭니다. 이름을 붙여 두면 뒤에서 긴 ID 대신 이름으로 이 예약을 가리킬 수 있습니다(대소문자는 가리지 않습니다).</p>
+<p>예약을 만드는 방법은 세 가지입니다. 어느 쪽으로 만들어도 같은 예약 목록에 들어갑니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="cli">터미널 명령</button><button data-tab="chat">대화 안에서</button><button data-tab="talk">말로 부탁</button></div>
+<div data-panel="cli"><pre><code>hermes cron create "every 2h" "Check server status"</code></pre><p>뜻: 2시간마다 서버 상태를 확인. Hermes 대화를 열지 않고 터미널에서 바로 만듭니다. 이 실습이 쓰는 방법입니다.</p></div>
+<div data-panel="chat"><pre><code>/cron add "every 2h" "Check server status"
+/cron add "in 30m" "Remind me to check the build"</code></pre><p>뜻: 대화 입력 칸에 넣는 슬래시 명령<span class="gl">(<code>/</code> 로 시작하는 명령)</span>입니다. 둘째 줄은 30분 뒤에 한 번만 "빌드 확인하라고 알려 줘"를 실행합니다.</p></div>
+<div data-panel="talk"><pre><code>Every morning at 9am, check Hacker News for AI news and send me a summary on Telegram.</code></pre><p>뜻: 매일 아침 9시에 Hacker News 에서 AI 소식을 확인해 Telegram 으로 요약을 보내 줘. 평소처럼 말하면 Hermes 가 예약 관리 도구를 스스로 써서 만듭니다. 이 문장대로 받으려면 Telegram 연결(<a href="#pb7">실습 7</a>)이 먼저 필요합니다.</p></div></div>
+<p><b>확인:</b> <code>hermes cron list</code> 를 입력하면 목록에 <code>morning-briefing</code> 이 보입니다.</p>
+<details class="adv"><summary>일정을 적는 다른 방법</summary><div class="table-wrap"><table class="kv"><thead><tr><th>적는 말</th><th>뜻</th></tr></thead><tbody><tr><td><code>every day at 9am</code> · <code>daily at 7am</code></td><td>매일 오전 9시 · 매일 오전 7시</td></tr><tr><td><code>weekdays at 9am</code></td><td>평일 오전 9시</td></tr><tr><td><code>every 2h</code> · <code>every 30m</code></td><td>2시간마다 · 30분마다 (지울 때까지 반복)</td></tr><tr><td><code>in 30m</code> · <code>in 1d</code></td><td>30분 뒤 · 하루 뒤에 한 번만</td></tr><tr><td><code>0 9 * * *</code> · <code>0 9 * * 1-5</code></td><td>cron 표현식으로 매일 9시 · 평일 9시</td></tr></tbody></table></div><p>시간은 <code>9am</code>, <code>9:30pm</code>, <code>14:00</code>, <code>noon</code>(정오), <code>midnight</code>(자정)처럼 적을 수 있습니다. 전체 형식은 <a href="hermes-agent-guide.html#ch07-cron-schedule">7장 일정 형식</a>에 있습니다.</p></details>
+</div>
+<div data-step="4"><h4 id="pb6-s4">4단계 · 기다리지 않고 한 번 실행해 보기</h4>
+<p>내일 아침까지 기다리지 않고 지금 한 번 돌려 봅니다.</p>
+<pre><code>hermes cron run morning-briefing</code></pre>
+<p>뜻: 이 예약을 다음 스케줄러 점검 때 실행하도록 요청합니다. 손으로 돌린 실행은 "추가 실행"입니다. 정해 둔 9시 실행은 그대로 일어나고, 반복 횟수도 줄지 않습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 140" role="img" aria-label="시험 실행과 예약 실행은 따로 일어남">
+<path id="pb6-time-path" class="line" d="M40 70 H720"/>
+<circle r="5" class="f-accent"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#pb6-time-path"/></animateMotion></circle>
+<circle class="box s-amber" cx="150" cy="70" r="14"/><text x="150" y="40" text-anchor="middle">지금</text><text class="sub" x="150" y="108" text-anchor="middle">손으로 시험 실행 (추가)</text>
+<circle class="box s-green" cx="420" cy="70" r="14"/><text x="420" y="40" text-anchor="middle">내일 9:00</text><text class="sub" x="420" y="108" text-anchor="middle">예약 실행 — 그대로</text>
+<circle class="box s-green" cx="640" cy="70" r="14"/><text x="640" y="40" text-anchor="middle">모레 9:00</text><text class="sub" x="640" y="108" text-anchor="middle">예약 실행 — 그대로</text>
+</svg><figcaption>시험 실행은 예약된 실행을 대신하지 않습니다. 하나 더 실행될 뿐입니다.</figcaption></figure>
+<p>실행이 어떻게 끝났는지는 실행 기록으로 봅니다.</p>
+<pre><code>hermes cron runs --limit 20</code></pre>
+<p>뜻: 최근 실행 시도 20개를 보여 줍니다. 공식 문서에 따르면 시도 하나는 claimed(접수) → running(실행 중)을 거쳐 completed(끝남) · failed(실패) · unknown(알 수 없음) 가운데 하나로 끝납니다. <b>확인:</b> 방금 돌린 시도가 <code>completed</code> 로 끝나 있습니다. 아직 <code>running</code> 이면 조금 뒤에 다시 봅니다.</p>
+</div>
+<div data-step="5"><h4 id="pb6-s5">5단계 · 결과 파일 읽기</h4>
+<p>터미널에서 만든 예약은 결과를 어디로 보낼지 따로 정하지 않으면 <code>local</code> — 내 컴퓨터 파일로만 저장합니다. 저장 위치는 아래와 같습니다.</p>
+<pre><code>~/.hermes/cron/output/{job_id}/{timestamp}.md</code></pre>
+<p>뜻: 예약 ID 이름의 폴더 안에, 실행 시각이 이름인 <code>.md</code> 파일이 실행할 때마다 하나씩 쌓입니다. 파일을 여는 방법은 원문에 없으므로 평소 쓰는 파일 탐색기나 편집기로 엽니다.</p>
+<p><b>확인:</b> 가장 최근 <code>.md</code> 파일을 열면 AI 소식 요약이 들어 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 250" role="img" aria-label="전달 대상에 따라 결과가 가는 곳">
+<rect class="box s-accent" x="20" y="85" width="190" height="80" rx="12"/><text x="115" y="120" text-anchor="middle">브리핑 결과</text><text class="sub" x="115" y="144" text-anchor="middle">에이전트의 마지막 답</text>
+<text class="sub" x="262" y="114" text-anchor="middle">전달 대상</text>
+<path class="line s-green anim-flow" d="M210 125 H315 V50 H420"/>
+<path class="line" d="M315 125 H420"/>
+<path class="line" d="M315 125 V200 H420"/>
+<rect class="box s-green" x="420" y="20" width="320" height="60" rx="10"/><text x="436" y="46">local · 내 컴퓨터 파일</text><text class="sub" x="436" y="66">터미널에서 만들면 기본</text><circle class="f-green anim-pulse" cx="716" cy="50" r="6"/>
+<rect class="box" x="420" y="95" width="320" height="60" rx="10"/><text x="436" y="121">origin · 예약을 만든 대화</text><text class="sub" x="436" y="141">메신저에서 만들면 기본</text>
+<rect class="box" x="420" y="170" width="320" height="60" rx="10"/><text x="436" y="196">telegram · Telegram 홈 채널</text><text class="sub" x="436" y="216">전달 대상을 직접 정했을 때</text>
+</svg><figcaption>결과가 가는 곳. 이 실습은 맨 위 길(local)로 받습니다.</figcaption></figure>
+<details class="adv"><summary>Telegram 으로 받고 싶다면</summary><p>공식 문서의 전달 대상 표에서 <code>telegram</code> 은 Telegram 홈 채널(<code>TELEGRAM_HOME_CHANNEL</code> 로 정한 곳)로 보낸다는 뜻이고, 원문의 스크립트 예약 예시는 만들 때 <code>--deliver telegram</code> 을 붙입니다. Telegram 대화 안에서 예약을 만들면 기본 전달 대상이 <code>origin</code> — 예약을 만든 그 대화입니다. 여러 곳에 보내려면 <code>telegram,discord</code> 처럼 쉼표로 잇습니다. 먼저 <a href="#pb7">실습 7</a>로 Telegram 을 연결하고, 홈 채널은 <a href="hermes-agent-guide.html#ch08-home-channel">8장 홈 채널</a>, 전달 대상 전체는 <a href="hermes-agent-guide.html#ch07-cron-delivery">7장 결과 전달</a>을 봅니다.</p></details>
+</div>
+<div data-step="6"><h4 id="pb6-s6">6단계 · 일정 바꾸기 · 잠시 멈추기 · 지우기</h4>
+<p>예약을 바꾸려고 지우고 다시 만들 필요는 없습니다. 주말에는 받고 싶지 않다면 일정만 고칩니다.</p>
+<pre><code>hermes cron edit morning-briefing --schedule "weekdays at 9am"</code></pre>
+<p>뜻: 일정을 평일 오전 9시로 바꿉니다. 프롬프트를 고칠 때는 <code>--prompt "새 프롬프트"</code> 를 씁니다.</p>
+<pre><code>hermes cron pause morning-briefing     # 예약은 두고 실행만 멈춤
+hermes cron resume morning-briefing    # 다시 켜기
+hermes cron remove morning-briefing    # 완전히 지우기</code></pre>
+<p>휴가 동안은 <code>pause</code> 로 멈춰 두고 돌아와서 <code>resume</code> 합니다. 대화 안에서는 같은 일을 <code>/cron list</code>, <code>/cron pause</code>, <code>/cron resume</code>, <code>/cron remove</code> 로 합니다. <b>확인:</b> 명령을 실행한 뒤 <code>hermes cron list</code> 로 바뀐 일정이나 상태가 반영됐는지 봅니다. 연습만 하고 끝낼 생각이면 <code>remove</code> 로 지워 둡니다. 지우지 않으면 매일 아침 계속 실행됩니다.</p>
+</div></div>
+<h3 id="pb6-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>시간이 지났는데 실행되지 않음</td><td>게이트웨이가 꺼져 있을 가능성이 큽니다. <code>hermes cron status</code> 가 <code>OVERDUE</code>(이미 지남) 경고를 내거나 <code>hermes cron list</code> 가 그 줄에 <code>Overdue:</code> 를 붙이면 스케줄러가 멈춘 것입니다. <code>hermes gateway restart</code> 로 게이트웨이를 다시 켜거나 <code>hermes cron run morning-briefing</code> 으로 바로 돌립니다.</td></tr>
+<tr><td>실행은 됐는데 결과가 메신저에 오지 않음</td><td>실행과 전달은 따로 기록됩니다. <code>hermes cron list</code> 에 <code>delivery_failed: 이유</code> 가 보이면 답은 만들어졌지만 전달에 실패한 것입니다. 답 자체는 <code>~/.hermes/cron/output/</code> 아래 파일에 남아 있습니다.</td></tr>
+<tr><td>요약이 엉뚱하거나 "무엇을 말하는지 모르겠다"는 답</td><td>프롬프트가 혼자 읽어서는 알 수 없는 문장인지 봅니다. 2단계의 좋은 예처럼 대상과 할 일을 모두 적고 <code>hermes cron edit morning-briefing --prompt "…"</code> 로 고칩니다.</td></tr>
+<tr><td>소식을 가져오지 못함</td><td>예약 작업은 기본으로 <code>hermes tools</code> 에서 <code>cron</code> 플랫폼에 켜 둔 툴셋<span class="gl">(toolset — 도구 꾸러미)</span>을 씁니다. 대화에서 쓰던 도구가 전부 켜져 있는 것이 아닙니다. <a href="hermes-agent-guide.html#ch04-toolsets">4장 툴셋</a>을 보고 필요한 도구를 켭니다.</td></tr>
+<tr><td>무엇이 문제인지 모르겠음</td><td><code>hermes cron doctor</code> 를 돌립니다. 켜져 있는 모든 예약을 읽기만 하며 점검해, 마지막 실행 실패·전달 실패·늦은 실행 같은 문제를 예약별로 알려 줍니다. 더 많은 증상은 <a href="hermes-agent-guide.html#ch07-cron-trouble">7장 예약 작업 문제 해결</a>에 있습니다.</td></tr>
+</tbody></table></div>
+<div class="warn"><b>컴퓨터나 게이트웨이가 꺼져 있던 아침</b><p>게이트웨이가 꺼져 있는 동안에는 예약이 실행되지 않습니다. 공식 문서는 게이트웨이가 다시 켜지면 지나간 반복 예약을 한 번만 따라잡아 실행한다고 적습니다(여러 번 놓쳤어도 한 번). 늦은 브리핑이 필요 없다면 만들 때 <code>--catch-up off</code> 를 붙입니다. 자세한 조건은 <a href="hermes-agent-guide.html#ch07-cron-manage">7장 예약 관리</a>를 봅니다.</p></div>
+<h3 id="pb6-next">다음에 할 것</h3>
+<ul><li>결과를 휴대폰으로 받으려면 <a href="#pb7">실습 7</a>로 Telegram 을 연결한 뒤 5단계의 접힌 상자를 다시 봅니다.</li><li>예약 작업의 원리는 <a href="hermes-agent-guide.html#ch07-cron-what">7장 예약 작업이란</a>, 만드는 방법 전체는 <a href="hermes-agent-guide.html#ch07-cron-create">예약 만들기</a>에서 읽습니다.</li><li>한 번에 여러 가지를 조사시키고 싶다면 <a href="#pb8">실습 8</a>로 넘어갑니다.</li></ul>
+<div class="note"><b>예약 작업 안에서는 예약을 또 만들 수 없습니다</b><p>예약이 끝없이 늘어나는 일을 막으려고, 예약으로 실행된 세션에서는 예약 관리 도구가 꺼져 있습니다. 반복은 프롬프트가 아니라 일정으로 정합니다.</p></div>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>예약은 게이트웨이가 켜져 있어야 실행됩니다. <code>hermes cron status</code> 로 확인합니다.</li><li><code>hermes cron create "일정" "프롬프트" --name "이름"</code> 으로 만들고, 프롬프트는 혼자 읽어도 알 수 있게 씁니다.</li><li><code>hermes cron run 이름</code> 으로 기다리지 않고 시험하며, 예약된 실행은 그대로 남습니다.</li><li>터미널에서 만든 예약의 결과는 <code>~/.hermes/cron/output/</code> 아래 파일로 쌓입니다.</li><li><code>edit</code> · <code>pause</code> · <code>resume</code> · <code>remove</code> 로 고치고, 멈추고, 지웁니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/features/cron (수집본 <code>sources/raw/user-guide_features_cron.md</code>). 가이드 <a href="hermes-agent-guide.html#ch07-cron-what">7장 예약 작업과 위임</a>. 예약 이름 <code>morning-briefing</code> 과 브리핑 프롬프트는 원문 예시 문장을 옮긴 연습용입니다.</p></section>
+<section class="chapter" id="pb7">
+<div class="ch-head"><div class="ch-no">SCENARIO 7</div><h2>Telegram 으로 Hermes 와 대화하기</h2><p class="lead">컴퓨터 앞에 없어도 휴대폰 메신저로 Hermes 에게 일을 맡길 수 있게 만듭니다. 내 전용 봇을 하나 만들고, 나만 쓸 수 있게 잠근 뒤, 첫 메시지에 답이 오는지 확인합니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>Telegram 에서 내 봇을 만들고 Hermes Agent 에 연결합니다.</li><li>허용한 사람만 봇을 쓸 수 있게 내 사용자 ID 를 등록합니다.</li><li>게이트웨이를 켜서 휴대폰으로 대화하고, 계속 켜 두는 방법을 압니다.</li></ul><p class="muted">예상 소요 시간: 20~30분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb7-prep">준비물</a>을 확인한 뒤 <a href="#pb7-steps">따라 하기</a> 1~4단계까지만 해도 대화가 됩니다. 5·6단계는 익숙해진 뒤에 해도 됩니다. 답이 오지 않으면 <a href="#pb7-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb7-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">시작 전 준비</a>를 마쳐서 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>에서 Hermes 와 대화가 되는 컴퓨터.</li><li>Telegram 앱과 내 계정. 휴대폰이든 컴퓨터든 상관없습니다.</li><li>봇 토큰과 내 사용자 ID 를 잠깐 적어 둘 메모장. 토큰은 비밀번호처럼 다룹니다.</li></ul>
+<p>이 실습의 주인공은 <b>게이트웨이</b><span class="gl">(gateway — 메신저와 Hermes 를 이어 주는, 계속 켜 두는 프로그램)</span>입니다. Telegram 에 보낸 메시지를 게이트웨이가 받아 그 대화방의 세션<span class="gl">(대화 한 묶음)</span>을 찾고, Hermes 에게 넘긴 뒤 답을 다시 Telegram 으로 돌려보냅니다.</p>
+<div class="note"><b>완료 기준</b><p>Telegram 에서 내 봇에게 메시지를 보냈을 때 Hermes 의 답이 돌아오면 완료입니다. 원문도 "게이트웨이를 켜면 봇이 몇 초 안에 접속하니, 메시지를 보내 확인하라"고만 적습니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 190" role="img" aria-label="휴대폰의 Telegram 메시지가 내 봇과 게이트웨이를 거쳐 Hermes 로 가고, 답이 같은 길로 돌아옵니다.">
+<path id="pb7-way" d="M626 136 H95" fill="none" stroke="none"/><path class="line" d="M626 120 V136 H95 V120"/>
+<rect class="box s-cyan" x="20" y="40" width="150" height="80" rx="12"/><text x="95" y="74" text-anchor="middle">내 휴대폰</text><text class="sub" x="95" y="96" text-anchor="middle">Telegram 앱</text>
+<path class="line s-accent anim-flow" d="M170 80 H197"/>
+<rect class="box s-accent" x="197" y="40" width="150" height="80" rx="12"/><text x="272" y="74" text-anchor="middle">내 봇</text><text class="sub" x="272" y="96" text-anchor="middle">BotFather 로 만듦</text>
+<path class="line s-accent anim-flow" d="M347 80 H374"/>
+<rect class="box s-amber" x="374" y="40" width="150" height="80" rx="12"/><text x="449" y="74" text-anchor="middle">게이트웨이</text><text class="sub" x="449" y="96" text-anchor="middle">내 컴퓨터에서 켜 둠</text>
+<path class="line s-accent anim-flow" d="M524 80 H551"/>
+<rect class="box s-green" x="551" y="40" width="150" height="80" rx="12"/><text x="626" y="74" text-anchor="middle">Hermes</text><text class="sub" x="626" y="96" text-anchor="middle">일하고 답을 씀</text>
+<circle r="6" class="f-accent"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#pb7-way"/></animateMotion></circle>
+<text class="sub" x="360" y="162" text-anchor="middle">아래 선은 답이 휴대폰으로 돌아오는 길 · 게이트웨이가 꺼져 있으면 오가는 길이 끊깁니다</text>
+</svg><figcaption>메시지가 가는 길(위)과 답이 돌아오는 길(아래)입니다. 게이트웨이는 내 컴퓨터에서 도는 프로그램이라, 이것이 꺼져 있으면 봇은 답하지 못합니다.</figcaption></figure>
+<h3 id="pb7-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb7-s1">1단계 · BotFather 에게서 봇과 토큰 받기</h4>
+<p>Telegram 의 모든 봇은 <b>@BotFather</b>(Telegram 공식 봇 관리 도구)가 발급하는 API 토큰<span class="gl">(봇을 조종할 수 있는 긴 비밀 문자열)</span>이 있어야 합니다.</p>
+<ol class="steps"><li><b>Telegram 에서 @BotFather 검색</b><span>검색해서 대화방을 엽니다. 주소 <code>t.me/BotFather</code> 로 열어도 됩니다.</span></li><li><b><code>/newbot</code> 보내기</b><span>새 봇을 만들겠다는 명령입니다.</span></li><li><b>표시 이름 정하기</b><span>사람들에게 보이는 이름입니다. 아무 이름이나 됩니다(예: Hermes Agent).</span></li><li><b>사용자 이름 정하기</b><span>남과 겹치지 않아야 하고 반드시 <code>bot</code> 으로 끝나야 합니다(예: <code>my_hermes_bot</code>).</span></li></ol>
+<p>BotFather 가 아래와 같은 모양의 토큰을 답으로 줍니다. 메모장에 옮겨 둡니다.</p>
+<pre><code>123456789:ABCdefGHIjklMNOpqrSTUvwxYZ</code></pre>
+<div class="warn"><b>토큰은 비밀입니다</b><p>이 토큰을 가진 사람은 누구나 내 봇을 조종할 수 있습니다. 새어 나갔다면 곧바로 BotFather 에게 <code>/revoke</code> 를 보내 무효로 만듭니다. 대화방·문서·화면 공유에 붙여 넣지 않습니다.</p></div>
+<p><b>확인:</b> 숫자, 쌍점(<code>:</code>), 긴 글자가 이어진 토큰 한 줄을 받아 적었습니다.</p>
+</div><div data-step="2"><h4 id="pb7-s2">2단계 · 내 사용자 ID 알아내기</h4>
+<p>Hermes 는 누가 봇을 쓸 수 있는지를 <b>숫자로 된 Telegram 사용자 ID</b> 로 가려냅니다. <code>@</code> 로 시작하는 사용자 이름이 아니라 <code>123456789</code> 같은 숫자입니다.</p>
+<ol class="steps"><li><b>@userinfobot 에게 메시지 보내기</b><span>원문이 권하는 방법입니다. 바로 내 사용자 ID 를 답해 줍니다.</span></li><li><b>안 되면 @get_id_bot</b><span>같은 일을 하는 다른 봇입니다.</span></li></ol>
+<p><b>확인:</b> 숫자만으로 된 내 ID 를 토큰 옆에 적어 두었습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 200" role="img" aria-label="허용 목록에 있는 내 ID 는 통과하고, 목록에 없는 사람은 거절됩니다.">
+<rect class="box s-green" x="20" y="24" width="190" height="60" rx="12"/><text x="115" y="50" text-anchor="middle">나 · ID 123456789</text><text class="sub" x="115" y="70" text-anchor="middle">허용 목록에 있음</text>
+<rect class="box s-red" x="20" y="116" width="190" height="60" rx="12"/><text x="115" y="142" text-anchor="middle">모르는 사람</text><text class="sub" x="115" y="162" text-anchor="middle">허용 목록에 없음</text>
+<path class="line s-green anim-flow" d="M210 54 H300 V88"/><path class="line s-red" d="M210 146 H300 V112"/>
+<rect class="box s-amber anim-pulse" x="245" y="88" width="110" height="24" rx="8"/><text x="300" y="105" text-anchor="middle">허용 목록 확인</text>
+<path class="line s-green anim-flow" d="M355 96 H470 V54 H500"/><path class="line s-red" d="M355 106 H470 V146 H500"/>
+<rect class="box s-green" x="500" y="24" width="200" height="60" rx="12"/><text x="600" y="50" text-anchor="middle">Hermes 가 답함</text><text class="sub" x="600" y="70" text-anchor="middle">대화 시작</text>
+<rect class="box s-red" x="500" y="116" width="200" height="60" rx="12"/><text x="600" y="142" text-anchor="middle">거절</text><text class="sub" x="600" y="162" text-anchor="middle">기본값이 "모두 거부"</text>
+</svg><figcaption>게이트웨이는 허용 목록에 없는 사람을 기본으로 모두 거절합니다. 터미널까지 다룰 수 있는 봇이라 이렇게 잠가 두는 것이 안전한 기본값입니다.</figcaption></figure>
+</div><div data-step="3"><h4 id="pb7-s3">3단계 · 설정 마법사에 토큰과 ID 넣기</h4>
+<p>터미널에 아래 명령을 넣습니다. 메신저 연결을 차례로 물어보며 대신 적어 주는 설정 마법사입니다.</p>
+<pre><code>hermes gateway setup</code></pre>
+<p>뜻: 메신저 플랫폼을 대화식으로 설정합니다. 화살표 키로 고르는 방식이며, 이미 설정된 플랫폼이 무엇인지도 보여 줍니다.</p>
+<ol class="steps"><li><b>Telegram 고르기</b><span>플랫폼을 묻는 곳에서 Telegram 을 선택합니다.</span></li><li><b>봇 토큰 넣기</b><span>1단계에서 받은 토큰을 붙여 넣습니다.</span></li><li><b>허용할 사용자 ID 넣기</b><span>2단계의 숫자를 넣습니다. 마법사가 설정을 대신 기록합니다.</span></li><li><b>끝에서 게이트웨이를 시작할지 묻습니다</b><span>여기서 시작해도 되고, 4단계에서 직접 켜도 됩니다.</span></li></ol>
+<figure class="diagram"><svg viewBox="0 0 720 180" role="img" aria-label="봇 토큰과 내 사용자 ID 두 값을 설정 마법사에 넣으면 설정 파일에 기록됩니다.">
+<rect class="box s-accent" x="20" y="20" width="200" height="58" rx="12"/><text x="120" y="45" text-anchor="middle">봇 토큰</text><text class="sub" x="120" y="65" text-anchor="middle">BotFather 가 준 것</text>
+<rect class="box s-cyan" x="20" y="102" width="200" height="58" rx="12"/><text x="120" y="127" text-anchor="middle">내 사용자 ID</text><text class="sub" x="120" y="147" text-anchor="middle">숫자</text>
+<path class="line s-accent anim-flow" d="M220 49 H250 V90 H280"/><path class="line s-cyan anim-flow" d="M220 131 H250 V90"/>
+<rect class="box s-amber" x="280" y="56" width="190" height="68" rx="12"/><text x="375" y="85" text-anchor="middle">hermes gateway setup</text><text class="sub" x="375" y="106" text-anchor="middle">설정 마법사</text>
+<path class="line s-green anim-flow" d="M470 90 H505"/>
+<rect class="box s-green" x="505" y="56" width="195" height="68" rx="12"/><text x="602" y="85" text-anchor="middle">~/.hermes/.env</text><text class="sub" x="602" y="106" text-anchor="middle">비밀 값을 두는 파일</text>
+</svg><figcaption>준비한 값은 두 개뿐입니다. <code>~</code> 는 내 홈 폴더를 뜻합니다.</figcaption></figure>
+<p><b>확인:</b> 마법사가 끝까지 진행됐고, <code>hermes gateway setup</code> 을 다시 열면 Telegram 이 이미 설정된 플랫폼으로 표시됩니다.</p>
+<details class="adv"><summary>마법사 대신 파일에 직접 적는 방법 · 앱에서 QR 로 만드는 방법</summary><p>비밀 값을 두는 파일 <code>~/.hermes/.env</code> 에 아래 두 줄을 넣어도 같은 결과입니다. 여러 사람을 허용하려면 ID 를 쉼표로 이어 적습니다.</p><pre><code>TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrSTUvwxYZ
+TELEGRAM_ALLOWED_USERS=123456789    # Comma-separated for multiple users</code></pre><p>뜻: 첫 줄은 봇 토큰, 둘째 줄은 허용할 사용자 ID 입니다. 원문은 또 대시보드와 데스크톱 앱의 <b>Messaging → Telegram</b> 화면에 <b>Create with QR</b> 버튼이 있어, QR 을 찍으면 봇 생성·ID 확인·<code>.env</code> 기록·게이트웨이 재시작을 대신 해 준다고만 적습니다. ID 를 일일이 적지 않고 승인하는 방식(DM 페어링)은 <a href="hermes-agent-guide.html#ch09-authorization">9장 누가 쓸 수 있나</a>를 봅니다.</p></details>
+</div><div data-step="4"><h4 id="pb7-s4">4단계 · 게이트웨이를 켜고 첫 메시지 보내기</h4>
+<p>마법사에서 시작하지 않았다면 터미널에 아래 명령을 넣습니다.</p>
+<pre><code>hermes gateway</code></pre>
+<p>뜻: 게이트웨이를 지금 이 터미널에서 바로 실행합니다(foreground — 앞에서 실행). 이 창을 연 채로 둡니다.</p>
+<ol class="steps"><li><b>Telegram 에서 내 봇 찾기</b><span>1단계에서 정한 사용자 이름(<code>bot</code> 으로 끝나는 이름)으로 검색해 대화방을 엽니다.</span></li><li><b>아무 메시지나 보내기</b><span>평소 터미널에서 부탁하던 것처럼 한 문장을 보냅니다.</span></li><li><b>답 기다리기</b><span>Hermes 가 일하는 동안 대화방에 "입력 중…" 표시가 뜹니다.</span></li></ol>
+<p><b>확인:</b> 봇이 몇 초 안에 접속하고, 보낸 메시지에 Hermes 의 답이 돌아옵니다. 여기까지 되면 이 실습의 완료 기준을 채웠습니다.</p>
+<div class="note"><b>위험한 명령은 대화방에서 먼저 묻습니다</b><p>Hermes 가 위험할 수 있는 명령을 실행하려 하면 대화방에서 승인을 요청합니다. <code>yes</code>(또는 <code>y</code>)로 허락하고 <code>no</code>(또는 <code>n</code>)로 거절합니다. 뜻을 모르면 거절하고 무슨 일인지 먼저 물어봅니다. <a href="hermes-agent-guide.html#ch09-approval">9장 승인</a>.</p></div>
+</div><div data-step="5"><h4 id="pb7-s5">5단계 · 대화방에서 슬래시 명령 써 보기</h4>
+<p>메신저에서도 슬래시 명령<span class="gl">(<code>/</code> 로 시작하는 명령)</span>을 씁니다. 아래 네 개를 하나씩 보내 봅니다.</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>보낼 명령</th><th>하는 일</th></tr></thead><tbody><tr><td><code>/help</code></td><td>쓸 수 있는 명령을 보여 줍니다.</td></tr><tr><td><code>/status</code></td><td>지금 세션의 정보를 보여 줍니다.</td></tr><tr><td><code>/new</code></td><td>새 대화를 시작합니다(<code>/reset</code> 도 같음).</td></tr><tr><td><code>/sethome</code></td><td>이 대화방을 홈 채널로 정합니다. 예약 작업의 결과가 이곳으로 옵니다.</td></tr></tbody></table></div>
+<p>메신저의 대화는 쉬었다 와도, 날이 바뀌어도 저절로 새로 시작되지 않습니다. 일 하나나 주제 하나가 끝나면 <code>/new</code> 로 직접 끊어 주는 것이 좋습니다. 대화가 짧아져 비용이 줄고, Hermes 가 새로 저장한 기억도 새 세션부터 반영됩니다.</p>
+<p><b>확인:</b> <code>/status</code> 를 보내면 세션 정보가 답으로 옵니다. <code>/sethome</code> 을 보냈다면 <a href="#pb6">실습 6</a>의 브리핑을 이 대화방으로 받을 준비가 됐습니다.</p>
+</div><div data-step="6"><h4 id="pb7-s6">6단계 · 터미널을 닫아도 돌게 서비스로 설치하기 (선택)</h4>
+<p>4단계 방식은 터미널에서 직접 실행한 것입니다. 늘 켜 두려면 게이트웨이를 서비스<span class="gl">(운영체제가 뒤에서 대신 돌려 주는 프로그램)</span>로 설치합니다. 원문은 같은 봇 토큰을 두 게이트웨이가 동시에 쓰면 나중 것이 연결에 실패한다고 적으니, 4단계에서 켠 게이트웨이를 먼저 끝낸 뒤 진행합니다(직접 켠 게이트웨이를 끄는 방법은 받은 원문에 따로 적혀 있지 않습니다).</p>
+<pre><code>hermes gateway install
+hermes gateway start
+hermes gateway status</code></pre>
+<p>뜻: 차례로 서비스로 설치(macOS 는 launchd, Linux 는 사용자 서비스) · 서비스 시작 · 상태 확인입니다. 멈출 때는 <code>hermes gateway stop</code> 입니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="mac">macOS</button><button data-tab="linux">Linux</button></div>
+<div data-panel="mac"><p>기록(로그)은 <code>tail -f ~/.hermes/logs/gateway.log</code> 로 봅니다. 서비스를 설치한 뒤에 새 도구(예: ffmpeg)를 깔았다면 <code>hermes gateway install</code> 을 한 번 더 실행해야 게이트웨이가 그 도구를 찾습니다.</p></div>
+<div data-panel="linux"><p>기록은 <code>journalctl --user -u hermes-gateway -f</code> 로 봅니다. 로그아웃한 뒤에도 돌게 하려면 <code>sudo loginctl enable-linger $USER</code> 를 실행합니다. 원문은 노트북·개발용 컴퓨터에는 사용자 서비스를 권합니다.</p></div></div>
+<p><b>확인:</b> <code>hermes gateway status</code> 로 서비스 상태를 본 뒤, 터미널 창을 닫고 Telegram 에서 메시지를 보내도 답이 옵니다. 컴퓨터가 꺼져 있으면 답하지 못합니다.</p>
+</div></div>
+<h3 id="pb7-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>봇이 전혀 답하지 않음</td><td>게이트웨이가 켜져 있는지 <code>hermes gateway status</code> 로 봅니다. <code>TELEGRAM_BOT_TOKEN</code> 이 맞는지 확인하고 게이트웨이 기록에서 오류를 찾습니다. 차례대로 점검하는 길은 <a href="#pb10">실습 10</a>에 있습니다.</td></tr>
+<tr><td>봇이 "unauthorized"(권한 없음)라고 답함</td><td>내 사용자 ID 가 <code>TELEGRAM_ALLOWED_USERS</code> 에 없습니다. @userinfobot 으로 숫자를 다시 확인해 3단계를 다시 합니다.</td></tr>
+<tr><td>토큰이 새어 나갔거나 무효가 됨</td><td>BotFather 에서 <code>/revoke</code> 로 무효로 만든 뒤 <code>/newbot</code> 또는 <code>/token</code> 으로 새 토큰을 받아 <code>.env</code> 를 고칩니다.</td></tr>
+<tr><td>1:1 대화는 되는데 그룹에서는 조용함</td><td>Telegram 봇은 기본으로 privacy mode(사생활 보호 모드)가 켜져 있어 그룹의 일반 메시지를 받지 못합니다. 아래 접힌 상자를 봅니다.</td></tr>
+<tr><td>음성 메시지가 글로 바뀌지 않음</td><td>음성 인식 준비가 필요합니다. <a href="hermes-agent-guide.html#ch08-voice">8장 음성</a>을 봅니다.</td></tr>
+</tbody></table></div>
+<details class="adv"><summary>그룹 대화방에서 쓰려면: privacy mode</summary><p>privacy mode 가 켜져 있으면 봇은 <code>/</code> 명령, 봇의 메시지에 단 답장, 입장·퇴장 같은 알림, 봇이 관리자인 채널의 메시지만 봅니다. 끄려면 @BotFather 에게 <code>/mybots</code> 를 보내 내 봇을 고르고 <b>Bot Settings → Group Privacy → Turn off</b>(봇 설정 → 그룹 사생활 보호 → 끄기)를 누릅니다. 바꾼 뒤에는 <b>봇을 그룹에서 내보냈다가 다시 넣어야</b> 적용됩니다. 끄는 대신 봇을 그룹 관리자로 올려도 모든 메시지를 받습니다. 그룹에서도 허용 목록은 그대로 적용됩니다. <a href="hermes-agent-guide.html#ch08-telegram-group">8장 그룹에서 쓰기</a>.</p></details>
+<h3 id="pb7-next">다음에 할 것</h3>
+<ul><li>정해 둔 시간에 결과를 이 대화방으로 받기 — <a href="#pb6">실습 6</a>. 홈 채널은 <a href="hermes-agent-guide.html#ch08-home-channel">8장 홈 채널</a>.</li><li>봇이 답하지 않거나 기억을 못 하는 것 같을 때 — <a href="#pb10">실습 10</a>.</li><li>메신저 안에서 쓰는 명령 전체 — <a href="hermes-agent-guide.html#ch08-commands">8장 대화방 명령</a>. 서비스로 계속 켜 두기 — <a href="hermes-agent-guide.html#ch08-service">8장 서비스</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>BotFather 에게 <code>/newbot</code> 으로 봇과 토큰을 받고, @userinfobot 으로 내 숫자 ID 를 알아냅니다.</li><li><code>hermes gateway setup</code> 에 두 값을 넣고 <code>hermes gateway</code> 로 켠 뒤 봇에게 메시지를 보냅니다.</li><li>토큰은 비밀이고, 허용 목록에 없는 사람은 기본으로 거절됩니다.</li><li>메신저 대화는 저절로 끊기지 않으니 일이 끝나면 <code>/new</code> 로 끊습니다.</li><li>늘 켜 두려면 <code>hermes gateway install</code> 로 서비스로 설치합니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram, /docs/user-guide/messaging (수집일 2026-11-09). 가이드 <a href="hermes-agent-guide.html#ch08-telegram-bot">8장 봇 만들기</a>·<a href="hermes-agent-guide.html#ch08-telegram-config">8장 Telegram 설정</a>. 토큰·ID 숫자와 봇 이름은 원문의 예시 값입니다.</p></section>
+<section class="chapter" id="pb8">
+<div class="ch-head"><div class="ch-no">SCENARIO 8</div><h2>일을 나눠 맡기기 — 세 가지를 동시에 조사시키기</h2><p class="lead">서로 상관없는 조사 세 가지를 Hermes 가 하위 에이전트 셋에게 나눠 주고, 요약만 모아 돌려받게 합니다. 지켜보는 방법과 멈추는 방법도 익힙니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>조사 세 가지를 하위 에이전트<span class="gl">(subagent — 일을 나눠 받은 별도 에이전트)</span> 셋에게 동시에 맡깁니다.</li><li>맡긴 일이 진행되는 모습을 보고, 필요하면 멈춥니다.</li><li>하위 에이전트가 무엇을 모르는지 알고, 맡길 말을 빠짐없이 씁니다.</li></ul><p class="muted">예상 소요 시간: 15~25분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb8-prep">준비물</a>을 확인한 뒤 <a href="#pb8-steps">따라 하기</a>를 진행하세요. 결과가 이상하거나 한참 조용하면 <a href="#pb8-stuck">막히면</a>을 봅니다. 처음에는 파일을 고치지 않는 조사 일로만 연습합니다.</p></div>
+<h3 id="pb8-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">시작 전 준비</a>와 <a href="#pb1">실습 1</a>을 마쳐, Hermes Agent<span class="gl">(Nous Research 가 만든, 쓸수록 스스로 배우는 AI 에이전트 — 에이전트는 도구를 써서 내 대신 일을 해 주는 AI 프로그램)</span>가 도구를 써서 결과를 내는 것을 본 상태. 이 뒤로는 Hermes 라고 부릅니다.</li><li>평소처럼 <code>hermes</code> 로 연 대화 화면.</li><li>조사에 필요한 도구가 켜져 있는 상태. 하위 에이전트는 부모가 켜 둔 툴셋<span class="gl">(toolset — 도구 꾸러미)</span>만 물려받습니다. 웹 조사가 필요하면 대화를 시작하기 전에 <a href="hermes-agent-guide.html#ch04-toolsets">4장 툴셋</a>을 보고 켜 둡니다.</li><li>서로의 결과를 기다릴 필요가 없는 조사 주제 3개. 이 실습은 공식 문서의 예시(WebAssembly · RISC-V · 양자 컴퓨팅)를 씁니다. 내 주제로 바꿔도 됩니다.</li></ul>
+<div class="warn"><b>토큰이 더 듭니다</b><p>하위 에이전트는 저마다 모델<span class="gl">(에이전트의 두뇌 역할을 하는 AI)</span>을 처음부터 따로 돌립니다. 공식 문서도 위임의 토큰<span class="gl">(AI 가 읽고 쓰는 글의 양을 세는 단위)</span> 비용이 "더 높다"고 적습니다. 처음에는 3개로만 연습합니다.</p></div>
+<div class="note"><b>완료 기준</b><p>세 조사의 요약이 대화에 돌아오고, 그 안에 세 주제가 모두 들어 있는지 읽어 확인하면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 760 240" role="img" aria-label="부모가 일을 셋으로 나누고 요약을 묶어 받는 흐름">
+<rect class="box s-accent" x="20" y="85" width="170" height="70" rx="12"/><text x="105" y="115" text-anchor="middle">Hermes (부모)</text><text class="sub" x="105" y="138" text-anchor="middle">일을 셋으로 나눔</text>
+<path class="line s-accent anim-flow" d="M190 120 H240 V47 H290"/>
+<path id="pb8-ov-b" class="line s-accent anim-flow" d="M190 120 H290"/>
+<path class="line s-accent anim-flow" d="M190 120 H240 V193 H290"/>
+<circle r="5" class="f-accent"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#pb8-ov-b"/></animateMotion></circle>
+<rect class="box s-amber" x="290" y="20" width="190" height="54" rx="10"/><text x="385" y="43" text-anchor="middle">하위 에이전트 1</text><text class="sub" x="385" y="62" text-anchor="middle">WebAssembly 조사</text>
+<rect class="box s-amber" x="290" y="93" width="190" height="54" rx="10"/><text x="385" y="116" text-anchor="middle">하위 에이전트 2</text><text class="sub" x="385" y="135" text-anchor="middle">RISC-V 조사</text>
+<rect class="box s-amber" x="290" y="166" width="190" height="54" rx="10"/><text x="385" y="189" text-anchor="middle">하위 에이전트 3</text><text class="sub" x="385" y="208" text-anchor="middle">양자 컴퓨팅 조사</text>
+<path class="line s-green" d="M480 47 H525 V120 H570"/>
+<path class="line s-green" d="M480 120 H570"/>
+<path class="line s-green" d="M480 193 H525 V120"/>
+<rect class="box s-green" x="570" y="85" width="170" height="70" rx="12"/><text x="655" y="115" text-anchor="middle">묶음 결과</text><text class="sub" x="655" y="138" text-anchor="middle">요약 3개가 한 번에</text>
+</svg><figcaption>이 실습의 흐름 — 부모가 일을 나누고, 하위 에이전트가 각자 조사하고, 요약만 부모의 대화로 돌아옵니다.</figcaption></figure>
+<h3 id="pb8-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb8-s1">1단계 · 동시에 맡겨도 되는 일인지 가르기</h4>
+<p>위임<span class="gl">(delegation — 일을 하위 에이전트에게 나눠 맡기는 것)</span>으로 한꺼번에 보낸 일은 모두 동시에 실행됩니다. 그래서 서로의 결과를 기다릴 필요가 없는 일만 한 번에 묶습니다. 공식 문서는 "B 가 A 의 결과를 필요로 하면 A 를 먼저 맡기고, A 가 돌아온 뒤 그 결과를 넣어 B 를 맡기라"고 적습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 180" role="img" aria-label="동시에 맡길 일과 순서대로 맡길 일">
+<text x="190" y="34" text-anchor="middle">동시에 맡겨도 되는 일</text>
+<rect class="box s-green" x="30" y="60" width="100" height="56" rx="10"/><text x="80" y="93" text-anchor="middle">조사 A</text>
+<rect class="box s-green" x="140" y="60" width="100" height="56" rx="10"/><text x="190" y="93" text-anchor="middle">조사 B</text>
+<rect class="box s-green" x="250" y="60" width="100" height="56" rx="10"/><text x="300" y="93" text-anchor="middle">조사 C</text>
+<text class="sub" x="190" y="146" text-anchor="middle">서로의 결과를 기다리지 않음</text>
+<path class="line" d="M390 20 V160"/>
+<text x="585" y="34" text-anchor="middle">순서대로 맡겨야 하는 일</text>
+<rect class="box s-amber" x="430" y="60" width="120" height="56" rx="10"/><text x="490" y="93" text-anchor="middle">조사 A</text>
+<path class="line s-amber anim-flow" d="M550 88 H620"/>
+<rect class="box s-amber" x="620" y="60" width="120" height="56" rx="10"/><text x="680" y="84" text-anchor="middle">정리 B</text><text class="sub" x="680" y="104" text-anchor="middle">A 결과가 필요</text>
+<text class="sub" x="585" y="146" text-anchor="middle">A 가 돌아온 뒤 B 를 맡김</text>
+</svg><figcaption>왼쪽처럼 서로 독립된 일만 한 묶음으로 보냅니다.</figcaption></figure>
+<p><b>확인:</b> 세 주제 가운데 어느 것도 다른 주제의 조사 결과가 있어야 시작할 수 있는 것이 아닙니다.</p>
+</div>
+<div data-step="2"><h4 id="pb8-s2">2단계 · 맡길 말을 빠짐없이 쓰기</h4>
+<p>하위 에이전트는 완전히 빈 대화에서 시작합니다. 내가 Hermes 와 지금까지 나눈 이야기, 앞서 쓴 도구의 결과를 하나도 모릅니다. 아는 것은 부모가 넘겨준 두 가지 — 목표(<code>goal</code>)와 배경(<code>context</code>) — 뿐입니다. 공식 문서의 나쁜 예와 좋은 예입니다.</p>
+<pre><code># BAD - subagent has no idea what "the error" is
+delegate_task(goal="Fix the error")
+
+# GOOD - subagent has all context it needs
+delegate_task(
+    goal="Fix the TypeError in api/handlers.py",
+    context="""The file api/handlers.py has a TypeError on line 47: ...
+    The project is at /home/user/myproject and uses Python 3.11."""
+)</code></pre>
+<p>뜻(가운데는 줄였습니다): 나쁜 예는 "그 오류 고쳐 줘"입니다. 하위 에이전트는 "그 오류"가 무엇인지 모릅니다. 좋은 예는 어느 파일의 어떤 오류인지, 프로젝트가 어디에 있는지를 모두 적었습니다. 이 호출은 Hermes 가 만드는 것이고, 나는 Hermes 가 그렇게 쓸 수 있도록 재료를 말로 주면 됩니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 230" role="img" aria-label="목표와 배경만 하위 에이전트로 건너감">
+<rect class="box s-accent" x="20" y="30" width="250" height="170" rx="12"/><text x="145" y="62" text-anchor="middle">부모의 대화</text><text class="sub" x="145" y="96" text-anchor="middle">지금까지 나눈 이야기</text><text class="sub" x="145" y="120" text-anchor="middle">앞서 쓴 도구의 결과</text><text class="sub" x="145" y="166" text-anchor="middle">→ 넘어가지 않음</text>
+<path id="pb8-ctx-path" class="line s-accent anim-flow" d="M270 115 H490"/>
+<text class="sub" x="380" y="100" text-anchor="middle">목표 + 배경만 건너감</text>
+<circle r="6" class="f-accent"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#pb8-ctx-path"/></animateMotion></circle>
+<rect class="box s-amber" x="490" y="30" width="250" height="170" rx="12"/><text x="615" y="62" text-anchor="middle">하위 에이전트</text><text class="sub" x="615" y="96" text-anchor="middle">빈 대화에서 시작</text><text class="sub" x="615" y="120" text-anchor="middle">받은 것: 목표와 배경</text><text class="sub" x="615" y="166" text-anchor="middle">→ 적힌 만큼만 앎</text>
+</svg><figcaption>하위 에이전트로 건너가는 것은 목표와 배경뿐입니다. 예외로, 작업 폴더의 맥락 파일(AGENTS.md 등)은 함께 읽힙니다.</figcaption></figure>
+<p>이 실습에서 보낼 문장은 아래와 같습니다. 주제와 초점은 공식 문서의 "Parallel Research" 예시에서 가져왔고, 문장으로 옮긴 것은 연습용입니다.</p>
+<pre><code>Research these three topics in parallel using delegate_task, one subagent per topic, then give me one combined summary.
+1. The current state of WebAssembly in 2025. Focus on: browser support, non-browser runtimes, language support
+2. The current state of RISC-V adoption in 2025. Focus on: server chips, embedded systems, software ecosystem
+3. Quantum computing progress in 2025. Focus on: error correction breakthroughs, practical applications, key players</code></pre>
+<p>뜻: 아래 세 주제를 delegate_task 로, 주제마다 하위 에이전트 하나씩 동시에 조사하고 요약을 하나로 묶어 줘. ① 2025년 WebAssembly 현황 — 브라우저 지원, 브라우저 밖 실행 환경, 언어 지원 ② 2025년 RISC-V 도입 현황 — 서버 칩, 임베디드 기기, 소프트웨어 생태계 ③ 2025년 양자 컴퓨팅 진전 — 오류 정정의 돌파구, 실제 쓰임새, 주요 참여자.</p>
+<p><b>확인:</b> 주제마다 "무엇을 조사할지"와 "어디에 초점을 둘지"가 한 줄 안에 다 있습니다. "아까 말한 그것" 같은 표현이 없습니다.</p>
+<details class="adv"><summary>한 번에 몇 개까지 맡길 수 있나</summary><p>Hermes 는 안에서 <code>delegate_task</code> 도구의 <code>tasks</code> 목록에 일을 여러 개 담아 보냅니다. 기본으로 10개까지 동시에 돌 수 있고(설정으로 바꿀 수 있음), 한도를 넘는 묶음은 조용히 잘리지 않고 도구 오류로 돌아옵니다. <a href="hermes-agent-guide.html#ch07-delegate-batch">7장 여러 일을 한 번에 맡기기</a> · <a href="hermes-agent-guide.html#ch07-delegate-context">하위 에이전트가 아는 것</a>.</p></details>
+</div>
+<div data-step="3"><h4 id="pb8-s3">3단계 · 보내고, 대화가 바로 돌아오는지 보기</h4>
+<p>2단계의 문장을 Hermes 대화에 보냅니다. 위임은 백그라운드<span class="gl">(뒤에서 따로 도는 것)</span>에서 실행됩니다. Hermes 는 접수했다는 표시만 바로 돌려주고 대화를 계속할 수 있게 하며, 결과는 나중에 새 메시지로 대화에 들어옵니다.</p>
+<p>하위 에이전트가 일하는 동안에는 입력 칸 위에 살아 있는 하위 에이전트가 자동으로 표시됩니다. 공식 문서에 따르면 여기에 개수, 작업 이름, 지난 시간, 가장 최근 활동이 보이고, 보는 동안에도 글을 계속 쓸 수 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 270" role="img" aria-label="화면 흉내: 입력 칸 위의 하위 에이전트 표시">
+<rect class="box" x="20" y="20" width="720" height="230" rx="12"/>
+<text class="sub" x="40" y="48">입력 칸 위 — 일하는 하위 에이전트 (개수 · 작업 이름 · 지난 시간 · 최근 활동)</text>
+<rect class="box s-amber" x="40" y="60" width="680" height="34" rx="6"/><g transform="translate(60,77)"><g class="anim-spin"><circle cx="0" cy="0" r="7" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-dasharray="11 33"/></g></g><text x="80" y="82">작업 1 · WebAssembly 조사</text>
+<rect class="box s-amber" x="40" y="100" width="680" height="34" rx="6"/><g transform="translate(60,117)"><g class="anim-spin"><circle cx="0" cy="0" r="7" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-dasharray="11 33"/></g></g><text x="80" y="122">작업 2 · RISC-V 조사</text>
+<rect class="box s-amber" x="40" y="140" width="680" height="34" rx="6"/><g transform="translate(60,157)"><g class="anim-spin"><circle cx="0" cy="0" r="7" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-dasharray="11 33"/></g></g><text x="80" y="162">작업 3 · 양자 컴퓨팅 조사</text>
+<rect class="box s-accent" x="40" y="194" width="680" height="40" rx="6"/><text x="56" y="219">입력 칸 — 기다리는 동안에도 계속 쓸 수 있음</text><rect class="f-accent anim-blink" x="330" y="205" width="2" height="18"/>
+</svg><figcaption>화면 흉내 — 원문이 적은 항목만 옮겼습니다. 실제 글자와 배치는 다를 수 있습니다.</figcaption></figure>
+<p><b>확인:</b> 입력 칸 위에 하위 에이전트가 표시되고, 입력 칸에 글을 쓸 수 있습니다. 표시가 없이 Hermes 가 혼자 차례로 조사한다면 "delegate_task 로 나눠서 해 줘"라는 뜻이 문장에 들어갔는지 다시 봅니다.</p>
+</div>
+<div data-step="4"><h4 id="pb8-s4">4단계 · 일하는 모습 지켜보기</h4>
+<p>더 자세히 보고 싶으면 명단 화면을 엽니다.</p>
+<p>기본 CLI<span class="gl">(터미널에서 글자로 쓰는 프로그램 화면)</span>에서는 <kbd>Ctrl</kbd>+<kbd>T</kbd>(또는 <kbd>F6</kbd>)로 전체 화면 명단을 엽니다. 화살표로 하위 에이전트를 고르고 <kbd>Enter</kbd> 로 그 에이전트의 최근 기록을 보며, <kbd>PgUp</kbd>/<kbd>PgDn</kbd> 으로 넘깁니다.</p><p>글자로 된 요약만 보려면 <code>/agents</code>(또는 <code>/tasks</code>)를 입력합니다. 공식 문서가 보여 주는 출력 예시는 이런 모양입니다.</p><pre><code>Background delegations: 1 running
+- deleg_ab12cd34 · running · research the delegation stall monitor
+  - child 1: 4 api calls · in web_search · active 12s ago
+  - child 2: 7 api calls · between turns · active 3s ago</code></pre><p>뜻: 백그라운드 위임 1건 실행 중. 하위 1번은 API 호출 4번(모델에 보낸 요청 수), 지금 웹 검색 도구를 쓰는 중, 12초 전에 움직임이라는 뜻입니다.</p>
+<p>TUI<span class="gl">(<code>hermes --tui</code> 로 여는 새 터미널 화면)</span>에서는 <kbd>Ctrl</kbd>+<kbd>T</kbd> 또는 <code>/agents</code> 로 나무 모양 명단을 열고, <kbd>Enter</kbd> 로 최근 기록을 봅니다.</p>
+<p>"최근 활동"은 지금 무엇을 하고 있는지 보여 줄 뿐, 몇 퍼센트 끝났는지를 뜻하지 않습니다. <b>확인:</b> 명단에서 세 작업이 각각 보이고, 최근 활동 시각이 계속 바뀝니다.</p>
+<details class="adv"><summary>더 깊이 보기 · 도중에 방향 바꾸기</summary><p>위임마다 사람이 읽을 수 있는 실시간 기록 파일이 작업당 하나씩 생깁니다. 원문 예시는 <code>tail -f ~/.hermes/cache/delegation/live/deleg_ab12cd34/task-0.log</code> 입니다(<code>deleg_…</code> 는 내 위임의 ID, <code>~</code> 는 내 홈 폴더). 멈추지 않고 방향만 바꾸려면 명단에서 고른 뒤 기본 CLI 는 <kbd>s</kbd>, TUI 는 <kbd>e</kbd> 로 안내 글을 보냅니다. 글은 "대기 중"으로 접수되고 하위 에이전트가 다음 확인 지점에서 읽습니다. <a href="hermes-agent-guide.html#ch07-delegate-monitor">7장 하위 에이전트 지켜보기</a>.</p></details>
+</div>
+<div data-step="5"><h4 id="pb8-s5">5단계 · 묶음 결과 받기</h4>
+<p>기본 설정에서는 세 작업이 <b>모두 끝난 뒤</b> 결과가 메시지 하나로 묶여 돌아옵니다. 먼저 끝난 것부터가 아니라 내가 적은 순서(1·2·3)대로 정리됩니다. 부모의 대화에는 하위 에이전트가 거친 긴 과정이 아니라 마지막 요약만 들어옵니다. 그래서 부모의 컨텍스트<span class="gl">(모델이 한 번에 기억하며 볼 수 있는 글의 양)</span>가 조사 과정으로 가득 차지 않습니다.</p>
+<p>끝날 때는 <code>Subagent Task Completed: …</code> 처럼 작업 이름이 앞에 붙은 완료 알림이 뜹니다. 실패한 작업은 조용히 사라지지 않고, 제공자<span class="gl">(provider — AI 모델을 빌려주는 서비스)</span> 오류나 시간 초과 같은 이유 한 줄이 붙습니다. 공식 문서의 예시입니다.</p>
+<pre><code>⚠️ Subagent failed — "your goal": HTTP 404: model not found (after 12s)</code></pre>
+<p>뜻: 하위 에이전트 실패 — "맡긴 목표": 모델을 찾지 못함(12초 뒤). 여러 개를 맡겼을 때는 작업별 완료 줄의 ✗ 표시 옆에 이유가 붙습니다.</p>
+<p><b>확인:</b> 돌아온 답에 세 주제의 요약이 모두 들어 있습니다. ✗ 가 붙은 작업이 있으면 이유를 읽고, 그 주제만 다시 맡깁니다.</p>
+</div>
+<div data-step="6"><h4 id="pb8-s6">6단계 · 필요할 때 멈추기</h4>
+<p>잘못 맡겼다면 멈출 수 있습니다. <kbd>Ctrl</kbd>+<kbd>C</kbd> 나 <kbd>Esc</kbd> 는 Hermes 의 지금 차례만 멈추고, 백그라운드에서 도는 하위 에이전트는 멈추지 않습니다. 이어서 메시지를 보내는 것도 마찬가지입니다.</p>
+<pre><code>/stop</code></pre>
+<p>뜻: 이 세션<span class="gl">(대화 한 묶음)</span>의 백그라운드 위임을 끝냅니다. 세션을 닫거나 <code>/new</code> 로 새로 시작해도 끝납니다. 하나만 멈추려면 4단계의 명단에서 고른 뒤 멈춤 키를 누릅니다(기본 CLI 는 <kbd>x</kbd> 다음 <kbd>y</kbd>, TUI 는 <kbd>x</kbd>). 다른 하위 에이전트는 계속 일합니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 190" role="img" aria-label="멈춤 키와 /stop 의 범위 차이">
+<rect class="box s-amber" x="20" y="20" width="190" height="60" rx="10"/><text x="115" y="55" text-anchor="middle">Ctrl+C · Esc</text>
+<path class="line s-amber anim-flow" d="M210 50 H285"/>
+<rect class="box" x="285" y="20" width="190" height="60" rx="10"/><text x="380" y="55" text-anchor="middle">지금 차례만 멈춤</text>
+<path class="line s-amber anim-flow" d="M475 50 H550"/>
+<rect class="box s-green" x="550" y="20" width="190" height="60" rx="10"/><text x="645" y="46" text-anchor="middle">하위 에이전트</text><text class="sub" x="645" y="66" text-anchor="middle">계속 일함</text>
+<rect class="box s-red" x="20" y="110" width="190" height="60" rx="10"/><text x="115" y="145" text-anchor="middle">/stop</text>
+<path class="line s-red anim-flow" d="M210 140 H285"/>
+<rect class="box" x="285" y="110" width="190" height="60" rx="10"/><text x="380" y="136" text-anchor="middle">백그라운드 위임</text><text class="sub" x="380" y="156" text-anchor="middle">모두 끝냄</text>
+<path class="line s-red anim-flow" d="M475 140 H550"/>
+<rect class="box s-red" x="550" y="110" width="190" height="60" rx="10"/><text x="645" y="136" text-anchor="middle">부분 결과</text><text class="sub" x="645" y="156" text-anchor="middle">interrupted 로 돌아옴</text>
+</svg><figcaption>멈춤 키와 <code>/stop</code> 의 범위가 다릅니다.</figcaption></figure>
+<p>멈춘 하위 에이전트도 빈손으로 끝나지 않습니다. 멈추기 직전까지 쓴 내용이 <code>interrupted</code>(중단됨) 상태의 결과로 돌아옵니다. <b>확인:</b> 멈췄다면 <code>Subagent Task Interrupted: …</code> 알림과 함께 부분 결과가 대화에 들어옵니다. 멈출 일이 없었다면 이 단계는 읽기만 하고 넘어갑니다.</p>
+</div></div>
+<h3 id="pb8-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>조사가 엉뚱한 방향으로 감</td><td>하위 에이전트는 앞선 대화를 모릅니다. 2단계처럼 주제마다 초점을 적어 다시 맡깁니다.</td></tr>
+<tr><td>하위 에이전트가 나에게 되묻지 않음 · 기억에 남기지 않음</td><td>정해진 동작입니다. 하위 에이전트는 사용자에게 되묻기(<code>clarify</code>), 기억 쓰기(<code>memory</code>), 메시지 보내기(<code>send_message</code>), 예약 만들기(<code>cronjob</code>), 다시 위임하기(<code>delegate_task</code>)를 쓸 수 없습니다. 판단에 필요한 것은 처음부터 적어 줍니다.</td></tr>
+<tr><td>웹 조사를 하지 못함</td><td>하위 에이전트는 부모의 툴셋만 물려받습니다. 필요한 도구를 켜고(<a href="hermes-agent-guide.html#ch04-toolsets">4장 툴셋</a>) 새 대화에서 다시 맡깁니다.</td></tr>
+<tr><td>한참 조용함</td><td><code>/agents</code> 로 마지막 활동 시각을 봅니다. 움직이고 있으면 기다립니다 — 기본으로 시간제한이 없습니다. 진행이 완전히 멈춘 채 450초(도구 안에서는 1200초)가 지나면 Hermes 가 스스로 중단시키고, 목록에 <code>stalling · no progress 450s — interrupting</code> 으로 표시합니다.</td></tr>
+<tr><td>Hermes 를 껐다 켰더니 하던 조사가 사라짐</td><td>Hermes 프로세스가 다시 시작되면 실행 중이던 하위 에이전트는 이어지지 않습니다. 세션을 닫거나 Hermes 가 다시 시작돼도 끝까지 돌아야 하는 일은 예약 작업(<a href="#pb6">실습 6</a>)으로 만듭니다.</td></tr>
+</tbody></table></div>
+<details class="adv"><summary>한도와 설정 — 숫자로 보기</summary><div class="table-wrap"><table class="kv"><thead><tr><th>항목</th><th>기본값과 뜻</th></tr></thead><tbody><tr><td>하위 에이전트 하나의 작업 횟수</td><td>도구를 쓰는 차례 250번(<code>delegation.max_iterations</code>). 다 쓰면 횟수 한도로 멈췄다는 표시와 함께 돌아옵니다.</td></tr><tr><td>한 번 묻고 끝나는 실행</td><td><code>hermes chat -q</code> 같은 실행은 하위 에이전트를 합쳐 2개까지.</td></tr></tbody></table></div><p><a href="hermes-agent-guide.html#ch07-delegate-limits">7장 위임의 한도</a>.</p></details>
+<h3 id="pb8-next">다음에 할 것</h3>
+<ul><li>주제 세 개를 내 조사 거리로 바꿔 봅니다. 주제마다 초점 한 줄을 꼭 붙입니다.</li><li>위임이 무엇이고 언제 쓰는지는 <a href="hermes-agent-guide.html#ch07-delegate-what">7장 위임이란</a>에서 읽습니다.</li><li>같은 조사를 매일 받고 싶다면 <a href="#pb6">실습 6</a>, 휴대폰에서 맡기고 싶다면 <a href="#pb7">실습 7</a>을 봅니다.</li></ul>
+<div class="note"><b>파일을 고치는 일을 나눠 맡길 때</b><p>하위 에이전트는 기본으로 부모와 같은 작업 폴더를 씁니다. 읽기만 하는 조사는 괜찮지만, 여럿이 같은 파일을 동시에 고치면 부딪칠 수 있습니다. 고치는 일은 <a href="hermes-agent-guide.html#ch07-delegate-limits">7장 위임의 한도와 설정</a>을 읽은 뒤에 맡깁니다.</p></div>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>서로의 결과를 기다리지 않는 일만 한 번에 묶어 맡깁니다.</li><li>하위 에이전트는 앞선 대화를 모릅니다. 주제마다 무엇을, 어디에 초점을 둘지 적습니다.</li><li>위임은 뒤에서 돌고, 결과는 모두 끝난 뒤 요약 묶음 하나로 돌아옵니다.</li><li><kbd>Ctrl</kbd>+<kbd>T</kbd> 나 <code>/agents</code> 로 지켜보고, 멈출 때는 <code>/stop</code> 을 씁니다.</li><li>하위 에이전트마다 모델을 따로 돌리므로 토큰이 더 듭니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/user-guide/features/delegation (수집본 <code>sources/raw/user-guide_features_delegation.md</code>). 가이드 <a href="hermes-agent-guide.html#ch07-delegate-what">7장 예약 작업과 위임</a>. 2단계의 부탁 문장은 원문 예시의 주제·초점을 문장으로 옮긴 연습용입니다.</p></section>
+<section class="chapter" id="pb9">
+<div class="ch-head"><div class="ch-no">SCENARIO 9</div><h2>막힘 해결 ① — 설치가 안 되거나 답이 이상할 때</h2><p class="lead">Hermes Agent 가 설치되지 않거나, 열리긴 하는데 답이 비어 있거나 엉뚱할 때 따라가는 순서입니다. 이것저것 한꺼번에 건드리지 않습니다. 증상을 한 줄로 적고, 원문이 정해 둔 순서대로 하나씩 확인한 뒤, 평범한 대화 한 번으로 고쳐졌는지 봅니다.</p></div>
+<div class="learn"><b>이 시나리오로 할 수 있게 되는 것</b><ul><li>증상을 세 갈래 — 명령을 못 찾음 · 열리는데 답이 이상함 · 오류 문구가 나옴 — 로 나눕니다.</li><li><code>hermes doctor</code> 와 <code>hermes model</code> 로 설정을 알려진 상태로 되돌립니다.</li><li>그래도 안 될 때 도움을 청하는 데 필요한 정보를 모읍니다.</li></ul><p class="muted">예상 소요 시간: 10~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p>화면의 오류 문구를 지우지 말고 <a href="#pb9-steps">따라 하기</a> 1단계부터 시작하세요. 오류 문구가 또렷하면 <a href="#pb9-stuck">막히면</a>의 표에서 같은 문구를 먼저 찾아도 됩니다. 메신저 봇이 답하지 않거나 기억·세션이 사라진 것 같을 때는 <a href="#pb10">실습 10</a>입니다.</p></div>
+<h3 id="pb9-prep">준비물과 완료 기준</h3><ul><li>터미널<span class="gl">(글자로 명령을 입력하는 창)</span>. 이 실습의 명령은 대부분 Hermes 대화 안이 아니라 터미널에 넣습니다.</li><li>화면에 나온 오류 문구 그대로. 메모장에 복사해 둡니다. 요약하지 말고 글자 그대로가 중요합니다.</li><li>내가 고른 제공자<span class="gl">(provider — AI 모델을 빌려주는 서비스)</span>의 로그인 정보나 API 키<span class="gl">(서비스가 나를 알아보는 비밀 문자열)</span>.</li></ul><div class="note"><b>완료 기준</b><p>평범한 대화 한 번이 오류 없이 답을 받으면 완료입니다. 원문의 원칙은 "설정을 고쳤으면 기능을 더 얹기 전에 평범한 대화부터 다시 시험한다"입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 230" role="img" aria-label="증상을 세 갈래로 나눕니다. 명령을 못 찾으면 2단계, 열리는데 답이 이상하면 3·4단계, 오류 문구가 나오면 막히면 표로 갑니다.">
+<rect class="box s-accent" x="240" y="16" width="240" height="48" rx="12"/><text x="360" y="46" text-anchor="middle">무엇이 이상한가요?</text>
+<path class="line s-accent anim-flow" d="M300 64 C300 96 125 88 125 118"/>
+<path class="line s-accent anim-flow" d="M360 64 V118"/>
+<path class="line s-accent anim-flow" d="M420 64 C420 96 595 88 595 118"/>
+<rect class="box s-red" x="20" y="118" width="210" height="92" rx="12"/><text x="125" y="146" text-anchor="middle">hermes 명령을 못 찾음</text><text class="sub" x="125" y="168" text-anchor="middle">command not found</text><text class="sub" x="125" y="192" text-anchor="middle">→ 2단계</text>
+<rect class="box s-amber" x="255" y="118" width="210" height="92" rx="12"/><text x="360" y="146" text-anchor="middle">열리는데 답이 이상함</text><text class="sub" x="360" y="168" text-anchor="middle">비어 있음 · 깨짐 · 엉뚱함</text><text class="sub" x="360" y="192" text-anchor="middle">→ 3 · 4단계</text>
+<rect class="box s-pink" x="490" y="118" width="210" height="92" rx="12"/><text x="595" y="146" text-anchor="middle">오류 문구가 나옴</text><text class="sub" x="595" y="168" text-anchor="middle">400 · 429 · API key …</text><text class="sub" x="595" y="192" text-anchor="middle">→ 「막히면」 표, 그다음 4단계</text>
+</svg><figcaption>먼저 갈래부터 고릅니다. 어느 갈래든 마지막은 5단계 — 평범한 대화로 다시 시험 — 입니다.</figcaption></figure>
+<h3 id="pb9-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb9-s1">1단계 · 증상을 한 줄로 적고 갈래 고르기</h4>
+<p>고치기 전에 무엇이 이상한지부터 적습니다. 화면의 오류 문구를 그대로 복사하고, 그 앞에 "무엇을 하다가"를 한 줄 붙입니다. 예: "설치 명령을 넣었더니 …", "hermes 를 열고 인사를 보냈더니 …".</p><p>그다음 위 그림에서 갈래를 고릅니다. 원문은 무언가 이상하게 느껴질 때 아래 순서로 확인하라고 적습니다. 이 실습은 ①~③을 다룹니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="원문의 복구 순서 여섯 가지: hermes doctor, hermes model, hermes setup, hermes sessions list, hermes --continue, hermes gateway status.">
+<path id="pb9-p-order" class="line" d="M125 54 H595 V160 H125"/>
+<rect class="box s-accent" x="20" y="24" width="210" height="60" rx="12"/><text x="125" y="50" text-anchor="middle">① hermes doctor</text><text class="sub" x="125" y="70" text-anchor="middle">무엇이 빠졌는지 진단</text>
+<rect class="box s-accent" x="255" y="24" width="210" height="60" rx="12"/><text x="360" y="50" text-anchor="middle">② hermes model</text><text class="sub" x="360" y="70" text-anchor="middle">제공자 · 모델 다시 고르기</text>
+<rect class="box s-accent" x="490" y="24" width="210" height="60" rx="12"/><text x="595" y="50" text-anchor="middle">③ hermes setup</text><text class="sub" x="595" y="70" text-anchor="middle">설정 전체 다시 하기</text>
+<rect class="box" x="490" y="130" width="210" height="60" rx="12"/><text x="595" y="156" text-anchor="middle">④ hermes sessions list</text><text class="sub" x="595" y="176" text-anchor="middle">세션이 저장됐는지</text>
+<rect class="box" x="255" y="130" width="210" height="60" rx="12"/><text x="360" y="156" text-anchor="middle">⑤ hermes --continue</text><text class="sub" x="360" y="176" text-anchor="middle">이어 하기가 되는지</text>
+<rect class="box" x="20" y="130" width="210" height="60" rx="12"/><text x="125" y="156" text-anchor="middle">⑥ hermes gateway status</text><text class="sub" x="125" y="176" text-anchor="middle">메신저 연결 상태</text>
+<circle class="f-accent" r="6"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#pb9-p-order"/></animateMotion></circle>
+</svg><figcaption>원문 Recovery Toolkit 의 순서. 앞의 것부터 하나씩 합니다. ④⑤는 <a href="#pb2">실습 2</a>, ⑥은 <a href="#pb10">실습 10</a>에서 다룹니다.</figcaption></figure>
+<p><b>확인:</b> 오류 문구를 복사해 두었고, 세 갈래 가운데 내 증상이 어디인지 골랐습니다.</p>
+</div><div data-step="2"><h4 id="pb9-s2">2단계 · hermes 명령을 못 찾을 때</h4>
+<p><code>hermes: command not found</code> 는 대부분 설치 실패가 아닙니다. 터미널이 새로 생긴 명령의 위치를 아직 읽지 않은 것입니다.</p><pre><code>source ~/.bashrc    # bash
+source ~/.zshrc     # zsh</code></pre><p>뜻: 셸<span class="gl">(터미널 안에서 명령을 받아 실행하는 프로그램)</span> 설정 파일을 다시 읽습니다. 내 셸에 맞는 한 줄만 넣습니다. 터미널 창을 새로 열어도 됩니다.</p><pre><code>which hermes
+ls ~/.local/bin/hermes</code></pre><p>뜻: <code>hermes</code> 명령의 위치를 묻고, 설치 자리에 파일이 있는지 봅니다. <code>~</code> 는 내 홈 폴더입니다.</p><ul><li><b>파일은 있는데 명령을 못 찾는다면</b> — 셸 설정에 경로 한 줄이 빠진 것입니다. zsh 를 쓴다면 아래 줄을 넣은 뒤 터미널을 새로 엽니다.</li></ul><pre><code>echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc</code></pre><p>뜻: "명령을 찾을 때 <code>~/.local/bin</code> 도 보라"는 한 줄을 zsh 설정 파일 끝에 덧붙입니다.</p><ul><li><b>파일 자체가 없다면</b> — 설치가 끝나지 않은 것입니다. <a href="#pb0">시작 전 준비</a> 1단계의 설치 명령을 다시 실행하고, 실패 줄이 나오면 <a href="#pb9-stuck">막히면</a> 표에서 찾습니다.</li></ul><p><b>확인:</b> <code>which hermes</code> 가 경로 한 줄을 내놓습니다.</p>
+<details class="adv"><summary>권한 오류(Permission denied)가 날 때</summary><div class="table-wrap"><table class="kv"><thead><tr><th>언제</th><th>원문의 해결</th></tr></thead><tbody><tr><td>설치 도중</td><td>설치 프로그램은 <code>sudo</code><span class="gl">(관리자 권한으로 실행하는 명령)</span> 없이 실행합니다(<code>~/.local/bin</code> 에 설치됨). 전에 <code>sudo</code> 로 설치한 적이 있다면 <code>sudo rm /usr/local/bin/hermes</code> 로 그때 만들어진 파일을 지운 뒤 보통 설치 명령을 다시 실행합니다.</td></tr><tr><td><code>source ~/.zshrc</code> 를 넣었을 때</td><td>Hermes 문제가 아니라 셸 설정 파일의 권한 문제입니다. <code>ls -la ~/.zshrc</code> 로 권한을 보고, <code>chmod 644 ~/.zshrc</code> 로 고친 뒤 <code>source ~/.zshrc</code> 를 다시 넣습니다. 또는 터미널을 새로 엽니다.</td></tr></tbody></table></div><p><a href="hermes-agent-guide.html#ch10-install-trouble">완전 가이드 10장 설치 문제</a>.</p></details>
+</div><div data-step="3"><h4 id="pb9-s3">3단계 · hermes doctor 로 진단하기</h4>
+<p>명령은 찾는데 무언가 이상하다면 진단부터 합니다.</p><pre><code>hermes doctor</code></pre><p>뜻: 설치와 설정을 점검합니다. 원문은 이 명령이 "무엇이 빠졌고 어떻게 고치는지 정확히 알려 준다"고 적습니다. 결과에 나온 항목을 위에서부터 읽고, 안내된 방법대로 하나씩 고칩니다.</p><div class="tip"><b>업데이트한 뒤부터 이상하다면</b><p>업데이트 뒤 설정 항목이 빠졌다는 문제에는 원문이 두 명령을 차례로 실행하라고 적습니다 — <code>hermes config check</code>(설정 점검), 그다음 <code>hermes config migrate</code>(설정을 새 형식으로 옮기기).</p></div><p><b>확인:</b> doctor 가 짚은 항목과 고치는 방법을 읽었고, 안내대로 고쳤습니다. 짚은 것이 없거나 고친 뒤에도 답이 이상하면 다음 단계로 갑니다.</p>
+<details class="adv"><summary>doctor 가 저장 위치(storage) 문제를 알릴 때</summary><p>Hermes 데이터 폴더나 그 안의 폴더를 다른 저장 장치(외장 디스크·NAS)로 연결해 둔 경우입니다. 연결 대상이 없거나 접근할 수 없으면 Hermes 는 시작을 멈추고 경로를 알려 줍니다. 원문은 이때 <code>config.yaml</code> 을 그대로 두라고 적습니다 — <code>hermes setup</code> 은 이 문제의 해결책이 아닙니다. 저장 장치를 다시 연결하거나 연결 대상을 바로잡은 뒤 다시 시도합니다.</p></details>
+</div><div data-step="4"><h4 id="pb9-s4">4단계 · 제공자와 모델 다시 확인하기</h4>
+<p>"열리는데 답이 비거나 깨진다"에 대해 원문이 꼽는 원인은 제공자 로그인이나 모델 선택이 잘못된 것입니다. 지금 설정을 본 뒤 다시 고릅니다.</p><pre><code>hermes config show | head -20
+hermes model</code></pre><p>뜻: 첫 줄은 저장된 설정의 앞 20줄을 보여 줍니다 — 어떤 모델<span class="gl">(에이전트의 두뇌 역할을 하는 AI)</span>과 제공자가 잡혀 있는지 봅니다. 둘째 줄은 제공자·모델·로그인을 처음부터 다시 고릅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 200" role="img" aria-label="다른 서비스에서 받은 키는 맞지 않습니다. OpenAI 키는 OpenRouter 에서 통하지 않고, OpenRouter 키여야 통합니다.">
+<rect class="box" x="20" y="24" width="210" height="56" rx="12"/><text x="125" y="57" text-anchor="middle">OpenAI 에서 받은 키</text>
+<path class="line s-red" d="M230 52 H490" stroke-dasharray="3 7"/><text x="360" y="42" text-anchor="middle">✗ 통하지 않음</text>
+<rect class="box s-red" x="490" y="24" width="210" height="56" rx="12"/><text x="595" y="57" text-anchor="middle">제공자: OpenRouter</text>
+<rect class="box" x="20" y="116" width="210" height="56" rx="12"/><text x="125" y="149" text-anchor="middle">OpenRouter 에서 받은 키</text>
+<path class="line s-green anim-flow" d="M230 144 H490"/><text x="360" y="134" text-anchor="middle">✓ 통함</text>
+<rect class="box s-green" x="490" y="116" width="210" height="56" rx="12"/><circle class="f-green anim-pulse" cx="508" cy="144" r="5"/><text x="600" y="149" text-anchor="middle">제공자: OpenRouter</text>
+</svg><figcaption>키는 받은 곳에서만 통합니다. 원문: OpenAI 키는 OpenRouter 에서 통하지 않고 그 반대도 마찬가지입니다.</figcaption></figure>
+<ul><li><b>키와 제공자가 짝이 맞는지</b> 봅니다. 키가 없거나, 기한이 지났거나, 잘못 붙여 넣었거나, 다른 제공자의 키일 때 생기는 문제입니다.</li><li><b>모델 이름</b>은 손으로 치지 말고 <code>hermes model</code> 이 보여 주는 목록에서 고릅니다. 이름에 오타가 있거나 그 제공자에 없는 모델이면 "찾을 수 없음"·400 오류가 납니다.</li><li><b>모델 크기</b> — 컨텍스트<span class="gl">(문맥 창 — 모델이 한 번에 기억하며 볼 수 있는 글의 양)</span>가 64,000 토큰<span class="gl">(AI 가 읽고 쓰는 글의 양을 세는 단위)</span>보다 작은 모델은 시작할 때 거부됩니다.</li></ul><p><b>확인:</b> <code>hermes model</code> 을 끝까지 마쳤고, <code>hermes config show | head -20</code> 에 방금 고른 모델·제공자가 보입니다.</p>
+<details class="adv"><summary>키를 직접 넣기 · 여전히 꼬여 있을 때</summary><ul><li>키를 명령으로 직접 넣는 원문 예시: <code>hermes config set OPENROUTER_API_KEY sk-or-v1-xxxxxxxxxxxx</code> — 뒤쪽 자리에 내 키를 넣습니다. 비밀 값은 <code>~/.hermes/.env</code> 에 저장됩니다.</li><li>원문은 <code>~/.hermes/.env</code> 에 서로 부딪치는 항목이 없는지 보라고 적습니다. 예전에 넣은 다른 제공자의 키가 남아 있는 경우입니다.</li><li>모델을 명령으로 정하는 원문 예시: <code>hermes config set model.default anthropic/claude-opus-4.7</code></li><li><code>hermes model</code> 로도 정리되지 않으면 복구 순서의 ③ <code>hermes setup</code>(설정 마법사 전체)으로 넘어갑니다.</li><li>직접 운영하는 모델 서버(custom endpoint)가 엉뚱한 답을 낸다면 주소(base URL)·모델 이름이 틀렸거나 호환되지 않는 서버일 수 있습니다. 원문은 다른 프로그램에서 그 서버가 제대로 답하는지 먼저 확인하라고 적습니다.</li></ul><p><a href="hermes-agent-guide.html#ch10-provider-trouble">완전 가이드 10장 제공자·모델 문제</a>.</p></details>
+</div><div data-step="5"><h4 id="pb9-s5">5단계 · 평범한 대화 한 번으로 다시 시험하기</h4>
+<p>고쳤으면 가장 단순한 대화로 시험합니다. 아래 명령은 화면을 열지 않고 한 번 묻고 답을 받은 뒤 끝납니다.</p><pre><code>hermes chat -q "Hello"</code></pre><p>뜻: Hermes 에게 "Hello" 한마디를 보내고 답을 받습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 170" role="img" aria-label="설정을 고친 뒤 평범한 대화로 시험합니다. 되면 하던 실습으로 돌아가고, 안 되면 복구 순서의 다음 명령으로 갑니다.">
+<rect class="box s-accent" x="20" y="30" width="190" height="64" rx="12"/><text x="115" y="58" text-anchor="middle">설정 고치기</text><text class="sub" x="115" y="78" text-anchor="middle">한 번에 하나만</text>
+<path class="line s-accent anim-flow" d="M210 62 H265"/>
+<rect class="box s-amber" x="265" y="30" width="190" height="64" rx="12"/><circle class="line s-amber anim-spin" cx="287" cy="62" r="9" stroke-dasharray="12 8"/><text x="372" y="58" text-anchor="middle">평범한 대화 한 번</text><text class="sub" x="372" y="78" text-anchor="middle">hermes chat -q "Hello"</text>
+<path class="line s-green anim-flow" d="M455 62 H510"/>
+<rect class="box s-green" x="510" y="30" width="190" height="64" rx="12"/><text x="605" y="58" text-anchor="middle">답이 옴</text><text class="sub" x="605" y="78" text-anchor="middle">하던 실습으로 돌아감</text>
+<path class="line s-red" d="M360 94 V134 H115 V94" stroke-dasharray="3 7"/><text class="sub" x="238" y="154" text-anchor="middle">안 되면: 복구 순서의 다음 명령으로</text>
+</svg><figcaption>한 가지를 고칠 때마다 평범한 대화로 시험합니다. 여러 개를 한꺼번에 바꾸면 무엇이 고쳤는지 알 수 없습니다.</figcaption></figure>
+<p>답이 오면 고쳐진 것입니다. 원문의 원칙을 한 번 더 적습니다 — 평범한 대화가 되기 전에는 메신저 연결·예약 작업·스킬 같은 기능을 얹지 않습니다. 여러 제공자를 오가게 하는 설정(routing·fallback)도 기본 제공자가 안정된 뒤에 켭니다.</p><p><b>확인:</b> <code>hermes chat -q "Hello"</code> 가 오류 없이 답을 내놓았습니다. 이어서 <code>hermes</code> 로 대화 화면도 정상으로 열립니다.</p>
+<details class="adv"><summary>잘 되는 것으로 알려진 모델로 시험하기</summary><p>모델 이름이 의심스러울 때 원문은 모델을 지정해 시험하는 예시를 듭니다: <code>hermes chat -q "hello" --model anthropic/claude-opus-4.7</code>. 이 모델로는 되고 내 설정으로는 안 된다면 저장된 모델 이름이 원인입니다. 내 제공자가 이 모델을 제공하지 않으면 이 시험도 실패하니, 그때는 <code>hermes model</code> 목록에 있는 이름으로 바꿔 넣습니다.</p></details>
+</div><div data-step="6"><h4 id="pb9-s6">6단계 · 그래도 안 되면 — 도움 청할 정보 모으기</h4>
+<p>여기까지 해도 안 되면 혼자 더 붙잡지 않습니다. 원문은 문제를 알릴 때 네 가지를 함께 적으라고 합니다.</p><pre><code>hermes --version
+python3 --version</code></pre><p>뜻: Hermes 버전과 Python<span class="gl">(Hermes 가 돌아가는 데 쓰는 프로그래밍 언어 실행기)</span> 버전을 보여 줍니다.</p><ol class="steps"><li><b>운영체제</b><span>macOS·Linux·Windows 가운데 무엇이고 어떤 버전인지.</span></li><li><b>Python 버전과 Hermes 버전</b><span>위 두 명령의 결과.</span></li><li><b>오류 문구 전체</b><span>1단계에서 복사해 둔 것. 줄이지 않습니다.</span></li></ol><p>원문이 안내하는 곳은 세 군데입니다 — 이미 올라온 문제 찾아보기(GitHub Issues), 커뮤니티에 묻기(Nous Research Discord), 버그 신고. 올리기 전에 문구 안에 API 키가 섞여 있지 않은지 꼭 봅니다.</p><p><b>확인:</b> 운영체제 · 두 버전 · 오류 문구 전체, 네 가지를 한곳에 모았습니다.</p>
+</div></div>
+<h3 id="pb9-stuck">막히면 — 오류 문구로 찾기</h3><div class="table-wrap"><table class="kv"><thead><tr><th>보이는 문구·증상</th><th>뜻과 해 볼 것</th></tr></thead><tbody><tr><td><code>hermes: command not found</code></td><td>셸이 새 경로를 읽지 않았습니다. 2단계.</td></tr><tr><td><code>API key not set</code> · 키가 통하지 않음</td><td><code>hermes model</code> 로 제공자를 다시 설정합니다. 키와 제공자가 짝이 맞는지 봅니다. 4단계.</td></tr><tr><td>첫 대화에서 HTTP 400</td><td>대개 모델 이름이 맞지 않는 것입니다 — 설정된 모델이 그 제공자에 없거나 내 키로는 쓸 수 없습니다. 4단계. OpenRouter 라면 키에 크레딧이 있는지도 봅니다.</td></tr><tr><td>Model not found · not available</td><td>모델 이름이 틀렸거나 내 제공자에 없습니다. <code>hermes model</code> 목록에서 다시 고릅니다.</td></tr><tr><td>429 (rate limit)</td><td>제공자의 사용 한도를 넘었습니다. 잠시 기다렸다 다시 보냅니다. 자주 나면 요금제를 올리거나 다른 모델·제공자를 씁니다.</td></tr><tr><td>Context length exceeded</td><td>대화가 모델이 감당하는 길이를 넘었습니다. 대화 안에서 <code>/compress</code>(대화 압축)를 넣거나, <code>hermes chat</code> 으로 새 세션<span class="gl">(대화 한 묶음)</span>을 시작합니다.</td></tr><tr><td><code>/model</code> 에 제공자가 하나만 보임</td><td>대화 안의 <code>/model</code> 은 이미 설정한 제공자끼리만 바꿉니다. <code>/quit</code> 으로 나가 터미널에서 <code>hermes model</code> 로 제공자를 추가한 뒤 새 대화를 엽니다.</td></tr><tr><td>답이 "Hermes 정책(policy·guardrails) 때문에 거절한다"고 말함</td><td>글로만 된 거절은 Hermes 가 막았다는 증거가 아닙니다. 원문은 Hermes 가 막을 때는 막힌 명령·경로를 적은 도구 오류나 승인 요청이 따로 보인다고 적습니다. <code>/status</code> 로 모델·제공자를 확인하고, 새 세션에서 다른 모델로 다시 해 봅니다. 모델을 바꾸면 달라지는 거절은 모델·제공자 쪽 동작입니다.</td></tr><tr><td><code>…refused this request because of a policy on your account</code></td><td>제공자가 계정 사정으로 거절한 것이라 다시 보내도 같습니다. 문구에 나온 제공자에서 계정 상태와 개인정보 설정을 확인하거나 <code>/model</code> 로 다른 모델·제공자로 바꿉니다.</td></tr><tr><td><code>Could not open a stream to &lt;host&gt; after N attempts (request X KB)</code></td><td>그 주소로 연결이 한 번도 되지 않았습니다(요금은 나가지 않음). 요청 크기가 수백 KB 로 크고 짧은 새 대화는 된다면 <code>/compress</code> 로 줄입니다. 작다면 서버에 닿지 않는 것이니 주소 설정을 확인한 뒤 <code>/retry</code>.</td></tr><tr><td>답이 너무 느림</td><td>원문이 꼽는 원인은 큰 모델, 먼 서버, 도구가 많아 무거워진 요청입니다. 더 빠른 모델로 바꾸거나, <code>hermes chat -t "terminal"</code> 처럼 쓸 툴셋<span class="gl">(toolset — 도구 꾸러미)</span>을 줄여 열어 봅니다.</td></tr></tbody></table></div>
+<details class="adv"><summary>드물게 만나는 설치·환경 문제</summary><div class="table-wrap"><table class="kv"><thead><tr><th>문구</th><th>원문의 설명</th></tr></thead><tbody><tr><td><code>uv: command not found</code></td><td>패키지 관리 도구 uv 가 없거나 경로에 없습니다. 원문의 해결: <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code> 뒤 <code>source ~/.bashrc</code>.</td></tr><tr><td>Unsupported Python version</td><td>지금 설치본은 Python 3.14 로 돌아갑니다. 설치 프로그램과 묶음 설치본이 맞는 Python 을 함께 제공하므로 설치된 앱 안의 Python 을 바꿔 끼우지 않습니다. <code>hermes doctor</code> 를 실행하고 그 설치 방식의 업데이트 방법을 씁니다.</td></tr><tr><td>에이전트가 실행한 명령이 <code>node: command not found</code>(또는 nvm·pyenv 등)</td><td>Hermes 가 터미널 환경을 준비할 때 내 셸 설정 일부를 읽지 못한 경우입니다. <code>~/.hermes/config.yaml</code> 의 <code>terminal:</code> 아래 <code>shell_init_files:</code> 목록에 읽을 파일(예: <code>~/.zshrc</code>)을 적습니다.</td></tr><tr><td>Context length exceeded 가 첫 긴 대화에서 바로 남</td><td>Hermes 가 모델의 컨텍스트 길이를 잘못 알고 있을 수 있습니다. 시작할 때 나오는 줄(예: <code>📊 Context limit: 128000 tokens</code>)이나 <code>/usage</code> 로 확인하고, <code>config.yaml</code> 의 <code>model:</code> 아래 <code>context_length:</code> 에 실제 값을 적습니다. 직접 돌리는 모델 서버에서 주로 생깁니다.</td></tr></tbody></table></div><p><a href="hermes-agent-guide.html#ch10-install-trouble">10장 설치 문제</a>·<a href="hermes-agent-guide.html#ch10-context-trouble">컨텍스트 문제</a>.</p></details>
+<h3 id="pb9-next">다음에 할 것</h3><ul><li>고쳐졌다면 하던 실습으로 돌아갑니다. 처음이라면 <a href="#pb1">실습 1</a>.</li><li>이어 하기가 안 되거나 세션이 안 보이면 <a href="#pb2">실습 2</a>의 「막히면」, 메신저 봇·기억 문제는 <a href="#pb10">실습 10</a>.</li><li>증상별 설명 전체는 <a href="hermes-agent-guide.html#ch10-faq">완전 가이드 10장 자주 묻는 질문</a>·<a href="hermes-agent-guide.html#ch10-stuck">그래도 안 될 때</a>, 원문의 실패 유형 표는 <a href="hermes-agent-guide.html#ch01-failures">1장 자주 겪는 실패</a>·<a href="hermes-agent-guide.html#ch01-recovery">복구 순서</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>오류 문구를 그대로 복사하고, 세 갈래 가운데 어디인지부터 고릅니다.</li><li>명령을 못 찾으면 셸 설정을 다시 읽거나 터미널을 새로 엽니다. 설치에 <code>sudo</code> 는 쓰지 않습니다.</li><li>순서는 <code>hermes doctor</code> → <code>hermes model</code> → <code>hermes setup</code>.</li><li>답이 비거나 깨지면 제공자·모델·키의 짝부터 의심합니다.</li><li>고칠 때마다 <code>hermes chat -q "Hello"</code> 로 시험하고, 되기 전에는 기능을 얹지 않습니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/reference/faq(Troubleshooting — Installation Issues · Provider &amp; Model Issues · Performance Issues · Permission denied when reloading shell after install · Error 400 on first agent run · Still Stuck?) · getting-started/quickstart(Common Failure Modes · Recovery Toolkit) · getting-started/installation(Troubleshooting · Symlinked home directories) · user-guide/cli(Running the CLI). 수집일 2026-11-09. 예상 소요 시간과 "무엇을 하다가" 예문은 이 활용편의 것입니다.</p></section>
+<section class="chapter" id="pb10">
+<div class="ch-head"><div class="ch-no">SCENARIO 10</div><h2>막힘 해결 ② — 봇이 답하지 않거나, 기억·세션이 사라진 것 같을 때</h2><p class="lead">"고장 났다"고 느껴지는 세 가지 증상을 차례대로 좁혀 봅니다. 대부분은 고장이 아니라 게이트웨이가 꺼져 있거나, 저장이 실제로는 안 됐거나, 다른 곳을 보고 있는 경우입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>증상을 보고 어느 길로 점검할지 고릅니다.</li><li>봇이 답하지 않을 때 게이트웨이 → 토큰 → 허용 목록 순서로 확인합니다.</li><li>"기억해 둘게요"라고 했는데 잊은 것 같을 때 기억 파일을 직접 열어 봅니다.</li><li>사라진 것 같은 지난 대화를 세션 목록에서 찾아 이어 합니다.</li></ul><p class="muted">예상 소요 시간: 증상 하나에 10~15분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb10-prep">길 고르기 그림</a>에서 내 증상을 찾아 해당 단계만 따라 합니다. 다 읽을 필요는 없습니다. 표에 없는 증상은 <a href="#pb10-stuck">막히면</a>을 봅니다.</p></div>
+<h3 id="pb10-prep">준비물과 완료 기준</h3>
+<ul><li>Hermes Agent 를 설치한 컴퓨터의 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>. 설치나 첫 대화부터 안 된다면 <a href="#pb9">실습 9</a>가 먼저입니다.</li><li>봇 증상이라면 <a href="#pb7">실습 7</a>에서 만든 Telegram 봇과 내 사용자 ID.</li><li>증상 메모 한 줄 — 무엇을 했고, 무엇을 기대했고, 실제로 무슨 일이 있었는지.</li></ul>
+<div class="note"><b>완료 기준</b><p>고른 길의 끝에 있는 <b>확인</b>을 통과하면 완료입니다. 봇이 다시 답하거나, 기억 파일에서 내 항목을 눈으로 확인하거나, 세션 목록에서 찾던 대화를 발견하는 것입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 300" role="img" aria-label="증상 세 가지에 따라 갈 단계를 고르는 그림입니다.">
+<rect class="box s-accent anim-pulse" x="250" y="16" width="220" height="46" rx="12"/><text x="360" y="44" text-anchor="middle">어떤 증상인가요?</text>
+<path class="line s-amber anim-flow" d="M360 62 V84 H125 V104"/><path class="line s-pink anim-flow" d="M360 62 V104"/><path class="line s-cyan anim-flow" d="M360 84 H595 V104"/>
+<rect class="box s-amber" x="20" y="104" width="210" height="70" rx="12"/><text x="125" y="132" text-anchor="middle">A · 봇이 답하지 않음</text><text class="sub" x="125" y="154" text-anchor="middle">Telegram 이 조용하거나 거절</text>
+<rect class="box s-pink" x="255" y="104" width="210" height="70" rx="12"/><text x="360" y="132" text-anchor="middle">B · 기억을 못 함</text><text class="sub" x="360" y="154" text-anchor="middle">"기억할게요" 했는데 잊음</text>
+<rect class="box s-cyan" x="490" y="104" width="210" height="70" rx="12"/><text x="595" y="132" text-anchor="middle">C · 대화가 사라진 듯</text><text class="sub" x="595" y="154" text-anchor="middle">어제 대화를 못 찾음</text>
+<path class="line s-amber" d="M125 174 V204"/><path class="line s-pink" d="M360 174 V204"/><path class="line s-cyan" d="M595 174 V204"/>
+<rect class="box s-amber" x="20" y="204" width="210" height="70" rx="12"/><text x="125" y="232" text-anchor="middle">1단계 → 2단계</text><text class="sub" x="125" y="254" text-anchor="middle">게이트웨이 · 토큰 · 허용 목록</text>
+<rect class="box s-pink" x="255" y="204" width="210" height="70" rx="12"/><text x="360" y="232" text-anchor="middle">3단계 → 4단계</text><text class="sub" x="360" y="254" text-anchor="middle">파일에 있나 · 새 세션인가</text>
+<rect class="box s-cyan" x="490" y="204" width="210" height="70" rx="12"/><text x="595" y="232" text-anchor="middle">5단계</text><text class="sub" x="595" y="254" text-anchor="middle">세션 목록에서 찾아 이어 하기</text>
+</svg><figcaption>증상별로 길을 고릅니다. A 는 1·2단계, B 는 3·4단계, C 는 5단계만 하면 됩니다.</figcaption></figure>
+<h3 id="pb10-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb10-s1">1단계 · [A] 게이트웨이가 켜져 있는지 보기</h4>
+<p>봇의 답은 내 컴퓨터에서 도는 게이트웨이<span class="gl">(gateway — 메신저와 Hermes 를 이어 주는, 계속 켜 두는 프로그램)</span>가 만듭니다. 원문은 봇이 답하지 않는 원인을 "봇이 돌고 있지 않거나, 권한이 없거나, 내가 허용 목록에 없다"로 꼽습니다. 가장 흔한 첫 번째부터 봅니다.</p>
+<pre><code># Check if the gateway is running
+hermes gateway status
+
+# Start the gateway
+hermes gateway start
+
+# Check logs for errors
+cat ~/.hermes/logs/gateway.log | tail -50</code></pre>
+<p>뜻: 차례로 게이트웨이가 도는지 확인 · 게이트웨이 시작 · 기록(로그)의 마지막 50줄 보기입니다. <code>~</code> 는 내 홈 폴더입니다. 서비스로 설치하지 않았다면 <code>hermes gateway</code> 로 터미널에서 직접 켭니다(<a href="#pb7-s4">실습 7의 4단계</a>).</p>
+<p><b>확인:</b> 게이트웨이를 켠 뒤 Telegram 에서 메시지를 보내면 답이 옵니다. 그래도 조용하면 기록 마지막 줄의 오류 문장을 메모하고 2단계로 갑니다.</p>
+<details class="adv"><summary>게이트웨이가 아예 켜지지 않을 때 · 켜져 있는데 멈춘 것 같을 때</summary><p>원문이 꼽는 원인은 필요한 부품 누락, 포트 충돌, 잘못된 토큰입니다. 아래 순서로 봅니다.</p><pre><code>cd ~/.hermes/hermes-agent &amp;&amp; python -c "import pm; pm.sync_venv(['messaging'], explicit=True)"
+lsof -i :8080
+hermes config show</code></pre><p>뜻: 메신저 게이트웨이에 필요한 부품 설치 · 8080 포트를 다른 프로그램이 쓰는지 확인 · 지금 설정 보기입니다. <code>hermes gateway status</code> 에 <code>Gateway heartbeat stale</code> 경고가 보이면 "돌고는 있는데 아무 일도 안 하는" 상태이니 게이트웨이를 다시 시작합니다. Windows 의 WSL 에서는 서비스 방식이 불안정하다고 원문이 적습니다 — <code>hermes gateway run</code> 으로 터미널에서 직접 켭니다. 자세한 것은 <a href="hermes-agent-guide.html#ch10-gateway-trouble">10장 게이트웨이 문제</a>.</p></details>
+</div><div data-step="2"><h4 id="pb10-s2">2단계 · [A] 토큰과 허용 목록 확인하기</h4>
+<p>게이트웨이가 켜져 있는데도 안 된다면, 메시지가 어느 문에서 막혔는지 증상으로 가릅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 200" role="img" aria-label="메시지가 지나야 하는 네 개의 문: 게이트웨이 실행, 봇 토큰, 허용 목록, 그룹이면 privacy mode.">
+<path id="pb10-gates" d="M30 20 H690" fill="none" stroke="none"/>
+<path class="line s-accent anim-flow" d="M20 20 H700"/><path class="line" d="M110 20 V36 M275 20 V36 M440 20 V36 M605 20 V36"/>
+<rect class="box s-amber" x="40" y="36" width="140" height="68" rx="12"/><text x="110" y="64" text-anchor="middle">① 게이트웨이</text><text class="sub" x="110" y="86" text-anchor="middle">켜져 있나</text>
+<rect class="box s-amber" x="205" y="36" width="140" height="68" rx="12"/><text x="275" y="64" text-anchor="middle">② 봇 토큰</text><text class="sub" x="275" y="86" text-anchor="middle">맞는 값인가</text>
+<rect class="box s-amber" x="370" y="36" width="140" height="68" rx="12"/><text x="440" y="64" text-anchor="middle">③ 허용 목록</text><text class="sub" x="440" y="86" text-anchor="middle">내 ID 가 있나</text>
+<rect class="box s-amber" x="535" y="36" width="140" height="68" rx="12"/><text x="605" y="64" text-anchor="middle">④ 그룹이라면</text><text class="sub" x="605" y="86" text-anchor="middle">privacy mode</text>
+<circle r="6" class="f-accent"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#pb10-gates"/></animateMotion></circle>
+<text class="sub" x="110" y="134" text-anchor="middle">전혀 답 없음 → 1단계</text><text class="sub" x="275" y="134" text-anchor="middle">전혀 답 없음</text><text class="sub" x="440" y="134" text-anchor="middle">"unauthorized" 라고 답함</text><text class="sub" x="605" y="134" text-anchor="middle">1:1 은 되고 그룹만 조용</text>
+<text class="sub" x="360" y="172" text-anchor="middle">왼쪽 문부터 하나씩 통과해야 Hermes 에 닿습니다</text>
+</svg><figcaption>메시지는 네 개의 문을 차례로 지납니다. 증상을 보면 어느 문에서 막혔는지 짐작할 수 있습니다.</figcaption></figure>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>확인할 것</th></tr></thead><tbody>
+<tr><td>전혀 답이 없음</td><td><code>TELEGRAM_BOT_TOKEN</code> 이 맞는지 봅니다. <code>hermes gateway setup</code> 을 다시 열어 토큰을 확인·재입력하는 것이 가장 쉽습니다. 토큰이 무효가 됐다면 BotFather 에서 <code>/revoke</code> 뒤 <code>/newbot</code> 또는 <code>/token</code> 으로 새로 받아 <code>.env</code> 를 고칩니다.</td></tr>
+<tr><td>"unauthorized"(권한 없음)</td><td>내 사용자 ID 가 <code>TELEGRAM_ALLOWED_USERS</code> 에 없습니다. @userinfobot 으로 숫자를 다시 확인합니다. 이 값을 비워 두면 게이트웨이는 안전을 위해 모든 사람을 거절합니다.</td></tr>
+<tr><td>1:1 은 되는데 그룹만 조용</td><td>privacy mode(사생활 보호 모드)가 켜져 있을 가능성이 큽니다. BotFather 에서 끄거나 봇을 그룹 관리자로 올리고, 바꾼 뒤에는 <b>봇을 그룹에서 내보냈다가 다시 넣습니다</b>. 방법은 <a href="#pb7-stuck">실습 7 막히면</a>.</td></tr>
+</tbody></table></div>
+<p><b>확인:</b> 고친 뒤 게이트웨이를 다시 시작하고 메시지를 보내면 Hermes 의 답이 옵니다.</p>
+</div><div data-step="3"><h4 id="pb10-s3">3단계 · [B] 기억이 실제로 저장됐는지 파일 열어 보기</h4>
+<p>가장 흔한 사연은 이렇습니다. 무언가의 위치를 알려 주자 Hermes 가 "기억해 두겠습니다"라고 답했는데, 새 세션<span class="gl">(대화 한 묶음)</span>에서는 전혀 모릅니다. 원문은 이 순서로 확인하라고 하며, <b>첫 번째가 대부분을 설명한다</b>고 적습니다.</p>
+<p>기억<span class="gl">(memory — 세션이 끝나도 남는 메모)</span>은 모델이 <b>memory 도구를 실제로 썼을 때만</b> 남습니다. "기억에 추가했습니다"라는 문장은 그냥 글일 뿐입니다. 파일을 직접 엽니다.</p>
+<pre><code>cat ~/.hermes/memories/MEMORY.md
+cat ~/.hermes/memories/USER.md</code></pre>
+<p>뜻: 기억 파일 두 개의 내용을 화면에 보여 줍니다. <code>MEMORY.md</code> 는 Hermes 가 적는 메모, <code>USER.md</code> 는 나에 대한 정보입니다.</p>
+<p>찾는 내용이 없다면 저장한 척만 한 것입니다. 작은 로컬 모델(대략 30B 파라미터 미만)이나 도구 호출이 약한 모델에서 자주 생깁니다. 이럴 때는 도구를 쓰라고 콕 집어 말합니다.</p>
+<pre><code>use the memory tool to save the vault path /srv/vault</code></pre>
+<p>뜻: "memory 도구를 써서 보관함 경로 /srv/vault 를 저장해 줘." 경로는 내 것으로 바꿉니다. 계속 반복되면 지시를 늘릴 것이 아니라, 저장하는 동안만이라도 더 강한 모델을 쓰는 것이 해결책이라고 원문은 적습니다.</p>
+<p><b>확인:</b> <code>cat</code> 명령을 다시 실행했을 때 방금 부탁한 내용이 파일에 보입니다.</p>
+</div><div data-step="4"><h4 id="pb10-s4">4단계 · [B] 파일에는 있는데 모른다면 — 새 세션에서 다시 묻기</h4>
+<p>기억은 <b>세션이 시작될 때 한 번</b> 읽혀 그 세션 내내 그대로 쓰입니다. 세션 도중에 저장한 내용은 파일에는 바로 적히지만, 이미 진행 중인 세션에는 보이지 않고 <b>다음 세션</b>부터 보입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 220" role="img" aria-label="기억은 세션 시작 때 한 번 읽히고, 세션 중 저장한 내용은 다음 세션부터 보입니다.">
+<rect class="box s-green" x="250" y="150" width="220" height="50" rx="12"/><text x="360" y="172" text-anchor="middle">기억 파일</text><text class="sub" x="360" y="190" text-anchor="middle">MEMORY.md · USER.md</text>
+<rect class="box s-accent" x="20" y="24" width="300" height="80" rx="12"/><text x="170" y="50" text-anchor="middle">지금 세션</text><text class="sub" x="170" y="72" text-anchor="middle">시작할 때 읽은 내용만 알고 있음</text><text class="sub" x="170" y="90" text-anchor="middle">도중에 저장한 것은 아직 안 보임</text>
+<rect class="box s-pink" x="400" y="24" width="300" height="80" rx="12"/><text x="550" y="50" text-anchor="middle">다음 세션</text><text class="sub" x="550" y="72" text-anchor="middle">/new 또는 hermes 를 새로 실행</text><text class="sub" x="550" y="90" text-anchor="middle">고쳐진 기억을 다시 읽음</text>
+<path class="line s-accent anim-flow" d="M170 104 V175 H250"/><text class="sub" x="100" y="140" text-anchor="middle">① 저장은 바로 파일로</text>
+<path class="line s-pink anim-flow" d="M470 175 H550 V104"/><text class="sub" x="630" y="140" text-anchor="middle">② 새 세션이 읽어 감</text>
+<path class="line s-amber" d="M320 64 H400"/><text class="sub f-amber" x="360" y="56" text-anchor="middle">/new</text>
+</svg><figcaption>저장한 내용은 다음 세션부터 보입니다. 메신저에서는 세션이 저절로 끝나지 않으므로 <code>/new</code> 로 직접 경계를 만들어야 합니다.</figcaption></figure>
+<ol class="steps"><li><b>새 세션 시작하기</b><span>대화 중이라면 <code>/new</code> 를 보냅니다. 터미널에서는 <code>hermes</code> 를 새로 실행해도 새 세션입니다.</span></li><li><b>Telegram 이라면 특히 <code>/new</code></b><span>메신저의 대화는 일부러 하나로 이어지게 만들어져 있어, 컴퓨터를 밤새 껐다 켜도 같은 세션입니다. 다시 시작한 것은 경계가 되지 않습니다.</span></li><li><b>저장한 내용을 물어보기</b><span>저장을 부탁했던 것(예: 보관함 경로)을 새 세션에서 물어봅니다.</span></li></ol>
+<p><b>확인:</b> 새 세션에서 Hermes 가 저장한 내용을 알고 답합니다.</p>
+<details class="adv"><summary>그래도 모른다면: 원문의 나머지 점검 항목</summary><div class="table-wrap"><table class="kv"><thead><tr><th>원인</th><th>확인 방법</th></tr></thead><tbody><tr><td>저장이 승인 대기 중</td><td><code>write_approval: true</code> 설정이면 터미널 대화 밖(메신저 등)의 저장은 승인 전까지 파일에 적히지 않습니다. <code>/memory pending</code> 으로 보고 <code>/memory approve all</code> 로 승인합니다.</td></tr><tr><td>다른 프로필을 보고 있음</td><td>기억은 프로필<span class="gl">(설정·기억·세션을 따로 쓰는 별도 Hermes 환경)</span>마다 따로입니다. <code>hermes -p work</code> 는 <code>~/.hermes/profiles/work/memories/</code> 를 읽습니다. 기본 프로필의 터미널 대화와 다른 프로필의 Telegram 봇은 기억을 나누지 않습니다. <code>hermes profile list</code> 로 무엇이 있는지 봅니다.</td></tr><tr><td>기억 기능이 꺼져 있음</td><td><code>memory.memory_enabled: false</code> 이거나 <code>agent.disabled_toolsets</code> 에 memory 가 있으면 도구 자체가 없어 저장할 수 없습니다.</td></tr><tr><td>기억이 아닌 곳에 적음</td><td><code>.env</code> 에 적은 값은 비밀 값·설정이지 기억이 아닙니다. 저장을 부탁하지 않고 지나가며 말한 사실도 남지 않습니다.</td></tr></tbody></table></div><p>반복 작업마다 필요한 위치 정보는 기억보다 스킬에 두는 편이 낫다고 원문은 권합니다. <a href="hermes-agent-guide.html#ch05-memory-forgot">5장 기억했다더니 잊었을 때</a>.</p></details>
+</div><div data-step="5"><h4 id="pb10-s5">5단계 · [C] 사라진 것 같은 대화를 세션 목록에서 찾기</h4>
+<p>터미널·TUI·메신저의 모든 대화는 <code>~/.hermes/state.db</code> 한 곳에 세션으로 저장됩니다. 자동 정리는 기본으로 꺼져 있고, 켜더라도 <b>끝난</b> 세션만 지웁니다. 그러니 "안 보인다"는 대개 "아직 못 찾았다"입니다.</p>
+<pre><code>hermes sessions list
+hermes sessions list --source telegram
+hermes sessions list --limit 50</code></pre>
+<p>뜻: 최근 세션 20개 보기 · Telegram 에서 한 대화만 보기 · 50개까지 늘려 보기입니다. 목록 끝에 "more not shown" 이라는 줄이 있으면 더 있다는 뜻이니 <code>--limit</code> 숫자를 키웁니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="cli">터미널에서 이어 하기</button><button data-tab="tg">Telegram 에서 이어 하기</button></div>
+<div data-panel="cli"><pre><code>hermes --continue
+hermes --resume 20250305_091523_a1b2c3d4
+hermes --resume "refactoring auth"</code></pre><p>뜻: 가장 최근 세션 이어 하기 · 목록의 ID 로 이어 하기 · 제목으로 이어 하기입니다. ID 와 제목은 원문의 예시이니 내 목록에 보이는 값으로 바꿉니다.</p></div>
+<div data-panel="tg"><p>대화방에서 <code>/sessions</code> 를 보내면 이 대화방의 지난 세션이 나오고, 지금 세션에는 <code>(current)</code> 표시가 붙습니다. 많으면 <code>/sessions search &lt;찾을 말&gt;</code> 로 제목·ID 를 걸러 냅니다. <code>/resume &lt;이름&gt;</code> 으로 그 세션을 다시 엽니다.</p></div></div>
+<figure class="diagram"><svg viewBox="0 0 720 170" role="img" aria-label="터미널, TUI, 메신저의 세션이 모두 state.db 한 곳에 저장되고 hermes sessions list 가 그곳을 읽습니다.">
+<rect class="box s-accent" x="20" y="16" width="170" height="38" rx="10"/><text x="105" y="40" text-anchor="middle">터미널(CLI) 대화</text>
+<rect class="box s-pink" x="20" y="66" width="170" height="38" rx="10"/><text x="105" y="90" text-anchor="middle">TUI 대화</text>
+<rect class="box s-cyan" x="20" y="116" width="170" height="38" rx="10"/><text x="105" y="140" text-anchor="middle">Telegram 대화</text>
+<path class="line s-accent anim-flow" d="M190 35 H240 V85 H280"/><path class="line s-pink anim-flow" d="M190 85 H280"/><path class="line s-cyan anim-flow" d="M190 135 H240 V85"/>
+<rect class="box s-green" x="280" y="50" width="180" height="70" rx="12"/><text x="370" y="80" text-anchor="middle">~/.hermes/state.db</text><text class="sub" x="370" y="102" text-anchor="middle">모든 세션이 모이는 곳</text>
+<path class="line s-green anim-flow" d="M460 85 H500"/>
+<rect class="box s-amber" x="500" y="50" width="200" height="70" rx="12"/><text x="600" y="80" text-anchor="middle">hermes sessions list</text><text class="sub" x="600" y="102" text-anchor="middle">/sessions 도 같은 곳을 읽음</text>
+</svg><figcaption>세션이 모이는 곳은 하나입니다. <code>~/.hermes/sessions/sessions.json</code> 파일에는 메신저 항목만 있는데, 이 파일은 세션 목록이 아니므로 터미널 대화가 없어 보여도 정상입니다.</figcaption></figure>
+<p><b>확인:</b> 목록에서 찾던 대화의 미리 보기 문장이나 제목을 발견했고, 이어 한 뒤 Hermes 가 지난 내용을 알고 있습니다.</p>
+<details class="adv"><summary>목록에 정말 없을 때</summary><p>프로필마다 세션 저장소가 따로이니 다른 프로필에서 한 대화가 아닌지 먼저 봅니다. 보관(archive) 처리한 세션은 <code>hermes sessions list</code> 와 <code>/resume</code> 에서 숨겨질 뿐 지워지지 않으며, 원문은 데스크톱 앱·대시보드의 세션 목록에서 보관을 풀 수 있다고만 적습니다. 터미널 대화가 정말로 목록에 들어오지 않는다면 <code>hermes sessions repair</code> 를 실행하고, 시작할 때 <code>⚠ Session store unavailable</code> 경고가 뜨는지 봅니다. 세션을 지우는 명령(<code>hermes sessions prune</code>·<code>hermes sessions delete</code>)을 쓰기 전에는 <code>hermes sessions export backup.jsonl</code> 로 먼저 내보내 둡니다. <a href="hermes-agent-guide.html#ch02-storage">2장 세션이 저장되는 곳</a>.</p></details>
+</div></div>
+<h3 id="pb10-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>답이 두 번 왔고 "♻️ Recovered reply" 로 시작함</td><td>고장이 아닙니다. 게이트웨이가 답을 보내던 중 멈췄다가 다시 켜지면, 답을 잃지 않으려고 저장해 둔 답을 다시 보내며 중복일 수 있다고 표시합니다.</td></tr>
+<tr><td>다시 켠 뒤 "아무 메시지나 보내면 이어 하겠다"는 안내가 옴</td><td>작업 도중에 게이트웨이가 꺼졌던 세션입니다. 아무 메시지나 답하면 마지막으로 저장된 지점부터 이어 갑니다.</td></tr>
+<tr><td>어제 Telegram 대화가 오늘도 그대로 이어짐</td><td>정상입니다. 메신저 대화는 쉬어도, 날이 바뀌어도 초기화되지 않습니다. 새로 시작하려면 <code>/new</code> 를 보냅니다.</td></tr>
+<tr><td>오래 쓴 대화방이 느리고 비용이 큼</td><td>세션 하나를 몇 주씩 쓰면 대화가 길어져 비용이 늘고 기억도 제 역할을 못 합니다. 일이나 주제가 끝날 때 <code>/new</code> 로 끊습니다. 끊기 전에 "remember anything worth keeping"(뜻: 남길 만한 것은 기억해 줘)이라고 부탁하면 도움이 됩니다.</td></tr>
+<tr><td>macOS 에서 게이트웨이가 ffmpeg 같은 도구를 못 찾음</td><td>서비스는 설치할 때의 경로 정보만 압니다. 도구를 나중에 깔았다면 <code>hermes gateway install</code> 을 다시 실행한 뒤 <code>hermes gateway start</code> 를 실행합니다.</td></tr>
+<tr><td>여기까지 해도 안 됨</td><td>증상 메모와 게이트웨이 기록의 오류 문장을 챙겨 <a href="hermes-agent-guide.html#ch10-stuck">10장 그래도 막힐 때</a>를 봅니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb10-next">다음에 할 것</h3>
+<ul><li>기억이 어떻게 저장되고 언제 읽히는지 — <a href="hermes-agent-guide.html#ch05-memory-what">5장 기억이란</a>. 직접 남겨 보기는 <a href="#pb3">실습 3</a>.</li><li>세션에 이름을 붙여 두면 다음에 찾기 쉽습니다 — <a href="#pb2">실습 2</a>, <a href="hermes-agent-guide.html#ch02-naming">2장 세션 이름</a>.</li><li>게이트웨이를 서비스로 늘 켜 두기 — <a href="#pb7-s6">실습 7의 6단계</a>, <a href="hermes-agent-guide.html#ch08-service">8장 서비스</a>.</li><li>설치·모델 쪽 문제 — <a href="#pb9">실습 9</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>봇이 조용하면 <code>hermes gateway status</code> 부터, 그다음 토큰과 허용 목록을 봅니다.</li><li>"기억할게요"는 글일 뿐입니다. <code>~/.hermes/memories/</code> 의 파일에 있어야 저장된 것입니다.</li><li>저장한 기억은 다음 세션부터 보입니다. 메신저에서는 <code>/new</code> 로 직접 끊습니다.</li><li>대화는 <code>state.db</code> 에 남아 있습니다. <code>hermes sessions list</code> 와 <code>/sessions</code> 로 찾아 이어 합니다.</li></ul></div>
+<p class="sources">출처: hermes-agent.nousresearch.com/docs/reference/faq (Messaging Issues · Profiles), /docs/user-guide/messaging, /docs/user-guide/messaging/telegram (Troubleshooting · Security), /docs/user-guide/features/memory (Memory Needs Session Boundaries · Troubleshooting), /docs/user-guide/sessions (수집일 2026-11-09). 가이드 <a href="hermes-agent-guide.html#ch08-trouble">8장 문제 해결</a>·<a href="hermes-agent-guide.html#ch02-resume">2장 이어 하기</a>. 세션 ID·제목·경로는 원문의 예시 값입니다.</p></section>
+</main></div>
+<script>
+
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('[data-theme-set]');
+  function cur(){return root.getAttribute('data-theme')||'auto'}
+  function mark(){var c=cur();btns.forEach(function(b){b.classList.toggle('on',b.dataset.themeSet===c);b.setAttribute('aria-pressed',b.dataset.themeSet===c)})}
+  btns.forEach(function(b){b.onclick=function(){var t=b.dataset.themeSet;
+    if(t==='auto'){root.removeAttribute('data-theme');try{localStorage.setItem('hermes-agent-guide-theme','auto')}catch(e){}}
+    else{root.setAttribute('data-theme',t);try{localStorage.setItem('hermes-agent-guide-theme',t)}catch(e){}}
+    mark()}});
+  mark();
+})();
+(function(){
+  var stepControllers=new WeakMap();
+  document.querySelectorAll('[data-stepper]').forEach(function(st){
+    var steps=[].slice.call(st.querySelectorAll(':scope > [data-step]')); if(!steps.length) return;
+    var chapter=st.closest('section.chapter');
+    if(chapter && /^pb\d+$/.test(chapter.id)){
+      var current=0, expanded=false;
+      var tools=document.createElement('div'); tools.className='stepper-tools';
+      var label=document.createElement('label'); label.textContent='단계 바로 가기';
+      var select=document.createElement('select');
+      steps.forEach(function(step,k){
+        var heading=step.querySelector('h4, :scope > b');
+        var option=document.createElement('option'); option.value=k;
+        option.textContent=heading ? heading.textContent.trim() : (k+1)+'단계'; select.appendChild(option);
+      });
+      label.appendChild(select);
+      var all=document.createElement('button'); all.type='button';
+      var nav=document.createElement('div'); nav.className='stepper-nav';
+      var prev=document.createElement('button'); prev.type='button'; prev.textContent='◀ 이전';
+      var next=document.createElement('button'); next.type='button'; next.textContent='다음 ▶';
+      var status=document.createElement('span'); status.className='muted'; status.setAttribute('role','status');
+      function show(n){
+        current=Math.max(0,Math.min(n,steps.length-1)); select.value=current;
+        st.classList.toggle('show-all',expanded);
+        steps.forEach(function(step,k){step.classList.toggle('active',k===current)});
+        all.textContent=expanded ? '한 단계씩 보기' : '전체 단계 펼치기';
+        all.setAttribute('aria-pressed',String(expanded));
+        prev.disabled=expanded || current===0; next.disabled=expanded || current===steps.length-1;
+        status.textContent=expanded ? '전체 '+steps.length+'단계를 보여 줍니다.' :
+          (current+1)+' / '+steps.length+(current===steps.length-1 ? ' · 마지막 단계입니다. 아래 완료 기준을 확인하세요.' : '');
+      }
+      function move(n){
+        expanded=false; show(n); st.scrollIntoView({block:'start'});
+      }
+      prev.onclick=function(){move(current-1)}; next.onclick=function(){move(current+1)};
+      select.onchange=function(){move(Number(select.value))};
+      all.onclick=function(){expanded=!expanded;show(current)};
+      tools.append(label,all); st.prepend(tools); nav.append(prev,next,status); st.appendChild(nav);
+      st.classList.add('stepper-ready'); show(0);
+      stepControllers.set(st,function(step){expanded=false;show(steps.indexOf(step))});
+      return;
+    }
+    var i=0, nav=document.createElement('div'); nav.className='stepper-nav';
+    var prev=document.createElement('button'); prev.textContent='◀ 이전';
+    var next=document.createElement('button'); next.textContent='다음 ▶';
+    var dots=document.createElement('span'); dots.className='dots';
+    var lab=document.createElement('span'); lab.className='muted'; lab.style.fontSize='13px';
+    steps.forEach(function(){dots.appendChild(document.createElement('i'));});
+    function show(n){i=(n+steps.length)%steps.length;steps.forEach(function(s,k){s.classList.toggle('active',k===i)});
+      [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)}); lab.textContent=(i+1)+' / '+steps.length;}
+    prev.onclick=function(){show(i-1)}; next.onclick=function(){show(i+1)};
+    nav.append(prev,dots,next,lab); st.appendChild(nav); show(0);
+  });
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    var btns=[].slice.call(t.querySelectorAll(':scope > .tab-bar button[data-tab]'));
+    var panels=[].slice.call(t.querySelectorAll(':scope > [data-panel]'));
+    function on(k){btns.forEach(function(b){b.classList.toggle('on',b.dataset.tab===k)});panels.forEach(function(p){p.classList.toggle('on',p.dataset.panel===k)});}
+    btns.forEach(function(b){b.onclick=function(){on(b.dataset.tab)}}); if(btns[0]) on(btns[0].dataset.tab);
+    t.classList.add('tabs-ready');
+  });
+  function revealHash(){
+    var id; try{id=decodeURIComponent(location.hash.slice(1))}catch(e){return}
+    var target=document.getElementById(id); if(!target) return;
+    var chapter=target.closest('section.chapter'); if(!chapter || !/^pb\d+$/.test(chapter.id)) return;
+    var step=target.closest('[data-step]'), st=step && step.closest('[data-stepper]');
+    if(st && stepControllers.has(st)) stepControllers.get(st)(step);
+    var parent=target.parentElement;
+    while(parent && parent!==chapter){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
+    requestAnimationFrame(function(){target.scrollIntoView({block:'start'})});
+  }
+  addEventListener('hashchange',revealHash); revealHash();
+  document.querySelectorAll('section.chapter[id^="pb"] .diagram > svg').forEach(function(svg){
+    var frame=document.createElement('div'); frame.className='diagram-scroll';
+    frame.tabIndex=0; frame.setAttribute('role','region');
+    frame.setAttribute('aria-label',(svg.getAttribute('aria-label') || '실습 그림')+' — 좌우로 스크롤할 수 있습니다.');
+    var width=svg.viewBox.baseVal.width; if(width)svg.style.minWidth=width+'px';
+    svg.parentNode.insertBefore(frame,svg); frame.appendChild(svg);
+    var hint=document.createElement('p'); hint.className='diagram-hint';
+    hint.textContent='그림이 한눈에 보이지 않으면 좌우로 밀어 보세요. 키보드는 그림 영역을 선택하고 ← / →를 누릅니다.';
+    frame.after(hint);
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  var bar=document.querySelector('.progress');
+  var links={}; document.querySelectorAll('.sidenav a[data-ch]').forEach(function(a){links[a.dataset.ch]=a});
+  var chs=[].slice.call(document.querySelectorAll('section.chapter'));
+  function rev(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*0.95) el.classList.add('in')})}
+  function onScroll(){rev();var h=document.documentElement; bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=chs[0]; chs.forEach(function(c){if(c.getBoundingClientRect().top<120) cur=c});
+    Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===cur.id)});}
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script></body></html>

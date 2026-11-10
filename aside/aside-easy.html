@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aside 쉬운 설명 — 고등학생도 이해하는 그림 한 장</title>
+<script>(function(){var t='dark';try{t=localStorage.getItem('aside-guide-theme')||'dark'}catch(e){}if(t!=='auto')document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')})();</script>
+<style>:root{--bg:#0b0b0d;--fg:#ececee;--muted:#9a9aa3;--card:#141418;--card2:#1b1b21;--border:#2a2a31;--accent:#7c83ff;--green:#34d399;--amber:#fbbf24;--pink:#f472b6;--cyan:#22d3ee;--red:#f87171}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}}
+:root[data-theme="light"]{--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}
+:root{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){color-scheme:light}}
+/* 테마 전환 버튼 */
+.theme-toggle{position:fixed;top:12px;right:14px;z-index:30;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.theme-toggle button{font:inherit;font-size:13px;border:0;background:none;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
+.theme-toggle button:hover{color:var(--fg)}
+.theme-toggle button.on{background:var(--accent);color:#fff}
+@media print{.theme-toggle{display:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15.5px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:color-mix(in srgb,var(--accent) 13%,transparent);padding:1px 6px;border-radius:5px;word-break:break-word}
+pre{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;overflow-x:auto;font:12.8px/1.6 ui-monospace,Menlo,monospace}
+pre code{background:none;padding:0}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--card2)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1320px;margin:0 auto}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidenav{display:none}}
+.sidenav{position:sticky;top:0;height:100dvh;overflow-y:auto;padding:24px 14px;border-right:1px solid var(--border);font-size:13.5px}
+.sidenav a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+.sidenav a:hover,.sidenav a.on{color:var(--fg);background:var(--card2)}
+.sidenav .sub a{padding-left:22px;font-size:12.5px}
+main{padding:28px 36px 120px;min-width:0}
+@media (max-width:700px){main{padding:20px 16px 80px}}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--pink));width:0;z-index:20}
+/* chapter */
+.chapter{margin-top:72px;padding-top:12px;border-top:1px solid var(--border)}
+.chapter > .ch-head .ch-no{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--accent)}
+.chapter h2{font-size:30px;line-height:1.25;margin:6px 0 10px;letter-spacing:-.01em}
+.chapter h3{font-size:21px;margin:44px 0 8px}
+.chapter h4{font-size:16px;margin:24px 0 6px;color:var(--accent)}
+.lead{color:var(--muted);font-size:16.5px;max-width:820px}
+.learn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:16px 0}
+.learn > b{display:block;margin-bottom:4px}
+.learn ul{margin:0;padding-left:20px}
+/* building blocks */
+.concept{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-top:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:14px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.card h4,.card h5{margin:0 0 4px;font-size:15px;color:var(--fg)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 26px}
+.kv{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.kv th,.kv td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.kv th{color:var(--muted);font-size:12.5px;font-weight:600;background:var(--card2)}
+.table-wrap{overflow-x:auto}
+ol.steps{list-style:none;counter-reset:st;margin:10px 0;padding:0;display:grid;gap:10px}
+ol.steps > li{counter-increment:st;position:relative;padding-left:40px;min-height:26px}
+ol.steps > li::before{content:counter(st);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+ol.steps > li > b{display:block}
+ol.steps > li span,ol.steps > li p{color:var(--muted);margin:0}
+.note,.tip,.warn,.eli5{margin:14px 0;padding:12px 16px;border-radius:12px;border:1px solid;font-size:14.5px}
+.note{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tip{border-color:color-mix(in srgb,var(--green) 45%,transparent);background:color-mix(in srgb,var(--green) 8%,transparent)}
+.warn{border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:color-mix(in srgb,var(--amber) 9%,transparent)}
+.eli5{border-color:color-mix(in srgb,var(--pink) 45%,transparent);background:color-mix(in srgb,var(--pink) 7%,transparent)}
+.note > b:first-child,.tip > b:first-child,.warn > b:first-child,.eli5 > b:first-child{display:block;margin-bottom:2px}
+.term{border-bottom:1px dashed var(--muted);cursor:help}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted);vertical-align:middle}
+.pill.exp{border-color:var(--amber);color:var(--amber)}
+.muted{color:var(--muted)}
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+.summary-box{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent),color-mix(in srgb,var(--pink) 8%,transparent));border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:28px}
+.sources{font-size:12.5px;color:var(--muted);margin-top:14px}
+/* diagrams */
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0;overflow-x:auto}
+.diagram figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg text{fill:var(--fg);font-family:inherit;font-size:13px}
+.diagram svg .sub{fill:var(--muted);font-size:11px}
+.diagram svg .box{fill:var(--card2);stroke:var(--border);stroke-width:1.2}
+.diagram svg .line{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diagram svg .s-accent{stroke:var(--accent)} .diagram svg .s-green{stroke:var(--green)} .diagram svg .s-amber{stroke:var(--amber)} .diagram svg .s-pink{stroke:var(--pink)} .diagram svg .s-cyan{stroke:var(--cyan)} .diagram svg .s-red{stroke:var(--red)}
+.diagram svg .f-accent{fill:var(--accent)} .diagram svg .f-green{fill:var(--green)} .diagram svg .f-amber{fill:var(--amber)} .diagram svg .f-pink{fill:var(--pink)} .diagram svg .f-cyan{fill:var(--cyan)} .diagram svg .f-red{fill:var(--red)} .diagram svg .f-muted{fill:var(--muted)}
+/* animation utilities */
+@keyframes dash{to{stroke-dashoffset:-24}}
+.anim-flow{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.08)}}
+.anim-pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim-spin{animation:spin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.anim-blink{animation:blink 1.1s step-end infinite}
+.reveal{transform:translateY(14px);transition:transform .6s ease}
+.reveal.in{transform:none}
+/* interactive stepper: <div class="stepper" data-stepper> with .stepper-stage > [data-step="1..n"] and auto buttons */
+.stepper{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.stepper [data-step]{display:none}
+.stepper [data-step].active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stepper-nav{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.stepper-nav button,.tabs button{font:inherit;font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--fg);cursor:pointer}
+.stepper-nav button:hover,.tabs button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stepper-nav .dots{display:flex;gap:5px}
+.stepper-nav .dots i{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.stepper-nav .dots i.on{background:var(--accent)}
+/* tabs: <div class="tabs" data-tabs><div class="tab-bar"><button data-tab="a">..</button></div><div data-panel="a">..</div></div> */
+.tabs{margin:14px 0}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tabs [data-panel]{display:none}
+.tabs [data-panel].on{display:block;animation:fadein .3s ease}
+/* 활용편은 JS가 없어도 모든 절차를 읽을 수 있고, 좁은 화면에서도 그림 글자를 유지한다. */
+.chapter[id^="pb"] .stepper > [data-step],.chapter[id^="pb"] .tabs > [data-panel]{display:block}
+.chapter[id^="pb"] .stepper-ready > [data-step]:not(.active),.chapter[id^="pb"] .tabs-ready > [data-panel]:not(.on){display:none}
+.chapter[id^="pb"] .stepper-ready.show-all > [data-step]{display:block}
+.chapter[id^="pb"] .stepper-tools{padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.chapter[id^="pb"] .stepper-tools label{display:block;font-size:13px;font-weight:600}
+.chapter[id^="pb"] .stepper-tools select{display:block;width:100%;max-width:100%;font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px;margin:5px 0 10px}
+.chapter[id^="pb"] .stepper-tools button{font:inherit;font-size:13px;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer}
+.chapter[id^="pb"] .stepper-nav button{min-height:40px}
+.chapter[id^="pb"] .stepper-nav button:disabled{opacity:.5;cursor:default}
+.chapter[id^="pb"] .stepper-nav [role="status"]{flex-basis:100%;font-size:13px}
+.chapter[id^="pb"] .diagram{overflow-x:auto}
+.chapter[id^="pb"] .diagram svg{min-width:660px}
+.chapter[id^="pb"] .diagram-scroll{overflow-x:auto;max-width:100%;padding:4px 0 8px}
+.chapter[id^="pb"] .diagram-hint{font-size:12px;color:var(--muted);margin:6px 0}
+.chapter[id^="pb"] .diagram-scroll:focus-visible,.chapter[id^="pb"] button:focus-visible,.chapter[id^="pb"] select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.chapter[id^="pb"] [id]{scroll-margin-top:64px}
+@media (max-width:700px){.chapter[id^="pb"] .two{grid-template-columns:1fr}.chapter[id^="pb"] .grid{grid-template-columns:1fr}.chapter[id^="pb"] .stepper{padding:12px}.chapter[id^="pb"] .diagram{padding:10px}}
+@media print{.chapter[id^="pb"] .stepper-ready > [data-step],.chapter[id^="pb"] .tabs-ready > [data-panel]{display:block!important}.chapter[id^="pb"] .stepper-tools,.chapter[id^="pb"] .stepper-nav,.chapter[id^="pb"] .diagram-hint{display:none}.chapter[id^="pb"] .diagram{overflow:visible}.chapter[id^="pb"] .diagram-scroll{overflow:visible}.chapter[id^="pb"] .diagram svg{min-width:0!important}}
+/* mock UI frame */
+.mock{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card2);margin:14px 0}
+.mock .bar{display:flex;gap:6px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block}
+.mock .body{padding:12px;font-size:13px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* 2층 구조: 고급·참고 접기 */
+details.adv{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:10px 16px;margin:14px 0}
+details.adv > summary{font-weight:600;color:var(--muted);list-style:none}
+details.adv > summary::before{content:"🔧 개발자용 참고 · ";color:var(--amber)}
+details.adv > summary::after{content:" — 처음엔 건너뛰어도 됩니다 (펼치기 ▾)";font-weight:400;font-size:13px}
+details.adv[open] > summary::after{content:" (접기 ▴)"}
+details.adv[open]{border-style:solid}
+.start-here{background:color-mix(in srgb,var(--green) 10%,transparent);border:1px solid color-mix(in srgb,var(--green) 50%,transparent);border-radius:14px;padding:14px 18px;margin:16px 0}
+.start-here > b:first-child{display:block;margin-bottom:4px}
+.start-here > b:first-child::before{content:"🚩 "}
+.gl{color:var(--muted);font-size:.92em}
+
+.sidenav .brand{font-weight:700;padding:0 10px 12px;display:block;color:var(--fg)}
+.sidenav .sub{display:none}
+.sidenav a.on + .sub{display:block}
+.sidenav a[data-ch]{margin-top:2px}
+
+.docnav{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 14px}
+.docnav a{padding:3px 9px!important;border-radius:999px!important;border:1px solid var(--border);font-size:12px!important;display:inline-block!important}
+.docnav a.cur{background:var(--accent);color:#fff!important;border-color:var(--accent)}
+.home-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted)!important;text-decoration:none;padding:4px 10px 4px 8px!important;border-radius:999px;border:1px solid var(--border)}
+.home-link:hover{color:var(--fg)!important;border-color:var(--accent)}
+.home-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.docnav-wrap{padding:0 6px 10px}
+.sidenav a.home-link{display:inline-flex!important;border-radius:999px!important;padding:4px 11px 4px 9px!important;color:var(--muted)!important}
+.sidenav a.home-link:hover{background:none;color:var(--fg)!important}
+.home-top{display:none;margin:0 0 14px}
+@media (max-width:900px){.home-top{display:inline-flex}}
+@media print{.home-link{display:none!important}}
+
+.ov-wrap{max-width:1080px;margin:0 auto;padding:28px 32px 100px}
+.ov-wrap .docnav{padding:0 0 8px}
+@media (max-width:700px){.ov-wrap{padding:20px 16px 80px}}</style></head>
+<body><div class="progress"></div><div class="theme-toggle" role="group" aria-label="화면 테마"><button data-theme-set="auto" title="시스템 설정 따라가기">🖥 자동</button><button data-theme-set="light" title="밝은 화면">☀️ 라이트</button><button data-theme-set="dark" title="어두운 화면">🌙 다크</button></div><main class="ov-wrap"><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="aside-easy.html" class="cur">쉬운 설명</a><a href="aside-overview.html" class="">한눈에 보기</a><a href="aside-essentials.html" class="">필수판</a><a href="aside-playbook.html" class="">활용편</a><a href="aside-guide.html" class="">완전 가이드</a></div><style>
+.ez-wrap{max-width:860px;margin:0 auto}
+.ez-hero{text-align:center;padding:28px 0 8px}
+.ez-hero h1{font-size:34px;line-height:1.3;margin:0 0 10px;letter-spacing:-.01em}
+.ez-hero p{color:var(--muted);font-size:17px;margin:0}
+.ez-scene{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px 20px;margin:26px 0}
+.ez-no{display:inline-block;font:600 13px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--accent);margin-bottom:4px}
+.ez-scene h2{font-size:24px;margin:0 0 14px;line-height:1.35}
+.ez-fig{background:none;border:0;padding:0;margin:0 0 14px;overflow:visible}
+.ez-scene svg{display:block;width:100%;height:auto;margin:0 auto}
+.ez-scene svg text{fill:var(--fg);font:600 15px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif}
+.ez-scene svg text.ez-small{font-size:12.5px;font-weight:500;fill:var(--muted)}
+.ez-scene svg text.ez-bad{fill:var(--red)}
+.ez-scene svg text.ez-good{fill:var(--green)}
+.ez-say{font-size:18px;line-height:1.7;margin:0}
+.ez-say b{color:var(--accent)}
+.ez-gl{color:var(--muted);font-size:.9em}
+.ez-recap{background:var(--card2);border-radius:18px;padding:22px 24px;margin:34px 0 10px}
+.ez-recap h2{font-size:24px;margin:0 0 12px}
+.ez-recap ol{margin:0;padding-left:22px;font-size:17px;line-height:1.8}
+.ez-src{color:var(--muted);font-size:13px;margin:22px 0 0}
+</style>
+<div class="ez-wrap">
+
+<div class="ez-hero" id="ez-top">
+  <h1>Aside, 한 장으로 쉽게</h1>
+  <p>보여 주기만 하던 브라우저가, 부탁한 일을 대신 해 주는 브라우저가 됐어요.</p>
+</div>
+
+<!-- 장면 1 — 근거: raw/home.md (AI browser that gets complex work done across your websites, accounts, and history), raw/site-manifesto.md (Most people still think the browser is just a window … One that acts on your behalf) -->
+<div class="ez-scene" id="ez-s1">
+  <span class="ez-no">하나</span>
+  <h2>보여 주는 창에서, 대신 일하는 브라우저로</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 215" role="img" aria-label="왼쪽은 화면만 보여 주는 보통 브라우저, 오른쪽은 줄마다 일을 끝내고 체크 표시를 하는 Aside">
+    <text x="155" y="26" text-anchor="middle">보통 브라우저</text>
+    <rect x="30" y="40" width="250" height="130" rx="12" fill="none" class="s-amber" stroke-width="2.5"/>
+    <path d="M30 66 L280 66" class="line" fill="none"/>
+    <circle cx="48" cy="53" r="4" class="f-amber"/><circle cx="62" cy="53" r="4" class="f-amber"/><circle cx="76" cy="53" r="4" class="f-amber"/>
+    <rect x="50" y="84" width="150" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <rect x="50" y="104" width="190" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <rect x="50" y="124" width="120" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <text x="155" y="196" text-anchor="middle" class="ez-small">보여 주기만 해요 — 클릭은 전부 내가</text>
+
+    <path d="M292 105 L348 105" class="line anim-flow" fill="none"/>
+
+    <text x="485" y="26" text-anchor="middle">Aside</text>
+    <rect x="360" y="40" width="250" height="130" rx="12" class="f-accent" opacity=".1"/>
+    <rect x="360" y="40" width="250" height="130" rx="12" fill="none" class="s-accent" stroke-width="2.5"/>
+    <path d="M360 66 L610 66" class="line" fill="none"/>
+    <circle cx="378" cy="53" r="4" class="f-accent"/><circle cx="392" cy="53" r="4" class="f-accent"/><circle cx="406" cy="53" r="4" class="f-accent"/>
+    <rect x="380" y="84" width="150" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <rect x="380" y="104" width="170" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <rect x="380" y="124" width="120" height="10" rx="5" class="f-muted" opacity=".45"/>
+    <text x="585" y="95" text-anchor="middle" class="ez-good">✓</text>
+    <text x="585" y="115" text-anchor="middle" class="ez-good">✓</text>
+    <text x="585" y="135" text-anchor="middle" class="ez-good">✓</text>
+    <circle r="6" class="f-pink"><animateMotion dur="5s" repeatCount="indefinite" path="M385 89 L525 89 L385 109 L545 109 L385 129 L495 129 Z"/></circle>
+    <text x="485" y="196" text-anchor="middle" class="ez-small">부탁하면 대신 클릭하고 입력해요</text>
+  </svg></figure>
+  <p class="ez-say">Aside는 <b>AI 브라우저</b>예요. 크롬이나 사파리처럼 웹을 보는 프로그램인데, 글로 부탁하면 AI가 <b>나 대신 사이트를 돌아다니며 복잡한 일을 끝까지</b> 해 줘요.</p>
+</div>
+
+<!-- 장면 2 — 근거: raw/site-manifesto.md (Most modern software is just a tab … does not require integrations), raw/site-home.md (Aside just uses websites and accounts directly, just like you do · works across your email, dashboards, and internal tools), raw/site-features_browser-agent.md (using the websites and accounts you already use, without setting up integrations) -->
+<div class="ez-scene" id="ez-s2">
+  <span class="ez-no">둘</span>
+  <h2>일은 거의 다 탭 안에 있어요</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 235" role="img" aria-label="내가 Aside에 부탁하면 Aside가 내가 로그인해 둔 메일, 문서, 급여, 사내 도구 탭을 직접 쓰는 그림">
+    <circle cx="56" cy="110" r="26" fill="none" class="s-accent" stroke-width="2.5"/><text x="56" y="116" text-anchor="middle">나</text>
+    <path d="M82 110 L150 110" class="line anim-flow" fill="none"/>
+    <text x="116" y="98" text-anchor="middle" class="ez-small">부탁</text>
+    <rect x="150" y="70" width="140" height="80" rx="14" class="f-accent" opacity=".12"/>
+    <rect x="150" y="70" width="140" height="80" rx="14" fill="none" class="s-accent" stroke-width="2.5"/>
+    <text x="220" y="106" text-anchor="middle">Aside</text><text x="220" y="130" text-anchor="middle" class="ez-small">내 브라우저</text>
+    <path d="M290 110 C345 110 350 37 400 37" class="line anim-flow" fill="none"/>
+    <path d="M290 110 C345 110 360 87 400 87" class="line anim-flow" fill="none"/>
+    <path d="M290 110 C345 110 360 137 400 137" class="line anim-flow" fill="none"/>
+    <path d="M290 110 C345 110 350 187 400 187" class="line anim-flow" fill="none"/>
+    <rect x="400" y="17" width="215" height="40" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="418" y="42">메일</text><text x="600" y="42" text-anchor="end" class="ez-small">내 계정 그대로</text>
+    <rect x="400" y="67" width="215" height="40" rx="10" fill="none" class="s-cyan" stroke-width="2"/><text x="418" y="92">문서 · 표</text><text x="600" y="92" text-anchor="end" class="ez-small">내 계정 그대로</text>
+    <rect x="400" y="117" width="215" height="40" rx="10" fill="none" class="s-amber" stroke-width="2"/><text x="418" y="142">급여</text><text x="600" y="142" text-anchor="end" class="ez-small">내 계정 그대로</text>
+    <rect x="400" y="167" width="215" height="40" rx="10" fill="none" class="s-pink" stroke-width="2"/><text x="418" y="192">사내 도구</text><text x="600" y="192" text-anchor="end" class="ez-small">내 계정 그대로</text>
+    <text x="220" y="180" text-anchor="middle" class="ez-small">따로 연결 설정을 하지 않아요</text>
+  </svg></figure>
+  <p class="ez-say">메일, 문서, 급여, 회사 도구… 요즘 일은 대부분 <b>브라우저 탭 하나</b>예요. Aside는 서비스마다 따로 연결해 줄 필요 없이, <b>내가 로그인해 둔 사이트를 나처럼 그대로</b> 써서 일해요.</p>
+</div>
+
+<!-- 장면 3 — 근거: raw/help_browser-basics.md (Ask AI works best when you name the site, the outcome, and any limit), raw/help_tasks.md (`Handle my billing.` is too vague · Rippling paystub 예시 · Ask if Rippling needs MFA or a verification code) -->
+<div class="ez-scene" id="ez-s3">
+  <span class="ez-no">셋</span>
+  <h2>부탁은 "어디서 · 무엇을 · 어디까지"</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 245" role="img" aria-label="막연한 부탁에는 엑스 표시, 사이트와 결과와 한계를 적은 부탁에는 체크 표시">
+    <rect x="30" y="18" width="270" height="54" rx="14" fill="none" class="s-red" stroke-width="2.5"/>
+    <text x="165" y="51" text-anchor="middle">“내 결제 좀 처리해 줘”</text>
+    <text x="322" y="51" class="ez-bad">✗ 너무 막연해요</text>
+    <text x="120" y="108" text-anchor="middle" class="ez-small">어느 사이트에서</text>
+    <text x="320" y="108" text-anchor="middle" class="ez-small">무엇을</text>
+    <text x="520" y="108" text-anchor="middle" class="ez-small">어디까지</text>
+    <rect x="30" y="118" width="180" height="60" rx="14" fill="none" class="s-accent" stroke-width="2.5"/><text x="120" y="154" text-anchor="middle">급여 사이트에서</text>
+    <rect x="230" y="118" width="180" height="60" rx="14" fill="none" class="s-green" stroke-width="2.5"/><text x="320" y="154" text-anchor="middle">이번 달 명세서를</text>
+    <rect x="430" y="118" width="180" height="60" rx="14" fill="none" class="s-amber" stroke-width="2.5"/><text x="520" y="154" text-anchor="middle">인증번호는 물어봐</text>
+    <path d="M210 148 L230 148" class="line anim-flow" fill="none"/><path d="M410 148 L430 148" class="line anim-flow" fill="none"/>
+    <text x="320" y="218" text-anchor="middle" class="ez-good">✓ 세 가지를 적으면 잘 알아들어요</text>
+  </svg></figure>
+  <p class="ez-say">Aside에게 맡길 때는 <b>어느 사이트에서, 무엇을, 어디까지 해도 되는지</b> 적어요. Aside 문서의 예시도 "급여 사이트에 로그인해서 이번 달 급여명세서 PDF를 받아 줘. 인증번호가 필요하면 물어봐"처럼 세 가지가 다 들어 있어요.</p>
+</div>
+
+<!-- 장면 4 — 근거: raw/help_password-manager.md (The agent can use the login action, but it does not receive the raw password · Fills passwords into websites without showing them to the agent), raw/site-features_password-manager.md (Credentials are autofilled into websites, not exposed to the agent) -->
+<div class="ez-scene" id="ez-s4">
+  <span class="ez-no">넷</span>
+  <h2>로그인은 금고가 대신 채워 줘요</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 250" role="img" aria-label="AI가 로그인을 부탁하면 금고가 사이트에 비밀번호를 직접 채우고, 비밀번호 글자는 AI에게 가지 않는 그림">
+    <rect x="20" y="70" width="150" height="90" rx="14" fill="none" class="s-pink" stroke-width="2.5"/>
+    <text x="95" y="110" text-anchor="middle">AI</text><text x="95" y="134" text-anchor="middle" class="ez-small">“로그인해 줘”</text>
+    <path d="M170 115 L245 115" class="line anim-flow" fill="none"/>
+    <text x="320" y="48" text-anchor="middle" class="ez-small">Aside Vault</text>
+    <rect x="245" y="60" width="150" height="110" rx="14" class="f-accent" opacity=".12"/>
+    <rect x="245" y="60" width="150" height="110" rx="14" fill="none" class="s-accent" stroke-width="2.5"/>
+    <path d="M309 98 V88 a11 11 0 0 1 22 0 V98" fill="none" class="s-accent" stroke-width="3"/>
+    <rect x="303" y="98" width="34" height="28" rx="5" class="f-accent"/>
+    <text x="320" y="152" text-anchor="middle">비밀번호 금고</text>
+    <path d="M395 115 L470 115" class="line anim-flow" fill="none"/>
+    <text x="432" y="103" text-anchor="middle" class="ez-small">자동 입력</text>
+    <rect x="470" y="70" width="150" height="90" rx="14" fill="none" class="s-green" stroke-width="2.5"/>
+    <text x="545" y="96" text-anchor="middle" class="ez-small">사이트 로그인 칸</text>
+    <rect x="490" y="108" width="110" height="32" rx="6" fill="none" class="s-green" stroke-width="2"/><text x="545" y="130" text-anchor="middle">••••••</text>
+    <path d="M320 170 C320 212 95 212 95 160" class="line s-red" fill="none" stroke-dasharray="6 5"/>
+    <text x="207" y="207" text-anchor="middle" class="ez-bad">✗</text>
+    <text x="207" y="238" text-anchor="middle" class="ez-small">비밀번호 글자는 AI에게 가지 않아요</text>
+  </svg></figure>
+  <p class="ez-say">Aside에는 <b>비밀번호 금고</b><span class="ez-gl">(Aside Vault)</span>가 들어 있어요. AI가 로그인 화면을 만나면 금고가 사이트에 비밀번호를 <b>직접 채워 넣고</b>, AI는 "로그인하기"만 시킬 뿐 <b>비밀번호 글자는 받지 못해요.</b></p>
+</div>
+
+<!-- 장면 5 — 근거: raw/help_security.md (Read only / Guard / Full access · Guard is the default for new tasks), raw/help_tasks.md (Task controls), raw/help_password-manager.md + raw/site-home.md (Sensitive actions like payments, posts, and messages wait for your confirmation) -->
+<div class="ez-scene" id="ez-s5">
+  <span class="ez-no">다섯</span>
+  <h2>어디까지 맡길지는 내가 정해요</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 250" role="img" aria-label="읽기만, 허락한 폴더만, 어디든 세 가지 권한 카드와, 결제 같은 일은 내 확인을 기다린다는 표시">
+    <rect x="20" y="18" width="190" height="96" rx="14" fill="none" class="s-green" stroke-width="2.5"/>
+    <text x="115" y="50" text-anchor="middle">읽기만</text><text x="115" y="72" text-anchor="middle" class="ez-small">Read only</text><text x="115" y="96" text-anchor="middle" class="ez-small">내 파일은 안 바꿔요</text>
+    <rect x="225" y="18" width="190" height="96" rx="14" class="f-accent" opacity=".12"/>
+    <rect x="225" y="18" width="190" height="96" rx="14" fill="none" class="s-accent" stroke-width="2.5"/>
+    <circle cx="245" cy="38" r="6" class="f-accent anim-pulse"/>
+    <text x="320" y="50" text-anchor="middle">허락한 폴더만</text><text x="320" y="72" text-anchor="middle" class="ez-small">Guard · 처음 설정</text><text x="320" y="96" text-anchor="middle" class="ez-small">다른 폴더는 먼저 물어봐요</text>
+    <rect x="430" y="18" width="190" height="96" rx="14" fill="none" class="s-pink" stroke-width="2.5"/>
+    <text x="525" y="50" text-anchor="middle">어디든</text><text x="525" y="72" text-anchor="middle" class="ez-small">Full access</text><text x="525" y="96" text-anchor="middle" class="ez-small">컴퓨터 어디든 읽고 써요</text>
+    <rect x="60" y="150" width="520" height="74" rx="14" fill="none" class="s-amber" stroke-width="2.5"/>
+    <circle cx="96" cy="187" r="9" class="f-amber anim-pulse"/>
+    <text x="122" y="181">결제 · 글 올리기 · 메시지 보내기</text>
+    <text x="122" y="206" class="ez-small">→ 내가 확인할 때까지 기다려요</text>
+  </svg></figure>
+  <p class="ez-say">일을 맡길 때 <b>읽기만 / 허락한 폴더만 / 어디든</b> 중에서 내 파일을 어디까지 건드려도 되는지 골라요<span class="ez-gl">(따로 고르지 않으면 가운데 것)</span>. 그리고 결제나 글 올리기처럼 <b>조심해야 하는 일은 내 확인을 기다려요.</b></p>
+</div>
+
+<!-- 장면 6 — 근거: raw/help_memory.md (reuse context from your browsing history, chats, and tasks · review and edit saved memory), raw/site-features_memory.md (so you don't have to repeat context every time · Memory is written in markdown and stored on your device … If something is wrong, edit it), raw/site-home.md (All memory stays local on your device) -->
+<div class="ez-scene" id="ez-s6">
+  <span class="ez-no">여섯</span>
+  <h2>하던 일을 기억해요, 내 컴퓨터 안에서</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 235" role="img" aria-label="방문 기록, 채팅, 작업이 내 컴퓨터 안의 기억 노트로 모이고 내가 그 노트를 보고 고칠 수 있는 그림">
+    <rect x="20" y="30" width="150" height="40" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="95" y="55" text-anchor="middle">방문 기록</text>
+    <rect x="20" y="90" width="150" height="40" rx="10" fill="none" class="s-amber" stroke-width="2"/><text x="95" y="115" text-anchor="middle">채팅</text>
+    <rect x="20" y="150" width="150" height="40" rx="10" fill="none" class="s-pink" stroke-width="2"/><text x="95" y="175" text-anchor="middle">작업</text>
+    <path d="M170 50 C225 50 245 110 300 110" class="line anim-flow" fill="none"/>
+    <path d="M170 110 L300 110" class="line anim-flow" fill="none"/>
+    <path d="M170 170 C225 170 245 110 300 110" class="line anim-flow" fill="none"/>
+    <rect x="270" y="30" width="345" height="160" rx="14" fill="none" class="s-cyan" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="442" y="20" text-anchor="middle" class="ez-small">내 컴퓨터 안</text>
+    <rect x="300" y="55" width="150" height="110" rx="8" class="f-accent" opacity=".12"/>
+    <rect x="300" y="55" width="150" height="110" rx="8" fill="none" class="s-accent" stroke-width="2.5"/>
+    <text x="375" y="104" text-anchor="middle">기억 노트</text><text x="375" y="128" text-anchor="middle" class="ez-small">글로 적혀 있어요</text>
+    <text x="532" y="92" text-anchor="middle">✏️</text>
+    <text x="532" y="120" text-anchor="middle" class="ez-small">내가 열어 보고</text>
+    <text x="532" y="140" text-anchor="middle" class="ez-small">고칠 수 있어요</text>
+    <text x="320" y="222" text-anchor="middle" class="ez-small">어제 하던 일을 처음부터 다시 설명하지 않아도 돼요</text>
+  </svg></figure>
+  <p class="ez-say">Aside는 내 방문 기록과 지난 채팅·작업에서 <b>알아 둘 것을 기억</b>해 두었다가 다음 일에 써요. 기억은 <b>내 컴퓨터에 글로 저장</b>되어서, 내가 열어 보고 틀린 건 고치거나 아예 꺼 둘 수 있어요.</p>
+</div>
+
+<!-- 장면 7 — 근거: raw/help_automation.md (Routines let Aside run recurring work without starting each task by hand · Cron routine: Starts a new task on a schedule), raw/help_devices.md (Keep the computer awake, online, and running Aside for local routines) -->
+<div class="ez-scene" id="ez-s7">
+  <span class="ez-no">일곱</span>
+  <h2>되풀이되는 일은 알람처럼 맞춰 둬요</h2>
+  <figure class="diagram ez-fig"><svg viewBox="0 0 640 225" role="img" aria-label="아침 9시를 가리키는 시계에서 월요일부터 금요일까지 매일 새 작업이 시작되는 그림">
+    <circle cx="110" cy="100" r="60" fill="none" class="s-accent" stroke-width="3"/>
+    <path d="M110 100 L76 100" class="s-accent" fill="none" stroke-width="4" stroke-linecap="round"/>
+    <path d="M110 100 L110 56" class="s-accent" fill="none" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="110" cy="100" r="6" class="f-pink anim-pulse"/>
+    <text x="110" y="188" text-anchor="middle" class="ez-small">예: 매일 아침 9시</text>
+    <path d="M172 100 L238 100" class="line anim-flow" fill="none"/>
+    <rect x="240" y="70" width="66" height="60" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="273" y="96" text-anchor="middle">월</text><text x="273" y="118" text-anchor="middle" class="ez-small">시작 ✓</text>
+    <rect x="316" y="70" width="66" height="60" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="349" y="96" text-anchor="middle">화</text><text x="349" y="118" text-anchor="middle" class="ez-small">시작 ✓</text>
+    <rect x="392" y="70" width="66" height="60" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="425" y="96" text-anchor="middle">수</text><text x="425" y="118" text-anchor="middle" class="ez-small">시작 ✓</text>
+    <rect x="468" y="70" width="66" height="60" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="501" y="96" text-anchor="middle">목</text><text x="501" y="118" text-anchor="middle" class="ez-small">시작 ✓</text>
+    <rect x="544" y="70" width="66" height="60" rx="10" fill="none" class="s-green" stroke-width="2"/><text x="577" y="96" text-anchor="middle">금</text><text x="577" y="118" text-anchor="middle" class="ez-small">시작 ✓</text>
+    <text x="425" y="162" text-anchor="middle" class="ez-small">내가 누르지 않아도 정한 때에 새 작업이 시작돼요</text>
+    <text x="425" y="186" text-anchor="middle" class="ez-small">단, 컴퓨터와 Aside가 켜져 있어야 해요</text>
+  </svg></figure>
+  <p class="ez-say">요약 만들기처럼 날마다·주마다 <b>되풀이되는 일</b>은 <b>루틴</b><span class="ez-gl">(반복 예약)</span>으로 맞춰 두면, 매번 직접 시작하지 않아도 정한 시간에 Aside가 알아서 시작해요.</p>
+</div>
+
+<div class="ez-recap" id="ez-recap">
+  <h2>한 장으로 다시 보기</h2>
+  <ol>
+    <li>Aside는 부탁한 일을 <b>대신 해 주는 AI 브라우저</b>예요.</li>
+    <li>내가 로그인해 둔 사이트를 <b>나처럼 그대로</b> 써요 — 따로 연결 설정이 없어요.</li>
+    <li>부탁에는 <b>어느 사이트 · 무엇을 · 어디까지</b>를 적어요.</li>
+    <li>로그인은 <b>금고가 채우고</b>, AI는 비밀번호를 보지 못해요.</li>
+    <li>파일을 어디까지 건드릴지 <b>내가 고르고</b>, 결제 같은 일은 <b>내 확인</b>을 기다려요.</li>
+    <li>하던 일을 <b>기억</b>하고, 그 기억은 내 컴퓨터에 있어 내가 고칠 수 있어요.</li>
+    <li>되풀이되는 일은 <b>루틴</b>으로 맞춰 둬요.</li>
+  </ol>
+  <p class="ez-say" style="margin-top:12px;font-size:16px">조금 더 자세한 설명은 <a href="aside-overview.html">한눈에 보기</a>, 따라 해 보려면 <a href="aside-playbook.html">활용편</a>에 있어요.</p>
+</div>
+
+<p class="ez-src">출처: Aside 도움말(docs.aside.com) — 첫 화면 · browser-basics · tasks · password-manager · security · memory · automation · devices, Aside 사이트(aside.com) — 첫 화면 · manifesto · features(browser-agent · memory · password-manager). 2026-11-09 수집본(<code>aside/sources/raw/</code>), Aside 브라우저 v1.0.1022.1 기준. 금고·노트·알람은 이해를 돕는 비유예요.</p>
+
+</div>
+</main>
+<script>
+
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('[data-theme-set]');
+  function cur(){return root.getAttribute('data-theme')||'auto'}
+  function mark(){var c=cur();btns.forEach(function(b){b.classList.toggle('on',b.dataset.themeSet===c);b.setAttribute('aria-pressed',b.dataset.themeSet===c)})}
+  btns.forEach(function(b){b.onclick=function(){var t=b.dataset.themeSet;
+    if(t==='auto'){root.removeAttribute('data-theme');try{localStorage.setItem('aside-guide-theme','auto')}catch(e){}}
+    else{root.setAttribute('data-theme',t);try{localStorage.setItem('aside-guide-theme',t)}catch(e){}}
+    mark()}});
+  mark();
+})();
+(function(){
+  var stepControllers=new WeakMap();
+  document.querySelectorAll('[data-stepper]').forEach(function(st){
+    var steps=[].slice.call(st.querySelectorAll(':scope > [data-step]')); if(!steps.length) return;
+    var chapter=st.closest('section.chapter');
+    if(chapter && /^pb\d+$/.test(chapter.id)){
+      var current=0, expanded=false;
+      var tools=document.createElement('div'); tools.className='stepper-tools';
+      var label=document.createElement('label'); label.textContent='단계 바로 가기';
+      var select=document.createElement('select');
+      steps.forEach(function(step,k){
+        var heading=step.querySelector('h4, :scope > b');
+        var option=document.createElement('option'); option.value=k;
+        option.textContent=heading ? heading.textContent.trim() : (k+1)+'단계'; select.appendChild(option);
+      });
+      label.appendChild(select);
+      var all=document.createElement('button'); all.type='button';
+      var nav=document.createElement('div'); nav.className='stepper-nav';
+      var prev=document.createElement('button'); prev.type='button'; prev.textContent='◀ 이전';
+      var next=document.createElement('button'); next.type='button'; next.textContent='다음 ▶';
+      var status=document.createElement('span'); status.className='muted'; status.setAttribute('role','status');
+      function show(n){
+        current=Math.max(0,Math.min(n,steps.length-1)); select.value=current;
+        st.classList.toggle('show-all',expanded);
+        steps.forEach(function(step,k){step.classList.toggle('active',k===current)});
+        all.textContent=expanded ? '한 단계씩 보기' : '전체 단계 펼치기';
+        all.setAttribute('aria-pressed',String(expanded));
+        prev.disabled=expanded || current===0; next.disabled=expanded || current===steps.length-1;
+        status.textContent=expanded ? '전체 '+steps.length+'단계를 보여 줍니다.' :
+          (current+1)+' / '+steps.length+(current===steps.length-1 ? ' · 마지막 단계입니다. 아래 완료 기준을 확인하세요.' : '');
+      }
+      function move(n){
+        expanded=false; show(n); st.scrollIntoView({block:'start'});
+      }
+      prev.onclick=function(){move(current-1)}; next.onclick=function(){move(current+1)};
+      select.onchange=function(){move(Number(select.value))};
+      all.onclick=function(){expanded=!expanded;show(current)};
+      tools.append(label,all); st.prepend(tools); nav.append(prev,next,status); st.appendChild(nav);
+      st.classList.add('stepper-ready'); show(0);
+      stepControllers.set(st,function(step){expanded=false;show(steps.indexOf(step))});
+      return;
+    }
+    var i=0, nav=document.createElement('div'); nav.className='stepper-nav';
+    var prev=document.createElement('button'); prev.textContent='◀ 이전';
+    var next=document.createElement('button'); next.textContent='다음 ▶';
+    var dots=document.createElement('span'); dots.className='dots';
+    var lab=document.createElement('span'); lab.className='muted'; lab.style.fontSize='13px';
+    steps.forEach(function(){dots.appendChild(document.createElement('i'));});
+    function show(n){i=(n+steps.length)%steps.length;steps.forEach(function(s,k){s.classList.toggle('active',k===i)});
+      [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)}); lab.textContent=(i+1)+' / '+steps.length;}
+    prev.onclick=function(){show(i-1)}; next.onclick=function(){show(i+1)};
+    nav.append(prev,dots,next,lab); st.appendChild(nav); show(0);
+  });
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    var btns=[].slice.call(t.querySelectorAll(':scope > .tab-bar button[data-tab]'));
+    var panels=[].slice.call(t.querySelectorAll(':scope > [data-panel]'));
+    function on(k){btns.forEach(function(b){b.classList.toggle('on',b.dataset.tab===k)});panels.forEach(function(p){p.classList.toggle('on',p.dataset.panel===k)});}
+    btns.forEach(function(b){b.onclick=function(){on(b.dataset.tab)}}); if(btns[0]) on(btns[0].dataset.tab);
+    t.classList.add('tabs-ready');
+  });
+  function revealHash(){
+    var id; try{id=decodeURIComponent(location.hash.slice(1))}catch(e){return}
+    var target=document.getElementById(id); if(!target) return;
+    var chapter=target.closest('section.chapter'); if(!chapter || !/^pb\d+$/.test(chapter.id)) return;
+    var step=target.closest('[data-step]'), st=step && step.closest('[data-stepper]');
+    if(st && stepControllers.has(st)) stepControllers.get(st)(step);
+    var parent=target.parentElement;
+    while(parent && parent!==chapter){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
+    requestAnimationFrame(function(){target.scrollIntoView({block:'start'})});
+  }
+  addEventListener('hashchange',revealHash); revealHash();
+  document.querySelectorAll('section.chapter[id^="pb"] .diagram > svg').forEach(function(svg){
+    var frame=document.createElement('div'); frame.className='diagram-scroll';
+    frame.tabIndex=0; frame.setAttribute('role','region');
+    frame.setAttribute('aria-label',(svg.getAttribute('aria-label') || '실습 그림')+' — 좌우로 스크롤할 수 있습니다.');
+    var width=svg.viewBox.baseVal.width; if(width)svg.style.minWidth=width+'px';
+    svg.parentNode.insertBefore(frame,svg); frame.appendChild(svg);
+    var hint=document.createElement('p'); hint.className='diagram-hint';
+    hint.textContent='그림이 한눈에 보이지 않으면 좌우로 밀어 보세요. 키보드는 그림 영역을 선택하고 ← / →를 누릅니다.';
+    frame.after(hint);
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  var bar=document.querySelector('.progress');
+  var links={}; document.querySelectorAll('.sidenav a[data-ch]').forEach(function(a){links[a.dataset.ch]=a});
+  var chs=[].slice.call(document.querySelectorAll('section.chapter'));
+  function rev(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*0.95) el.classList.add('in')})}
+  function onScroll(){rev();var h=document.documentElement; bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=chs[0]; chs.forEach(function(c){if(c.getBoundingClientRect().top<120) cur=c});
+    Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===cur.id)});}
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script></body></html>

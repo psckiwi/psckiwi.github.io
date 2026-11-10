@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 에이전트 시스템 한눈에 보기</title>
+<script>(function(){var t='dark';try{t=localStorage.getItem('ai-agent-system-guide-theme')||'dark'}catch(e){}if(t!=='auto')document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')})();</script>
+<style>:root{--bg:#0b0b0d;--fg:#ececee;--muted:#9a9aa3;--card:#141418;--card2:#1b1b21;--border:#2a2a31;--accent:#7c83ff;--green:#34d399;--amber:#fbbf24;--pink:#f472b6;--cyan:#22d3ee;--red:#f87171}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}}
+:root[data-theme="light"]{--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}
+:root{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){color-scheme:light}}
+/* 테마 전환 버튼 */
+.theme-toggle{position:fixed;top:12px;right:14px;z-index:30;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.theme-toggle button{font:inherit;font-size:13px;border:0;background:none;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
+.theme-toggle button:hover{color:var(--fg)}
+.theme-toggle button.on{background:var(--accent);color:#fff}
+@media print{.theme-toggle{display:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15.5px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:color-mix(in srgb,var(--accent) 13%,transparent);padding:1px 6px;border-radius:5px;word-break:break-word}
+pre{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;overflow-x:auto;font:12.8px/1.6 ui-monospace,Menlo,monospace}
+pre code{background:none;padding:0}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--card2)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1320px;margin:0 auto}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidenav{display:none}}
+.sidenav{position:sticky;top:0;height:100dvh;overflow-y:auto;padding:24px 14px;border-right:1px solid var(--border);font-size:13.5px}
+.sidenav a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+.sidenav a:hover,.sidenav a.on{color:var(--fg);background:var(--card2)}
+.sidenav .sub a{padding-left:22px;font-size:12.5px}
+main{padding:28px 36px 120px;min-width:0}
+@media (max-width:700px){main{padding:20px 16px 80px}}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--pink));width:0;z-index:20}
+/* chapter */
+.chapter{margin-top:72px;padding-top:12px;border-top:1px solid var(--border)}
+.chapter > .ch-head .ch-no{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--accent)}
+.chapter h2{font-size:30px;line-height:1.25;margin:6px 0 10px;letter-spacing:-.01em}
+.chapter h3{font-size:21px;margin:44px 0 8px}
+.chapter h4{font-size:16px;margin:24px 0 6px;color:var(--accent)}
+.lead{color:var(--muted);font-size:16.5px;max-width:820px}
+.learn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:16px 0}
+.learn > b{display:block;margin-bottom:4px}
+.learn ul{margin:0;padding-left:20px}
+/* building blocks */
+.concept{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-top:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:14px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.card h4,.card h5{margin:0 0 4px;font-size:15px;color:var(--fg)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 26px}
+.kv{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.kv th,.kv td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.kv th{color:var(--muted);font-size:12.5px;font-weight:600;background:var(--card2)}
+.table-wrap{overflow-x:auto}
+ol.steps{list-style:none;counter-reset:st;margin:10px 0;padding:0;display:grid;gap:10px}
+ol.steps > li{counter-increment:st;position:relative;padding-left:40px;min-height:26px}
+ol.steps > li::before{content:counter(st);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+ol.steps > li > b{display:block}
+ol.steps > li span,ol.steps > li p{color:var(--muted);margin:0}
+.note,.tip,.warn,.eli5{margin:14px 0;padding:12px 16px;border-radius:12px;border:1px solid;font-size:14.5px}
+.note{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tip{border-color:color-mix(in srgb,var(--green) 45%,transparent);background:color-mix(in srgb,var(--green) 8%,transparent)}
+.warn{border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:color-mix(in srgb,var(--amber) 9%,transparent)}
+.eli5{border-color:color-mix(in srgb,var(--pink) 45%,transparent);background:color-mix(in srgb,var(--pink) 7%,transparent)}
+.note > b:first-child,.tip > b:first-child,.warn > b:first-child,.eli5 > b:first-child{display:block;margin-bottom:2px}
+.term{border-bottom:1px dashed var(--muted);cursor:help}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted);vertical-align:middle}
+.pill.exp{border-color:var(--amber);color:var(--amber)}
+.muted{color:var(--muted)}
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+.summary-box{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent),color-mix(in srgb,var(--pink) 8%,transparent));border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:28px}
+.sources{font-size:12.5px;color:var(--muted);margin-top:14px}
+/* diagrams */
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0;overflow-x:auto}
+.diagram figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg text{fill:var(--fg);font-family:inherit;font-size:13px}
+.diagram svg .sub{fill:var(--muted);font-size:11px}
+.diagram svg .box{fill:var(--card2);stroke:var(--border);stroke-width:1.2}
+.diagram svg .line{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diagram svg .s-accent{stroke:var(--accent)} .diagram svg .s-green{stroke:var(--green)} .diagram svg .s-amber{stroke:var(--amber)} .diagram svg .s-pink{stroke:var(--pink)} .diagram svg .s-cyan{stroke:var(--cyan)} .diagram svg .s-red{stroke:var(--red)}
+.diagram svg .f-accent{fill:var(--accent)} .diagram svg .f-green{fill:var(--green)} .diagram svg .f-amber{fill:var(--amber)} .diagram svg .f-pink{fill:var(--pink)} .diagram svg .f-cyan{fill:var(--cyan)} .diagram svg .f-red{fill:var(--red)} .diagram svg .f-muted{fill:var(--muted)}
+/* animation utilities */
+@keyframes dash{to{stroke-dashoffset:-24}}
+.anim-flow{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.08)}}
+.anim-pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim-spin{animation:spin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.anim-blink{animation:blink 1.1s step-end infinite}
+.reveal{transform:translateY(14px);transition:transform .6s ease}
+.reveal.in{transform:none}
+/* interactive stepper: <div class="stepper" data-stepper> with .stepper-stage > [data-step="1..n"] and auto buttons */
+.stepper{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.stepper [data-step]{display:none}
+.stepper [data-step].active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stepper-nav{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.stepper-nav button,.tabs button{font:inherit;font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--fg);cursor:pointer}
+.stepper-nav button:hover,.tabs button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stepper-nav .dots{display:flex;gap:5px}
+.stepper-nav .dots i{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.stepper-nav .dots i.on{background:var(--accent)}
+/* tabs: <div class="tabs" data-tabs><div class="tab-bar"><button data-tab="a">..</button></div><div data-panel="a">..</div></div> */
+.tabs{margin:14px 0}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tabs [data-panel]{display:none}
+.tabs [data-panel].on{display:block;animation:fadein .3s ease}
+/* 활용편은 JS가 없어도 모든 절차를 읽을 수 있고, 좁은 화면에서도 그림 글자를 유지한다. */
+.chapter[id^="pb"] .stepper > [data-step],.chapter[id^="pb"] .tabs > [data-panel]{display:block}
+.chapter[id^="pb"] .stepper-ready > [data-step]:not(.active),.chapter[id^="pb"] .tabs-ready > [data-panel]:not(.on){display:none}
+.chapter[id^="pb"] .stepper-ready.show-all > [data-step]{display:block}
+.chapter[id^="pb"] .stepper-tools{padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.chapter[id^="pb"] .stepper-tools label{display:block;font-size:13px;font-weight:600}
+.chapter[id^="pb"] .stepper-tools select{display:block;width:100%;max-width:100%;font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px;margin:5px 0 10px}
+.chapter[id^="pb"] .stepper-tools button{font:inherit;font-size:13px;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer}
+.chapter[id^="pb"] .stepper-nav button{min-height:40px}
+.chapter[id^="pb"] .stepper-nav button:disabled{opacity:.5;cursor:default}
+.chapter[id^="pb"] .stepper-nav [role="status"]{flex-basis:100%;font-size:13px}
+.chapter[id^="pb"] .diagram{overflow-x:auto}
+.chapter[id^="pb"] .diagram svg{min-width:660px}
+.chapter[id^="pb"] .diagram-scroll{overflow-x:auto;max-width:100%;padding:4px 0 8px}
+.chapter[id^="pb"] .diagram-hint{font-size:12px;color:var(--muted);margin:6px 0}
+.chapter[id^="pb"] .diagram-scroll:focus-visible,.chapter[id^="pb"] button:focus-visible,.chapter[id^="pb"] select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.chapter[id^="pb"] [id]{scroll-margin-top:64px}
+@media (max-width:700px){.chapter[id^="pb"] .two{grid-template-columns:1fr}.chapter[id^="pb"] .grid{grid-template-columns:1fr}.chapter[id^="pb"] .stepper{padding:12px}.chapter[id^="pb"] .diagram{padding:10px}}
+@media print{.chapter[id^="pb"] .stepper-ready > [data-step],.chapter[id^="pb"] .tabs-ready > [data-panel]{display:block!important}.chapter[id^="pb"] .stepper-tools,.chapter[id^="pb"] .stepper-nav,.chapter[id^="pb"] .diagram-hint{display:none}.chapter[id^="pb"] .diagram{overflow:visible}.chapter[id^="pb"] .diagram-scroll{overflow:visible}.chapter[id^="pb"] .diagram svg{min-width:0!important}}
+/* mock UI frame */
+.mock{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card2);margin:14px 0}
+.mock .bar{display:flex;gap:6px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block}
+.mock .body{padding:12px;font-size:13px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* 2층 구조: 고급·참고 접기 */
+details.adv{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:10px 16px;margin:14px 0}
+details.adv > summary{font-weight:600;color:var(--muted);list-style:none}
+details.adv > summary::before{content:"🔧 개발자용 참고 · ";color:var(--amber)}
+details.adv > summary::after{content:" — 처음엔 건너뛰어도 됩니다 (펼치기 ▾)";font-weight:400;font-size:13px}
+details.adv[open] > summary::after{content:" (접기 ▴)"}
+details.adv[open]{border-style:solid}
+.start-here{background:color-mix(in srgb,var(--green) 10%,transparent);border:1px solid color-mix(in srgb,var(--green) 50%,transparent);border-radius:14px;padding:14px 18px;margin:16px 0}
+.start-here > b:first-child{display:block;margin-bottom:4px}
+.start-here > b:first-child::before{content:"🚩 "}
+.gl{color:var(--muted);font-size:.92em}
+
+.sidenav .brand{font-weight:700;padding:0 10px 12px;display:block;color:var(--fg)}
+.sidenav .sub{display:none}
+.sidenav a.on + .sub{display:block}
+.sidenav a[data-ch]{margin-top:2px}
+
+.docnav{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 14px}
+.docnav a{padding:3px 9px!important;border-radius:999px!important;border:1px solid var(--border);font-size:12px!important;display:inline-block!important}
+.docnav a.cur{background:var(--accent);color:#fff!important;border-color:var(--accent)}
+.home-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted)!important;text-decoration:none;padding:4px 10px 4px 8px!important;border-radius:999px;border:1px solid var(--border)}
+.home-link:hover{color:var(--fg)!important;border-color:var(--accent)}
+.home-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.docnav-wrap{padding:0 6px 10px}
+.sidenav a.home-link{display:inline-flex!important;border-radius:999px!important;padding:4px 11px 4px 9px!important;color:var(--muted)!important}
+.sidenav a.home-link:hover{background:none;color:var(--fg)!important}
+.home-top{display:none;margin:0 0 14px}
+@media (max-width:900px){.home-top{display:inline-flex}}
+@media print{.home-link{display:none!important}}
+
+.ov-wrap{max-width:1080px;margin:0 auto;padding:28px 32px 100px}
+.ov-wrap .docnav{padding:0 0 8px}
+@media (max-width:700px){.ov-wrap{padding:20px 16px 80px}}</style></head>
+<body><div class="progress"></div><div class="theme-toggle" role="group" aria-label="화면 테마"><button data-theme-set="auto" title="시스템 설정 따라가기">🖥 자동</button><button data-theme-set="light" title="밝은 화면">☀️ 라이트</button><button data-theme-set="dark" title="어두운 화면">🌙 다크</button></div><main class="ov-wrap"><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="ai-agent-system-easy.html" class="">쉬운 설명</a><a href="ai-agent-system-overview.html" class="cur">한눈에 보기</a><a href="ai-agent-system-essentials.html" class="">필수판</a><a href="ai-agent-system-playbook.html" class="">활용편</a><a href="ai-agent-system-guide.html" class="">완전 가이드</a></div><section class="chapter" id="ov" style="border-top:none;margin-top:0">
+<style>
+#ov .hero{padding:24px 0 6px}
+#ov .eyebrow{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--accent)}
+#ov h1{font-size:38px;line-height:1.2;margin:10px 0 12px;letter-spacing:-.02em}
+#ov h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+#ov .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+#ov .card .go{display:inline-block;margin-top:8px;font-size:13px;text-decoration:none}
+#ov .card .go::after{content:" →"}
+#ov .card h4 .ic{margin-right:6px}
+#ov .path{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+#ov .path a{text-decoration:none;background:var(--card2);border:1px solid var(--border);border-radius:999px;padding:4px 12px;font-size:14px;color:var(--fg)}
+#ov .path a:hover{border-color:var(--accent)}
+#ov .path i{color:var(--muted);font-style:normal}
+#ov .diagram svg text{font-size:15px}
+#ov .diagram svg .sub{font-size:12.5px}
+#ov details.ov-more{margin:8px 0;padding:10px 16px}
+#ov details.ov-more > summary{font-weight:400}
+#ov details.ov-more > summary h3{display:inline;margin:0;font-size:17px}
+#ov details.ov-more > summary .hint{margin-left:8px;font-size:13px;color:var(--muted)}
+#ov ol.ov-check{padding-left:24px;line-height:1.75}
+#ov ol.ov-check li{margin:4px 0}
+#ov ol.ov-check li small{color:var(--muted)}
+</style>
+
+<div class="hero">
+  <div class="eyebrow">AI 에이전트 시스템 한눈에 보기 · 2026-11-10 기준</div>
+  <h1>AI 에이전트 = <em>LLM + 도구 + 루프</em><br>설계에 필요한 개념을 한 쪽에</h1>
+  <p class="lead">에이전트는 LLM<span class="gl">(대규모 언어 모델)</span>이 <b>다음 단계를 스스로 정하며 도구를 반복해서 쓰는</b> 시스템입니다. 이 쪽은 완전 가이드 1~10장의 요점을 그림 다섯 장과 체크리스트 하나로 줄였습니다. 특정 회사 제품을 추천하지 않고, 6개 벤더 공식 문서의 <b>공통 개념</b>을 먼저 봅니다.</p>
+  <div class="pills"><span class="pill">벤더 중립 개념 교재</span><span class="pill">MCP 명세 2026-07-28</span><span class="pill">Anthropic · OpenAI · Google ADK · Microsoft · LangChain/LangGraph</span></div>
+</div>
+
+<div class="eli5"><b>아주 쉽게 말하면</b>LLM 은 말을 아주 잘하는 상담원입니다. 에이전트는 그 상담원에게 <b>전화기와 서류함(도구)</b>을 쥐여 주고 "일이 끝날 때까지 알아서 해 보세요"라고 맡긴 비서입니다.</div>
+<div class="note"><b>실제로는</b>모델은 "이 도구를 이 값으로 실행해 달라"는 요청만 글로 내놓고, 실제 실행은 앱(또는 벤더 서버)이 합니다. 결과를 다시 모델에 보내면 모델이 다음 행동을 정하고, 도구 사용 요청이 아닌 답이 나올 때까지 이 왕복이 반복됩니다. → <a href="ai-agent-system-guide.html#ch01-agent-loop">에이전트 루프</a></div>
+
+<h3 id="ov-picture">1. 에이전트 = LLM + 도구 + 루프</h3>
+<figure class="diagram">
+<svg viewBox="0 0 900 310" role="img" aria-label="앱이 도구 목록과 메시지를 LLM 에 보내고, LLM 이 도구 호출을 요청하면 앱이 도구를 실행해 결과를 붙여 다시 보내는 반복 고리. 도구 요청이 아니면 최종 답으로 빠져나온다">
+  <defs>
+    <path id="ov-lp" d="M300,80 L560,80 C620,80 620,220 560,220 L300,220 C240,220 240,80 300,80 Z"/>
+  </defs>
+  <rect x="20" y="110" width="150" height="80" rx="14" class="box s-accent"/>
+  <text x="95" y="145" text-anchor="middle" font-weight="700">사용자</text>
+  <text x="95" y="167" text-anchor="middle" class="sub">업무 요청</text>
+  <line x1="170" y1="150" x2="250" y2="150" class="line s-accent anim-flow"/>
+  <use href="#ov-lp" class="line" style="fill:none"/>
+  <rect x="330" y="45" width="200" height="70" rx="14" class="box s-amber"/>
+  <circle cx="352" cy="64" r="6" class="f-amber anim-pulse"/>
+  <text x="430" y="76" text-anchor="middle" font-weight="700">LLM (두뇌)</text>
+  <text x="430" y="98" text-anchor="middle" class="sub">다음에 무엇을 할지 판단</text>
+  <rect x="330" y="185" width="200" height="70" rx="14" class="box s-green"/>
+  <text x="430" y="216" text-anchor="middle" font-weight="700">도구 (손발)</text>
+  <text x="430" y="238" text-anchor="middle" class="sub">앱이 실제로 실행</text>
+  <text x="640" y="140" class="sub">① 도구 호출 요청</text>
+  <text x="640" y="160" class="sub">  (이름 + 입력값)</text>
+  <text x="140" y="245" class="sub">② 실행 결과를 붙여</text>
+  <text x="140" y="263" class="sub">   다시 보냄</text>
+  <circle r="6" class="f-accent"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#ov-lp"/></animateMotion></circle>
+  <rect x="720" y="40" width="160" height="70" rx="14" class="box s-cyan"/>
+  <text x="800" y="70" text-anchor="middle" font-weight="700">최종 답</text>
+  <text x="800" y="92" text-anchor="middle" class="sub">도구 요청이 아니면 끝</text>
+  <line x1="530" y1="62" x2="720" y2="62" class="line s-cyan anim-flow"/>
+  <text x="450" y="290" text-anchor="middle" class="sub">점이 한 바퀴 돌 때마다 모델 호출 한 번 · 컨텍스트에 도구 결과가 하나씩 쌓입니다</text>
+</svg>
+<figcaption>LLM 한 번 호출은 글 하나를 만들 뿐입니다. 도구와 반복 고리(루프)를 붙여야 에이전트가 됩니다. 단계 수를 미리 알 수 없는 열린 문제에 맞지만, 그만큼 비용과 오류 누적을 감수합니다.</figcaption>
+</figure>
+<div class="grid">
+  <div class="card"><h4><span class="ic">🧠</span>LLM 의 한계</h4><p>학습 데이터와 이번 요청의 컨텍스트만 보고 글을 만듭니다. 최신·사내 정보와 실제 행동은 도구가 필요하고, 답은 매번 조금씩 다를 수 있습니다(비결정적).</p><a class="go" href="ai-agent-system-guide.html#ch01-llm">1장 LLM</a></div>
+  <div class="card"><h4><span class="ic">📏</span>컨텍스트 창</h4><p>시스템 프롬프트·도구 정의·대화 기록·도구 결과·출력까지 모두 담는 한정된 공간. 많이 넣을수록 정확도가 떨어질 수 있어 고르는 일이 중요합니다.</p><a class="go" href="ai-agent-system-guide.html#ch01-context-window">컨텍스트 창</a></div>
+  <div class="card"><h4><span class="ic">🔁</span>LLM vs 에이전트</h4><p>LLM 은 묻는 말에 답하고, 에이전트는 모델이 다음 단계를 스스로 정하며 도구를 루프로 씁니다.</p><a class="go" href="ai-agent-system-guide.html#ch01-llm-vs-agent">비교 보기</a></div>
+</div>
+
+<h3 id="ov-layers">2. 도구 · 함수 호출 · MCP 는 층이 다릅니다</h3>
+<figure class="diagram">
+<svg viewBox="0 0 900 290" role="img" aria-label="세 층 그림. 맨 아래 도구는 기능 자체, 가운데 함수 호출은 모델이 그 기능을 쓰겠다고 요청하는 방식, 맨 위 MCP 는 여러 앱이 도구를 같은 규격으로 주고받게 하는 표준">
+  <rect x="40" y="20" width="560" height="70" rx="14" class="box s-pink"/>
+  <text x="70" y="50" font-weight="700">MCP — 연결 규격</text>
+  <text x="70" y="72" class="sub">여러 AI 앱이 도구·자료를 같은 규격으로 주고받는 공개 표준</text>
+  <rect x="40" y="110" width="560" height="70" rx="14" class="box s-amber"/>
+  <text x="70" y="140" font-weight="700">함수 호출 · 도구 호출 — 요청 방식</text>
+  <text x="70" y="162" class="sub">모델이 "이 도구를 이 값으로" 요청 (OpenAI: function calling · Anthropic: tool use)</text>
+  <rect x="40" y="200" width="560" height="70" rx="14" class="box s-green"/>
+  <text x="70" y="230" font-weight="700">도구 — 기능 자체</text>
+  <text x="70" y="252" class="sub">이름 · 설명 · 입력 형식 · 결과. 실행은 앱(또는 서버)이 한다</text>
+  <rect x="650" y="40" width="210" height="60" rx="12" class="box s-cyan"/>
+  <text x="755" y="66" text-anchor="middle" font-weight="600">호스트 (AI 앱)</text>
+  <text x="755" y="86" text-anchor="middle" class="sub">서버마다 클라이언트 1개</text>
+  <rect x="650" y="150" width="96" height="56" rx="10" class="box s-pink"/>
+  <text x="698" y="176" text-anchor="middle" class="sub">MCP 서버 A</text>
+  <text x="698" y="194" text-anchor="middle" class="sub">파일</text>
+  <rect x="764" y="150" width="96" height="56" rx="10" class="box s-pink"/>
+  <text x="812" y="176" text-anchor="middle" class="sub">MCP 서버 B</text>
+  <text x="812" y="194" text-anchor="middle" class="sub">사내 DB</text>
+  <line x1="700" y1="100" x2="698" y2="150" class="line s-pink anim-flow"/>
+  <line x1="810" y1="100" x2="812" y2="150" class="line s-pink anim-flow"/>
+  <text x="755" y="236" text-anchor="middle" class="sub">서버끼리는 서로 못 보고</text>
+  <text x="755" y="256" text-anchor="middle" class="sub">대화 전체는 호스트에만</text>
+</svg>
+<figcaption>함수 호출(OpenAI)과 tool use(Anthropic)는 같은 메커니즘이며 필드 이름만 다릅니다. MCP 는 모델이 아니라 앱(호스트)과 서버 사이에서 도구 정의와 실행을 나르는 JSON-RPC(프로그램끼리 요청과 응답을 주고받는 메시지 형식) 규약입니다.</figcaption>
+</figure>
+<div class="grid">
+  <div class="card"><h4><span class="ic">🛠</span>API vs 도구</h4><p>API 는 코드가 정해진 대로 부르고, 도구는 모델이 상황을 보고 골라 부릅니다. 그래서 도구는 업무 흐름 단위로, 적은 수로, 다음 행동에 꼭 필요한 정보만 돌려주게 설계합니다.</p><a class="go" href="ai-agent-system-guide.html#ch02-api-vs-tool">2장 비교</a></div>
+  <div class="card"><h4><span class="ic">✍️</span>도구 설명이 성능을 좌우</h4><p>이름·설명·입력 설명은 모델이 언제 어떻게 쓸지 판단하는 근거입니다. 실패하면 무엇이 틀렸고 무엇을 해 볼지 담아 돌려주면 모델이 스스로 고칩니다.</p><a class="go" href="ai-agent-system-guide.html#ch02-define">도구 정의</a></div>
+  <div class="card"><h4><span class="ic">🔌</span>MCP 의 세 가지 제공물</h4><p>서버는 도구(모델이 부를지 정함)·리소스(앱이 다룸)·프롬프트(사용자가 고름)를 내놓습니다. 전송은 같은 컴퓨터의 STDIO 와 네트워크의 Streamable HTTP 두 가지.</p><a class="go" href="ai-agent-system-guide.html#ch03-primitives">3장 MCP</a></div>
+</div>
+
+<h3 id="ov-knowledge">3. 지식 3층 — 프롬프트 · 스킬 · 메모리/RAG</h3>
+<figure class="diagram">
+<svg viewBox="0 0 900 260" role="img" aria-label="지시문은 매 호출에 항상, 스킬은 설명만 두었다가 필요할 때 본문을, 메모리와 RAG 는 창 밖에 두었다가 찾아서 컨텍스트 창에 넣는다">
+  <rect x="30" y="20" width="270" height="62" rx="12" class="box s-accent"/>
+  <text x="50" y="46" font-weight="700">① 프롬프트 · 지시문</text>
+  <text x="50" y="68" class="sub">역할 · 목표 · 제약 — ⏱ 항상 실림</text>
+  <rect x="30" y="98" width="270" height="62" rx="12" class="box s-amber"/>
+  <text x="50" y="124" font-weight="700">② 스킬</text>
+  <text x="50" y="146" class="sub">업무 절차 꾸러미 — ⏱ 필요할 때 본문</text>
+  <rect x="30" y="176" width="270" height="62" rx="12" class="box s-green"/>
+  <text x="50" y="202" font-weight="700">③ 메모리 · RAG</text>
+  <text x="50" y="224" class="sub">겪은 것 · 문서 지식 — ⏱ 찾아서 넣음</text>
+  <path id="ov-k1" d="M300,51 C400,51 420,110 520,120"/>
+  <path id="ov-k2" d="M300,129 L520,129"/>
+  <path id="ov-k3" d="M300,207 C400,207 420,150 520,140"/>
+  <use href="#ov-k1" class="line s-accent anim-flow" style="fill:none"/>
+  <use href="#ov-k2" class="line s-amber anim-flow" style="fill:none"/>
+  <use href="#ov-k3" class="line s-green anim-flow" style="fill:none"/>
+  <rect x="520" y="70" width="200" height="120" rx="16" class="box s-cyan"/>
+  <text x="620" y="112" text-anchor="middle" font-weight="700">컨텍스트 창</text>
+  <text x="620" y="136" text-anchor="middle" class="sub">이번 호출에 실린 것만</text>
+  <text x="620" y="156" text-anchor="middle" class="sub">LLM 이 본다</text>
+  <line x1="720" y1="130" x2="770" y2="130" class="line"/>
+  <rect x="770" y="100" width="100" height="60" rx="12" class="box s-amber"/>
+  <text x="820" y="136" text-anchor="middle" font-weight="700">LLM</text>
+</svg>
+<figcaption>여섯 수단(지시문·스킬·도구·MCP·메모리·RAG)은 모두 컨텍스트 창이라는 한 자리를 두고 "언제, 얼마나" 실리느냐가 다릅니다. 컨텍스트는 유한한 자원이라, 결과에 꼭 필요한 정보만 가장 적게 골라 싣는 컨텍스트 엔지니어링이 필요합니다.</figcaption>
+</figure>
+<div class="grid">
+  <div class="card"><h4><span class="ic">📝</span>프롬프트 · 지시문</h4><p>역할·목표·제약·도구 사용 시점·출력 형식. 성공 기준과 평가부터 세우고, 초안 → 시험 → 실패 유형별 수정을 반복합니다. 코드처럼 버전 관리합니다.</p><a class="go" href="ai-agent-system-guide.html#ch04-instructions">4장 지시문</a></div>
+  <div class="card"><h4><span class="ic">📦</span>스킬</h4><p>SKILL.md·스크립트·자료를 묶은 폴더. 설명 → 본문 → 자료 순으로 필요할 때만 실립니다. 표준이 아닌 <b>제품 용어</b>이고, 설치 전 출처를 검증합니다. 스킬은 "어떻게", 도구는 "행동", MCP 는 "연결".</p><a class="go" href="ai-agent-system-guide.html#ch04-skill-tool-mcp">스킬·도구·MCP</a></div>
+  <div class="card"><h4><span class="ic">🗄</span>메모리 vs RAG</h4><p>메모리는 대화에서 생긴 정보(선호·결정·진행 기록), RAG 는 미리 있는 문서를 조각으로 나눠 임베딩(글의 뜻을 숫자로 바꾸기)·색인해 두고 뜻이 가까운 조각을 찾아 붙이는 방식. 검색 기술은 겹쳐도 출처·수명·범위가 다릅니다.</p><a class="go" href="ai-agent-system-guide.html#ch05-memory-vs-rag">5장 비교</a></div>
+</div>
+
+<h3 id="ov-workflow">4. 워크플로 vs 에이전트 — 길을 누가 정하나</h3>
+<figure class="diagram">
+<svg viewBox="0 0 900 250" role="img" aria-label="왼쪽 워크플로는 코드가 정한 고정 경로를 따라 단계가 차례로 이어지고, 오른쪽 에이전트는 LLM 이 가운데서 도구와 사람을 오가며 스스로 경로를 정한다">
+  <text x="215" y="26" text-anchor="middle" font-weight="700">워크플로 — 코드가 길을 정함</text>
+  <rect x="20" y="70" width="110" height="56" rx="10" class="box s-accent"/><text x="75" y="103" text-anchor="middle" class="sub">LLM 호출 1</text>
+  <rect x="160" y="70" width="110" height="56" rx="10" class="box s-accent"/><text x="215" y="103" text-anchor="middle" class="sub">검사</text>
+  <rect x="300" y="70" width="110" height="56" rx="10" class="box s-accent"/><text x="355" y="103" text-anchor="middle" class="sub">LLM 호출 2</text>
+  <line x1="130" y1="98" x2="160" y2="98" class="line s-accent anim-flow"/>
+  <line x1="270" y1="98" x2="300" y2="98" class="line s-accent anim-flow"/>
+  <text x="215" y="160" text-anchor="middle" class="sub">같은 입력이면 같은 경로 · 예측 가능 · 일관</text>
+  <text x="215" y="182" text-anchor="middle" class="sub">패턴: 체이닝 · 라우팅 · 병렬화 ·</text>
+  <text x="215" y="200" text-anchor="middle" class="sub">오케스트레이터-워커 · 평가자-최적화</text>
+  <line x1="450" y1="20" x2="450" y2="230" class="line" style="stroke-dasharray:4 4"/>
+  <text x="675" y="26" text-anchor="middle" font-weight="700">에이전트 — LLM 이 길을 정함</text>
+  <rect x="615" y="90" width="120" height="60" rx="14" class="box s-amber"/>
+  <circle cx="635" cy="108" r="6" class="f-amber anim-pulse"/>
+  <text x="675" y="126" text-anchor="middle" font-weight="700">LLM</text>
+  <rect x="490" y="50" width="96" height="44" rx="10" class="box s-green"/><text x="538" y="77" text-anchor="middle" class="sub">도구 A</text>
+  <rect x="490" y="150" width="96" height="44" rx="10" class="box s-green"/><text x="538" y="177" text-anchor="middle" class="sub">도구 B</text>
+  <rect x="770" y="50" width="96" height="44" rx="10" class="box s-green"/><text x="818" y="77" text-anchor="middle" class="sub">도구 C</text>
+  <rect x="770" y="150" width="96" height="44" rx="10" class="box s-pink"/><text x="818" y="177" text-anchor="middle" class="sub">사람 승인</text>
+  <line x1="615" y1="105" x2="586" y2="75" class="line s-green anim-flow"/>
+  <line x1="615" y1="135" x2="586" y2="170" class="line s-green anim-flow"/>
+  <line x1="735" y1="105" x2="770" y2="75" class="line s-green anim-flow"/>
+  <line x1="735" y1="135" x2="770" y2="170" class="line s-pink anim-flow"/>
+  <text x="675" y="225" text-anchor="middle" class="sub">유연 · 대신 비용과 오류 누적</text>
+</svg>
+<figcaption>완전 가이드 6장 [그림 7]의 요약. 실제 시스템은 둘을 섞습니다. 공통 권고는 <b>가장 단순한 해법부터</b> 시작해 나아질 때만 복잡도를 더하는 것입니다.</figcaption>
+</figure>
+<div class="grid">
+  <div class="card"><h4><span class="ic">🧭</span>계획과 반성</h4><p>에이전트는 계획 → 도구로 행동 → 실제 결과 관찰 → 판단의 고리를 돕니다. 평가자-최적화 패턴이 반성·자기 수정의 대표 형태입니다.</p><a class="go" href="ai-agent-system-guide.html#ch06-planning">6장 계획</a></div>
+  <div class="card"><h4><span class="ic">✋</span>사람 승인 · 체크포인트</h4><p>메일 발송·결제·삭제 같은 부작용 앞에서 멈추고 상태를 저장한 뒤, 승인이 오면 새 대화가 아니라 <b>같은 실행</b>을 이어 갑니다.</p><a class="go" href="ai-agent-system-guide.html#ch06-hitl">사람 승인</a></div>
+  <div class="card"><h4><span class="ic">🛑</span>재시도와 멈춤 조건</h4><p>실패는 층별로 재시도·대체·재개로 다루되 부작용이 두 번 일어나지 않게 하고, 완료·반복 상한·규칙 차단·사람 거절 같은 멈춤 조건을 미리 둡니다.</p><a class="go" href="ai-agent-system-guide.html#ch06-stop">멈춤 조건</a></div>
+</div>
+
+<h3 id="ov-multi">5. 멀티 에이전트는 비용과 맞바꿉니다</h3>
+<figure class="diagram">
+<svg viewBox="0 0 900 240" role="img" aria-label="채팅 한 번 대비 토큰 사용량 막대 그래프. 채팅 1배, 단일 에이전트 약 4배, 멀티 에이전트 약 15배">
+  <text x="30" y="28" font-weight="700">채팅 한 번 대비 토큰 사용량 (Anthropic 측정, 대략)</text>
+  <text x="30" y="76">채팅</text>
+  <rect x="170" y="56" width="40" height="30" rx="6" class="f-cyan"/>
+  <text x="222" y="77">1배</text>
+  <text x="30" y="126">단일 에이전트</text>
+  <rect x="170" y="106" width="160" height="30" rx="6" class="f-amber"/>
+  <text x="342" y="127">약 4배</text>
+  <text x="30" y="176">멀티 에이전트</text>
+  <rect x="170" y="156" width="600" height="30" rx="6" class="f-pink"/>
+  <text x="782" y="177">약 15배</text>
+  <text x="30" y="215" class="sub">조사 평가에서 성능 차이의 80%를 토큰 사용량이 설명 — 잘 되는 이유와 비싼 이유가 같습니다</text>
+</svg>
+<figcaption>그래서 원문은 "작업의 가치가 높아서, 성능이 좋아지는 대신 늘어나는 비용을 치를 만해야 한다"고 말합니다. OpenAI·LangChain·Google ADK·Microsoft 모두 <b>먼저 에이전트 하나로 시작</b>하고, 나눠서 실질적으로 나아질 때만 나누라고 권합니다.</figcaption>
+</figure>
+<div class="grid">
+  <div class="card"><h4><span class="ic">👥</span>왜 나누나</h4><p>각자 컨텍스트를 가진 에이전트 여럿이 일을 나눕니다. 이득은 컨텍스트 분리·병렬화·분산 개발에서 나옵니다.</p><a class="go" href="ai-agent-system-guide.html#ch07-single-vs-multi">7장 단일 vs 멀티</a></div>
+  <div class="card"><h4><span class="ic">🧩</span>패턴은 "최종 답을 누가 쥐나"</h4><p>감독자형(하위 에이전트를 도구처럼 부름) vs 핸드오프형(대화 주도권을 넘김). 순차·병렬은 코드가 흐름을 정하는 워크플로입니다.</p><a class="go" href="ai-agent-system-guide.html#ch07-patterns">협업 패턴</a></div>
+  <div class="card"><h4><span class="ic">📨</span>위임과 검증</h4><p>위임 지시서에는 목표·출력 형식·도구·경계를 담고, 공유/독립 컨텍스트, 검증 에이전트, 실패 보고, 예산 상한을 함께 설계합니다.</p><a class="go" href="ai-agent-system-guide.html#ch07-delegation">위임</a></div>
+</div>
+
+<h3 id="ov-ops">6. 운영 3축 — 권한 · 관측 · 평가</h3>
+<p>잘 만든 에이전트도 상태 저장·추적·평가·권한이 없으면 믿고 쓸 수 없습니다. 이 쪽은 운영에서 정할 것을 세 축으로 묶었습니다.</p>
+<div class="grid">
+  <div class="card"><h4><span class="ic">🔐</span>권한 — 최소 권한</h4><p>도구마다 "주지 않음 · 읽기 · 승인 후 실행 · 자동" 중 하나를 고릅니다. 인젝션이 성공해도 피해가 최소가 되게 하는 마지막 벽입니다. 열쇠는 호스트가 쥐고, 생성 코드는 샌드박스<span class="gl">(격리된 실행 공간)</span>에서 돌립니다.</p><a class="go" href="ai-agent-system-guide.html#ch09-least-privilege">9장 최소 권한</a></div>
+  <div class="card"><h4><span class="ic">🔭</span>관측 — 추적과 감사</h4><p>요청 하나의 처음부터 끝까지를 트레이스(요청 한 건의 전체 기록)와 스팬(그 안의 모델·도구 호출 하나하나의 기록)으로 남겨, 나쁜 검색어인지 도구 실패인지 가려냅니다. 누가·무엇을·어떤 판단으로 했는지는 감사 로그에 남깁니다.</p><a class="go" href="ai-agent-system-guide.html#ch08-observability">8장 관측성</a></div>
+  <div class="card"><h4><span class="ic">📊</span>평가 — 궤적과 최종 답</h4><p>확률적으로 움직이므로 통과/실패만으로는 부족합니다. 최종 답과 궤적(경로 — 밟은 단계·도구 호출 순서)을 함께 보고, 작게 시작해 평가 세트(정해 둔 시험 문제 묶음)로 반복합니다.</p><a class="go" href="ai-agent-system-guide.html#ch08-evaluation">8장 평가</a></div>
+</div>
+<div class="warn"><b>인젝션은 완벽히 막을 수 없다는 전제로</b>프롬프트 인젝션은 사용자(직접)와 에이전트가 읽는 내용(간접·도구 경로)으로 들어오고, 유출은 도구 인자·화면·로그·네트워크로 나갑니다. 여러 겹으로 막되 권한과 격리를 함께 묶습니다. → <a href="ai-agent-system-guide.html#ch09-injection">9장 인젝션</a></div>
+
+<h3 id="ov-checklist">7. 설계 순서 체크리스트 — 12항목</h3>
+<p>요구사항이 구조를 정하고, 구조가 부품을 정합니다. 앞 단계의 답이 뒤 단계의 선택지를 줄여 줍니다. 순서는 이 교재의 정리이고, 판단 기준은 각 장의 원문에서 왔습니다.</p>
+<ol class="ov-check">
+  <li><b>요구사항 · 목표</b> — 무엇을 해야 성공인가, 지표는? <small>→ <a href="ai-agent-system-guide.html#ch09-quality">9장</a></small></li>
+  <li><b>전체 아키텍처</b> — 단순하게, 계획 단계를 투명하게, 도구 인터페이스를 신중하게. <small>→ <a href="ai-agent-system-guide.html#ch08-layers">8장</a></small></li>
+  <li><b>에이전트 구성</b> — 하나로 시작, 나눌 이유가 있을 때만 전문가 추가. <small>→ <a href="ai-agent-system-guide.html#ch07-single-vs-multi">7장</a></small></li>
+  <li><b>사용 LLM</b> — 제품이 아니라 능력(추론·도구 호출·컨텍스트·비용)으로, 역할별로 알맞은 모델에 나눠 보내기(라우팅). <small>→ <a href="ai-agent-system-guide.html#ch01-llm">1장</a></small></li>
+  <li><b>도구 구성</b> — 몇 개의 신중한 도구로 시작, 이름 공간 나누기, 의미 있는 응답. <small>→ <a href="ai-agent-system-guide.html#ch02-define">2장</a></small></li>
+  <li><b>MCP 활용 여부</b> — 여러 호스트가 같은 도구를 쓰는가, 인가가 필요한 원격 서버인가. <small>→ <a href="ai-agent-system-guide.html#ch03-vs-api">3장</a></small></li>
+  <li><b>스킬 · 메모리</b> — 반복 지침은 스킬, 지속할 사실은 메모리, 찾아 읽을 지식은 RAG. <small>→ <a href="ai-agent-system-guide.html#ch04-skill">4장</a> · <a href="ai-agent-system-guide.html#ch05-memory-vs-rag">5장</a></small></li>
+  <li><b>워크플로 · 오케스트레이션</b> — 잘 정의된 일엔 워크플로, 유연성이 필요하면 에이전트. <small>→ <a href="ai-agent-system-guide.html#ch06-workflow-vs-agent">6장</a> · <a href="ai-agent-system-guide.html#ch07-patterns">7장</a></small></li>
+  <li><b>권한 · 보안</b> — 도구별 권한 칸, 신원 방식, 인젝션 대책, 부작용 도구 옆 검사. <small>→ <a href="ai-agent-system-guide.html#ch09-least-privilege">9장</a></small></li>
+  <li><b>실행 과정</b> — 요청 하나가 처리되는 단계, 매 단계 실제 결과로 진행 판단. <small>→ <a href="ai-agent-system-guide.html#ch01-agent-loop">1장</a></small></li>
+  <li><b>오류 · 예외 처리</b> — 재시도·타임아웃·대체·중단·멈춘 자리에서 재개. <small>→ <a href="ai-agent-system-guide.html#ch06-retry">6장</a> · <a href="ai-agent-system-guide.html#ch09-incident">9장</a></small></li>
+  <li><b>운영 · 평가</b> — 평가 세트, 판정 방식, 추적, 비용 지표. 결과가 다시 1번을 고칩니다. <small>→ <a href="ai-agent-system-guide.html#ch08-evaluation">8장</a> · <a href="ai-agent-system-guide.html#ch09-cost">9장</a></small></li>
+</ol>
+<p class="muted">이 12항목을 사례 4개(조사·보고서, GitHub 개발, 프로젝트 관리, 업무 자동화)에 적용한 예는 <a href="ai-agent-system-guide.html#ch10-method">10장 실전 설계</a>에 있습니다.</p>
+
+<h3 id="ov-start">이제 어디로 갈까요?</h3>
+<p>그림으로 먼저 감을 잡으려면 <a href="ai-agent-system-easy.html">쉬운 설명</a>, 손으로 설계해 보려면 <a href="ai-agent-system-playbook.html">활용편</a>(설계 실습 10개)이 빠릅니다. 차근차근 읽으려면 이 순서로 보세요.</p>
+<div class="path"><a href="ai-agent-system-guide.html#ch00-map">개념 관계도</a><i>→</i><a href="ai-agent-system-guide.html#ch01-llm-vs-agent">LLM vs 에이전트</a><i>→</i><a href="ai-agent-system-guide.html#ch02-flow">도구 호출 흐름</a><i>→</i><a href="ai-agent-system-guide.html#ch03-what">MCP</a><i>→</i><a href="ai-agent-system-guide.html#ch05-knowledge-in-action">지식과 행동</a><i>→</i><a href="ai-agent-system-guide.html#ch06-workflow-vs-agent">워크플로 vs 에이전트</a><i>→</i><a href="ai-agent-system-guide.html#ch10-method">설계 순서</a></div>
+
+<details class="ov-more"><summary><h3 id="ov-guide">자세히 읽기 — 가이드 지도</h3><span class="hint">문서 5종과 장별 내용</span></summary>
+<div class="grid">
+  <div class="card"><h4>1. LLM과 에이전트</h4><p>컨텍스트 창 · 추론 · 구조화 출력 · 에이전트 루프</p><a class="go" href="ai-agent-system-guide.html#ch01">열기</a></div>
+  <div class="card"><h4>2. 도구와 함수 호출</h4><p>API vs 도구 · 호출 흐름 · 도구 정의 · 오류 처리</p><a class="go" href="ai-agent-system-guide.html#ch02">열기</a></div>
+  <div class="card"><h4>3. MCP 아키텍처</h4><p>호스트·클라이언트·서버 · 제공물 · 전송 · 여러 서버</p><a class="go" href="ai-agent-system-guide.html#ch03">열기</a></div>
+  <div class="card"><h4>4. 프롬프트·스킬·컨텍스트</h4><p>지시문 · 스킬 · 컨텍스트 엔지니어링</p><a class="go" href="ai-agent-system-guide.html#ch04">열기</a></div>
+  <div class="card"><h4>5. 메모리와 RAG</h4><p>단기·장기 메모리 · 임베딩 · 메모리 vs RAG</p><a class="go" href="ai-agent-system-guide.html#ch05">열기</a></div>
+  <div class="card"><h4>6. 실행과 제어</h4><p>계획 · 워크플로 vs 에이전트 · 체크포인트 · 사람 승인 · 재시도</p><a class="go" href="ai-agent-system-guide.html#ch06">열기</a></div>
+  <div class="card"><h4>7. 멀티 에이전트</h4><p>패턴 · 통신 · 위임 · 메모리 공유 · 비용</p><a class="go" href="ai-agent-system-guide.html#ch07">열기</a></div>
+  <div class="card"><h4>8. 아키텍처와 프레임워크</h4><p>층 구조 · 런타임 vs 프레임워크 · 관측 · 평가 · 가드레일</p><a class="go" href="ai-agent-system-guide.html#ch08">열기</a></div>
+  <div class="card"><h4>9. 보안과 운영</h4><p>최소 권한 · MCP 보안 · 인젝션 · 샌드박스 · 감사 · 비용</p><a class="go" href="ai-agent-system-guide.html#ch09">열기</a></div>
+  <div class="card"><h4>10. 실전 설계</h4><p>12항목 틀 · 사례 4가지 · 종합 아키텍처</p><a class="go" href="ai-agent-system-guide.html#ch10">열기</a></div>
+</div>
+<div class="grid">
+  <div class="card"><h4>🎈 쉬운 설명</h4><p>고등학생도 이해할 수 있게 그림 위주로 한 장에.</p><a class="go" href="ai-agent-system-easy.html">쉬운 설명 열기</a></div>
+  <div class="card"><h4>📗 필수판</h4><p>각 장의 「처음이라면 이것만」 소절만 모은 짧은 판.</p><a class="go" href="ai-agent-system-essentials.html">필수판 열기</a></div>
+  <div class="card"><h4>🧭 활용편</h4><p>코드 없이 종이·문서 위에서 하는 설계 실습 10개. 결과물은 매번 「설계 노트」 한 장.</p><a class="go" href="ai-agent-system-playbook.html">활용편 열기</a></div>
+  <div class="card"><h4>📘 완전 가이드</h4><p>개념 · 벤더별 차이 · 사례 · 용어집 · 참고 자료까지.</p><a class="go" href="ai-agent-system-guide.html">완전 가이드 열기</a></div>
+</div>
+</details>
+
+<p class="sources">근거: MCP 명세 2026-07-28 · 6개 벤더 공식 문서 86쪽 · 수집일 2026-11-10</p>
+</section>
+</main>
+<script>
+
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('[data-theme-set]');
+  function cur(){return root.getAttribute('data-theme')||'auto'}
+  function mark(){var c=cur();btns.forEach(function(b){b.classList.toggle('on',b.dataset.themeSet===c);b.setAttribute('aria-pressed',b.dataset.themeSet===c)})}
+  btns.forEach(function(b){b.onclick=function(){var t=b.dataset.themeSet;
+    if(t==='auto'){root.removeAttribute('data-theme');try{localStorage.setItem('ai-agent-system-guide-theme','auto')}catch(e){}}
+    else{root.setAttribute('data-theme',t);try{localStorage.setItem('ai-agent-system-guide-theme',t)}catch(e){}}
+    mark()}});
+  mark();
+})();
+(function(){
+  var stepControllers=new WeakMap();
+  document.querySelectorAll('[data-stepper]').forEach(function(st){
+    var steps=[].slice.call(st.querySelectorAll(':scope > [data-step]')); if(!steps.length) return;
+    var chapter=st.closest('section.chapter');
+    if(chapter && /^pb\d+$/.test(chapter.id)){
+      var current=0, expanded=false;
+      var tools=document.createElement('div'); tools.className='stepper-tools';
+      var label=document.createElement('label'); label.textContent='단계 바로 가기';
+      var select=document.createElement('select');
+      steps.forEach(function(step,k){
+        var heading=step.querySelector('h4, :scope > b');
+        var option=document.createElement('option'); option.value=k;
+        option.textContent=heading ? heading.textContent.trim() : (k+1)+'단계'; select.appendChild(option);
+      });
+      label.appendChild(select);
+      var all=document.createElement('button'); all.type='button';
+      var nav=document.createElement('div'); nav.className='stepper-nav';
+      var prev=document.createElement('button'); prev.type='button'; prev.textContent='◀ 이전';
+      var next=document.createElement('button'); next.type='button'; next.textContent='다음 ▶';
+      var status=document.createElement('span'); status.className='muted'; status.setAttribute('role','status');
+      function show(n){
+        current=Math.max(0,Math.min(n,steps.length-1)); select.value=current;
+        st.classList.toggle('show-all',expanded);
+        steps.forEach(function(step,k){step.classList.toggle('active',k===current)});
+        all.textContent=expanded ? '한 단계씩 보기' : '전체 단계 펼치기';
+        all.setAttribute('aria-pressed',String(expanded));
+        prev.disabled=expanded || current===0; next.disabled=expanded || current===steps.length-1;
+        status.textContent=expanded ? '전체 '+steps.length+'단계를 보여 줍니다.' :
+          (current+1)+' / '+steps.length+(current===steps.length-1 ? ' · 마지막 단계입니다. 아래 완료 기준을 확인하세요.' : '');
+      }
+      function move(n){
+        expanded=false; show(n); st.scrollIntoView({block:'start'});
+      }
+      prev.onclick=function(){move(current-1)}; next.onclick=function(){move(current+1)};
+      select.onchange=function(){move(Number(select.value))};
+      all.onclick=function(){expanded=!expanded;show(current)};
+      tools.append(label,all); st.prepend(tools); nav.append(prev,next,status); st.appendChild(nav);
+      st.classList.add('stepper-ready'); show(0);
+      stepControllers.set(st,function(step){expanded=false;show(steps.indexOf(step))});
+      return;
+    }
+    var i=0, nav=document.createElement('div'); nav.className='stepper-nav';
+    var prev=document.createElement('button'); prev.textContent='◀ 이전';
+    var next=document.createElement('button'); next.textContent='다음 ▶';
+    var dots=document.createElement('span'); dots.className='dots';
+    var lab=document.createElement('span'); lab.className='muted'; lab.style.fontSize='13px';
+    steps.forEach(function(){dots.appendChild(document.createElement('i'));});
+    function show(n){i=(n+steps.length)%steps.length;steps.forEach(function(s,k){s.classList.toggle('active',k===i)});
+      [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)}); lab.textContent=(i+1)+' / '+steps.length;}
+    prev.onclick=function(){show(i-1)}; next.onclick=function(){show(i+1)};
+    nav.append(prev,dots,next,lab); st.appendChild(nav); show(0);
+  });
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    var btns=[].slice.call(t.querySelectorAll(':scope > .tab-bar button[data-tab]'));
+    var panels=[].slice.call(t.querySelectorAll(':scope > [data-panel]'));
+    function on(k){btns.forEach(function(b){b.classList.toggle('on',b.dataset.tab===k)});panels.forEach(function(p){p.classList.toggle('on',p.dataset.panel===k)});}
+    btns.forEach(function(b){b.onclick=function(){on(b.dataset.tab)}}); if(btns[0]) on(btns[0].dataset.tab);
+    t.classList.add('tabs-ready');
+  });
+  function revealHash(){
+    var id; try{id=decodeURIComponent(location.hash.slice(1))}catch(e){return}
+    var target=document.getElementById(id); if(!target) return;
+    var chapter=target.closest('section.chapter'); if(!chapter || !/^pb\d+$/.test(chapter.id)) return;
+    var step=target.closest('[data-step]'), st=step && step.closest('[data-stepper]');
+    if(st && stepControllers.has(st)) stepControllers.get(st)(step);
+    var parent=target.parentElement;
+    while(parent && parent!==chapter){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
+    requestAnimationFrame(function(){target.scrollIntoView({block:'start'})});
+  }
+  addEventListener('hashchange',revealHash); revealHash();
+  document.querySelectorAll('section.chapter[id^="pb"] .diagram > svg').forEach(function(svg){
+    var frame=document.createElement('div'); frame.className='diagram-scroll';
+    frame.tabIndex=0; frame.setAttribute('role','region');
+    frame.setAttribute('aria-label',(svg.getAttribute('aria-label') || '실습 그림')+' — 좌우로 스크롤할 수 있습니다.');
+    var width=svg.viewBox.baseVal.width; if(width)svg.style.minWidth=width+'px';
+    svg.parentNode.insertBefore(frame,svg); frame.appendChild(svg);
+    var hint=document.createElement('p'); hint.className='diagram-hint';
+    hint.textContent='그림이 한눈에 보이지 않으면 좌우로 밀어 보세요. 키보드는 그림 영역을 선택하고 ← / →를 누릅니다.';
+    frame.after(hint);
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  var bar=document.querySelector('.progress');
+  var links={}; document.querySelectorAll('.sidenav a[data-ch]').forEach(function(a){links[a.dataset.ch]=a});
+  var chs=[].slice.call(document.querySelectorAll('section.chapter'));
+  function rev(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*0.95) el.classList.add('in')})}
+  function onScroll(){rev();var h=document.documentElement; bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=chs[0]; chs.forEach(function(c){if(c.getBoundingClientRect().top<120) cur=c});
+    Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===cur.id)});}
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script></body></html>

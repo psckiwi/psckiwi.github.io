@@ -1,0 +1,1455 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ego(lite) 활용편 — 따라 하기</title>
+<script>(function(){var t='dark';try{t=localStorage.getItem('ego-lite-guide-theme')||'dark'}catch(e){}if(t!=='auto')document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')})();</script>
+<style>:root{--bg:#0b0b0d;--fg:#ececee;--muted:#9a9aa3;--card:#141418;--card2:#1b1b21;--border:#2a2a31;--accent:#7c83ff;--green:#34d399;--amber:#fbbf24;--pink:#f472b6;--cyan:#22d3ee;--red:#f87171}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}}
+:root[data-theme="light"]{--bg:#fafafa;--fg:#18181b;--muted:#5f5f6b;--card:#fff;--card2:#f3f3f7;--border:#e2e2e8;--accent:#4f46e5;--green:#059669;--amber:#d97706;--pink:#db2777;--cyan:#0891b2;--red:#dc2626}
+:root{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){color-scheme:light}}
+/* 테마 전환 버튼 */
+.theme-toggle{position:fixed;top:12px;right:14px;z-index:30;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.theme-toggle button{font:inherit;font-size:13px;border:0;background:none;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
+.theme-toggle button:hover{color:var(--fg)}
+.theme-toggle button.on{background:var(--accent);color:#fff}
+@media print{.theme-toggle{display:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15.5px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:color-mix(in srgb,var(--accent) 13%,transparent);padding:1px 6px;border-radius:5px;word-break:break-word}
+pre{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;overflow-x:auto;font:12.8px/1.6 ui-monospace,Menlo,monospace}
+pre code{background:none;padding:0}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--card2)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1320px;margin:0 auto}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidenav{display:none}}
+.sidenav{position:sticky;top:0;height:100dvh;overflow-y:auto;padding:24px 14px;border-right:1px solid var(--border);font-size:13.5px}
+.sidenav a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+.sidenav a:hover,.sidenav a.on{color:var(--fg);background:var(--card2)}
+.sidenav .sub a{padding-left:22px;font-size:12.5px}
+main{padding:28px 36px 120px;min-width:0}
+@media (max-width:700px){main{padding:20px 16px 80px}}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--pink));width:0;z-index:20}
+/* chapter */
+.chapter{margin-top:72px;padding-top:12px;border-top:1px solid var(--border)}
+.chapter > .ch-head .ch-no{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--accent)}
+.chapter h2{font-size:30px;line-height:1.25;margin:6px 0 10px;letter-spacing:-.01em}
+.chapter h3{font-size:21px;margin:44px 0 8px}
+.chapter h4{font-size:16px;margin:24px 0 6px;color:var(--accent)}
+.lead{color:var(--muted);font-size:16.5px;max-width:820px}
+.learn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:16px 0}
+.learn > b{display:block;margin-bottom:4px}
+.learn ul{margin:0;padding-left:20px}
+/* building blocks */
+.concept{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-top:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:14px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.card h4,.card h5{margin:0 0 4px;font-size:15px;color:var(--fg)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 26px}
+.kv{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.kv th,.kv td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.kv th{color:var(--muted);font-size:12.5px;font-weight:600;background:var(--card2)}
+.table-wrap{overflow-x:auto}
+ol.steps{list-style:none;counter-reset:st;margin:10px 0;padding:0;display:grid;gap:10px}
+ol.steps > li{counter-increment:st;position:relative;padding-left:40px;min-height:26px}
+ol.steps > li::before{content:counter(st);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+ol.steps > li > b{display:block}
+ol.steps > li span,ol.steps > li p{color:var(--muted);margin:0}
+.note,.tip,.warn,.eli5{margin:14px 0;padding:12px 16px;border-radius:12px;border:1px solid;font-size:14.5px}
+.note{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tip{border-color:color-mix(in srgb,var(--green) 45%,transparent);background:color-mix(in srgb,var(--green) 8%,transparent)}
+.warn{border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:color-mix(in srgb,var(--amber) 9%,transparent)}
+.eli5{border-color:color-mix(in srgb,var(--pink) 45%,transparent);background:color-mix(in srgb,var(--pink) 7%,transparent)}
+.note > b:first-child,.tip > b:first-child,.warn > b:first-child,.eli5 > b:first-child{display:block;margin-bottom:2px}
+.term{border-bottom:1px dashed var(--muted);cursor:help}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted);vertical-align:middle}
+.pill.exp{border-color:var(--amber);color:var(--amber)}
+.muted{color:var(--muted)}
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+.summary-box{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent),color-mix(in srgb,var(--pink) 8%,transparent));border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:28px}
+.sources{font-size:12.5px;color:var(--muted);margin-top:14px}
+/* diagrams */
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0;overflow-x:auto}
+.diagram figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg text{fill:var(--fg);font-family:inherit;font-size:13px}
+.diagram svg .sub{fill:var(--muted);font-size:11px}
+.diagram svg .box{fill:var(--card2);stroke:var(--border);stroke-width:1.2}
+.diagram svg .line{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diagram svg .s-accent{stroke:var(--accent)} .diagram svg .s-green{stroke:var(--green)} .diagram svg .s-amber{stroke:var(--amber)} .diagram svg .s-pink{stroke:var(--pink)} .diagram svg .s-cyan{stroke:var(--cyan)} .diagram svg .s-red{stroke:var(--red)}
+.diagram svg .f-accent{fill:var(--accent)} .diagram svg .f-green{fill:var(--green)} .diagram svg .f-amber{fill:var(--amber)} .diagram svg .f-pink{fill:var(--pink)} .diagram svg .f-cyan{fill:var(--cyan)} .diagram svg .f-red{fill:var(--red)} .diagram svg .f-muted{fill:var(--muted)}
+/* animation utilities */
+@keyframes dash{to{stroke-dashoffset:-24}}
+.anim-flow{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.08)}}
+.anim-pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim-spin{animation:spin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.anim-blink{animation:blink 1.1s step-end infinite}
+.reveal{transform:translateY(14px);transition:transform .6s ease}
+.reveal.in{transform:none}
+/* interactive stepper: <div class="stepper" data-stepper> with .stepper-stage > [data-step="1..n"] and auto buttons */
+.stepper{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+.stepper [data-step]{display:none}
+.stepper [data-step].active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stepper-nav{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.stepper-nav button,.tabs button{font:inherit;font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--fg);cursor:pointer}
+.stepper-nav button:hover,.tabs button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stepper-nav .dots{display:flex;gap:5px}
+.stepper-nav .dots i{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.stepper-nav .dots i.on{background:var(--accent)}
+/* tabs: <div class="tabs" data-tabs><div class="tab-bar"><button data-tab="a">..</button></div><div data-panel="a">..</div></div> */
+.tabs{margin:14px 0}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tabs [data-panel]{display:none}
+.tabs [data-panel].on{display:block;animation:fadein .3s ease}
+/* 활용편은 JS가 없어도 모든 절차를 읽을 수 있고, 좁은 화면에서도 그림 글자를 유지한다. */
+.chapter[id^="pb"] .stepper > [data-step],.chapter[id^="pb"] .tabs > [data-panel]{display:block}
+.chapter[id^="pb"] .stepper-ready > [data-step]:not(.active),.chapter[id^="pb"] .tabs-ready > [data-panel]:not(.on){display:none}
+.chapter[id^="pb"] .stepper-ready.show-all > [data-step]{display:block}
+.chapter[id^="pb"] .stepper-tools{padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.chapter[id^="pb"] .stepper-tools label{display:block;font-size:13px;font-weight:600}
+.chapter[id^="pb"] .stepper-tools select{display:block;width:100%;max-width:100%;font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px;margin:5px 0 10px}
+.chapter[id^="pb"] .stepper-tools button{font:inherit;font-size:13px;color:var(--fg);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer}
+.chapter[id^="pb"] .stepper-nav button{min-height:40px}
+.chapter[id^="pb"] .stepper-nav button:disabled{opacity:.5;cursor:default}
+.chapter[id^="pb"] .stepper-nav [role="status"]{flex-basis:100%;font-size:13px}
+.chapter[id^="pb"] .diagram{overflow-x:auto}
+.chapter[id^="pb"] .diagram svg{min-width:660px}
+.chapter[id^="pb"] .diagram-scroll{overflow-x:auto;max-width:100%;padding:4px 0 8px}
+.chapter[id^="pb"] .diagram-hint{font-size:12px;color:var(--muted);margin:6px 0}
+.chapter[id^="pb"] .diagram-scroll:focus-visible,.chapter[id^="pb"] button:focus-visible,.chapter[id^="pb"] select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.chapter[id^="pb"] [id]{scroll-margin-top:64px}
+@media (max-width:700px){.chapter[id^="pb"] .two{grid-template-columns:1fr}.chapter[id^="pb"] .grid{grid-template-columns:1fr}.chapter[id^="pb"] .stepper{padding:12px}.chapter[id^="pb"] .diagram{padding:10px}}
+@media print{.chapter[id^="pb"] .stepper-ready > [data-step],.chapter[id^="pb"] .tabs-ready > [data-panel]{display:block!important}.chapter[id^="pb"] .stepper-tools,.chapter[id^="pb"] .stepper-nav,.chapter[id^="pb"] .diagram-hint{display:none}.chapter[id^="pb"] .diagram{overflow:visible}.chapter[id^="pb"] .diagram-scroll{overflow:visible}.chapter[id^="pb"] .diagram svg{min-width:0!important}}
+/* mock UI frame */
+.mock{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card2);margin:14px 0}
+.mock .bar{display:flex;gap:6px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block}
+.mock .body{padding:12px;font-size:13px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* 2층 구조: 고급·참고 접기 */
+details.adv{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:10px 16px;margin:14px 0}
+details.adv > summary{font-weight:600;color:var(--muted);list-style:none}
+details.adv > summary::before{content:"🔧 개발자용 참고 · ";color:var(--amber)}
+details.adv > summary::after{content:" — 처음엔 건너뛰어도 됩니다 (펼치기 ▾)";font-weight:400;font-size:13px}
+details.adv[open] > summary::after{content:" (접기 ▴)"}
+details.adv[open]{border-style:solid}
+.start-here{background:color-mix(in srgb,var(--green) 10%,transparent);border:1px solid color-mix(in srgb,var(--green) 50%,transparent);border-radius:14px;padding:14px 18px;margin:16px 0}
+.start-here > b:first-child{display:block;margin-bottom:4px}
+.start-here > b:first-child::before{content:"🚩 "}
+.gl{color:var(--muted);font-size:.92em}
+
+.sidenav .brand{font-weight:700;padding:0 10px 12px;display:block;color:var(--fg)}
+.sidenav .sub{display:none}
+.sidenav a.on + .sub{display:block}
+.sidenav a[data-ch]{margin-top:2px}
+
+.docnav{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 14px}
+.docnav a{padding:3px 9px!important;border-radius:999px!important;border:1px solid var(--border);font-size:12px!important;display:inline-block!important}
+.docnav a.cur{background:var(--accent);color:#fff!important;border-color:var(--accent)}
+.home-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted)!important;text-decoration:none;padding:4px 10px 4px 8px!important;border-radius:999px;border:1px solid var(--border)}
+.home-link:hover{color:var(--fg)!important;border-color:var(--accent)}
+.home-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.docnav-wrap{padding:0 6px 10px}
+.sidenav a.home-link{display:inline-flex!important;border-radius:999px!important;padding:4px 11px 4px 9px!important;color:var(--muted)!important}
+.sidenav a.home-link:hover{background:none;color:var(--fg)!important}
+.home-top{display:none;margin:0 0 14px}
+@media (max-width:900px){.home-top{display:inline-flex}}
+@media print{.home-link{display:none!important}}
+</style></head>
+<body><div class="progress"></div><div class="theme-toggle" role="group" aria-label="화면 테마"><button data-theme-set="auto" title="시스템 설정 따라가기">🖥 자동</button><button data-theme-set="light" title="밝은 화면">☀️ 라이트</button><button data-theme-set="dark" title="어두운 화면">🌙 다크</button></div>
+<div class="layout"><nav class="sidenav"><span class="brand">ego(lite) 활용편</span><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="ego-lite-easy.html" class="">쉬운 설명</a><a href="ego-lite-overview.html" class="">한눈에 보기</a><a href="ego-lite-essentials.html" class="">필수판</a><a href="ego-lite-playbook.html" class="cur">활용편</a><a href="ego-lite-guide.html" class="">완전 가이드</a></div><a href="#pb0" data-ch="pb0"><b>시작하기</b></a><div class="sub"><a href="#pb0-prep">준비물과 완료 기준</a><a href="#pb0-steps">따라 하기</a><a href="#pb0-check">준비 점검표</a><a href="#pb0-stuck">막히면</a><a href="#pb0-next">다음에 할 것</a></div><a href="#pb1" data-ch="pb1"><b>1. 첫 작업</b></a><div class="sub"><a href="#pb1-prep">준비물과 완료 기준</a><a href="#pb1-steps">따라 하기</a><a href="#pb1-stuck">막히면</a><a href="#pb1-next">다음에 할 것</a></div><a href="#pb2" data-ch="pb2"><b>2. 에이전트 Space 들여다보고, 넘겨받고, 돌려주기</b></a><div class="sub"><a href="#pb2-prep">준비물과 완료 기준</a><a href="#pb2-steps">따라 하기</a><a href="#pb2-stuck">막히면</a><a href="#pb2-next">다음에 할 것</a></div><a href="#pb3" data-ch="pb3"><b>3. 읽기만 하는 조사</b></a><div class="sub"><a href="#pb3-prep">준비물과 완료 기준</a><a href="#pb3-steps">따라 하기</a><a href="#pb3-check">결과 점검표 — 다섯 가지 신호</a><a href="#pb3-stuck">막히면</a><a href="#pb3-next">다음에 할 것</a></div><a href="#pb4" data-ch="pb4"><b>4. 로그인된 사이트에서 목록 뽑기</b></a><div class="sub"><a href="#pb4-prep">준비물과 완료 기준</a><a href="#pb4-steps">따라 하기</a><a href="#pb4-stuck">막히면</a><a href="#pb4-next">다음에 할 것</a></div><a href="#pb5" data-ch="pb5"><b>5. 파일 내려받기</b></a><div class="sub"><a href="#pb5-prep">준비물과 완료 기준</a><a href="#pb5-steps">따라 하기</a><a href="#pb5-stuck">막히면</a><a href="#pb5-next">다음에 할 것</a></div><a href="#pb6" data-ch="pb6"><b>6. 양식 채우고 제출 직전에 멈추기</b></a><div class="sub"><a href="#pb6-prep">준비물과 완료 기준</a><a href="#pb6-steps">따라 하기</a><a href="#pb6-stuck">막히면</a><a href="#pb6-next">다음에 할 것</a></div><a href="#pb7" data-ch="pb7"><b>7. 여러 작업을 동시에 맡기기</b></a><div class="sub"><a href="#pb7-prep">준비물과 완료 기준</a><a href="#pb7-steps">따라 하기</a><a href="#pb7-stuck">막히면</a><a href="#pb7-next">다음에 할 것</a></div><a href="#pb8" data-ch="pb8"><b>8. 다른 에이전트로 같은 작업 해 보기</b></a><div class="sub"><a href="#pb8-prep">준비물과 완료 기준</a><a href="#pb8-steps">따라 하기</a><a href="#pb8-alt">두 번째 에이전트가 없다면 — 데스크톱 앱 ↔ 터미널 화면</a><a href="#pb8-stuck">막히면</a><a href="#pb8-next">다음에 할 것</a></div><a href="#pb9" data-ch="pb9"><b>9. 막힘 해결 ①</b></a><div class="sub"><a href="#pb9-prep">준비물과 완료 기준</a><a href="#pb9-steps">따라 하기</a><a href="#pb9-stuck">막히면</a><a href="#pb9-next">다음에 할 것</a></div><a href="#pb10" data-ch="pb10"><b>10. 막힘 해결 ②</b></a><div class="sub"><a href="#pb10-prep">준비물과 완료 기준</a><a href="#pb10-steps">따라 하기</a><a href="#pb10-stuck">막히면</a><a href="#pb10-next">다음에 할 것</a></div></nav>
+<main><a class="home-link home-top" href="../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a><section class="chapter" id="pb0">
+<style>#pb0{border-top:none;margin-top:0}#pb0 .pb0-check td:first-child{white-space:nowrap;width:2.4em;text-align:center}</style>
+<div class="ch-head"><div class="ch-no">START</div><h2>시작 전 준비 — 설치·첫 실행 설정·에이전트 권한</h2><p class="lead">실습에 들어가기 전에 한 번만 해 두는 준비입니다. ego(lite)를 설치하고, 내가 쓰는 AI 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램 — Claude Code, Codex 등)</span>가 ego(lite)를 열 수 있도록 권한을 맞춘 뒤, 대화창에서 <code>/ego-browser</code>가 보이는지 확인합니다.</p></div>
+<div class="learn"><b>이 준비로 할 수 있게 되는 것</b><ul><li>ego(lite)를 설치하고 첫 실행 설정<span class="gl">(onboarding)</span>을 끝까지 마칩니다.</li><li>쓰던 브라우저의 로그인 상태를 가져올지 스스로 정합니다.</li><li>에이전트의 권한을 넓히는 것이 무슨 뜻인지 알고 켭니다.</li><li>에이전트 대화창에서 ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>을 불러옵니다.</li></ul><p class="muted">예상 소요 시간: 5~10분 (원문은 설치부터 첫 작업까지 약 2분이라고 안내합니다)</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb0-prep">준비물</a>을 확인한 뒤 <a href="#pb0-steps">따라 하기</a> 다섯 단계를 순서대로 진행하세요. 중간에 걸리면 <a href="#pb0-stuck">막히면</a>에서 같은 증상을 찾습니다. 이미 설치와 첫 실행 설정을 마쳤다면 3단계부터 시작합니다.</p></div>
+<h3 id="pb0-prep">준비물과 완료 기준</h3><ul><li><b>macOS 컴퓨터.</b> 이 활용편은 macOS를 기준으로 씁니다. Windows용은 베타이고 화면·경로가 다를 수 있습니다 — <a href="ego-lite-guide.html#ch01-windows">가이드 1장 Windows</a>를 함께 보세요.</li><li><b>내가 쓰는 에이전트 하나.</b> 여기서는 Claude Code(데스크톱 앱 또는 터미널<span class="gl">(글자로 명령을 입력하는 창)</span>)와 Codex(데스크톱 앱 또는 터미널)를 다룹니다. 다른 에이전트는 <a href="ego-lite-guide.html#ch05-table">가이드 5장의 에이전트별 표</a>에서 찾습니다.</li><li><b>(선택) 평소 쓰던 브라우저와 macOS 키체인<span class="gl">(Keychain — macOS가 비밀번호 같은 민감한 정보를 보관하는 금고)</span> 암호.</b> 로그인 상태를 옮겨 올 때만 필요합니다.</li></ul><div class="note"><b>완료 기준</b><p>에이전트 입력 칸 옆의 권한 표시가 <b>Bypass permissions</b>(Claude Code) 또는 <b>Full access</b>(Codex)이고, 입력 칸에 <code>/ego-browser</code>를 쳤을 때 ego-browser 스킬이 목록에 보이면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="내려받아 설치, 첫 실행 설정, 에이전트 준비, 스킬 확인의 네 단계입니다.">
+<defs><path id="pb0-track" d="M97 128 H622"/></defs>
+<rect class="box s-accent" x="20" y="24" width="155" height="80" rx="12"/><text x="97" y="58" text-anchor="middle" font-weight="600">① 내려받아 설치</text><text class="sub" x="97" y="80" text-anchor="middle">DMG 열고 더블클릭</text>
+<path class="line s-accent anim-flow" d="M175 64 H195"/>
+<rect class="box s-cyan" x="195" y="24" width="155" height="80" rx="12"/><text x="272" y="58" text-anchor="middle" font-weight="600">② 첫 실행 설정</text><text class="sub" x="272" y="80" text-anchor="middle">스킬 설치 · 가져오기</text>
+<path class="line s-cyan anim-flow" d="M350 64 H370"/>
+<rect class="box s-amber" x="370" y="24" width="155" height="80" rx="12"/><text x="447" y="58" text-anchor="middle" font-weight="600">③ 에이전트 준비</text><text class="sub" x="447" y="80" text-anchor="middle">다시 열기 · 권한 넓히기</text>
+<path class="line s-amber anim-flow" d="M525 64 H545"/>
+<rect class="box s-green" x="545" y="24" width="155" height="80" rx="12"/><text x="622" y="58" text-anchor="middle" font-weight="600">④ 스킬 확인</text><text class="sub" x="622" y="80" text-anchor="middle">/ego-browser 가 보임</text>
+<path class="line" d="M97 128 H622" style="stroke-dasharray:2 5"/><circle r="5" class="f-accent"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#pb0-track"/></animateMotion></circle>
+</svg><figcaption>준비는 네 덩어리입니다. ①②는 ego(lite) 쪽, ③④는 에이전트 쪽에서 합니다.</figcaption></figure>
+<h3 id="pb0-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb0-s1">1단계 · ego(lite) 내려받아 설치하기</h4>
+<ol class="steps"><li><b>설치 파일 내려받기</b><span>ego(lite) 문서 사이트(lite.ego.app)의 <b>Download for Mac</b>(Mac용 내려받기) 단추로 DMG<span class="gl">(macOS 앱 설치 파일)</span>를 받아 엽니다.</span></li><li><b>설치하기</b><span>화면 안내에 따라 ego(lite) 아이콘을 더블클릭해 설치합니다.</span></li><li><b>ego(lite) 열기</b><span>설치된 ego(lite)를 찾아 엽니다.</span></li></ol>
+<p><b>확인:</b> ego(lite)가 열리고 첫 실행 설정이 시작됩니다. 더 자세한 설명은 <a href="ego-lite-guide.html#ch01-install">가이드 1장 설치</a>에 있습니다.</p>
+</div><div data-step="2"><h4 id="pb0-s2">2단계 · 첫 실행 설정 마치기</h4>
+<p>처음 열면 ego(lite)가 두 가지 일을 합니다. 하나는 <b>스킬 설치</b>입니다. 내 컴퓨터에 설치된 에이전트를 찾아 ego-browser 스킬을 그 에이전트의 스킬 폴더(<code>~/.agents/skills</code>, <code>~/.claude/skills/</code>)에 써 넣습니다. 그래서 널리 쓰이는 에이전트 대부분은 따로 설치할 것이 없습니다. 다른 하나는 <b>데이터 가져오기</b>를 할지 묻는 것입니다.</p>
+<ol class="steps"><li><b>가져올지 정하기</b><span>다른 브라우저의 데이터를 가져오겠냐고 물으면, 가져올 브라우저를 고르고 확인합니다. 로그인 상태·북마크·비밀번호·확장 프로그램이 함께 넘어와 나와 에이전트가 그대로 씁니다. 이 데이터는 내 컴퓨터에 남고 내가 관리합니다.</span></li><li><b>키체인 암호 입력하기</b><span>가져오는 동안 macOS가 키체인 암호를 물을 수 있고, 같은 창이 <b>여러 번</b> 뜰 수 있습니다. 뜰 때마다 입력합니다. 이 암호가 있어야 로그인 상태·쿠키·확장 프로그램·Chrome 프로필을 옮겨 올 수 있습니다.</span></li><li><b>끝까지 진행하기</b><span>남은 안내를 따라 첫 실행 설정을 마칩니다.</span></li></ol>
+<figure class="diagram"><svg viewBox="0 0 720 230" role="img" aria-label="첫 실행 설정 때 쓰던 브라우저의 데이터가 ego(lite)로 들어오고, ego-browser 스킬이 에이전트 스킬 폴더에 기록됩니다.">
+<rect class="box s-cyan" x="20" y="30" width="200" height="120" rx="12"/><text x="120" y="60" text-anchor="middle" font-weight="600">쓰던 브라우저</text><text class="sub" x="120" y="84" text-anchor="middle">로그인 상태 · 북마크</text><text class="sub" x="120" y="102" text-anchor="middle">비밀번호 · 확장 프로그램</text><text class="sub" x="120" y="130" text-anchor="middle">(Chrome 등)</text>
+<path class="line s-cyan anim-flow" d="M220 90 H270"/>
+<rect class="box s-accent" x="270" y="45" width="180" height="90" rx="12"/><text x="360" y="84" text-anchor="middle" font-weight="600">ego(lite) 첫 실행</text><text class="sub" x="360" y="106" text-anchor="middle">첫 실행 설정</text>
+<path class="line s-green anim-flow" d="M450 90 H500"/>
+<rect class="box s-green" x="500" y="30" width="200" height="120" rx="12"/><text x="600" y="60" text-anchor="middle" font-weight="600">에이전트 스킬 폴더</text><text class="sub" x="600" y="84" text-anchor="middle">~/.agents/skills</text><text class="sub" x="600" y="102" text-anchor="middle">~/.claude/skills/</text><text class="sub" x="600" y="130" text-anchor="middle">ego-browser 스킬이 들어감</text>
+<text class="sub" x="180" y="178" text-anchor="middle">① 가져올지 묻습니다 — 고르고 확인</text><text class="sub" x="180" y="198" text-anchor="middle">macOS 키체인 암호를 여러 번 물을 수 있음</text>
+<text class="sub" x="560" y="178" text-anchor="middle">② 설치된 에이전트를 찾아 스킬을 써 넣음</text>
+</svg><figcaption>첫 실행 설정 한 번으로 데이터 가져오기(선택)와 스킬 설치가 함께 이루어집니다.</figcaption></figure>
+<p><b>확인:</b> 첫 실행 설정이 끝까지 진행되었습니다. 데이터를 가져왔다면 평소 쓰던 사이트 하나를 ego(lite)에서 열어 로그인된 채인지 봅니다. 가져오기의 자세한 내용은 <a href="ego-lite-guide.html#ch01-import">가이드 1장 데이터 가져오기</a>를 보세요.</p>
+</div><div data-step="3"><h4 id="pb0-s3">3단계 · 에이전트를 완전히 종료했다 다시 열기</h4>
+<p>첫 실행 설정을 하는 동안 에이전트가 이미 켜져 있었다면, 방금 설치된 스킬이 에이전트의 스킬 목록에 아직 나타나지 않을 수 있습니다. 종료했다 다시 열어야 스킬 목록이 새로 고쳐집니다.</p>
+<ol class="steps"><li><b>에이전트 종료하기</b><span>Claude 또는 Codex를 완전히 종료(quit)합니다.</span></li><li><b>다시 열기</b><span>같은 에이전트를 다시 엽니다.</span></li></ol>
+<p>Codex 문서는 처음부터 ego(lite) 설치와 첫 실행 설정을 마친 <b>뒤에</b> Codex를 열라고 안내합니다.</p>
+<p><b>확인:</b> 에이전트가 새로 열려 대화를 시작할 수 있습니다.</p>
+</div><div data-step="4"><h4 id="pb0-s4">4단계 · 에이전트 권한 넓히기</h4>
+<p>ego-browser 명령은 내 컴퓨터에 설치된 ego(lite) 앱을 열어야 합니다. 이것은 샌드박스<span class="gl">(격리된 실행 칸)</span> 밖의 앱을 실행하는 일이라, 권한이 좁은 상태에서는 샌드박스에 막히거나 승인 요청에서 멈출 수 있습니다. 그래서 에이전트 쪽 권한 설정을 넓혀 줍니다. 이름은 에이전트마다 다릅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 240" role="img" aria-label="권한을 넓히기 전에는 ego-browser 실행이 샌드박스나 승인 요청에 막히고, 넓힌 뒤에는 ego(lite)가 열립니다.">
+<text class="sub" x="20" y="22">권한을 넓히기 전</text>
+<rect class="box" x="20" y="32" width="190" height="66" rx="10"/><text x="115" y="60" text-anchor="middle" font-weight="600">에이전트</text><text class="sub" x="115" y="80" text-anchor="middle">ego-browser 실행 시도</text>
+<path class="line s-red" d="M210 65 H300"/>
+<rect class="box s-red" x="300" y="32" width="150" height="66" rx="10"/><text x="375" y="60" text-anchor="middle" font-weight="600">샌드박스 · 승인</text><text class="sub" x="375" y="80" text-anchor="middle">막히거나 승인 대기</text>
+<path class="line" d="M450 65 H510" style="stroke-dasharray:2 5"/>
+<rect class="box" x="510" y="32" width="190" height="66" rx="10" style="stroke-dasharray:4 4"/><text x="605" y="60" text-anchor="middle" font-weight="600">ego(lite)</text><text class="sub" x="605" y="80" text-anchor="middle">열리지 않을 수 있음</text>
+<text class="sub" x="20" y="130">권한을 넓힌 뒤 — Bypass permissions · Full access</text>
+<rect class="box s-accent" x="20" y="140" width="190" height="66" rx="10"/><text x="115" y="168" text-anchor="middle" font-weight="600">에이전트</text><text class="sub" x="115" y="188" text-anchor="middle">ego-browser 실행</text>
+<path class="line s-green anim-flow" d="M210 173 H510"/><text class="sub" x="360" y="163" text-anchor="middle">단계마다 묻지 않고 실행</text>
+<rect class="box s-green" x="510" y="140" width="190" height="66" rx="10"/><circle cx="530" cy="158" r="5" class="f-green anim-pulse"/><text x="605" y="168" text-anchor="middle" font-weight="600">ego(lite)</text><text class="sub" x="605" y="188" text-anchor="middle">열리고 Space 에서 작업</text>
+</svg><figcaption>권한을 넓히면 에이전트가 승인을 기다리지 않고 ego(lite)를 열어 작업합니다. Space는 ego(lite) 안의 에이전트 전용 작업 공간입니다(<a href="#pb2">실습 2</a>에서 직접 봅니다).</figcaption></figure>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="cc">Claude Code</button><button data-tab="cx">Codex</button><button data-tab="etc">그 밖의 에이전트</button></div>
+<div data-panel="cc"><ol class="steps"><li><b>Cowork가 아니라 Code로 바꾸기</b><span>Claude 데스크톱 앱의 왼쪽 위 모드 전환기에서 <b>Cowork</b>를 <b>Code</b>로 바꾸고, 프로젝트나 폴더를 하나 엽니다. ego-browser 스킬은 Claude Code용이라 Cowork의 스킬 메뉴에는 나타나지 않습니다.</span></li><li><b>Bypass permissions 고르기</b><span>Code 대화의 입력 칸 옆 권한 선택기를 열어 <b>Bypass permissions</b>(승인 건너뛰기)를 고릅니다. 켜면 Claude Code가 단계마다 확인을 기다리지 않고 내 컴퓨터에서 명령을 실행해 ego(lite)를 열고 브라우저 작업을 합니다.</span></li></ol>
+<details class="adv"><summary>터미널에서 Claude Code를 쓰는 경우</summary><p>터미널 화면(TUI<span class="gl">(터미널 안에서 글자로 쓰는 화면)</span>)에서는 아래 명령으로 시작합니다. 열리면 상태 줄에 <code>bypass permissions on</code>이 보입니다.</p><pre><code>claude --dangerously-skip-permissions</code></pre></details></div>
+<div data-panel="cx"><ol class="steps"><li><b>Codex 모드인지 보기</b><span>ChatGPT 데스크톱 앱(예전 Codex 데스크톱 앱)을 쓴다면 왼쪽 위에서 모드를 <b>Codex</b>로 바꿉니다. 그다음 프로젝트를 열고 새 작업을 시작합니다.</span></li><li><b>Full access 고르기</b><span>입력 칸 왼쪽 아래의 권한 선택기를 열어 <b>Full access</b>(전체 권한)를 고르고, 이어서 뜨는 경고를 확인합니다. 이 설정이 없으면 ego(lite) 실행이 샌드박스에 막히거나 승인 요청에서 멈출 수 있습니다.</span></li></ol>
+<details class="adv"><summary>터미널에서 Codex를 쓰는 경우</summary><p>프로젝트 폴더에서 터미널을 열고 아래 명령으로 새로 시작합니다. 승인 요청과 샌드박스를 건너뛴 상태로 Codex가 열립니다. Codex 모드 전환 단계는 건너뜁니다.</p><pre><code>codex --dangerously-bypass-approvals-and-sandbox</code></pre></details></div>
+<div data-panel="etc"><p>Cursor, OpenCode, WorkBuddy, Hermes Agent, OpenClaw, DeepSeek Harness도 같은 원리이고 설정 이름만 다릅니다. <a href="ego-lite-guide.html#ch05-table">가이드 5장의 에이전트별 표</a>에서 내 에이전트의 설정 이름을 찾으세요. 어느 에이전트든 공통인 부분은 <a href="ego-lite-guide.html#ch05-common">5장 첫머리</a>에 있습니다.</p></div></div>
+<div class="warn"><b>권한을 넓힌다는 것의 뜻</b><p>이 설정을 켜면 에이전트는 단계마다 묻지 않고 내 컴퓨터에서 명령을 실행합니다. Codex는 Full access를 고를 때 경고를 보여 주고 확인을 받습니다. 그러니 <b>믿는 에이전트에게, 내용을 아는 작업을 맡길 때만</b> 켜고, 해도 되는 일과 하면 안 되는 일은 프롬프트<span class="gl">(에이전트에게 보내는 요청 글)</span>에 적어 줍니다. 권한 방식 자체는 각 에이전트를 만든 회사의 안내를 함께 확인하세요. 더 자세한 설명은 <a href="ego-lite-guide.html#ch01-permission">가이드 1장 권한</a>에 있습니다.</p></div>
+<p><b>확인:</b> 입력 칸 옆 권한 표시가 Bypass permissions(Claude Code) 또는 Full access(Codex)로 보입니다. 터미널에서 쓴다면 Claude Code는 상태 줄의 <code>bypass permissions on</code>으로 확인하고, Codex는 위 명령으로 새로 시작했는지로 확인합니다.</p>
+</div><div data-step="5"><h4 id="pb0-s5">5단계 · /ego-browser 가 보이는지 확인하기</h4>
+<p>이제 스킬이 실제로 잡히는지 봅니다. 작업 문장은 아직 보내지 않습니다.</p>
+<ol class="steps"><li><b>입력 칸에 <code>/ego-browser</code> 입력하기</b><span>Claude Code에서는 <code>/ego-browser</code>를 입력하고 목록에서 그 스킬을 고릅니다. Codex에서는 <code>/ego</code>까지만 입력해 스킬 선택 목록에서 ego-browser를 고르거나, <code>/ego-browser</code>를 입력하고 <kbd>Tab</kbd>을 누릅니다.</span></li><li><b>목록 확인하기</b><span>ego-browser가 목록에 나타나는지 봅니다.</span></li></ol>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 에이전트 대화창 — 화면 흉내</div><div class="body"><p><code>/ego-browser</code><span class="anim-blink">▌</span></p><p class="muted">스킬 목록 ▸ <b>ego-browser</b></p></div></div>
+<p><b>확인:</b> ego-browser 스킬이 목록에 보이고 선택됩니다. 여기까지 되면 준비가 끝났습니다. 보내지 않고 입력 칸을 비워 두어도 됩니다 — 스킬은 실습 1에서 다시 부릅니다. 연결의 전체 설명은 <a href="ego-lite-guide.html#ch01-connect">가이드 1장 에이전트 연결</a>에 있습니다.</p>
+</div></div>
+<h3 id="pb0-check">준비 점검표</h3><div class="table-wrap"><table class="kv pb0-check"><thead><tr><th>☐</th><th>확인할 것</th><th>어디서 했나</th></tr></thead><tbody><tr><td>☐</td><td>ego(lite)를 설치했고 첫 실행 설정을 끝까지 마쳤다</td><td>1·2단계</td></tr><tr><td>☐</td><td>(선택) 쓰던 브라우저의 데이터를 가져왔고, 키체인 암호 창에 매번 입력했다</td><td>2단계</td></tr><tr><td>☐</td><td>에이전트를 완전히 종료했다가 다시 열었다</td><td>3단계</td></tr><tr><td>☐</td><td>권한 표시가 Bypass permissions 또는 Full access다</td><td>4단계</td></tr><tr><td>☐</td><td><code>/ego-browser</code>를 치면 ego-browser 스킬이 보인다</td><td>5단계</td></tr></tbody></table></div>
+<h3 id="pb0-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td>Claude에서 <code>/ego-browser</code>가 안 보임</td><td>지금 화면이 Cowork가 아니라 <b>Code</b>인지 봅니다. Cowork에 안 보인다고 설치가 실패한 것은 아닙니다. Code인데도 없으면 Claude를 종료했다 다시 열고 <code>/ego</code>를 다시 입력합니다.</td></tr><tr><td>Codex에서 ego-browser가 안 보임</td><td>ego(lite) 첫 실행 설정을 마쳤는지 확인하고, Codex를 종료했다 다시 연 뒤 <code>/ego</code>를 입력해 ego-browser를 고릅니다. 설치된 스킬은 <code>~/.agents/skills/</code>에 있어야 합니다.</td></tr><tr><td>권한 선택기에 Bypass permissions가 없음</td><td>Claude의 <b>Settings &gt; Claude Code</b>(설정 &gt; Claude Code)에서 <b>Allow bypass permissions mode</b>(승인 건너뛰기 모드 허용)를 켭니다. Team·Enterprise 정책이 이 항목을 숨길 수 있으니, 잠겨 있으면 관리자에게 문의합니다.</td></tr><tr><td>키체인 암호 창이 계속 뜸</td><td>가져오기 중에는 여러 번 뜨는 것이 정상입니다. 뜰 때마다 입력합니다.</td></tr><tr><td>(실습 1에서 작업을 보냈을 때) 스킬은 보이는데 ego(lite)가 열리지 않음</td><td>권한 표시부터 다시 봅니다. 터미널에서 쓰는 중이면 지금 열어 둔 에이전트 화면(세션)을 닫고 4단계의 명령으로 새로 시작합니다. 그래도 안 되면 <a href="#pb9">실습 9 — 연결 문제 해결</a>과 <a href="ego-lite-guide.html#ch05-trouble">가이드 5장 문제 해결</a>로 갑니다.</td></tr></tbody></table></div>
+<h3 id="pb0-next">다음에 할 것</h3><p>준비가 끝났으면 <a href="#pb1">실습 1 — 블로그 두 곳을 읽고 요약 받기</a>로 첫 작업을 맡겨 봅니다. 이어서 <a href="#pb2">실습 2</a>에서 에이전트가 일하는 모습을 들여다보고, <a href="#pb3">실습 3</a>에서 결과를 원문과 대조하는 법을 익힙니다.</p>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>ego(lite)를 설치하고 처음 열면 스킬 설치와 데이터 가져오기(선택)가 함께 진행됩니다.</li><li>키체인 암호 창은 여러 번 뜰 수 있고, 뜰 때마다 입력합니다.</li><li>첫 실행 설정 때 켜져 있던 에이전트는 종료했다 다시 열어야 스킬이 보입니다.</li><li>Claude Code는 Code 모드에서 Bypass permissions, Codex는 Full access를 고릅니다. 믿는 에이전트와 아는 작업에만 켭니다.</li><li><code>/ego-browser</code>를 쳐서 스킬이 보이면 준비 끝입니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/quick-start · claude-code · codex (수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준). 가이드 <a href="ego-lite-guide.html#ch01-install">1장 설치</a>·<a href="ego-lite-guide.html#ch01-connect">1장 에이전트 연결</a>·<a href="ego-lite-guide.html#ch05-table">5장 에이전트별 표</a>.</p></section>
+<section class="chapter" id="pb1">
+<div class="ch-head"><div class="ch-no">SCENARIO 1</div><h2>첫 작업 — 블로그 두 곳을 읽고 요약 받기</h2><p class="lead">준비를 마쳤다면 첫 일을 맡겨 봅니다. 원문 빠른 시작에 실린 프롬프트<span class="gl">(에이전트에게 보내는 요청 글)</span> 한 줄을 그대로 보내면, AI 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>가 ego(lite) 안에 새 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>를 만들어 OpenAI와 Anthropic의 블로그를 읽고, 요점을 대화창으로 돌려줍니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>스킬을 불러오고 프롬프트를 보내는 기본 순서를 손에 익힙니다.</li><li>에이전트가 일하는 동안 ego(lite) 안에서 무슨 일이 일어나는지 압니다.</li><li>돌아온 답이 부탁한 내용을 채웠는지 스스로 확인합니다.</li></ul><p class="muted">예상 소요 시간: 5분 안팎</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb1-prep">준비물</a>을 확인한 뒤 <a href="#pb1-steps">따라 하기</a> 네 단계를 진행하세요. 에이전트가 시작하지 않거나 답이 이상하면 <a href="#pb1-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb1-prep">준비물과 완료 기준</h3><ul><li><a href="#pb0">시작 전 준비</a>를 마친 상태 — ego(lite) 설치와 첫 실행 설정이 끝났고, 에이전트 권한이 <b>Full access</b>(Codex) 또는 <b>Bypass permissions</b>(Claude Code)입니다.</li><li>에이전트의 새 대화 하나. 원문 빠른 시작은 Codex를 예로 듭니다. 에이전트마다 다른 점은 <a href="ego-lite-guide.html#ch05-table">가이드 5장</a>에서 다룹니다.</li><li>ego(lite)를 미리 열어 둘 필요는 없습니다. ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>이 ego(lite)를 열고 Space를 만듭니다.</li></ul><div class="note"><b>완료 기준</b><p>에이전트 대화창에 <b>OpenAI와 Anthropic 두 회사</b>의 최신 글 요점이 정리되어 돌아오면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="스킬 부르기, 프롬프트 보내기, 에이전트가 Space에서 읽기, 요약 받기의 네 단계입니다.">
+<defs><path id="pb1-track" d="M97 128 H622"/></defs>
+<rect class="box s-accent" x="20" y="24" width="155" height="80" rx="12"/><text x="97" y="58" text-anchor="middle" font-weight="600">① 스킬 부르기</text><text class="sub" x="97" y="80" text-anchor="middle">/ego-browser</text>
+<path class="line s-accent anim-flow" d="M175 64 H195"/>
+<rect class="box s-accent" x="195" y="24" width="155" height="80" rx="12"/><text x="272" y="58" text-anchor="middle" font-weight="600">② 프롬프트 보내기</text><text class="sub" x="272" y="80" text-anchor="middle">원문 한 줄 붙여 넣기</text>
+<path class="line s-accent anim-flow" d="M350 64 H370"/>
+<rect class="box s-green" x="370" y="24" width="155" height="80" rx="12"/><text x="447" y="58" text-anchor="middle" font-weight="600">③ 에이전트가 읽기</text><text class="sub" x="447" y="80" text-anchor="middle">새 Space · 블로그 두 곳</text>
+<path class="line s-green anim-flow" d="M525 64 H545"/>
+<rect class="box s-accent" x="545" y="24" width="155" height="80" rx="12"/><text x="622" y="58" text-anchor="middle" font-weight="600">④ 요약 받기</text><text class="sub" x="622" y="80" text-anchor="middle">대화창에서 확인</text>
+<path class="line" d="M97 128 H622" style="stroke-dasharray:2 5"/><circle r="5" class="f-accent"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#pb1-track"/></animateMotion></circle>
+</svg><figcaption>내가 하는 일은 ①②④이고, ③은 에이전트가 자기 Space에서 합니다.</figcaption></figure>
+<h3 id="pb1-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb1-s1">1단계 · 스킬을 불러오고 권한 확인하기</h4>
+<ol class="steps"><li><b>새 대화 열기</b><span>에이전트에서 새 대화(Codex 데스크톱이라면 프로젝트를 열고 새 작업, Claude라면 Code 모드의 대화)를 엽니다.</span></li><li><b><code>/ego-browser</code> 입력하기</b><span>대화창 입력 칸에 <code>/ego-browser</code>를 입력해 스킬을 켭니다. 목록이 뜨면 ego-browser를 고릅니다(에이전트별 고르는 법은 <a href="#pb0-s5">준비 5단계</a>와 같습니다).</span></li><li><b>권한 표시 보기</b><span>입력 칸 옆의 권한 표시가 Full access 또는 Bypass permissions인지 봅니다.</span></li></ol>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 에이전트 대화창 — 화면 흉내</div><div class="body"><p><code>/ego-browser</code><span class="anim-blink">▌</span></p><p class="muted">스킬 목록 ▸ <b>ego-browser</b> · 권한 ▸ <b>Full access</b></p></div></div>
+<p><b>확인:</b> ego-browser 스킬이 선택되었고 권한이 넓혀져 있습니다. 둘 중 하나라도 아니면 <a href="#pb0-s4">준비 4단계</a>·<a href="#pb0-s5">5단계</a>로 돌아갑니다.</p>
+</div><div data-step="2"><h4 id="pb1-s2">2단계 · 프롬프트를 붙여 넣고 보내기</h4>
+<p>아래 한 줄을 대화창에 붙여 넣고 <kbd>Enter</kbd>를 누릅니다. 원문 빠른 시작의 프롬프트 그대로입니다.</p>
+<pre><code>Use ego-browser. Please open the blog pages of OpenAI and Anthropic, check if there is any noteworthy information, and quickly summarize the main points of the latest articles for me.</code></pre>
+<p class="muted">뜻: ego-browser를 써 줘. OpenAI와 Anthropic의 블로그 페이지를 열어 눈여겨볼 소식이 있는지 확인하고, 최신 글들의 요점을 빠르게 요약해 줘.</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>문장 조각</th><th>에이전트에게 알려 주는 것</th></tr></thead><tbody><tr><td><code>Use ego-browser.</code></td><td>어떤 도구로 할지 — ego(lite)를 조종하는 ego-browser</td></tr><tr><td><code>open the blog pages of OpenAI and Anthropic</code></td><td>대상 — 두 회사의 블로그 페이지</td></tr><tr><td><code>check if there is any noteworthy information</code></td><td>읽을 것 — 눈여겨볼 소식</td></tr><tr><td><code>quickly summarize the main points of the latest articles</code></td><td>결과 형태 — 최신 글 요점의 짧은 요약</td></tr></tbody></table></div>
+<details class="adv"><summary>터미널 화면(TUI)에서 보내는 경우</summary><p>Claude Code의 TUI<span class="gl">(터미널 안에서 글자로 쓰는 화면)</span>에서는 <code>/ego-browser</code> 뒤에 한 칸을 띄우고 같은 메시지 안에 작업 문장을 이어 적어 보냅니다. Codex의 TUI에서는 <code>/ego</code>를 입력해 ego-browser를 고른 뒤 작업 문장을 덧붙입니다.</p></details>
+<p><b>확인:</b> 메시지가 전송되고 에이전트가 일을 시작합니다.</p>
+</div><div data-step="3"><h4 id="pb1-s3">3단계 · 에이전트가 일하는 동안 기다리기</h4>
+<p>이제 에이전트 차례입니다. 에이전트는 ego(lite)에 <b>새 Space</b>를 만들고, 거기서 OpenAI와 Anthropic의 블로그 페이지를 열어 최신 글을 읽은 뒤, 두 회사의 최근 소식과 요점을 정리합니다. 이 일은 모두 에이전트 Space 안에서 일어나므로 엉뚱한 창이 튀어나오거나 내가 쓰던 탭을 빼앗기지 않습니다. 기다리는 동안 내 탭에서 하던 일을 계속해도 됩니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 295" role="img" aria-label="내가 프롬프트를 보내면 에이전트가 ego(lite)에 새 Space를 만들고 블로그 두 곳을 읽은 뒤 요약을 돌려줍니다.">
+<rect class="box s-cyan" x="20" y="20" width="200" height="40" rx="10"/><text x="120" y="45" text-anchor="middle" font-weight="600">나 · 대화창</text>
+<rect class="box s-amber" x="260" y="20" width="200" height="40" rx="10"/><text x="360" y="45" text-anchor="middle" font-weight="600">에이전트</text>
+<rect class="box s-green" x="500" y="20" width="200" height="40" rx="10"/><text x="600" y="45" text-anchor="middle" font-weight="600">ego(lite) · 에이전트 Space</text>
+<path class="line" d="M120 60 V270 M360 60 V270 M600 60 V270" style="stroke-dasharray:2 5"/>
+<text class="sub" x="240" y="87" text-anchor="middle">① 프롬프트 보내기</text><path class="line s-cyan anim-flow" d="M120 95 H352"/><polygon class="f-cyan" points="352,90 360,95 352,100"/>
+<text class="sub" x="480" y="127" text-anchor="middle">② 새 Space 만들기</text><path class="line s-amber anim-flow" d="M360 135 H592"/><polygon class="f-amber" points="592,130 600,135 592,140"/>
+<text class="sub" x="480" y="167" text-anchor="middle">③ 블로그 두 곳 열고 최신 글 읽기</text><path class="line s-amber anim-flow" d="M360 175 H592"/><polygon class="f-amber" points="592,170 600,175 592,180"/>
+<circle cx="600" cy="155" r="6" class="f-green anim-pulse"/>
+<text class="sub" x="480" y="207" text-anchor="middle">④ 읽은 내용을 받아 정리</text><path class="line s-green anim-flow" d="M600 215 H368"/><polygon class="f-green" points="368,210 360,215 368,220"/>
+<text class="sub" x="240" y="247" text-anchor="middle">⑤ 두 회사 요점 요약</text><path class="line s-amber anim-flow" d="M360 255 H128"/><polygon class="f-amber" points="128,250 120,255 128,260"/>
+</svg><figcaption>①과 ⑤만 내 눈앞의 대화창에서 일어납니다. ②~④는 에이전트 Space 안의 일이고, 그동안 내 탭은 그대로입니다.</figcaption></figure>
+<p>무엇을 하고 있는지 궁금하면 ego(lite) 오른쪽 위의 <b>Space 단추</b>를 눌러 들여다볼 수 있습니다. 방법은 <a href="#pb2">실습 2</a>에서 따라 합니다.</p>
+<p><b>확인:</b> 대화창에서 에이전트가 작업을 이어 가고, ego(lite)에서 내가 보던 탭은 바뀌지 않았습니다. 에이전트 Space가 생긴 것은 오른쪽 위 Space 단추로 볼 수 있지만, 지금은 건너뛰어도 됩니다.</p>
+</div><div data-step="4"><h4 id="pb1-s4">4단계 · 요약을 받고 확인하기</h4>
+<p>작업이 끝나면 에이전트가 요약을 대화창으로 돌려줍니다. 받은 답을 아래 세 가지로 읽어 봅니다.</p>
+<ol class="steps"><li><b>두 회사가 모두 있는가</b><span>OpenAI 쪽과 Anthropic 쪽 내용이 각각 들어 있는지 봅니다.</span></li><li><b>최신 글의 요점인가</b><span>부탁한 것은 최신 글들의 요점입니다. 글 제목이나 주제가 함께 적혀 있으면 나중에 원문과 대조하기 쉽습니다.</span></li><li><b>읽지 못한 곳을 밝혔는가</b><span>열지 못한 페이지가 있었다면 빈틈을 지어내 채우지 말고 무엇이 빠졌는지 말하게 합니다.</span></li></ol>
+<figure class="diagram"><svg viewBox="0 0 720 245" role="img" aria-label="대화창에는 두 회사의 요점이 돌아오고, 에이전트 Space에는 읽은 블로그 탭이 남아 있습니다.">
+<rect class="box" x="20" y="20" width="400" height="200" rx="12"/><text x="38" y="46" font-weight="600">에이전트 대화창 — 돌아온 답</text>
+<rect class="box s-accent" x="36" y="60" width="368" height="64" rx="8"/><text x="52" y="86" font-weight="600">OpenAI 블로그</text><text class="sub" x="52" y="106">최신 글 · 요점 몇 줄</text><text x="376" y="98" style="fill:var(--green)" font-weight="700">✔</text>
+<rect class="box s-pink" x="36" y="136" width="368" height="64" rx="8"/><text x="52" y="162" font-weight="600">Anthropic 블로그</text><text class="sub" x="52" y="182">최신 글 · 요점 몇 줄</text><text x="376" y="174" style="fill:var(--green)" font-weight="700">✔</text>
+<path class="line s-green anim-flow" d="M470 120 H420"/>
+<rect class="box s-green" x="470" y="20" width="230" height="200" rx="12"/><text x="585" y="46" text-anchor="middle" font-weight="600">에이전트 Space</text>
+<rect class="box" x="490" y="62" width="190" height="36" rx="8"/><text x="585" y="85" text-anchor="middle">OpenAI 블로그 탭</text>
+<rect class="box" x="490" y="110" width="190" height="36" rx="8"/><text x="585" y="133" text-anchor="middle">Anthropic 블로그 탭</text>
+<text class="sub" x="585" y="176" text-anchor="middle">작업이 끝나도 탭은</text><text class="sub" x="585" y="194" text-anchor="middle">바로 닫히지 않고 남습니다</text>
+</svg><figcaption>완료 기준은 왼쪽입니다 — 두 회사의 요점이 모두 돌아왔는지 봅니다. 오른쪽에 남은 탭으로는 에이전트가 무엇을 보고 답했는지 확인할 수 있습니다.</figcaption></figure>
+<p><b>확인:</b> 대화창에 OpenAI와 Anthropic 두 회사의 최신 글 요점이 있습니다. 첫 작업을 마쳤습니다.</p>
+</div></div>
+<h3 id="pb1-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td><code>/ego-browser</code>가 목록에 없음</td><td>ego(lite) 첫 실행 설정을 마쳤는지 보고, 에이전트를 종료했다 다시 엽니다. Claude라면 Cowork가 아니라 Code인지 확인합니다. → <a href="#pb0-stuck">준비의 막히면</a></td></tr><tr><td>스킬은 불러왔는데 ego(lite)가 열리지 않음</td><td>권한 표시를 확인합니다. ego-browser는 내 컴퓨터의 ego(lite) 앱을 열어야 하므로 샌드박스<span class="gl">(격리된 실행 칸)</span> 밖의 앱을 실행할 권한이 필요합니다. Full access 또는 Bypass permissions로 바꾼 뒤 다시 보냅니다.</td></tr><tr><td>에이전트가 단계마다 승인을 물으며 멈춤</td><td>권한이 넓혀지지 않은 상태입니다. <a href="#pb0-s4">준비 4단계</a>를 다시 합니다.</td></tr><tr><td>요약에 한 회사만 있음</td><td>빠진 쪽 블로그를 왜 읽지 못했는지, 무엇이 빠졌는지 말해 달라고 합니다. 에이전트 Space에 남은 탭을 열어 실제로 어떤 페이지가 열렸는지도 봅니다(<a href="#pb2">실습 2</a>).</td></tr><tr><td>사이트가 로그인이나 확인을 요구함</td><td>에이전트 Space에 들어가 내가 직접 처리하고 이어 하라고 말합니다(<a href="#pb2-s5">실습 2의 넘겨받기</a> — 사람만 할 수 있는 단계를 내가 직접 처리하는 것). 비밀번호나 인증 코드는 프롬프트에 붙여 넣지 않습니다.</td></tr></tbody></table></div>
+<div class="tip"><b>이 실습은 순서를 익히는 연습입니다</b><p>원문은 로그인이 필요 없는 공개 자료만 찾거나 요약할 때는 일반 웹 검색이 더 가벼운 도구라고 말합니다. Space가 제값을 하는 것은 진짜 브라우저·진짜 로그인·파일 주고받기가 필요한 일입니다. 여기서는 “스킬 → 프롬프트 → 결과”의 기본 순서를 몸에 익히는 것이 목적입니다.</p></div>
+<h3 id="pb1-next">다음에 할 것</h3><ul><li>같은 작업을 한 번 더 돌리면서 <a href="#pb2">실습 2 — 에이전트 Space 들여다보고, 넘겨받고, 돌려주기</a>를 따라 합니다.</li><li>표로 결과를 받고 원문과 대조하는 연습은 <a href="#pb3">실습 3</a>에 있습니다.</li><li>이 순서의 배경 설명은 <a href="ego-lite-guide.html#ch01-first-task">가이드 1장 첫 작업</a>, 에이전트에게 일을 잘 맡기는 글쓰기는 <a href="ego-lite-guide.html#ch03-task">가이드 3장</a>에서 볼 수 있습니다.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>순서는 <code>/ego-browser</code>로 스킬 부르기 → 프롬프트 보내기 → 기다리기 → 요약 확인입니다.</li><li>에이전트는 새 Space를 만들어 그 안에서 블로그를 읽으므로 내 탭은 그대로입니다.</li><li>완료 기준은 두 회사의 최신 글 요점이 대화창에 돌아오는 것입니다.</li><li>빠진 것이 있으면 지어내지 말고 무엇이 빠졌는지 말하게 합니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/quick-start · space · claude-code · codex · snapshot(검증할 수 있는 결과) · windows/quick-start(빠진 내용을 말하게 하라는 안내) (수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준). 가이드 <a href="ego-lite-guide.html#ch01-first-task">1장 첫 작업</a>·<a href="ego-lite-guide.html#ch02-what">2장 Space</a>.</p></section>
+<section class="chapter" id="pb2">
+<div class="ch-head"><div class="ch-no">SCENARIO 2</div><h2>에이전트 Space 들여다보고, 넘겨받고, 돌려주기</h2><p class="lead">AI 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>가 일하는 동안 그 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>를 직접 들여다봅니다. 로그인이나 인증처럼 사람만 할 수 있는 단계가 나오면 내가 넘겨받아<span class="gl">(에이전트가 못 하는 단계를 내가 직접 처리하는 것)</span> 끝내고, 다시 에이전트에게 돌려줍니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>오른쪽 위 Space 단추로 Space 관리 패널을 열고, 에이전트가 일하는 Space를 찾습니다.</li><li>에이전트 Space를 보고 와도 내 탭이 그대로라는 것을 눈으로 확인합니다.</li><li>로그인·인증 화면이 나오면 직접 처리하고, 에이전트에게 이어 하라고 말합니다.</li><li>작업이 끝난 뒤 남은 탭으로 에이전트가 본 페이지를 확인합니다.</li></ul><p class="muted">예상 소요 시간: 10분 안팎</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb2-prep">준비물</a>을 확인한 뒤 <a href="#pb2-steps">따라 하기</a>를 진행하세요. 파란 빛이 안 보이거나 에이전트가 이어 하지 않으면 <a href="#pb2-stuck">막히면</a>을 봅니다. 5단계(넘겨받기)는 그런 화면이 실제로 나왔을 때만 합니다.</p></div>
+<h3 id="pb2-prep">준비물과 완료 기준</h3><ul><li><a href="#pb1">실습 1</a>을 마친 상태 — ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>을 불러오고 프롬프트<span class="gl">(에이전트에게 보내는 요청 글)</span>를 보낼 수 있습니다.</li><li>ego(lite)에서 내가 보던 탭 하나. 읽던 기사나 쓰던 글이면 됩니다. 돌아왔을 때 그대로인지 보기 위해서입니다.</li><li>돌릴 작업 하나. 여기서는 실습 1의 프롬프트를 다시 씁니다.</li></ul><div class="note"><b>완료 기준</b><p>작업이 도는 동안 <b>파란 빛이 나는 Space</b>에 들어가 에이전트가 연 페이지를 보고, 내 탭으로 돌아와 그대로인지 확인하고, 작업이 끝난 뒤에도 그 Space에 탭이 남아 있는 것을 보면 완료입니다. 이번 작업에서 로그인·인증 화면이 나오지 않으면 5단계는 읽어만 둡니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="작업 시작, Space 단추, 들여다보기, 필요할 때 넘겨받기, 남은 탭 확인의 다섯 단계입니다.">
+<defs><path id="pb2-track" d="M82 128 H638"/></defs>
+<rect class="box s-accent" x="20" y="24" width="124" height="80" rx="12"/><text x="82" y="58" text-anchor="middle" font-weight="600">① 작업 시작</text><text class="sub" x="82" y="80" text-anchor="middle">프롬프트 보내기</text>
+<path class="line s-accent anim-flow" d="M144 64 H159"/>
+<rect class="box s-accent" x="159" y="24" width="124" height="80" rx="12"/><text x="221" y="58" text-anchor="middle" font-weight="600">② Space 단추</text><text class="sub" x="221" y="80" text-anchor="middle">오른쪽 위에서 열기</text>
+<path class="line s-accent anim-flow" d="M283 64 H298"/>
+<rect class="box s-cyan" x="298" y="24" width="124" height="80" rx="12"/><text x="360" y="58" text-anchor="middle" font-weight="600">③ 들여다보기</text><text class="sub" x="360" y="80" text-anchor="middle">파란 빛 Space</text>
+<path class="line s-cyan anim-flow" d="M422 64 H437"/>
+<rect class="box s-amber" x="437" y="24" width="124" height="80" rx="12" style="stroke-dasharray:5 4"/><text x="499" y="58" text-anchor="middle" font-weight="600">④ 넘겨받기</text><text class="sub" x="499" y="80" text-anchor="middle">필요할 때만</text>
+<path class="line s-amber anim-flow" d="M561 64 H576"/>
+<rect class="box s-green" x="576" y="24" width="124" height="80" rx="12"/><text x="638" y="58" text-anchor="middle" font-weight="600">⑤ 남은 탭 확인</text><text class="sub" x="638" y="80" text-anchor="middle">작업이 끝난 뒤</text>
+<path class="line" d="M82 128 H638" style="stroke-dasharray:2 5"/><circle r="5" class="f-accent"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#pb2-track"/></animateMotion></circle>
+</svg><figcaption>들여다보기는 언제든 할 수 있고, 넘겨받기(점선)는 사람만 할 수 있는 단계가 나왔을 때만 합니다.</figcaption></figure>
+<h3 id="pb2-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb2-s1">1단계 · 작업 하나 시작하기</h4>
+<p>먼저 ego(lite)에서 내가 볼 탭 하나를 열어 둡니다. 그다음 에이전트 대화창에서 <code>/ego-browser</code>로 스킬을 부르고, 실습 1의 프롬프트를 다시 보냅니다(원문 빠른 시작의 문장 그대로).</p>
+<pre><code>Use ego-browser. Please open the blog pages of OpenAI and Anthropic, check if there is any noteworthy information, and quickly summarize the main points of the latest articles for me.</code></pre>
+<p class="muted">뜻: ego-browser를 써 줘. OpenAI와 Anthropic의 블로그 페이지를 열어 눈여겨볼 소식이 있는지 확인하고, 최신 글들의 요점을 빠르게 요약해 줘.</p>
+<p><b>확인:</b> 에이전트가 일을 시작했습니다. 끝나기 전에 바로 2단계로 넘어갑니다.</p>
+</div><div data-step="2"><h4 id="pb2-s2">2단계 · 오른쪽 위 Space 단추로 Space 관리 패널 열기</h4>
+<p>작업이 도는 동안 ego(lite) 창의 <b>오른쪽 위 Space 단추</b>를 누릅니다. <b>Space management panel</b>(Space 관리 패널)이 열립니다. 이 가운데 <b>파란 빛이 나는 것</b>이 지금 에이전트가 일하고 있는 Space입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 295" role="img" aria-label="화면 흉내: ego(lite) 오른쪽 위 Space 단추를 누르면 Space 관리 패널이 열리고, 파란 빛이 나는 Space가 에이전트가 일하는 곳입니다.">
+<rect class="box" x="20" y="20" width="680" height="250" rx="12"/><path class="line" d="M20 60 H700"/>
+<circle cx="42" cy="40" r="5" class="f-muted"/><circle cx="58" cy="40" r="5" class="f-muted"/><circle cx="74" cy="40" r="5" class="f-muted"/>
+<text x="96" y="45" font-weight="600">ego(lite)</text>
+<text class="sub" x="584" y="44" text-anchor="end">① 오른쪽 위 Space 단추 →</text>
+<rect class="box s-accent anim-pulse" x="596" y="28" width="88" height="24" rx="6"/><text x="640" y="45" text-anchor="middle">Space</text>
+<path class="line s-accent anim-flow" d="M640 52 V72"/>
+<rect class="box s-cyan" x="40" y="80" width="370" height="170" rx="10"/><text x="58" y="108" font-weight="600">내 탭</text><text class="sub" x="58" y="130">읽던 기사 · 쓰던 글</text>
+<rect x="58" y="146" width="300" height="8" rx="4" class="f-muted" opacity=".3"/><rect x="58" y="162" width="260" height="8" rx="4" class="f-muted" opacity=".3"/><rect x="58" y="178" width="280" height="8" rx="4" class="f-muted" opacity=".3"/>
+<text class="sub" x="58" y="216">에이전트는 내 탭·마우스·초점을</text><text class="sub" x="58" y="234">가져가지 않습니다</text>
+<rect class="box s-accent" x="440" y="72" width="244" height="184" rx="10"/><text x="456" y="96" font-weight="600">Space 관리 패널</text><text class="sub" x="456" y="113">Space management panel</text>
+<rect class="box s-accent" x="456" y="124" width="212" height="52" rx="8" style="stroke-width:2.5"/><circle cx="476" cy="150" r="6" class="f-accent anim-pulse"/><text x="492" y="146" font-weight="600">에이전트 Space</text><text class="sub" x="492" y="164">② 파란 빛 = 지금 일하는 곳</text>
+<rect class="box" x="456" y="188" width="212" height="52" rx="8"/><text x="492" y="219">다른 Space · 빛 없음</text>
+</svg><figcaption>화면 흉내 — ① Space 단추를 누르면 패널이 열리고 ② 파란 빛이 나는 Space가 에이전트의 작업 공간입니다. 실제 배치와 모양은 버전에 따라 다를 수 있습니다.</figcaption></figure>
+<p><b>확인:</b> 패널이 열렸고, 파란 빛이 나는 Space가 하나 보입니다.</p>
+</div><div data-step="3"><h4 id="pb2-s3">3단계 · 파란 빛 Space로 들어가 보기</h4>
+<p>파란 빛이 나는 Space를 눌러 들어갑니다. 에이전트가 연 페이지들이 보입니다. Space는 화면 없이 숨어서 도는 브라우저가 아니라, 내 컴퓨터의 ego(lite) 안에서 눈으로 볼 수 있는 작업 공간입니다. 이번에는 구경만 합니다 — 에이전트가 어떤 페이지를 열어 두었는지 살펴봅니다.</p>
+<p><b>확인:</b> 에이전트 Space 안에 OpenAI나 Anthropic의 블로그 페이지가 열려 있습니다.</p>
+</div><div data-step="4"><h4 id="pb2-s4">4단계 · 내 탭으로 돌아오기</h4>
+<p>이제 내가 쓰던 쪽으로 돌아옵니다. 원문은 들어가는 길(Space 단추 → Space 관리 패널 → 파란 빛 Space)을 안내하므로, 돌아올 때도 같은 Space 단추에서 내가 쓰던 쪽을 고릅니다. 화면에 보이는 모양이 다르면 화면을 따르세요.</p>
+<p>돌아와서 볼 것은 하나입니다. 1단계에서 열어 둔 내 탭이 <b>두고 간 그대로</b>인지입니다. 에이전트는 자기 Space 안에서만 일하므로 내가 보던 페이지·마우스·초점을 가져가지 않습니다. 그래서 에이전트가 일하는 동안 나는 기사를 읽거나 글을 쓰던 일을 계속할 수 있고, 궁금할 때만 Space에 들렀다 오면 됩니다.</p>
+<p><b>확인:</b> 내 탭이 그대로이고, 에이전트의 작업은 멈추지 않고 계속됩니다. 배경 설명은 <a href="ego-lite-guide.html#ch02-together">가이드 2장 함께 일하는 흐름</a>에 있습니다.</p>
+</div><div data-step="5"><h4 id="pb2-s5">5단계 · 필요할 때 넘겨받고 돌려주기</h4>
+<p>사이트가 로그인이나 인증을 요구하면 에이전트는 멈추고 나를 부릅니다. 이때는 2·3단계와 같은 길로 에이전트 Space에 들어가, 그 페이지에서 <b>내가 직접</b> 로그인하거나 인증을 끝냅니다. 그런 다음 대화창으로 돌아와 이어 하라고 말합니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 245" role="img" aria-label="에이전트가 멈추면 내가 Space에 들어가 직접 처리하고, 대화창에 이어 하라고 말하면 에이전트가 같은 Space에서 계속합니다. 비밀번호와 인증 코드는 프롬프트에 붙여 넣지 않습니다.">
+<rect class="box s-amber" x="20" y="30" width="200" height="70" rx="12"/><circle cx="40" cy="48" r="5" class="f-amber anim-pulse"/><text x="120" y="62" text-anchor="middle" font-weight="600">① 에이전트가 멈춤</text><text class="sub" x="120" y="84" text-anchor="middle">로그인·인증 화면을 만남</text>
+<path class="line s-amber anim-flow" d="M220 65 H260"/>
+<rect class="box s-cyan" x="260" y="30" width="200" height="70" rx="12"/><text x="360" y="62" text-anchor="middle" font-weight="600">② 내가 그 Space 로 들어감</text><text class="sub" x="360" y="84" text-anchor="middle">오른쪽 위 Space 단추</text>
+<path class="line s-cyan anim-flow" d="M460 65 H500"/>
+<rect class="box s-cyan" x="500" y="30" width="200" height="70" rx="12"/><text x="600" y="62" text-anchor="middle" font-weight="600">③ 내가 직접 처리</text><text class="sub" x="600" y="84" text-anchor="middle">로그인 · 인증 코드 입력</text>
+<path class="line s-accent anim-flow" d="M600 100 V150"/>
+<rect class="box s-accent" x="500" y="150" width="200" height="70" rx="12"/><text x="600" y="182" text-anchor="middle" font-weight="600">④ 이어 하라고 말함</text><text class="sub" x="600" y="204" text-anchor="middle">대화창에 한 문장</text>
+<path class="line s-green anim-flow" d="M500 185 H460"/>
+<rect class="box s-green" x="260" y="150" width="200" height="70" rx="12"/><text x="360" y="182" text-anchor="middle" font-weight="600">⑤ 에이전트가 이어서 진행</text><text class="sub" x="360" y="204" text-anchor="middle">같은 Space 에서 계속</text>
+<rect class="box s-red" x="20" y="150" width="200" height="70" rx="12" style="stroke-dasharray:5 4"/><text x="120" y="176" text-anchor="middle" font-weight="600" style="fill:var(--red)">✕ 하지 않는 것</text><text class="sub" x="120" y="195" text-anchor="middle">비밀번호·인증 코드를</text><text class="sub" x="120" y="210" text-anchor="middle">프롬프트에 붙여 넣기</text>
+</svg><figcaption>넘겨받기는 “에이전트가 멈춤 → 내가 Space에서 처리 → 이어 하라고 말함”의 세 박자입니다.</figcaption></figure>
+<pre><code>I finished the login in the agent Space. Please continue the task in the same Space.</code></pre>
+<p class="muted">뜻: 에이전트 Space에서 로그인을 마쳤어. 같은 Space에서 작업을 이어서 해 줘. — <b>예시</b>입니다. 원문에는 “직접 끝낸 뒤 에이전트에게 같은 Space에서 계속하라고 말한다”는 안내만 있고 정해진 문장은 없습니다.</p>
+<div class="warn"><b>비밀번호와 인증 코드는 프롬프트에 붙여 넣지 않습니다</b><p>로그인과 인증은 반드시 에이전트 Space의 그 페이지에서 내 손으로 합니다. 대화창에 적어 보내지 않습니다.</p></div>
+<div class="table-wrap"><table class="kv"><thead><tr><th>에이전트가 멈추고 나를 불러야 하는 상황 (원문 Space 문서)</th></tr></thead><tbody><tr><td>문자·이메일 인증 코드, QR 코드 로그인, 하드웨어 보안 키, CAPTCHA<span class="gl">(사람인지 확인하는 검사)</span></td></tr><tr><td>결제·주문·송금·환불</td></tr><tr><td>게시·삭제·보관, 그 밖에 되돌리기 어려운 일괄 수정</td></tr><tr><td>다른 앱에 내 계정 접근 권한을 주는 일</td></tr></tbody></table></div>
+<p><b>확인:</b> 내가 처리한 뒤 에이전트가 같은 Space에서 작업을 이어 갑니다. 자세한 설명은 <a href="ego-lite-guide.html#ch02-login">가이드 2장 로그인과 멈춰야 하는 순간</a>에 있습니다.</p>
+</div><div data-step="6"><h4 id="pb2-s6">6단계 · 끝난 뒤 남은 탭 확인하기</h4>
+<p>에이전트가 요약을 돌려주면 다시 Space 단추로 그 Space에 들어가 봅니다. 작업이 끝나도 Space의 탭은 바로 닫히지 않고 남습니다. 에이전트가 어떤 페이지를 방문했고 무엇을 했는지 내가 확인할 수 있게 하기 위해서입니다. 다만 명령 없이 30분이 지나면 에이전트 작업 Space는 자동으로 닫히므로, 이 단계는 작업이 끝난 직후에 합니다(<a href="ego-lite-guide.html#ch02-after">가이드 2장 작업이 끝난 뒤</a>).</p>
+<ol class="steps"><li><b>남은 탭 보기</b><span>블로그 페이지 탭이 그대로 열려 있는지 봅니다.</span></li><li><b>답과 맞춰 보기</b><span>대화창의 요약에 나온 글 하나를 골라, 남은 탭의 페이지에 실제로 있는 글인지 봅니다.</span></li></ol>
+<p><b>확인:</b> 작업이 끝난 뒤에도 에이전트 Space에 탭이 남아 있고, 요약의 내용을 그 페이지에서 찾을 수 있습니다.</p>
+</div></div>
+<h3 id="pb2-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td>파란 빛이 나는 Space가 없음</td><td>파란 빛은 에이전트가 <b>지금 일하고 있는</b> Space의 표시입니다. 대화창에서 작업이 아직 도는 중인지 먼저 봅니다. 작업을 새로 보내고 도는 동안 다시 Space 단추를 누릅니다.</td></tr><tr><td>에이전트가 로그인 화면에서 멈춰 있음</td><td>5단계대로 에이전트 Space에 들어가 직접 로그인·인증을 끝낸 뒤 이어 하라고 말합니다.</td></tr><tr><td>내가 처리했는데 에이전트가 이어 하지 않음</td><td>대화창에 “끝냈으니 같은 Space에서 계속하라”고 분명히 말합니다. 원문의 안내도 처리를 끝낸 뒤 에이전트에게 계속하라고 말하는 것입니다.</td></tr><tr><td>이어 하던 에이전트가 번호가 맞지 않는다고 함</td><td>내가 로그인하면서 페이지가 바뀌어, 에이전트가 전에 읽어 둔 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span>의 번호표(@N)가 더는 맞지 않는 것입니다. 스냅샷을 새로 찍으라고 말합니다. → <a href="#pb10">실습 10</a></td></tr><tr><td>작업이 끝나고 한참 뒤에 들어가 보니 그 Space가 없음</td><td>끝난 직후에는 탭이 남아 있지만, 명령 없이 30분이 지나면 에이전트 작업 Space는 자동으로 닫힙니다. 작업을 다시 보내고 끝난 직후에 6단계를 합니다. → <a href="ego-lite-guide.html#ch02-after">가이드 2장 작업이 끝난 뒤</a></td></tr><tr><td>비밀번호를 대화창에 적어야 할 것 같음</td><td>적지 않습니다. 에이전트 Space의 로그인 페이지에서 직접 입력합니다.</td></tr></tbody></table></div>
+<h3 id="pb2-next">다음에 할 것</h3><ul><li>멈출 곳은 미리 정해 줄 수도 있습니다. 원문이 드는 예는 <code>read-only, don't modify</code>(읽기만, 수정 금지)와 <code>stop and confirm before submitting</code>(제출 전에 멈추고 확인받기)입니다. 프롬프트에 이런 문장을 넣는 연습은 <a href="#pb4">실습 4</a>·<a href="#pb6">실습 6</a>에서 합니다.</li><li>남은 탭으로 결과를 꼼꼼히 대조하는 방법은 <a href="#pb3">실습 3</a>에서 이어집니다.</li><li>Space가 무엇이고 왜 내 탭을 방해하지 않는지는 <a href="ego-lite-guide.html#ch02-what">가이드 2장</a>, 작업 뒤 남는 것은 <a href="ego-lite-guide.html#ch02-after">2장 작업이 끝난 뒤</a>에서 설명합니다.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>오른쪽 위 Space 단추 → Space 관리 패널 → 파란 빛이 나는 Space가 에이전트의 작업 공간입니다.</li><li>에이전트는 자기 Space에서만 일하므로 내 탭·마우스·초점은 그대로입니다.</li><li>로그인·인증은 에이전트 Space에서 내가 직접 하고, 끝나면 이어 하라고 말합니다.</li><li>비밀번호와 인증 코드는 프롬프트에 붙여 넣지 않습니다.</li><li>작업이 끝나도 탭은 바로 닫히지 않고 남아 있어 에이전트가 본 페이지를 확인할 수 있습니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/quick-start(Watch and take over) · space · claude-code · codex(넘겨받은 뒤 이어 하라고 말하기, 비밀번호 경고) · snapshot(번호표가 맞지 않을 때) (수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준). 가이드 <a href="ego-lite-guide.html#ch02-together">2장 함께 일하는 흐름</a>·<a href="ego-lite-guide.html#ch02-login">2장 로그인</a>. “이어 하라”는 문장은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb3">
+<style>#pb3 .pb3-check td:first-child{white-space:nowrap;width:2.4em;text-align:center}</style>
+<div class="ch-head"><div class="ch-no">SCENARIO 3</div><h2>읽기만 하는 조사 — 인기 글을 표로 받고 원문과 대조</h2><p class="lead">아무것도 고치지 않고 읽기만 하는 조사를 맡깁니다. AI 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>가 Reddit에서 인기 글 하나를 찾아 표로 정리해 오면, 표의 칸을 원문 페이지와 하나씩 맞춰 봅니다. 화면에 없는 숫자를 지어내지 않고 <code>not shown</code>(표시 안 됨)으로 적었는지가 핵심입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>읽을 것·하지 말 것·결과 형태를 담은 프롬프트<span class="gl">(에이전트에게 보내는 요청 글)</span>를 보냅니다.</li><li>표의 각 칸을 원문 페이지와 대조합니다.</li><li>지어낸 숫자와 <code>not shown</code>을 구별하고, 빠진 것을 에이전트가 말하게 합니다.</li><li>결과를 믿어도 되는지 다섯 가지 신호로 점검합니다.</li></ul><p class="muted">예상 소요 시간: 10~15분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb3-prep">준비물</a>을 확인한 뒤 <a href="#pb3-steps">따라 하기</a>를 진행하고, 마지막에 <a href="#pb3-check">결과 점검표</a>로 마무리하세요. 숫자가 의심스럽거나 표가 비어 있으면 <a href="#pb3-stuck">막히면</a>을 봅니다.</p></div>
+<h3 id="pb3-prep">준비물과 완료 기준</h3><ul><li><a href="#pb1">실습 1</a>을 마친 상태. <a href="#pb2">실습 2</a>까지 했다면 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에 들어가는 법도 알고 있습니다.</li><li>에이전트의 새 대화 하나와 ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>.</li><li>이번 프롬프트는 Windows용 빠른 시작 문서에 실린 것입니다. 문장 자체에는 운영체제에 따라 달라지는 내용이 없어 그대로 씁니다.</li></ul><div class="note"><b>완료 기준</b><p>제목·서브레딧<span class="gl">(Reddit 안의 주제별 게시판)</span>·링크·게시 날짜·추천 수·댓글 수·조회 수가 든 표를 받고, 링크를 열어 표와 글을 대조했으며, 화면에 보이지 않는 숫자가 <code>not shown</code>으로 적혀 있으면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="문장 보내기, 표 받기, 링크 열어 대조, 빈칸 확인, 빠진 것 묻기의 다섯 단계입니다.">
+<defs><path id="pb3-track" d="M82 128 H638"/></defs>
+<rect class="box s-accent" x="20" y="24" width="124" height="80" rx="12"/><text x="82" y="58" text-anchor="middle" font-weight="600">① 문장 보내기</text><text class="sub" x="82" y="80" text-anchor="middle">원문 그대로</text>
+<path class="line s-accent anim-flow" d="M144 64 H159"/>
+<rect class="box s-accent" x="159" y="24" width="124" height="80" rx="12"/><text x="221" y="58" text-anchor="middle" font-weight="600">② 표 받기</text><text class="sub" x="221" y="80" text-anchor="middle">일곱 칸 + 링크</text>
+<path class="line s-accent anim-flow" d="M283 64 H298"/>
+<rect class="box s-cyan" x="298" y="24" width="124" height="80" rx="12"/><text x="360" y="58" text-anchor="middle" font-weight="600">③ 원문과 대조</text><text class="sub" x="360" y="80" text-anchor="middle">링크 열어 보기</text>
+<path class="line s-cyan anim-flow" d="M422 64 H437"/>
+<rect class="box s-amber" x="437" y="24" width="124" height="80" rx="12"/><text x="499" y="58" text-anchor="middle" font-weight="600">④ 빈칸 확인</text><text class="sub" x="499" y="80" text-anchor="middle">not shown 표시</text>
+<path class="line s-amber anim-flow" d="M561 64 H576"/>
+<rect class="box s-green" x="576" y="24" width="124" height="80" rx="12"/><text x="638" y="58" text-anchor="middle" font-weight="600">⑤ 빠진 것 묻기</text><text class="sub" x="638" y="80" text-anchor="middle">지어내지 않게</text>
+<path class="line" d="M82 128 H638" style="stroke-dasharray:2 5"/><circle r="5" class="f-accent"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#pb3-track"/></animateMotion></circle>
+</svg><figcaption>①②는 받는 일, ③~⑤는 받은 것을 확인하는 일입니다. 이 실습의 절반은 확인입니다.</figcaption></figure>
+<h3 id="pb3-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb3-s1">1단계 · 조사 프롬프트 보내기</h4>
+<p>새 대화에서 <code>/ego-browser</code>로 스킬을 부른 뒤, 아래 문장을 붙여 넣고 보냅니다. 원문에 실린 문장 그대로입니다.</p>
+<pre><code>Use ego-browser. Open Reddit and find a popular post from the past week. Open the post and return its title, subreddit, link, posting date, upvote count, comment count, and view count if Reddit shows one. Present the results in a small table. If a figure is not visible, mark it as "not shown" rather than guessing. Do not vote or comment.</code></pre>
+<p class="muted">뜻: ego-browser를 써 줘. Reddit을 열어 지난 한 주의 인기 글 하나를 찾아 줘. 그 글을 열고 제목, 서브레딧<span class="gl">(Reddit 안의 주제별 게시판)</span>, 링크, 게시 날짜, 추천 수, 댓글 수, 그리고 Reddit이 보여 준다면 조회 수를 알려 줘. 결과는 작은 표로 정리해 줘. 숫자가 보이지 않으면 추측하지 말고 “not shown”이라고 적어 줘. 투표하거나 댓글을 달지 마.</p>
+<p>이 문장이 좋은 본보기인 이유는, 원문 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span> 문서가 “좋은 작업 설명에 들어갈 것”으로 꼽는 항목이 거의 다 들어 있기 때문입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 305" role="img" aria-label="프롬프트를 대상 페이지, 읽을 것, 하지 말 것, 멈출 곳, 결과 형태의 다섯 항목으로 나누어 본 그림입니다. 이 프롬프트에는 멈출 곳이 없습니다.">
+<rect class="box s-accent" x="20" y="20" width="170" height="44" rx="8"/><text x="105" y="47" text-anchor="middle" font-weight="600">대상 페이지</text><path class="line s-accent anim-flow" d="M190 42 H230"/>
+<rect class="box" x="230" y="20" width="470" height="44" rx="8"/><text x="244" y="39">Reddit — 지난 한 주의 인기 글 하나</text><text class="sub" x="244" y="56">Open Reddit and find a popular post from the past week.</text>
+<rect class="box s-cyan" x="20" y="74" width="170" height="44" rx="8"/><text x="105" y="101" text-anchor="middle" font-weight="600">읽을 것</text><path class="line s-cyan anim-flow" d="M190 96 H230"/>
+<rect class="box" x="230" y="74" width="470" height="44" rx="8"/><text x="244" y="93">제목 · 서브레딧 · 링크 · 날짜 · 추천 수 · 댓글 수 · 조회 수</text><text class="sub" x="244" y="110">title, subreddit, link, posting date, upvote / comment / view count</text>
+<rect class="box s-red" x="20" y="128" width="170" height="44" rx="8"/><text x="105" y="155" text-anchor="middle" font-weight="600">하지 말 것</text><path class="line s-red anim-flow" d="M190 150 H230"/>
+<rect class="box" x="230" y="128" width="470" height="44" rx="8"/><text x="244" y="147">투표 금지 · 댓글 금지</text><text class="sub" x="244" y="164">Do not vote or comment.</text>
+<rect class="box" x="20" y="182" width="170" height="44" rx="8" style="stroke-dasharray:5 4"/><text x="105" y="209" text-anchor="middle" font-weight="600">멈출 곳</text><path class="line" d="M190 204 H230" style="stroke-dasharray:2 5"/>
+<rect class="box" x="230" y="182" width="470" height="44" rx="8" style="stroke-dasharray:5 4"/><text x="244" y="201">이 프롬프트에는 없음</text><text class="sub" x="244" y="218">사람 확인(CAPTCHA)·결제·권한 승인 화면이 나올 수 있는 작업에서 적습니다</text>
+<rect class="box s-green" x="20" y="236" width="170" height="44" rx="8"/><text x="105" y="263" text-anchor="middle" font-weight="600">결과 형태</text><path class="line s-green anim-flow" d="M190 258 H230"/>
+<rect class="box" x="230" y="236" width="470" height="44" rx="8"/><text x="244" y="255">작은 표 · 안 보이는 숫자는 not shown</text><text class="sub" x="244" y="272">in a small table … mark it as "not shown" rather than guessing</text>
+</svg><figcaption>왼쪽은 스냅샷 문서가 말하는 “작업 설명에 들어갈 것” 다섯 가지, 오른쪽은 이 프롬프트에서 그에 해당하는 대목입니다.</figcaption></figure>
+<p><b>확인:</b> 메시지가 전송되고 에이전트가 일을 시작합니다. 에이전트는 ego(lite)에 Space를 만들어 Reddit을 열고 글 하나를 읽습니다.</p>
+</div><div data-step="2"><h4 id="pb3-s2">2단계 · 표 받기</h4>
+<p>에이전트가 출처 링크가 달린 표를 돌려줍니다. 모양은 대략 아래와 같습니다(값은 자리 표시입니다 — 실제 글에 따라 달라집니다).</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>칸</th><th>들어 있어야 할 것</th></tr></thead><tbody><tr><td>Title (제목)</td><td>글 제목 그대로</td></tr><tr><td>Subreddit (서브레딧)</td><td>글이 올라온 게시판 이름</td></tr><tr><td>Link (링크)</td><td>그 글로 바로 가는 주소</td></tr><tr><td>Posting date (게시 날짜)</td><td>글이 올라온 날짜</td></tr><tr><td>Upvote count (추천 수)</td><td>페이지에 보이는 숫자</td></tr><tr><td>Comment count (댓글 수)</td><td>페이지에 보이는 숫자</td></tr><tr><td>View count (조회 수)</td><td>보이면 숫자, 안 보이면 <code>not shown</code></td></tr></tbody></table></div>
+<p><b>확인:</b> 일곱 칸이 모두 있고 링크가 들어 있습니다. 칸이 빠졌으면 빠진 칸을 채워 달라고, 그 값이 페이지에 없으면 없다고 말해 달라고 합니다.</p>
+</div><div data-step="3"><h4 id="pb3-s3">3단계 · 링크를 열어 표와 원문 대조하기</h4>
+<p>원문은 작업이 끝나면 <b>링크를 열어 표와 글을 비교하라</b>고 안내합니다. 표의 링크를 눌러 열어도 되고, 에이전트 Space에 남아 있는 탭을 봐도 됩니다(들어가는 법은 <a href="#pb2-s2">실습 2</a>). 작업이 끝나도 탭은 바로 닫히지 않고 남으므로, 끝난 직후라면 에이전트가 실제로 본 페이지를 그대로 볼 수 있습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 300" role="img" aria-label="에이전트가 준 표의 일곱 칸을 Space에 남은 Reddit 글 페이지의 같은 항목과 한 줄씩 대조합니다. 조회 수는 화면에 없으면 not shown 이 맞습니다.">
+<rect class="box s-accent" x="20" y="20" width="300" height="250" rx="12"/><text x="38" y="46" font-weight="600">에이전트가 준 표</text>
+<text x="38" y="80">제목</text><text x="38" y="106">서브레딧</text><text x="38" y="132">링크</text><text x="38" y="158">게시 날짜</text><text x="38" y="184">추천 수</text><text x="38" y="210">댓글 수</text><text x="38" y="236">조회 수: not shown</text>
+<rect class="box s-green" x="400" y="20" width="300" height="250" rx="12"/><text x="418" y="46" font-weight="600">Space 에 남은 Reddit 글</text>
+<text x="418" y="80">글 맨 위의 제목</text><text x="418" y="106">글이 올라온 게시판</text><text x="418" y="132">주소창의 주소</text><text x="418" y="158">글에 적힌 날짜</text><text x="418" y="184">화면에 보이는 추천 수</text><text x="418" y="210">화면에 보이는 댓글 수</text><text x="418" y="236">조회 수 — 화면에 없음</text>
+<path class="line s-accent anim-flow" d="M320 76 H400 M320 102 H400 M320 128 H400 M320 154 H400 M320 180 H400 M320 206 H400"/>
+<path class="line s-amber" d="M320 232 H400" style="stroke-dasharray:2 5"/><circle cx="360" cy="232" r="6" class="f-amber anim-pulse"/>
+</svg><figcaption>한 줄씩 같은지 봅니다. 마지막 줄처럼 화면에 없는 값은 표에도 <code>not shown</code>이어야 맞습니다.</figcaption></figure>
+<p><b>확인:</b> 제목·서브레딧·날짜·숫자가 페이지에 보이는 것과 같습니다. 페이지와 어긋나는 칸이 있으면 4단계까지 본 뒤 5단계에서 다시 읽게 합니다.</p>
+</div><div data-step="4"><h4 id="pb3-s4">4단계 · 안 보이는 숫자가 not shown 인지 보기</h4>
+<p>프롬프트에 “보이지 않으면 추측하지 말고 not shown이라고 적어라”를 넣은 이유를 확인하는 단계입니다. 원문의 시연 녹화에서는 Reddit이 조회 수를 보여 주지 않았고, 에이전트(Codex)는 그 칸을 not shown으로 적었습니다.</p>
+<ol class="steps"><li><b>표에서 not shown 찾기</b><span>어느 칸이 not shown인지 봅니다.</span></li><li><b>페이지에서 그 값 찾아보기</b><span>정말 화면에 없는지 봅니다. 없으면 에이전트가 제대로 한 것입니다.</span></li><li><b>반대 방향도 보기</b><span>표에는 숫자가 있는데 페이지에서 찾을 수 없는 칸이 있는지 봅니다. 있다면 지어낸 값일 수 있습니다.</span></li></ol>
+<p><b>확인:</b> not shown인 칸은 페이지에도 없고, 숫자가 적힌 칸은 모두 페이지에서 찾을 수 있습니다.</p>
+</div><div data-step="5"><h4 id="pb3-s5">5단계 · 빠진 것이 있으면 무엇이 빠졌는지 말하게 하기</h4>
+<p>에이전트가 어떤 페이지에 닿지 못했거나 숫자를 읽지 못했다면, 원문의 안내는 <b>빈틈을 채워 넣게 하지 말고 무엇이 빠졌는지 말하게 하라</b>는 것입니다. 아래는 그 안내를 따라 만든 <b>예시</b> 문장입니다(원문에 정해진 문장은 없습니다).</p>
+<pre><code>If you could not reach a page or read a figure, tell me exactly what is missing instead of filling in the gap.</code></pre>
+<p class="muted">뜻: 닿지 못한 페이지나 읽지 못한 숫자가 있으면, 빈틈을 채우지 말고 무엇이 빠졌는지 정확히 말해 줘.</p>
+<p>표와 페이지가 어긋나 보일 때는 이전 답에서 계속 추론하게 두지 말고, 지금 페이지의 스냅샷을 다시 찍게 합니다. 이것도 <b>예시</b>입니다.</p>
+<pre><code>Take a fresh snapshot of the current page and check the table against it again.</code></pre>
+<p class="muted">뜻: 지금 페이지의 스냅샷을 새로 찍고, 표를 그것과 다시 대조해 줘.</p>
+<p><b>확인:</b> 에이전트가 빠진 것을 구체적으로 밝혔거나, 다시 읽은 뒤 표를 고쳤습니다.</p>
+</div></div>
+<h3 id="pb3-check">결과 점검표 — 다섯 가지 신호</h3><p>원문 스냅샷 문서는 작업이 끝났을 때 볼 신호를 다섯 가지로 듭니다. 이번 작업에 맞춰 보면 이렇습니다.</p>
+<div class="table-wrap"><table class="kv pb3-check"><thead><tr><th>☐</th><th>신호</th><th>이번 실습에서 볼 것</th></tr></thead><tbody><tr><td>☐</td><td>방문한 페이지와 핵심 동작을 밝혔는가</td><td>Reddit의 어느 글을 열었는지 답에 적혀 있습니다.</td></tr><tr><td>☐</td><td>내가 검증할 수 있는 것(제목·ID·주소·금액·시각)이 들어 있는가</td><td>제목·링크·게시 날짜가 있어 직접 열어 볼 수 있습니다.</td></tr><tr><td>☐</td><td>내려받기였다면 파일이 저장된 경로를 알려 줬는가</td><td>이번에는 해당 없음 — <a href="#pb5">실습 5</a>에서 봅니다.</td></tr><tr><td>☐</td><td>고치거나 제출하는 일이었다면 마지막 단계 전에 멈췄는가</td><td>이번에는 읽기만 했습니다. 투표·댓글을 하지 않았는지 봅니다 — 멈추기 연습은 <a href="#pb6">실습 6</a>.</td></tr><tr><td>☐</td><td>관련 페이지가 Space에 아직 열려 있는가</td><td>에이전트 Space에 그 Reddit 글 탭이 남아 있습니다.</td></tr></tbody></table></div>
+<h3 id="pb3-stuck">막히면</h3><div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody><tr><td>표의 숫자를 페이지에서 찾을 수 없음</td><td>5단계의 두 번째 문장처럼 스냅샷을 다시 찍어 대조하게 합니다. 이전 답을 바탕으로 계속 추론하게 두지 않습니다.</td></tr><tr><td>조회 수가 not shown으로 나옴</td><td>정상일 수 있습니다. 페이지에 조회 수가 실제로 없는지만 확인합니다.</td></tr><tr><td>표에 링크가 없음</td><td>글로 바로 가는 링크를 달라고 합니다. 링크가 있어야 대조할 수 있습니다.</td></tr><tr><td>에이전트가 페이지 일부를 읽지 못했다고 함</td><td>스냅샷이 모든 것을 읽지는 못합니다. 화면 밖 내용, 이미지 속 글자, 복잡한 캔버스, 샌드박스된 교차 출처 iframe<span class="gl">(페이지 안에 끼워 넣은 다른 사이트의 페이지)</span>은 다 보이지 않을 수 있습니다. 읽지 못한 부분을 밝히게 하고 내가 직접 봅니다. → <a href="ego-lite-guide.html#ch03-limits">가이드 3장 한계</a></td></tr><tr><td>Reddit이 로그인이나 확인을 요구함</td><td>에이전트 Space에서 내가 직접 처리하고 이어 하라고 말합니다(<a href="#pb2-s5">실습 2의 넘겨받기</a> — 사람만 할 수 있는 단계를 내가 직접 처리하는 것). 비밀번호나 인증 코드는 프롬프트에 붙여 넣지 않습니다.</td></tr></tbody></table></div>
+<h3 id="pb3-next">다음에 할 것</h3><ul><li>로그인된 사이트에서 같은 방식으로 목록을 뽑는 연습은 <a href="#pb4">실습 4</a>입니다. “하지 말 것”을 더 분명히 적습니다.</li><li>일 맡기는 글에 들어갈 다섯 가지는 <a href="ego-lite-guide.html#ch03-task">가이드 3장 작업 설명 쓰기</a>, 결과 확인은 <a href="ego-lite-guide.html#ch03-review">3장 결과 확인</a>에서 자세히 설명합니다.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>프롬프트에 대상·읽을 것·하지 말 것·결과 형태를 적고, “모르면 not shown”을 넣습니다.</li><li>표를 받으면 링크를 열어 한 줄씩 원문과 대조합니다. Space에 남은 탭으로도 볼 수 있습니다.</li><li>화면에 없는 값이 not shown이면 제대로 된 것이고, 페이지에 없는 숫자가 적혀 있으면 의심합니다.</li><li>빠진 것은 채워 넣게 하지 말고 무엇이 빠졌는지 말하게 합니다.</li><li>마지막에 다섯 가지 신호로 점검합니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/windows/quick-start(Reddit 조사 프롬프트와 결과 확인 안내) · snapshot(Writing a task for the agent · Reviewing what the agent did · Common questions) · space (수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준). 가이드 <a href="ego-lite-guide.html#ch03-task">3장 작업 설명 쓰기</a>·<a href="ego-lite-guide.html#ch03-review">3장 결과 확인</a>. 5단계의 두 문장은 원문 안내를 따라 만든 예시입니다.</p></section>
+<section class="chapter" id="pb4">
+<div class="ch-head"><div class="ch-no">SCENARIO 4</div><h2>로그인된 사이트에서 목록 뽑기 — 하지 말 것 정해 주기</h2><p class="lead">내가 ego(lite)에 로그인해 둔 사이트의 알림 목록을 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>에게 읽어 오게 합니다. 이번에는 “읽기만 하고 아무것도 바꾸지 말라”는 경계를 문장으로 못박는 연습입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>ego(lite)에 로그인해 둔 사이트가 에이전트 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에서도 로그인된 화면으로 열리는 것을 확인합니다.</li><li>작업 문장에 “하지 말 것”을 적어 읽기만 시킵니다.</li><li>돌아온 목록의 제목과 URL<span class="gl">(웹 주소)</span>을 내 눈으로 대조합니다.</li></ul><p class="muted">예상 소요 시간: 10~15분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb4-prep">준비물</a>을 확인한 뒤 <a href="#pb4-steps">따라 하기</a>를 진행하세요. 로그인 화면이 뜨거나 목록이 이상하면 <a href="#pb4-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb4-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb0">시작 전 준비</a>와 <a href="#pb1">실습 1</a>을 마친 상태. 에이전트 대화창에서 <code>/ego-browser</code> 스킬<span class="gl">(에이전트에게 주는 사용 설명서 묶음)</span>을 부를 수 있어야 합니다.</li><li>ego(lite)에서 내가 이미 로그인해 둔 사이트 하나. 원문 예시는 GitHub의 Notifications(알림) 페이지입니다. GitHub를 쓰지 않는다면 <b>알림이나 받은편지함 목록이 있는, 내가 로그인해 둔 다른 사이트</b>로 바꿔도 됩니다.</li><li>비밀번호와 인증 코드는 필요 없습니다. 에이전트에게 보내는 문장에 절대 붙여 넣지 않습니다.</li></ul>
+<div class="note"><b>완료 기준</b><p>에이전트가 목록(이름·제목·URL)을 돌려주고, 알림이 읽음 처리되거나 보관되지 않은 것을 확인한 뒤, 그중 두 건 이상을 내가 직접 열어 제목이 같은지 확인하면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="내 탭에서 로그인 확인, 하지 말 것을 적어 맡기기, Space에서 로그인된 화면 확인, 목록 대조 순서입니다.">
+<rect class="box s-cyan" x="20" y="30" width="155" height="90" rx="12"/><text x="97" y="66" text-anchor="middle" font-weight="600">① 로그인 확인</text><text class="sub" x="97" y="92" text-anchor="middle">내 탭에서 미리 열어 봄</text>
+<path class="line s-accent anim-flow" d="M175 75 H195"/>
+<rect class="box s-accent" x="195" y="30" width="155" height="90" rx="12"/><text x="272" y="66" text-anchor="middle" font-weight="600">② 문장으로 맡기기</text><text class="sub" x="272" y="92" text-anchor="middle">하지 말 것을 적어서</text>
+<path class="line s-accent anim-flow" d="M350 75 H370"/>
+<rect class="box s-green" x="370" y="30" width="155" height="90" rx="12"/><text x="447" y="66" text-anchor="middle" font-weight="600">③ Space에서 열림</text><text class="sub" x="447" y="92" text-anchor="middle">로그인된 화면인지 봄</text>
+<path class="line s-accent anim-flow" d="M525 75 H545"/>
+<rect class="box s-amber" x="545" y="30" width="155" height="90" rx="12"/><text x="622" y="66" text-anchor="middle" font-weight="600">④ 목록 대조</text><text class="sub" x="622" y="92" text-anchor="middle">제목·URL을 직접 확인</text>
+</svg><figcaption>로그인은 내가 미리 해 둔 것을 쓰고, 에이전트는 읽기만 합니다. 마지막 대조는 내 몫입니다.</figcaption></figure>
+<h3 id="pb4-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb4-s1">1단계 · 내 탭에서 로그인 상태 확인하기</h4>
+<p>ego(lite)의 내 탭에서 연습할 사이트의 알림(또는 받은편지함) 페이지를 직접 엽니다. 로그인 화면이 나오면 지금 내가 직접 로그인해 둡니다.</p>
+<p>원문은 “ego(lite)에 이미 로그인해 둔 사이트라면, 에이전트는 보통 로그인을 마친 뒤의 화면으로 바로 들어간다”고 설명합니다. 쿠키<span class="gl">(로그인했다는 것을 브라우저가 기억해 두는 정보)</span>를 따로 옮겨 줄 필요가 없습니다.</p>
+<p><b>확인:</b> 내 탭에 로그인 화면이 아니라 내 알림 목록이 보입니다. 목록의 맨 위 두세 건 제목과, 읽지 않음으로 표시된 건이 어느 것인지 눈여겨봐 둡니다(5단계에서 바뀐 것이 없는지 볼 때 씁니다).</p>
+<details class="adv"><summary>Space마다 쿠키가 따로라는데 왜 로그인되어 있나요</summary><p>Space 문서에는 두 문장이 함께 있습니다. “Space는 작업마다 쿠키와 저장소가 따로인 격리된 BrowserContext<span class="gl">(브라우저 안의 독립된 칸)</span>다.” 그리고 “ego(lite)에 로그인해 둔 사이트는 보통 로그인된 화면으로 바로 열린다.” 원문은 둘 사이의 내부 동작을 더 설명하지 않으므로, 이 실습에서는 “보통 로그인된 채로 열린다”는 결과만 확인합니다. <a href="ego-lite-guide.html#ch02-login">완전 가이드 2장 · 로그인</a>.</p></details>
+</div>
+<div data-step="2"><h4 id="pb4-s2">2단계 · 작업 문장을 다섯 가지로 뜯어 보기</h4>
+<p>공식 문서의 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span> 쪽은 좋은 작업 설명에 다섯 가지가 들어간다고 말합니다. ① 대상 페이지 ② 읽고·채우고·누르고·내려받을 것 ③ <b>하면 안 되는 것</b> ④ 멈출 곳 ⑤ 원하는 결과의 모양입니다. 원문 예시 문장을 여기에 맞춰 보면 이렇습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 302" role="img" aria-label="원문 예시 문장을 대상 페이지, 읽을 것, 하지 말 것, 멈출 곳, 결과 형태로 나눈 그림입니다.">
+<rect class="box" x="20" y="20" width="170" height="46" rx="8"/><text x="105" y="48" text-anchor="middle" font-weight="600">① 대상 페이지</text>
+<path class="line" d="M190 43 H230"/>
+<rect class="box s-accent" x="230" y="20" width="470" height="46" rx="8"/><text x="246" y="40">my GitHub Notifications</text><text class="sub" x="246" y="57">내 GitHub 알림 페이지</text>
+<rect class="box" x="20" y="74" width="170" height="46" rx="8"/><text x="105" y="102" text-anchor="middle" font-weight="600">② 읽을 것</text>
+<path class="line" d="M190 97 H230"/>
+<rect class="box s-accent" x="230" y="74" width="470" height="46" rx="8"/><text x="246" y="94">list the PRs that need my review</text><text class="sub" x="246" y="111">내 검토가 필요한 PR 목록을 뽑기</text>
+<rect class="box s-red" x="20" y="128" width="170" height="46" rx="8"/><text x="105" y="156" text-anchor="middle" font-weight="600">③ 하지 말 것</text>
+<path class="line s-red anim-flow" d="M190 151 H230"/>
+<rect class="box s-red" x="230" y="128" width="470" height="46" rx="8"/><circle class="f-red anim-pulse" cx="676" cy="151" r="6"/><text x="246" y="148">Don't archive, don't mark anything as read.</text><text class="sub" x="246" y="165">보관하지 말 것, 아무것도 읽음으로 표시하지 말 것</text>
+<rect class="box" x="20" y="182" width="170" height="46" rx="8"/><text x="105" y="210" text-anchor="middle" font-weight="600">④ 멈출 곳</text>
+<path class="line" d="M190 205 H230" style="stroke-dasharray:3 4"/>
+<rect class="box" x="230" y="182" width="470" height="46" rx="8" style="stroke-dasharray:4 4"/><text x="246" y="202">(이 예시에는 없음)</text><text class="sub" x="246" y="219">필요하면 한 줄 더합니다 — 3단계의 바꿔 쓰는 틀 참고</text>
+<rect class="box" x="20" y="236" width="170" height="46" rx="8"/><text x="105" y="264" text-anchor="middle" font-weight="600">⑤ 결과 형태</text>
+<path class="line" d="M190 259 H230"/>
+<rect class="box s-green" x="230" y="236" width="470" height="46" rx="8"/><text x="246" y="256">repo name, title, URL</text><text class="sub" x="246" y="273">저장소 이름 · 제목 · 주소 — 나중에 대조할 수 있는 항목</text>
+</svg><figcaption>이번 실습의 핵심은 ③입니다. 스냅샷은 에이전트가 페이지를 잘 보게 해 줄 뿐, 작업의 경계는 내가 정해야 합니다. 읽기만 하는 일이라도 “무엇을 하지 말지”를 문장으로 적어 둡니다.</figcaption></figure>
+<p>PR<span class="gl">(Pull Request — 코드 변경을 검토해 달라는 요청)</span>이 낯설어도 괜찮습니다. “내가 처리해야 할 알림의 목록”이라고 읽으면 됩니다.</p>
+<p><b>확인:</b> 내 사이트에서 ①~⑤에 해당하는 말을 각각 한 줄로 말할 수 있습니다. 특히 ③ “바뀌면 곤란한 것”을 두 가지 이상 떠올렸습니다.</p>
+</div>
+<div data-step="3"><h4 id="pb4-s3">3단계 · 문장을 보내기</h4>
+<p>에이전트 대화창에서 <code>/ego-browser</code>로 스킬을 부른 뒤, 아래에서 내 상황에 맞는 문장을 붙여 넣고 Enter를 누릅니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="gh">GitHub를 쓰는 경우 (원문 예시)</button><button data-tab="other">다른 사이트로 바꾸는 경우 (예시 틀)</button></div>
+<div data-panel="gh"><pre><code>Use ego-browser. Open my GitHub Notifications and list the PRs that need my review — repo name, title, URL.
+Don't archive, don't mark anything as read.</code></pre><p>뜻: ego-browser를 써서 내 GitHub 알림을 열고, 내 검토가 필요한 PR을 저장소 이름·제목·URL과 함께 목록으로 뽑아 줘. 보관하지 말고, 아무것도 읽음으로 표시하지 마.</p><p class="muted">첫머리 <code>Use ego-browser.</code>는 빠른 시작 문서의 첫 작업 문장을 따라 붙인 것이고, 나머지는 스냅샷 문서의 예시 그대로입니다.</p></div>
+<div data-panel="other"><pre><code>Use ego-browser. Open my [site name] inbox and list the unread items — sender, title, URL.
+Read-only, don't modify: don't open, reply to, archive, delete, or mark anything as read.
+Pause if you hit a login or verification screen.</code></pre><p>뜻: ego-browser를 써서 내 [사이트 이름] 받은편지함을 열고, 읽지 않은 항목을 보낸 사람·제목·URL과 함께 목록으로 뽑아 줘. 읽기만 하고 바꾸지 마 — 열지도, 답장하지도, 보관·삭제하지도, 읽음으로 표시하지도 마. 로그인이나 인증 화면이 나오면 멈춰.</p><p class="muted">원문에 없는 문장입니다. 다섯 가지 요소에 맞춰 만든 <b>예시</b>이고, <code>[site name]</code>과 항목 이름은 내 사이트에 맞게 바꿉니다. “read-only, don't modify”는 Space 문서가 경계 문장의 예로 든 표현입니다.</p></div></div>
+<p><b>확인:</b> 에이전트가 작업을 시작하고, 내가 보고 있던 탭은 바뀌지 않습니다. 에이전트는 ego(lite) 안에 자기 Space를 만들어 그 안에서 페이지를 엽니다.</p>
+</div>
+<div data-step="4"><h4 id="pb4-s4">4단계 · Space에서 로그인된 화면인지 보기</h4>
+<ol class="steps"><li><b>ego(lite) 오른쪽 위의 Space 단추 누르기</b><span>3단계의 작업이 도는 동안 바로 누릅니다. Space 관리 패널이 열립니다.</span></li><li><b>파란 빛이 나는 Space 찾기</b><span>그곳이 지금 에이전트가 일하고 있는 Space입니다.</span></li><li><b>눌러서 들어가 보기</b><span>에이전트가 연 페이지가 보입니다. 보기만 하고 아무것도 누르지 않습니다.</span></li></ol>
+<figure class="diagram"><svg viewBox="0 0 720 300" role="img" aria-label="화면 흉내: 오른쪽 위 Space 단추를 누르면 Space 관리 패널이 열리고, 파란 빛이 나는 Space가 에이전트가 일하는 곳입니다.">
+<rect class="box" x="20" y="20" width="680" height="260" rx="12"/>
+<text x="40" y="49" font-weight="600">ego(lite) 브라우저</text>
+<rect class="box s-accent anim-pulse" x="580" y="30" width="100" height="28" rx="8"/><text x="630" y="49" text-anchor="middle">Space 단추</text>
+<path class="line s-accent anim-flow" d="M630 58 V76"/>
+<rect class="box s-cyan" x="40" y="76" width="320" height="184" rx="10"/>
+<text x="56" y="104" font-weight="600">내 탭</text>
+<text class="sub" x="56" y="126">내가 보던 페이지는 그대로입니다</text>
+<text class="sub" x="56" y="146">마우스와 키보드도 빼앗기지 않습니다</text>
+<rect class="box s-accent" x="380" y="76" width="300" height="184" rx="10"/>
+<text x="396" y="104" font-weight="600">Space 관리 패널</text>
+<rect class="box s-accent" x="396" y="118" width="268" height="62" rx="8"/>
+<circle class="f-accent anim-pulse" cx="416" cy="149" r="7"/>
+<text x="434" y="144" font-weight="600">에이전트 Space</text>
+<text class="sub" x="434" y="164">파란 빛 = 지금 일하고 있는 곳</text>
+<text class="sub" x="396" y="206">눌러 들어가면 에이전트가 연 페이지가 보입니다</text>
+<text class="sub" x="396" y="226">로그인된 알림 목록이 보이면 성공</text>
+</svg><figcaption>화면 흉내 — 배치와 모양은 실제 버전과 다를 수 있습니다. 원문이 말하는 것은 오른쪽 위 Space 단추, Space 관리 패널, 파란 빛이 나는 Space 세 가지입니다.</figcaption></figure>
+<p><b>확인:</b> Space 안에 로그인 화면이 아니라 <b>내 계정의 알림 목록</b>이 열려 있습니다. 로그인이나 인증 화면이 보이면 <a href="#pb4-stuck">막히면</a>의 첫 줄로 갑니다.</p>
+</div>
+<div data-step="5"><h4 id="pb4-s5">5단계 · 돌아온 목록을 직접 대조하기</h4>
+<p>에이전트의 답을 그대로 믿지 않고, 스냅샷 문서의 점검 항목으로 확인합니다.</p>
+<ol class="steps"><li><b>어느 페이지를 열고 무엇을 했는지 적혀 있는가</b><span>방문한 페이지와 주요 동작이 답에 있어야 합니다.</span></li><li><b>바뀐 것이 없는가</b><span>작업이 끝나도 Space의 탭은 바로 닫히지 않고 남습니다. 그 화면에서 알림이 읽음 처리되거나 보관되지 않았는지, 1단계에서 봐 둔 것과 견주어 봅니다. 이 확인을 아래의 “직접 열어 보기”보다 먼저 합니다 — 사이트에 따라서는 내가 알림을 여는 것만으로 읽음으로 바뀔 수 있어, 순서가 뒤바뀌면 누가 바꿨는지 가릴 수 없습니다.</span></li><li><b>확인할 수 있는 항목이 있는가</b><span>제목과 URL이 건마다 있어야 합니다. 두 건을 골라 URL을 내 탭에서 열고 제목이 같은지 봅니다.</span></li></ol>
+<p>빠진 건이 있거나 목록이 화면과 다르면, 앞선 답을 근거로 계속 추측하게 두지 말고 지금 페이지를 다시 읽게 합니다. 아래는 그렇게 요청하는 <b>예시</b> 문장입니다.</p>
+<pre><code>Re-snapshot the current page and check your list against what is on the page now. Don't modify anything.</code></pre><p>뜻: 지금 페이지의 스냅샷을 다시 찍고, 네 목록을 지금 화면과 맞춰 봐. 아무것도 바꾸지 마.</p>
+<p><b>확인:</b> 내가 열어 보기 전의 알림 상태가 1단계에서 본 그대로이고, 고른 두 건의 제목·URL이 실제 페이지와 같습니다.</p>
+</div></div>
+<h3 id="pb4-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>할 일</th></tr></thead><tbody>
+<tr><td>Space에 로그인·인증 화면이 뜸</td><td>문자·이메일 코드, QR 로그인, 보안 키 같은 단계는 에이전트가 멈추고 나에게 돌려줘야 하는 일입니다. 그 Space에 들어가 내가 직접 처리한 뒤 대화창에서 이어 하라고 말합니다(<a href="#pb2-s5">실습 2의 5단계</a>). 비밀번호나 인증 코드를 대화창에 붙여 넣지 않습니다.</td></tr>
+<tr><td>4단계에서 파란 빛이 나는 Space가 안 보임</td><td>파란 빛은 에이전트가 지금 일하고 있는 Space의 표시입니다. 대화창에서 작업이 아직 도는 중인지 먼저 봅니다. 이미 끝났다면 문장을 다시 보내고, 도는 동안 Space 단추를 누릅니다(<a href="#pb2-stuck">실습 2의 막히면</a>).</td></tr>
+<tr><td>목록이 비었거나 엉뚱한 페이지를 읽음</td><td>Space에 열린 페이지가 맞는지 먼저 봅니다. 다르면 대상 페이지를 더 분명히 적어 다시 맡기고, 맞으면 5단계의 다시 읽기 문장을 보냅니다.</td></tr>
+<tr><td>알림을 읽음 처리하려 하거나 이미 바꿈</td><td>대화창에서 에이전트에게 그만하라고 말하고, 그 Space에 들어가 무엇이 바뀌었는지 내가 직접 봅니다. 다시 맡길 때는 “read-only, don't modify”를 문장에 넣고, 하지 말 것을 하나씩 적습니다.</td></tr>
+<tr><td>“번호표(@N)<span class="gl">(스냅샷 속 단추·입력 칸에 붙는 임시 번호)</span>가 유효하지 않다”고 함</td><td>앞선 스냅샷 뒤에 페이지가 바뀐 것입니다. 스냅샷을 새로 찍게 합니다. 자세한 것은 <a href="#pb10">실습 10</a>.</td></tr>
+<tr><td>스킬이 안 보이거나 ego(lite)가 안 열림</td><td><a href="#pb9">실습 9</a>에서 연결부터 확인합니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb4-next">다음에 할 것</h3>
+<ul><li>읽기만 하던 것에서 한 걸음 나아가 파일을 받아 봅니다 — <a href="#pb5">실습 5 · 파일 내려받기</a>.</li><li>되돌리기 어려운 단추 앞에서 멈추게 하는 연습 — <a href="#pb6">실습 6</a>.</li><li>더 읽기: <a href="ego-lite-guide.html#ch03-task">작업 문장 쓰는 법</a> · <a href="ego-lite-guide.html#ch03-review">결과 점검하기</a> · <a href="ego-lite-guide.html#ch02-login">로그인과 넘겨받기</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>ego(lite)에 로그인해 둔 사이트는 에이전트 Space에서도 보통 로그인된 화면으로 바로 열립니다.</li><li>작업 문장에는 대상·읽을 것·<b>하지 말 것</b>·멈출 곳·결과 형태를 적습니다.</li><li>Space 단추 → Space 관리 패널 → 파란 빛이 나는 Space에서 에이전트의 화면을 봅니다.</li><li>돌아온 목록은 제목과 URL로 직접 대조하고, 이상하면 스냅샷을 다시 찍게 합니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/snapshot (Writing a task for the agent · Reviewing what the agent did · Common questions), /docs/space (Logged-in state · How you and the agent collaborate · FAQ), /docs/quick-start (Run your first task · Watch and take over), /docs/product-introduce (Space), /docs/claude-code (비밀번호·인증 코드 경고). 2026-11-09 수집. “다른 사이트” 틀과 다시 읽기 문장은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb5">
+<div class="ch-head"><div class="ch-no">SCENARIO 5</div><h2>파일 내려받기 — 멈출 곳과 저장 위치 보고받기</h2><p class="lead">로그인해야 들어갈 수 있는 관리 화면에서 조건을 걸고 파일을 내려받는 일을 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>에게 맡깁니다. 어디서 멈출지 미리 정하고, 파일이 내 컴퓨터 어디에 저장됐는지 보고받는 연습입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>작업 문장에 “이런 화면이 나오면 멈춰라”를 미리 적습니다.</li><li>내려받은 파일의 로컬 경로<span class="gl">(내 컴퓨터 안에서 파일이 있는 위치)</span>를 보고받습니다.</li><li>파일을 직접 열어 날짜와 행 수가 맞는지 확인합니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb5-prep">준비물</a>을 확인한 뒤 <a href="#pb5-steps">따라 하기</a>를 진행하세요. 에이전트가 멈췄거나 파일을 찾지 못하면 <a href="#pb5-stuck">막히면</a>에서 같은 증상을 찾습니다.</p></div>
+<h3 id="pb5-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb4">실습 4</a>까지 해 본 상태. 로그인된 사이트를 에이전트 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에서 여는 것을 확인했어야 합니다.</li><li>ego(lite)에 로그인해 둔, <b>내려받기 단추가 있는 내 업무 화면</b> 하나. 원문 예시는 주문 현황 화면(orders dashboard)에서 어제 주문을 CSV<span class="gl">(쉼표로 칸을 나눈 표 파일)</span>로 받는 일입니다. 내가 쓰는 관리 화면의 보고서·목록 내보내기로 바꿔서 합니다.</li><li>연습은 여러 번 내려받아도 문제가 없는 자료로 합니다.</li></ul>
+<div class="note"><b>완료 기준</b><p>에이전트가 파일의 로컬 경로를 알려 주고, 내가 그 파일을 열어 날짜 범위와 행 수가 화면과 맞는 것을 확인하면 완료입니다.</p></div>
+<p>이런 일이 Space에 어울리는 이유는 원문에 있습니다. 로그인이 필요한 현황 화면·주문 페이지, 그리고 누르기·걸러 내기·내려받기가 들어가는 작업은 진짜 브라우저와 진짜 로그인이 있어야 하기 때문입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 190" role="img" aria-label="화면 열기, 조건 걸기, 내려받기, 경로 보고, 내가 확인 순서이며 로그인 확인과 내보내기 확인에서 멈춥니다.">
+<rect class="box s-accent" x="20" y="30" width="124" height="80" rx="12"/><text x="82" y="64" text-anchor="middle" font-weight="600">① 화면 열기</text><text class="sub" x="82" y="88" text-anchor="middle">주문 현황 화면</text>
+<path class="line s-accent anim-flow" d="M144 70 H159"/>
+<rect class="box s-accent" x="159" y="30" width="124" height="80" rx="12"/><text x="221" y="64" text-anchor="middle" font-weight="600">② 조건 걸기</text><text class="sub" x="221" y="88" text-anchor="middle">어제 주문만</text>
+<path class="line s-accent anim-flow" d="M283 70 H298"/>
+<rect class="box s-accent" x="298" y="30" width="124" height="80" rx="12"/><text x="360" y="64" text-anchor="middle" font-weight="600">③ 내려받기</text><text class="sub" x="360" y="88" text-anchor="middle">CSV 파일</text>
+<path class="line s-accent anim-flow" d="M422 70 H437"/>
+<rect class="box s-green" x="437" y="30" width="124" height="80" rx="12"/><text x="499" y="64" text-anchor="middle" font-weight="600">④ 경로 보고</text><text class="sub" x="499" y="88" text-anchor="middle">어디에 저장했는지</text>
+<path class="line s-accent anim-flow" d="M561 70 H576"/>
+<rect class="box s-cyan" x="576" y="30" width="124" height="80" rx="12"/><text x="638" y="64" text-anchor="middle" font-weight="600">⑤ 내가 확인</text><text class="sub" x="638" y="88" text-anchor="middle">날짜와 행 수</text>
+<path class="line s-amber" d="M82 110 V128" style="stroke-dasharray:3 3"/>
+<rect class="box s-amber anim-pulse" x="20" y="128" width="124" height="34" rx="8"/><text class="sub" x="82" y="149" text-anchor="middle">멈춤 · 로그인 확인</text>
+<path class="line s-amber" d="M360 110 V128" style="stroke-dasharray:3 3"/>
+<rect class="box s-amber anim-pulse" x="288" y="128" width="144" height="34" rx="8"/><text class="sub" x="360" y="149" text-anchor="middle">멈춤 · 내보내기 확인</text>
+</svg><figcaption>①~④는 에이전트가, ⑤는 내가 합니다. 노란 칸은 문장에 미리 적어 둔 “멈출 곳”입니다.</figcaption></figure>
+<h3 id="pb5-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb5-s1">1단계 · 원문 문장을 내 화면에 맞게 바꾸기</h4>
+<p>공식 문서 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span> 쪽의 예시 문장은 두 줄입니다. 첫 줄은 할 일, 둘째 줄은 <b>멈출 곳</b>과 <b>보고받을 것</b>입니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="src">원문 예시</button><button data-tab="mine">내 화면으로 바꾸는 틀 (예시)</button></div>
+<div data-panel="src"><pre><code>Use ego-browser. Open the orders dashboard, filter yesterday's orders, and download the CSV.
+Pause if you hit a login challenge or an export confirmation, and tell me where the file landed.</code></pre><p>뜻: ego-browser를 써서 주문 현황 화면을 열고, 어제 주문만 걸러서 CSV를 내려받아 줘. 로그인 확인이나 내보내기 확인이 나오면 멈추고, 파일이 어디에 저장됐는지 알려 줘.</p><p class="muted">첫머리 <code>Use ego-browser.</code>는 빠른 시작 문서의 첫 작업 문장을 따라 붙인 것이고, 나머지는 스냅샷 문서의 예시 그대로입니다.</p></div>
+<div data-panel="mine"><pre><code>Use ego-browser. Open [page name or URL], filter [what, which period], and download the [CSV].
+Don't change, delete, or send anything on the site.
+Pause if you hit a login challenge or an export confirmation, and tell me where the file landed.</code></pre><p>뜻: ego-browser를 써서 [화면 이름이나 주소]를 열고, [무엇을 어느 기간으로] 걸러서 [CSV]를 내려받아 줘. 사이트에서 아무것도 바꾸거나 지우거나 보내지 마. 로그인 확인이나 내보내기 확인이 나오면 멈추고, 파일이 어디에 저장됐는지 알려 줘.</p><p class="muted">원문 문장의 빈칸만 바꾸고 “하지 말 것” 한 줄을 더한 <b>예시</b>입니다. 대괄호 안을 내 화면에 맞게 채웁니다.</p></div></div>
+<div class="table-wrap"><table class="kv"><thead><tr><th>원문의 말</th><th>내 화면에서 바꿔 넣을 것</th></tr></thead><tbody>
+<tr><td>the orders dashboard</td><td>내가 쓰는 관리 화면의 이름이나 주소</td></tr>
+<tr><td>yesterday's orders</td><td>걸러 낼 대상과 기간(어제, 지난주 등)</td></tr>
+<tr><td>the CSV</td><td>그 화면이 내보내 주는 파일</td></tr>
+<tr><td>a login challenge</td><td>로그인이나 본인 확인을 다시 요구하는 화면 — 그대로 둡니다</td></tr>
+<tr><td>an export confirmation</td><td>내려받기 전에 확인을 요구하는 화면 — 그대로 둡니다</td></tr>
+</tbody></table></div>
+<p><b>확인:</b> 내 문장에 대상 화면, 걸러 낼 조건, 멈출 곳, “파일이 어디에 저장됐는지 알려 달라”는 말이 모두 들어 있습니다.</p>
+</div>
+<div data-step="2"><h4 id="pb5-s2">2단계 · 내 탭에서 미리 한 번 보기</h4>
+<p>ego(lite)의 내 탭에서 그 화면을 직접 열어 봅니다. 로그인되어 있는지, 내려받기 단추가 실제로 있는지 봅니다. 같은 조건을 걸었을 때 화면에 건수가 보이면 적어 둡니다. 나중에 파일의 행 수와 맞춰 볼 숫자입니다.</p>
+<p>로그인이 풀려 있으면 지금 내가 직접 로그인합니다. 비밀번호나 인증 코드를 에이전트에게 보내는 문장에 붙여 넣지 않습니다.</p>
+<p><b>확인:</b> 로그인된 화면이 보이고, 조건을 걸었을 때의 건수(또는 첫 줄과 마지막 줄)를 메모했습니다.</p>
+</div>
+<div data-step="3"><h4 id="pb5-s3">3단계 · 보내고, 멈춘 곳에서 직접 처리하기</h4>
+<p>에이전트 대화창에서 <code>/ego-browser</code> 스킬<span class="gl">(에이전트에게 주는 사용 설명서 묶음)</span>을 부르고 1단계의 문장을 보냅니다. 그다음 ego(lite) 오른쪽 위의 <b>Space 단추</b>를 눌러 Space 관리 패널을 열고, <b>파란 빛이 나는 Space</b>에 들어가 진행을 봅니다.</p>
+<p>에이전트가 로그인 확인이나 내보내기 확인에서 멈추고 나를 부르면, 그 Space 안에서 화면을 읽고 내가 직접 처리합니다. 마친 뒤에는 대화창으로 돌아와 이어 하라고 말합니다 — Claude Code 연결 문서가 “직접 처리한 뒤 에이전트에게 계속하라고 말하라”고 안내합니다(문장 예시는 <a href="#pb2-s5">실습 2의 5단계</a>). 그러면 에이전트가 이어서 합니다. 순서가 낯설면 <a href="#pb2">실습 2</a>를 다시 봅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 150" role="img" aria-label="에이전트가 멈추면 내가 Space에서 처리하고, 에이전트가 이어서 진행합니다.">
+<rect class="box s-amber anim-pulse" x="20" y="30" width="210" height="90" rx="12"/><text x="125" y="65" text-anchor="middle" font-weight="600">에이전트가 멈춤</text><text class="sub" x="125" y="92" text-anchor="middle">로그인 확인 · 내보내기 확인</text>
+<path class="line s-accent anim-flow" d="M230 75 H255"/>
+<rect class="box s-cyan" x="255" y="30" width="210" height="90" rx="12"/><text x="360" y="65" text-anchor="middle" font-weight="600">내가 Space에서 처리</text><text class="sub" x="360" y="92" text-anchor="middle">화면을 읽고 직접 누름</text>
+<path class="line s-accent anim-flow" d="M465 75 H490"/>
+<rect class="box s-green" x="490" y="30" width="210" height="90" rx="12"/><text x="595" y="65" text-anchor="middle" font-weight="600">에이전트가 이어 감</text><text class="sub" x="595" y="92" text-anchor="middle">내려받기 → 저장 위치 보고</text>
+</svg><figcaption>멈춤은 실패가 아니라 문장에 적어 둔 약속입니다. 멈추지 않고 지나갔다면 그것이 오히려 확인할 일입니다.</figcaption></figure>
+<p><b>확인:</b> 내가 보던 탭은 그대로이고, 멈춤이 있었다면 내가 처리한 뒤 작업이 이어졌습니다. 확인 화면이 아예 없는 사이트라면 멈춤 없이 끝나도 정상입니다.</p>
+</div>
+<div data-step="4"><h4 id="pb5-s4">4단계 · 저장 위치를 보고받기</h4>
+<p>작업이 끝나면 에이전트의 답에서 세 가지를 찾습니다. 스냅샷 문서의 점검 항목 가운데 내려받기에 해당하는 것들입니다.</p>
+<ol class="steps"><li><b>어느 페이지를 열고 무엇을 했는가</b><span>방문한 화면과 건 조건이 답에 적혀 있어야 합니다.</span></li><li><b>로컬 파일 경로가 있는가</b><span>내려받기 작업이라면 파일이 내 컴퓨터 어디에 있는지 알려 줘야 합니다.</span></li><li><b>대조할 값이 있는가</b><span>건수·날짜처럼 내가 확인할 수 있는 값이 있으면 더 좋습니다.</span></li></ol>
+<p>경로가 빠졌다면 아래 <b>예시</b> 문장으로 다시 묻습니다.</p>
+<pre><code>Tell me the local file path of the file you downloaded, and the filter you applied.</code></pre><p>뜻: 내려받은 파일의 로컬 경로와, 네가 건 조건을 알려 줘.</p>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 에이전트 답의 모양 (예시 — 실제 문장과 경로는 다릅니다)</div><div class="body">연 화면: 주문 현황 → 조건: 어제 하루 → CSV 내려받음<br>저장 위치: <code>(내 컴퓨터의 폴더 경로)/orders.csv</code><br>행 수: 42</div></div>
+<p><b>확인:</b> 답에 파일 경로가 한 줄로 적혀 있고, 그 위치에서 파일을 찾았습니다.</p>
+</div>
+<div data-step="5"><h4 id="pb5-s5">5단계 · 파일을 열어 날짜와 행 수 확인하기</h4>
+<p>알려 준 경로의 파일을 표 계산 프로그램이나 글 편집기로 엽니다. 그리고 작업이 끝난 뒤에도 바로 닫히지 않고 남아 있는 Space의 화면과 나란히 놓고 봅니다. 이 대조는 작업이 끝난 직후에 합니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 195" role="img" aria-label="Space에 남은 화면의 기간 조건과 건수를, 내려받은 파일의 날짜 칸과 행 수와 맞춰 봅니다.">
+<rect class="box s-green" x="20" y="30" width="290" height="140" rx="12"/><text x="36" y="56" font-weight="600">Space에 남은 화면</text>
+<rect class="box" x="36" y="70" width="258" height="38" rx="8"/><text x="50" y="94">기간 조건: 어제</text>
+<rect class="box" x="36" y="118" width="258" height="38" rx="8"/><text x="50" y="142">화면에 보이는 건수</text>
+<rect class="box s-cyan" x="410" y="30" width="290" height="140" rx="12"/><text x="426" y="56" font-weight="600">내려받은 파일</text>
+<rect class="box" x="426" y="70" width="258" height="38" rx="8"/><text x="440" y="94">날짜 칸: 어제 날짜만 있는가</text>
+<rect class="box" x="426" y="118" width="258" height="38" rx="8"/><text x="440" y="142">행 수 (머리글 줄은 빼고)</text>
+<path class="line s-amber anim-flow" d="M310 89 H410"/><text class="sub" x="360" y="81" text-anchor="middle">같은가?</text>
+<path class="line s-amber anim-flow" d="M310 137 H410"/><text class="sub" x="360" y="129" text-anchor="middle">같은가?</text>
+</svg><figcaption>파일만 보지 말고 화면과 맞춰 봅니다. 화면에 건수가 없으면 첫 줄과 마지막 줄을 골라 대조합니다.</figcaption></figure>
+<p>맞지 않으면 에이전트에게 지금 페이지를 다시 읽게 합니다. 앞선 답을 근거로 계속 추측하게 두지 않는다는 것이 원문의 조언입니다. <b>예시</b> 문장:</p>
+<pre><code>Re-snapshot the current page and tell me the filter that is applied now and how many rows are shown.</code></pre><p>뜻: 지금 페이지의 스냅샷을 다시 찍고, 지금 걸려 있는 조건과 보이는 행 수를 알려 줘.</p>
+<p><b>확인:</b> 파일의 날짜가 요청한 기간 안에만 있고, 행 수가 화면의 건수와 같습니다.</p>
+</div></div>
+<h3 id="pb5-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>할 일</th></tr></thead><tbody>
+<tr><td>에이전트가 멈춘 채 기다림</td><td>약속대로 멈춘 것입니다. Space 단추 → Space 관리 패널 → 파란 빛이 나는 Space에 들어가 화면을 보고 내가 직접 처리한 뒤, 대화창에서 이어 하라고 말합니다. 비밀번호나 인증 코드를 대화창에 붙여 넣지 않습니다.</td></tr>
+<tr><td>답에 파일 경로가 없음</td><td>4단계의 예시 문장으로 다시 묻습니다. 다음부터는 문장 끝의 “tell me where the file landed”를 빼지 않습니다.</td></tr>
+<tr><td>경로는 받았는데 그 위치에서 파일을 못 찾음</td><td>경로의 마지막 부분이 파일 이름이고 그 앞이 폴더입니다. 폴더 이름과 파일 이름을 따로 다시 알려 달라고 한 뒤 그 폴더를 직접 열어 봅니다. 그래도 없으면 내려받기가 실제로 끝났는지 Space에 남은 화면에서 확인하고 다시 맡깁니다.</td></tr>
+<tr><td>파일이 비었거나 기간이 다름</td><td>Space에 남은 화면에서 조건이 어떻게 걸려 있는지 먼저 봅니다. 그다음 5단계의 다시 읽기 문장을 보내고, 조건을 더 분명히 적어 다시 맡깁니다.</td></tr>
+<tr><td>내려받기 단추를 못 찾겠다고 함</td><td>스냅샷이 모든 것을 읽지는 못합니다. 화면 밖 내용, 그림 속 글자, 복잡한 캔버스, 다른 사이트에서 끼워 넣은 일부 페이지(iframe)는 다 보이지 않을 수 있습니다. 그 단계만 내가 Space에서 직접 누르고 이어 가게 합니다. <a href="#pb10">실습 10</a>.</td></tr>
+<tr><td>확인 화면에서 멈추지 않고 진행함</td><td>결과를 5단계대로 더 꼼꼼히 대조합니다. 다음에는 멈출 화면을 그 사이트의 말로 구체적으로 적습니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb5-next">다음에 할 것</h3>
+<ul><li>내려받기보다 조심스러운 일, 제출 단추 앞에서 멈추게 하는 연습 — <a href="#pb6">실습 6</a>.</li><li>보고서 여러 개를 한꺼번에 받고 싶다면 — <a href="#pb7">실습 7 · 여러 작업을 동시에</a>.</li><li>더 읽기: <a href="ego-lite-guide.html#ch03-task">작업 문장 쓰는 법</a> · <a href="ego-lite-guide.html#ch03-review">결과 점검하기</a> · <a href="ego-lite-guide.html#ch02-after">작업이 끝난 뒤의 Space</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>문장 첫 줄에는 할 일을, 둘째 줄에는 멈출 곳과 보고받을 것을 적습니다.</li><li>에이전트가 멈추면 그 Space에 들어가 내가 직접 처리하고, 끝나면 이어 하라고 말합니다.</li><li>내려받기 작업은 파일의 로컬 경로를 반드시 보고받습니다.</li><li>파일을 열어 날짜와 행 수를 Space에 남은 화면과 맞춰 봅니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/snapshot (Writing a task for the agent · Reviewing what the agent did · Common questions), /docs/space (What belongs in a Space · How you and the agent collaborate · FAQ), /docs/quick-start (Run your first task · Watch and take over), /docs/claude-code (넘겨받은 뒤 계속하라고 말하기 · 비밀번호 경고). 2026-11-09 수집. 바꿔 쓰는 틀, 다시 묻는 문장, 답의 모양은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb6">
+<div class="ch-head"><div class="ch-no">SCENARIO 6</div><h2>양식 채우고 제출 직전에 멈추기</h2><p class="lead">칸을 채우는 지루한 일은 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>에게 맡기고, 되돌리기 어려운 마지막 단추는 내가 누릅니다. 에이전트가 제출 바로 앞에서 멈추게 문장을 쓰고, 채워진 내용을 확인하는 연습입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>제출·결제·게시·삭제처럼 되돌리기 어려운 일 앞에 “멈춤선”을 긋습니다.</li><li>에이전트가 채운 칸을 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에서 하나씩 대조합니다.</li><li>마지막 단추는 내가 직접 누르거나, 누르지 않고 끝냅니다.</li></ul><p class="muted">예상 소요 시간: 15~20분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb6-prep">준비물</a>에서 연습할 양식을 고른 뒤 <a href="#pb6-steps">따라 하기</a>를 진행하세요. 에이전트가 멈추지 않았거나 칸이 틀렸다면 <a href="#pb6-stuck">막히면</a>을 봅니다.</p></div>
+<h3 id="pb6-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb2">실습 2</a>(Space 들여다보기·넘겨받기)와 <a href="#pb4">실습 4</a>(하지 말 것 정해 주기)를 해 본 상태.</li><li><b>잘못 제출돼도 실제 피해가 없는 양식</b> 하나. 예: 내가 쓰는 서비스의 문의 양식, 설문, 예약 신청 양식. 결제나 계약이 걸린 양식은 연습 대상으로 고르지 않습니다.</li><li>양식에 채울 내용을 적은 메모(이름, 연락처, 문의 내용 등). 비밀번호나 인증 코드는 메모에도, 에이전트에게 보내는 문장에도 넣지 않습니다.</li></ul>
+<div class="note"><b>완료 기준</b><p>에이전트가 칸을 채운 뒤 제출 단추를 누르지 않고 멈췄고, 내가 Space에서 칸마다 내용을 확인했으면 완료입니다. 제출은 해도 되고 안 해도 됩니다.</p></div>
+<p>공식 활용 사례도 같은 방식을 씁니다. 채용 지원서를 이력서 PDF로 끝까지 채우되 <b>제출 한 번 전에서 멈춰</b> 내가 검토하게 하고, 항공편 예약은 탑승객 정보를 미리 채운 뒤 <b>결제 페이지에서 멈춥니다</b>.</p>
+<figure class="diagram"><svg viewBox="0 0 720 170" role="img" aria-label="에이전트가 채울 내용을 받아 칸을 채우고 제출 직전에 멈추면, 내가 내용을 확인하고 직접 제출합니다.">
+<text class="sub" x="170" y="20" text-anchor="middle">에이전트가 하는 일</text><text class="sub" x="540" y="20" text-anchor="middle">내가 하는 일</text>
+<rect class="box s-accent" x="20" y="30" width="140" height="80" rx="12"/><text x="90" y="64" text-anchor="middle" font-weight="600">① 내용 받기</text><text class="sub" x="90" y="88" text-anchor="middle">문장에 적힌 값</text>
+<path class="line s-accent anim-flow" d="M160 70 H180"/>
+<rect class="box s-accent" x="180" y="30" width="140" height="80" rx="12"/><text x="250" y="64" text-anchor="middle" font-weight="600">② 칸 채우기</text><text class="sub" x="250" y="88" text-anchor="middle">Space 안에서</text>
+<path class="line s-accent anim-flow" d="M320 70 H380"/>
+<path class="line s-red anim-pulse" d="M350 28 V128" style="stroke-width:3;stroke-dasharray:6 5"/>
+<text class="sub" x="350" y="148" text-anchor="middle" style="fill:var(--red)">제출 직전 멈춤선</text>
+<rect class="box s-cyan" x="380" y="30" width="150" height="80" rx="12"/><text x="455" y="64" text-anchor="middle" font-weight="600">③ 내용 확인</text><text class="sub" x="455" y="88" text-anchor="middle">칸마다 대조</text>
+<path class="line s-cyan anim-flow" d="M530 70 H550"/>
+<rect class="box s-cyan" x="550" y="30" width="150" height="80" rx="12"/><text x="625" y="64" text-anchor="middle" font-weight="600">④ 직접 제출</text><text class="sub" x="625" y="88" text-anchor="middle">또는 누르지 않고 끝</text>
+</svg><figcaption>빨간 선 왼쪽은 에이전트가, 오른쪽은 내가 합니다. 선의 위치를 문장으로 정해 주는 것이 이번 실습입니다.</figcaption></figure>
+<h3 id="pb6-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb6-s1">1단계 · 어디에 멈춤선을 그을지 알기</h4>
+<p>Space 문서는 에이전트가 <b>멈추고 나에게 돌려줘야 하는 상황</b>을 네 가지로 듭니다. 내가 고른 양식의 마지막 단추가 이 가운데 어디에 해당하는지 봅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 222" role="img" aria-label="에이전트가 멈추고 돌려줘야 하는 네 가지: 본인 확인, 돈이 오가는 일, 되돌리기 어려운 변경, 권한 내주기.">
+<rect class="box s-amber" x="20" y="20" width="330" height="80" rx="12"/><circle class="f-amber anim-pulse" cx="46" cy="60" r="7"/><text x="66" y="54" font-weight="600">본인 확인</text><text class="sub" x="66" y="76">문자·이메일 코드, QR 로그인, 보안 키</text>
+<rect class="box s-red" x="370" y="20" width="330" height="80" rx="12"/><circle class="f-red anim-pulse" cx="396" cy="60" r="7"/><text x="416" y="54" font-weight="600">돈이 오가는 일</text><text class="sub" x="416" y="76">결제, 주문, 송금, 환불</text>
+<rect class="box s-red" x="20" y="120" width="330" height="80" rx="12"/><circle class="f-red anim-pulse" cx="46" cy="160" r="7"/><text x="66" y="154" font-weight="600">되돌리기 어려운 변경</text><text class="sub" x="66" y="176">게시, 삭제, 보관, 여러 건을 한꺼번에 고치기</text>
+<rect class="box s-amber" x="370" y="120" width="330" height="80" rx="12"/><circle class="f-amber anim-pulse" cx="396" cy="160" r="7"/><text x="416" y="154" font-weight="600">권한 내주기</text><text class="sub" x="416" y="176">다른 앱이 내 계정에 접근하도록 승인</text>
+</svg><figcaption>양식의 “제출”은 대개 왼쪽 아래(되돌리기 어려운 변경)에 해당합니다. 결제 단추가 있다면 오른쪽 위입니다.</figcaption></figure>
+<p>원문은 여기에 한 줄을 덧붙입니다. 경계는 <b>미리</b> 그어 둘 수도 있다는 것입니다. 예로 든 문장이 “read-only, don't modify”(읽기만, 바꾸지 말 것)와 “stop and confirm before submitting”(제출하기 전에 멈추고 확인받을 것)입니다. 이번에는 뒤의 문장을 씁니다.</p>
+<p><b>확인:</b> 내 양식에서 “에이전트가 누르면 안 되는 단추”가 무엇인지 한 가지로 말할 수 있습니다.</p>
+</div>
+<div data-step="2"><h4 id="pb6-s2">2단계 · 멈출 곳을 넣어 문장 만들기</h4>
+<p>아래는 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span> 문서의 다섯 가지 요소(대상 페이지 · 채울 것 · 하지 말 것 · 멈출 곳 · 결과 형태)에 맞춰 만든 <b>예시</b>입니다. 원문에 이 문장이 그대로 있는 것은 아닙니다. 대괄호 안을 내 양식에 맞게 바꿉니다.</p>
+<pre><code>Use ego-browser. Open [form page URL] and fill in the form with the details below.
+Name: [my name]
+Email: [my email]
+Message: [what I want to say]
+Don't click the final submit button. Stop and confirm before submitting, and list what you entered in each field.
+Pause if you hit a login, captcha, or payment screen.</code></pre>
+<p>뜻: ego-browser를 써서 [양식 페이지 주소]를 열고 아래 내용으로 양식을 채워 줘. 이름: … / 이메일: … / 내용: … 마지막 제출 단추는 누르지 마. 제출하기 전에 멈추고 확인받고, 칸마다 무엇을 넣었는지 적어 줘. 로그인, 사람 확인(captcha), 결제 화면이 나오면 멈춰.</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>요소</th><th>이 문장에서</th></tr></thead><tbody>
+<tr><td>대상 페이지</td><td><code>[form page URL]</code> — 양식이 있는 주소</td></tr>
+<tr><td>채울 것</td><td>칸 이름과 값을 한 줄에 하나씩</td></tr>
+<tr><td>하지 말 것</td><td><code>Don't click the final submit button.</code></td></tr>
+<tr><td>멈출 곳</td><td><code>Stop and confirm before submitting</code> · 로그인·사람 확인·결제 화면</td></tr>
+<tr><td>결과 형태</td><td>칸마다 넣은 값의 목록</td></tr>
+</tbody></table></div>
+<p><b>확인:</b> 문장에 “누르지 말 것”과 “멈출 곳”이 각각 한 줄씩 있고, 비밀번호나 인증 코드는 들어 있지 않습니다.</p>
+</div>
+<div data-step="3"><h4 id="pb6-s3">3단계 · 보내고, Space에서 채워지는 모습 보기</h4>
+<ol class="steps"><li><b>대화창에서 <code>/ego-browser</code>를 부르고 문장 보내기</b><span>에이전트가 ego(lite) 안에 Space를 만들고 양식 페이지를 엽니다.</span></li><li><b>ego(lite) 오른쪽 위의 Space 단추 누르기</b><span>Space 관리 패널이 열립니다. 파란 빛이 나는 Space가 에이전트가 일하는 곳입니다.</span></li><li><b>그 Space에 들어가 보기</b><span>칸이 채워지는 것을 봅니다. 지금은 보기만 하고 아무것도 누르지 않습니다.</span></li></ol>
+<p>스냅샷을 찍는 것만으로는 페이지에서 아무것도 바뀌지 않습니다. 상태를 실제로 바꾸는 것은 그 뒤에 일어나는 누르기·채우기·제출·올리기·삭제입니다. 그래서 채우기까지는 맡기되, 제출은 따로 떼어 내가 쥡니다.</p>
+<p><b>확인:</b> 내가 보던 탭은 바뀌지 않았고, Space 안의 양식에 내가 준 값이 들어가고 있습니다.</p>
+</div>
+<div data-step="4"><h4 id="pb6-s4">4단계 · 멈췄는지 확인하고 칸마다 대조하기</h4>
+<p>에이전트가 “제출 전에 멈췄다”고 답하면, 답에 적힌 값과 Space의 실제 화면을 맞춰 봅니다. 수정하거나 제출하는 작업에서는 <b>마지막 단계 전에 멈춰 확인을 받았는가</b>가 원문이 꼽는 점검 항목입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 300" role="img" aria-label="화면 흉내: 칸이 채워진 양식에서 제출 단추는 눌리지 않았고, 나는 칸마다 값을 확인합니다.">
+<rect class="box" x="20" y="20" width="420" height="260" rx="12"/>
+<text x="40" y="48" font-weight="600">문의 양식 (화면 흉내)</text>
+<text class="sub" x="40" y="74">이름</text><rect class="box s-green" x="40" y="80" width="380" height="30" rx="6"/><text x="52" y="100">홍길동</text>
+<text class="sub" x="40" y="128">이메일</text><rect class="box s-green" x="40" y="134" width="380" height="30" rx="6"/><text x="52" y="154">me@example.com</text>
+<text class="sub" x="40" y="182">내용</text><rect class="box s-green" x="40" y="188" width="380" height="30" rx="6"/><text x="52" y="208">연습용 문의입니다</text>
+<rect class="box s-red anim-pulse" x="40" y="236" width="120" height="32" rx="8"/><text x="100" y="257" text-anchor="middle">Submit · 제출</text>
+<text class="sub" x="176" y="257">에이전트는 이 단추 앞에서 멈춤</text>
+<path class="line s-green anim-flow" d="M420 95 H460"/><path class="line s-green anim-flow" d="M420 149 H460"/><path class="line s-green anim-flow" d="M420 203 H460"/>
+<rect class="box s-cyan" x="460" y="20" width="240" height="260" rx="12"/>
+<text x="476" y="48" font-weight="600">내가 볼 것</text>
+<text class="sub" x="476" y="78">① 칸마다 값이 메모와 같은가</text>
+<text class="sub" x="476" y="104">② 비어 있는 필수 칸이 없는가</text>
+<text class="sub" x="476" y="130">③ 내가 시키지 않은 선택이</text>
+<text class="sub" x="490" y="146">켜져 있지 않은가</text>
+<text class="sub" x="476" y="172">④ 아직 양식 화면인가</text>
+<text class="sub" x="490" y="188">(제출 완료 화면이 아닌가)</text>
+<text class="sub" x="476" y="226">모두 맞으면 내가 직접 누르거나</text>
+<text class="sub" x="476" y="244">누르지 않고 연습을 끝냅니다</text>
+</svg><figcaption>화면 흉내 — 양식의 칸과 단추 이름은 사이트마다 다릅니다. 칸의 값은 예시입니다.</figcaption></figure>
+<p>틀린 칸이 있으면 내가 그 Space에서 직접 고치거나, 아래 <b>예시</b> 문장처럼 고치게 한 뒤 다시 멈추게 합니다.</p>
+<pre><code>The email field is wrong. Change it to [correct value], re-snapshot the page, and stop again before submitting.</code></pre><p>뜻: 이메일 칸이 틀렸어. [맞는 값]으로 바꾸고, 페이지 스냅샷을 다시 찍은 뒤, 제출 전에 다시 멈춰.</p>
+<p><b>확인:</b> Space에 아직 양식 화면이 떠 있고, 모든 칸의 값이 내 메모와 같습니다.</p>
+</div>
+<div data-step="5"><h4 id="pb6-s5">5단계 · 내가 직접 제출하거나, 누르지 않고 끝내기</h4>
+<p>연습이 목적이면 여기서 끝내도 됩니다. 실제로 보내려면 <b>그 Space 안에서 내가 직접</b> 제출 단추를 누릅니다. 원문 사례에는 내가 확인해 주기를 기다렸다가 마지막 제출로 넘어가는 흐름도 나오지만, 이 실습에서는 에이전트에게 “이제 제출해”라고 시키지 않습니다. 화면을 직접 본 사람이 마지막 단추를 누르는 연습이기 때문입니다.</p>
+<p>작업이 끝나도 Space의 탭은 바로 닫히지 않고 남으므로, 제출한 뒤의 결과 화면도 그 자리에서 확인할 수 있습니다. 언제까지 남는지는 <a href="ego-lite-guide.html#ch02-after">완전 가이드 2장 · 작업이 끝난 뒤</a>에 있습니다.</p>
+<div class="tip"><b>실제 업무에 옮길 때</b><p>같은 틀이 지원서(마지막 제출 전), 예약(결제 페이지 전), 게시물 작성(게시 전), 관리 화면의 일괄 수정(저장 전)에 그대로 쓰입니다. 멈출 단추의 이름만 그 사이트의 말로 바꿉니다.</p></div>
+<p><b>확인:</b> 제출했다면 완료 화면을 Space에서 보았고, 하지 않았다면 양식이 채워진 채 남아 있습니다. 어느 쪽이든 마지막 단추는 에이전트가 누르지 않았습니다.</p>
+</div></div>
+<h3 id="pb6-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>할 일</th></tr></thead><tbody>
+<tr><td>에이전트가 제출까지 눌러 버림</td><td>Space에 남은 화면에서 무엇이 제출됐는지 먼저 확인합니다. 고치거나 취소할 수 있는지는 그 서비스에서 내가 직접 알아봅니다. 다시 할 때는 “Don't click the final submit button”과 “Stop and confirm before submitting”을 둘 다 넣고, 단추 이름을 그 사이트의 말로 적습니다.</td></tr>
+<tr><td>로그인·사람 확인(captcha) 화면에서 멈춤</td><td>정상입니다. 이런 단계는 에이전트가 멈추고 내가 들어오기를 기다립니다. ego(lite)는 CAPTCHA나 사이트의 보안 확인을 우회하지 않습니다. Space에서 내가 직접 처리하면 에이전트가 이어 갑니다(<a href="#pb2">실습 2</a>). 비밀번호나 인증 코드를 대화창에 붙여 넣지 않습니다.</td></tr>
+<tr><td>칸이 비었거나 다른 값이 들어감</td><td>4단계의 예시 문장으로 고치게 하거나 내가 직접 고칩니다. 값이 헷갈릴 만하면 문장에서 칸 이름을 양식에 보이는 그대로 적습니다.</td></tr>
+<tr><td>어떤 칸을 못 찾겠다고 함</td><td>스냅샷이 모든 것을 읽지는 못합니다. 화면 밖 내용, 그림 속 글자, 복잡한 canvas<span class="gl">(그림판처럼 직접 그려 넣은 화면 영역)</span>, 다른 사이트의 페이지를 격리해 끼워 넣은 일부 칸<span class="gl">(iframe)</span>은 다 보이지 않을 수 있습니다. 그 칸만 내가 채웁니다. <a href="#pb10">실습 10</a>.</td></tr>
+<tr><td>멈췄는지 넘어갔는지 모르겠음</td><td>Space에 들어가 지금 화면이 양식인지 완료 화면인지 봅니다. 에이전트에게는 지금 페이지의 스냅샷을 다시 찍어 알려 달라고 합니다.</td></tr>
+</tbody></table></div>
+<h3 id="pb6-next">다음에 할 것</h3>
+<ul><li>조사 여러 개를 한꺼번에 맡겨 봅니다 — <a href="#pb7">실습 7 · 여러 작업을 동시에</a>.</li><li>로그인·인증에서 자주 막힌다면 — <a href="#pb10">실습 10</a>.</li><li>더 읽기: <a href="ego-lite-guide.html#ch02-login">에이전트가 멈추고 돌려줘야 하는 상황</a> · <a href="ego-lite-guide.html#ch03-task">작업 문장 쓰는 법</a> · <a href="ego-lite-guide.html#ch07-usecases">활용 사례</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>본인 확인, 돈이 오가는 일, 되돌리기 어려운 변경, 권한 내주기 앞에서는 에이전트가 멈추고 나에게 돌려줘야 합니다.</li><li>문장에 “누르지 말 것”과 “stop and confirm before submitting”을 미리 적습니다.</li><li>에이전트가 멈추면 Space에서 칸마다 값을 대조합니다.</li><li>마지막 단추는 그 Space에서 내가 직접 누릅니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/use-cases (Find and apply to jobs automatically · Search and quote flight bookings), /document/en/docs/quick-start (What else can you do with ego(lite) · Watch and take over), /docs/space (Logged-in state · How you and the agent collaborate · FAQ), /docs/snapshot (Writing a task for the agent · Reviewing what the agent did · Common questions), /docs/claude-code (비밀번호·인증 코드 경고). 2026-11-09 수집. 양식 채우기 문장과 고쳐 달라는 문장, 양식 화면은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb7">
+<div class="ch-head"><div class="ch-no">SCENARIO 7</div><h2>여러 작업을 동시에 맡기기</h2><p class="lead">서로 상관없는 조사 두세 개를 한꺼번에 맡기고, 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>들이 각자의 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에서 일하는 모습을 봅니다. 나는 그동안 내 탭에서 하던 일을 계속합니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>작업 두세 개를 동시에 맡기고, 작업마다 Space가 따로 생기는 것을 확인합니다.</li><li>Space 관리 패널에서 어느 Space가 일하는 중인지 보고, 하나를 골라 들어가 봅니다.</li><li>결과를 작업별로 따로 받아 각각 대조합니다.</li></ul><p class="muted">예상 소요 시간: 20~30분</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb7-prep">준비물</a>을 확인한 뒤 <a href="#pb7-steps">따라 하기</a>를 진행하세요. 처음에는 작업 두 개로 시작합니다. 컴퓨터가 느려지거나 결과가 섞이면 <a href="#pb7-stuck">막히면</a>을 봅니다.</p></div>
+<h3 id="pb7-prep">준비물과 완료 기준</h3>
+<ul><li><a href="#pb1">실습 1</a>과 <a href="#pb2">실습 2</a>를 마친 상태. 작업 하나를 맡기고 Space를 들여다본 적이 있어야 합니다.</li><li>로그인 없이 되는 <b>읽기 작업</b> 두세 개. 아래 1단계에서 공식 활용 사례 가운데 고릅니다.</li><li>ego(lite)가 실행 중이고, 쓰는 에이전트에서 <code>/ego-browser</code> 스킬<span class="gl">(에이전트에게 주는 사용 설명서 묶음)</span>을 부를 수 있을 것.</li></ul>
+<div class="note"><b>완료 기준</b><p>작업 두 개 이상이 같은 시간에 서로 다른 Space에서 진행되는 것을 Space 관리 패널에서 보았고, 결과를 작업별로 받아 각각 한 건 이상 원래 페이지와 대조했으면 완료입니다.</p></div>
+<figure class="diagram"><svg viewBox="0 0 720 304" role="img" aria-label="나는 작업마다 따로 맡기고, 각 작업은 ego(lite) 브라우저 안의 서로 다른 Space에서 진행됩니다. 내 탭은 그대로입니다.">
+<rect class="box s-cyan" x="20" y="114" width="80" height="60" rx="12"/><text x="60" y="149" text-anchor="middle" font-weight="600">나</text>
+<path class="line s-cyan" d="M100 144 H120 V58 H140"/><path class="line s-cyan" d="M100 144 H140"/><path class="line s-cyan" d="M100 144 H120 V230 H140"/>
+<rect class="box s-amber" x="140" y="30" width="170" height="56" rx="10"/><text x="156" y="54" font-weight="600">작업 A · 주식 조회</text><text class="sub" x="156" y="72">에이전트 대화 하나</text>
+<rect class="box s-amber" x="140" y="116" width="170" height="56" rx="10"/><text x="156" y="140" font-weight="600">작업 B · 중고차 검색</text><text class="sub" x="156" y="158">에이전트 대화 하나</text>
+<rect class="box s-amber" x="140" y="202" width="170" height="56" rx="10"/><text x="156" y="226" font-weight="600">작업 C · 항공편 견적</text><text class="sub" x="156" y="244">에이전트 대화 하나</text>
+<path class="line s-accent anim-flow" d="M310 58 H400"/><path class="line s-accent anim-flow" d="M310 144 H400"/><path class="line s-accent anim-flow" d="M310 230 H400"/>
+<text class="sub" x="348" y="136" text-anchor="middle">ego-browser</text>
+<rect class="box s-accent" x="384" y="14" width="316" height="270" rx="14" style="fill:none;stroke-dasharray:4 4"/>
+<rect class="box s-accent" x="400" y="30" width="184" height="56" rx="10"/><circle class="f-accent anim-pulse" cx="420" cy="58" r="6"/><text x="436" y="54" font-weight="600">Space A</text><text class="sub" x="436" y="72">다섯 종목 읽는 중</text>
+<rect class="box s-accent" x="400" y="116" width="184" height="56" rx="10"/><circle class="f-accent anim-pulse" cx="420" cy="144" r="6"/><text x="436" y="140" font-weight="600">Space B</text><text class="sub" x="436" y="158">매물 걸러 내는 중</text>
+<rect class="box s-accent" x="400" y="202" width="184" height="56" rx="10"/><circle class="f-accent anim-pulse" cx="420" cy="230" r="6"/><text x="436" y="226" font-weight="600">Space C</text><text class="sub" x="436" y="244">항공편 찾는 중</text>
+<rect class="box s-cyan" x="600" y="30" width="84" height="228" rx="10"/><text x="642" y="136" text-anchor="middle" font-weight="600">내 탭</text><text class="sub" x="642" y="156" text-anchor="middle">하던 일</text><text class="sub" x="642" y="172" text-anchor="middle">그대로</text>
+<text class="sub" x="542" y="276" text-anchor="middle">ego(lite) 브라우저 하나 안에서 모두 진행</text>
+</svg><figcaption>보통 작업 하나에 Space 하나입니다. Space마다 자기 탭을 따로 가지며, 모두 같은 ego(lite) 안에서 돕니다. “에이전트 대화 하나씩”은 맡기는 방법의 한 예입니다.</figcaption></figure>
+<p><b>몇 개까지 되나요?</b> 원문은 숫자를 정해 두지 않고 “내 컴퓨터의 메모리와 CPU<span class="gl">(컴퓨터의 계산 장치)</span>에 달려 있다”고만 말합니다. 그래도 가벼운 편인 이유는, Space가 브라우저를 작업마다 새로 띄우지 않고 ego(lite) 하나를 함께 쓰기 때문입니다. 빈 페이지만 여는 6개 동시 실험의 숫자가 이렇습니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 210" role="img" aria-label="빈 페이지 6개 동시 실험: 브라우저를 따로 띄우면 메모리 약 15 GB, 프로세스 약 84개, 시작 약 2.5초. ego(lite) Space는 약 0.9 GB, 약 6개, 약 0.6초.">
+<text x="20" y="34" font-weight="600">더해진 메모리</text>
+<text class="sub" x="20" y="60">브라우저를 따로 + 프로필 복사</text><rect class="f-red" x="20" y="68" width="180" height="16" rx="4"><animate attributeName="width" from="0" to="180" dur="1.2s" fill="freeze"/></rect><text x="20" y="104">약 15 GB</text>
+<text class="sub" x="20" y="134">ego(lite) Space</text><rect class="f-green" x="20" y="142" width="11" height="16" rx="4"/><text x="20" y="178">약 0.9 GB</text>
+<text x="260" y="34" font-weight="600">더해진 프로세스</text>
+<text class="sub" x="260" y="60">브라우저를 따로 + 프로필 복사</text><rect class="f-red" x="260" y="68" width="180" height="16" rx="4"><animate attributeName="width" from="0" to="180" dur="1.2s" fill="freeze"/></rect><text x="260" y="104">약 84개</text>
+<text class="sub" x="260" y="134">ego(lite) Space</text><rect class="f-green" x="260" y="142" width="13" height="16" rx="4"/><text x="260" y="178">약 6개</text>
+<text x="500" y="34" font-weight="600">동시에 시작하는 시간</text>
+<text class="sub" x="500" y="60">브라우저를 따로 + 프로필 복사</text><rect class="f-red" x="500" y="68" width="180" height="16" rx="4"><animate attributeName="width" from="0" to="180" dur="1.2s" fill="freeze"/></rect><text x="500" y="104">약 2.5초</text>
+<text class="sub" x="500" y="134">ego(lite) Space</text><rect class="f-green" x="500" y="142" width="43" height="16" rx="4"/><text x="500" y="178">약 0.6초</text>
+</svg><figcaption>Space 문서의 6개 동시 실험(빈 페이지 about:blank만 엶). 원문은 이 숫자가 <b>정밀 측정이 아니라 자원 구조를 보이려는 것</b>이라고 밝힙니다. 실제 비용은 페이지의 복잡도, 확장 프로그램, 사이트 스크립트, 동시에 돌리는 수에 따라 달라집니다. 프로세스는 실행 중인 프로그램의 단위입니다.</figcaption></figure>
+<h3 id="pb7-steps">따라 하기</h3><div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb7-s1">1단계 · 맡길 작업 두세 개 고르기</h4>
+<p>서로 결과가 얽히지 않는, 읽기만 하는 조사를 고릅니다. 아래 셋은 공식 활용 사례에서 가져온 것입니다. 처음에는 A와 B 두 개만 해도 충분합니다.</p>
+<div class="table-wrap"><table class="kv"><thead><tr><th>작업</th><th>활용 사례의 내용</th><th>돌려받을 것</th></tr></thead><tbody>
+<tr><td>A · 주식 조회</td><td>Yahoo Finance에서 미국 주식 다섯 종목의 가격·일일 등락·시가총액·1개월 수익률을 기록</td><td>종목별 표, 가장 오른 종목과 가장 내린 종목</td></tr>
+<tr><td>B · 중고차 검색</td><td>Cars.com에서 뉴욕 근처 중고 Toyota Camry를 연식·주행거리로 거르고, 선수금 5,000달러·60개월로 월 납입액 계산</td><td>매물 제목·가격·월 납입액·URL</td></tr>
+<tr><td>C · 항공편 견적</td><td>내 노선과 날짜로 항공편을 찾아 직항만 거르고 가장 싼 편 고르기</td><td>편명·출발 시각·총 운임</td></tr>
+</tbody></table></div>
+<p>원문 사례가 미국 사이트라서 그대로 해 봐도 되고, 내가 평소 보는 공개 사이트의 비슷한 조사로 바꿔도 됩니다. 다만 공개 정보를 찾아 읽기만 하는 일이라면 일반 웹 검색이 더 가볍다는 것이 원문의 안내입니다. 여기서는 걸러 내기나 계산기처럼 <b>화면을 직접 다뤄야 하는</b> 조사를 골랐습니다.</p>
+<p><b>확인:</b> 고른 작업이 두 개 이상이고, 모두 로그인·결제·제출 없이 끝나는 일입니다.</p>
+</div>
+<div data-step="2"><h4 id="pb7-s2">2단계 · 작업마다 따로 맡기기</h4>
+<p>원문은 “작업 여러 개를 이렇게 보내라”고 정해 주지 않습니다. <b>여러 작업을 맡기는 방법은 에이전트마다 다릅니다.</b> 한 가지 방법(예시)은 에이전트 대화<span class="gl">(세션 — 에이전트와 주고받는 한 묶음의 대화)</span>를 작업마다 따로 열어, 각각에서 <code>/ego-browser</code>를 부르고 문장을 하나씩 보내는 것입니다. 앞 작업이 끝나기를 기다리지 않고 이어서 보냅니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="a">작업 A</button><button data-tab="b">작업 B</button><button data-tab="c">작업 C (선택)</button></div>
+<div data-panel="a"><pre><code>Use ego-browser. Look up five U.S. stocks on Yahoo Finance — [ticker 1], [ticker 2], [ticker 3], [ticker 4], [ticker 5]. Record price, daily change, market cap, and 1-month return for each, and report the biggest gainer and the biggest loser.
+Read-only, don't modify. Return a table with the URL of each page you read.</code></pre><p>뜻: ego-browser를 써서 Yahoo Finance에서 미국 주식 다섯 종목 [종목 기호 다섯 개]을 찾아봐. 종목마다 가격·일일 등락·시가총액·1개월 수익률을 기록하고, 가장 많이 오른 종목과 가장 많이 내린 종목을 알려 줘. 읽기만 하고 바꾸지 마. 읽은 페이지의 URL을 넣은 표로 돌려줘.</p></div>
+<div data-panel="b"><pre><code>Use ego-browser. Search Cars.com for a used Toyota Camry near NYC, filter by year and mileage ([year range], [max mileage]), then use the payment calculator at $5,000 down over 60 months to surface the monthly payment.
+Read-only: don't contact a seller or submit any form. Return the listing title, price, monthly payment, and URL.</code></pre><p>뜻: ego-browser를 써서 Cars.com에서 뉴욕 근처의 중고 Toyota Camry를 찾고, 연식과 주행거리([연식 범위], [최대 주행거리])로 거른 뒤, 납입 계산기에 선수금 5,000달러·60개월을 넣어 월 납입액을 알려 줘. 읽기만 해 — 판매자에게 연락하거나 어떤 양식도 제출하지 마. 매물 제목·가격·월 납입액·URL을 돌려줘.</p></div>
+<div data-panel="c"><pre><code>Use ego-browser. Search flights for [route] on [date], filter to nonstop, and pick the cheapest option.
+Stop before entering any passenger or payment details. Return the flight number, departure time, and total fare.</code></pre><p>뜻: ego-browser를 써서 [노선]의 [날짜] 항공편을 찾고, 직항만 걸러서 가장 싼 편을 골라 줘. 탑승객 정보나 결제 정보를 넣기 전에 멈춰. 편명·출발 시각·총 운임을 돌려줘.</p></div></div>
+<p class="muted">세 문장 모두 활용 사례 쪽의 설명 문장을 바탕으로 만든 <b>예시</b>입니다. 첫머리 <code>Use ego-browser.</code>와 둘째 줄(하지 말 것·결과 형태)은 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span> 문서의 다섯 가지 요소에 맞춰 더했습니다. 원문의 항공편 사례는 탑승객 정보를 채우고 결제 페이지에서 멈추지만, 여기서는 읽기 연습이라 그 앞에서 멈추게 했습니다.</p>
+<p><b>확인:</b> 작업마다 문장을 하나씩 보냈고, 각 대화에서 에이전트가 작업을 시작했습니다. 내가 보던 탭은 그대로입니다.</p>
+</div>
+<div data-step="3"><h4 id="pb7-s3">3단계 · Space 관리 패널에서 일하는 Space 세어 보기</h4>
+<p>ego(lite) 오른쪽 위의 <b>Space 단추</b>를 눌러 Space 관리 패널을 엽니다. <b>파란 빛이 나는 Space</b>가 에이전트가 지금 일하고 있는 곳입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 720 250" role="img" aria-label="화면 흉내: Space 관리 패널에 파란 빛이 나는 Space가 작업 수만큼 보입니다.">
+<rect class="box" x="20" y="20" width="680" height="210" rx="12"/>
+<text x="40" y="49" font-weight="600">Space 관리 패널 (화면 흉내)</text>
+<rect class="box s-accent" x="580" y="30" width="100" height="28" rx="8"/><text x="630" y="49" text-anchor="middle">Space 단추</text>
+<rect class="box s-accent" x="40" y="74" width="200" height="100" rx="10"/><circle class="f-accent anim-pulse" cx="62" cy="100" r="7"/><text x="80" y="105" font-weight="600">Space A</text><text class="sub" x="56" y="132">주식 조회 — 일하는 중</text><text class="sub" x="56" y="152">파란 빛</text>
+<rect class="box s-accent" x="260" y="74" width="200" height="100" rx="10"/><circle class="f-accent anim-pulse" cx="282" cy="100" r="7"/><text x="300" y="105" font-weight="600">Space B</text><text class="sub" x="276" y="132">중고차 검색 — 일하는 중</text><text class="sub" x="276" y="152">파란 빛</text>
+<rect class="box s-accent" x="480" y="74" width="200" height="100" rx="10"/><circle class="f-accent anim-pulse" cx="502" cy="100" r="7"/><text x="520" y="105" font-weight="600">Space C</text><text class="sub" x="496" y="132">항공편 견적 — 일하는 중</text><text class="sub" x="496" y="152">파란 빛</text>
+<text class="sub" x="40" y="206">Space를 누르면 그 안으로 들어가 에이전트가 연 페이지를 볼 수 있습니다</text>
+</svg><figcaption>화면 흉내 — 배치·이름·모양은 실제 버전과 다를 수 있습니다. 원문이 말하는 것은 오른쪽 위 Space 단추, Space 관리 패널, 파란 빛이 나는 Space입니다.</figcaption></figure>
+<p><b>확인:</b> 일하는 중인 Space가 맡긴 작업 수만큼 보입니다. 하나만 보인다면 <a href="#pb7-stuck">막히면</a>의 둘째 줄을 봅니다.</p>
+</div>
+<div data-step="4"><h4 id="pb7-s4">4단계 · 하나에 들어가 보고, 내 탭으로 돌아오기</h4>
+<ol class="steps"><li><b>Space 하나를 골라 들어가기</b><span>그 작업의 페이지만 열려 있는지 봅니다. Space마다 탭이 따로입니다.</span></li><li><b>보기만 하기</b><span>어느 Space든 열어서 에이전트를 지켜보거나, 작업을 멈추거나, 넘겨받을 수 있습니다. 이번에는 지켜보기만 합니다.</span></li><li><b>내 탭으로 돌아와 다른 일 하기</b><span>에이전트는 내 탭을 바꾸지 않고 키보드 초점도 가져가지 않습니다.</span></li></ol>
+<p><b>확인:</b> 들어가 본 Space에는 그 작업의 사이트만 열려 있었고, 내 탭으로 돌아온 뒤에도 내 화면과 입력은 방해받지 않습니다.</p>
+<details class="adv"><summary>Space는 누가 만들고 이름은 어떻게 붙나요</summary><p>에이전트가 ego-browser로 실행하는 스크립트 안에서 <code>useOrCreateTaskSpace(name)</code>이 이름으로 Space를 다시 쓰거나 새로 만들고, 스크립트의 나머지가 그 안에서 실행됩니다. Space 문서는 서로 다른 작업이 번호표(@N)<span class="gl">(스냅샷 속 단추·입력 칸에 붙는 임시 번호)</span>를 공유하지 않는다고 덧붙입니다. 내가 직접 입력할 일은 없습니다. <a href="ego-lite-guide.html#ch02-parallel">완전 가이드 2장 · 여러 작업</a>.</p></details>
+</div>
+<div data-step="5"><h4 id="pb7-s5">5단계 · 결과를 작업별로 받아 대조하기</h4>
+<p>결과는 맡긴 대화마다 따로 돌아옵니다. 작업별로 아래를 확인합니다.</p>
+<ol class="steps"><li><b>방문한 페이지와 한 일이 적혀 있는가</b><span>A의 답에는 A의 사이트만 나와야 합니다.</span></li><li><b>확인할 수 있는 값이 있는가</b><span>URL·금액·시각 가운데 한 건을 골라 원래 페이지와 맞춰 봅니다. 작업이 끝나도 Space의 탭은 바로 닫히지 않고 남으므로 그 Space에서 볼 수 있습니다(<a href="ego-lite-guide.html#ch02-after">언제까지 남는지</a>).</span></li><li><b>하지 말라고 한 일을 하지 않았는가</b><span>연락·제출·결제 정보 입력이 없어야 합니다.</span></li></ol>
+<p>값이 화면과 다르면 그 작업의 대화에서 지금 페이지의 스냅샷을 다시 찍어 확인해 달라고 합니다.</p>
+<p><b>확인:</b> 작업마다 결과를 따로 받았고, 각각 한 건 이상 원래 페이지와 값이 같습니다.</p>
+</div></div>
+<h3 id="pb7-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>할 일</th></tr></thead><tbody>
+<tr><td>컴퓨터가 눈에 띄게 느려짐</td><td>동시에 돌릴 수 있는 수는 내 컴퓨터의 메모리와 CPU에 달려 있습니다. 작업 수를 줄여 두 개부터 다시 합니다. 급하면 Space를 열어 작업 하나를 멈춥니다.</td></tr>
+<tr><td>일하는 Space가 하나만 보임</td><td>작업이 한 대화 안에서 차례로 처리되고 있을 수 있습니다. 2단계의 예시처럼 작업마다 대화를 따로 열어 맡겼는지 확인합니다. 에이전트마다 방법이 다르므로 <a href="ego-lite-guide.html#ch05-common">에이전트별 연결 방법</a>도 봅니다.</td></tr>
+<tr><td>결과가 서로 섞임</td><td>한 문장에 여러 작업을 넣지 않았는지 봅니다. 작업 하나에 문장 하나, 결과 형태도 작업마다 따로 적습니다.</td></tr>
+<tr><td>한 작업만 멈춰서 기다림</td><td>그 Space에 사람 확인이나 로그인 화면이 떴을 수 있습니다. 멈춘 Space에 들어가 내가 직접 처리합니다(<a href="#pb2">실습 2</a>). 비밀번호나 인증 코드를 대화창에 붙여 넣지 않습니다.</td></tr>
+<tr><td>“번호표가 유효하지 않다”고 함</td><td>페이지가 바뀐 뒤 옛 번호를 쓴 것입니다. 스냅샷을 새로 찍게 합니다. <a href="#pb10">실습 10</a>.</td></tr>
+</tbody></table></div>
+<h3 id="pb7-next">다음에 할 것</h3>
+<ul><li>같은 작업을 다른 에이전트로 해 봅니다 — <a href="#pb8">실습 8</a>.</li><li>더 읽기: <a href="ego-lite-guide.html#ch02-parallel">여러 작업을 동시에</a> · <a href="ego-lite-guide.html#ch02-why">Space가 가벼운 이유</a> · <a href="ego-lite-guide.html#ch07-usecases">활용 사례</a>.</li></ul>
+<div class="summary-box"><b>한눈에 정리</b><ul><li>보통 작업 하나에 Space 하나이고, 여러 Space가 같은 ego(lite) 안에서 동시에 돕니다.</li><li>몇 개까지 되는지는 내 컴퓨터의 메모리와 CPU에 달려 있습니다.</li><li>여러 작업을 맡기는 방법은 에이전트마다 다릅니다. 대화를 작업마다 따로 여는 것이 한 가지 방법입니다.</li><li>Space 관리 패널에서 파란 빛이 나는 Space를 보고, 결과는 작업별로 따로 대조합니다.</li></ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/space (Why Space exists · What belongs in a Space · Many tasks at once · FAQ), /docs/product-introduce (Space · Compared with browser extensions), /use-cases (Track your stocks in one pass · Find your dream car · Search and quote flight bookings), /docs/quick-start (Watch and take over), /docs/snapshot (Writing a task for the agent · Reviewing what the agent did). 2026-11-09 수집. 작업 A·B·C 문장과 “대화를 따로 여는” 방법은 연습용 예시입니다.</p></section>
+<section class="chapter" id="pb8">
+<style>
+  #pb8 .same td:first-child{white-space:nowrap;font-weight:600}
+  #pb8 .diff td:first-child{white-space:nowrap;font-weight:600}
+</style>
+<div class="ch-head"><div class="ch-no">SCENARIO 8</div><h2>다른 에이전트로 같은 작업 해 보기</h2><p class="lead">같은 일을 AI 에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span> 둘에게 차례로 맡겨 봅니다. 에이전트를 바꿔도 ego(lite) 브라우저와 로그인, 일하는 방식은 그대로라는 것을 눈으로 확인하는 실습입니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>같은 문장을 두 에이전트에 보내 결과를 나란히 비교합니다.</li><li>에이전트마다 달라지는 세 가지(스킬을 읽는 폴더 · 권한 설정 이름 · 스킬을 부르는 입력)를 구분합니다.</li><li>다른 에이전트가 없을 때 같은 에이전트의 데스크톱 앱과 터미널 화면으로 같은 확인을 합니다.</li></ul><p class="muted">예상 소요 시간: 20~30분 (두 번째 에이전트가 이미 설치·로그인되어 있을 때)</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb8-prep">준비물</a>을 확인한 뒤 <a href="#pb8-steps">따라 하기</a>를 진행하세요. 막히면 <a href="#pb8-stuck">막히면</a>에서 같은 증상을 찾습니다. 두 번째 에이전트가 없다면 <a href="#pb8-alt">데스크톱 앱 ↔ 터미널 화면</a>으로 대신합니다.</p></div>
+
+<h3 id="pb8-prep">준비물과 완료 기준</h3>
+<ul>
+  <li><a href="#pb0">시작 전 준비</a>를 마친 ego(lite)와, <a href="#pb1">실습 1</a>에서 쓰던 에이전트 하나. 이 에이전트를 “첫 번째 에이전트”라고 부르겠습니다.</li>
+  <li>두 번째 에이전트 — Claude Code, Codex, Cursor 가운데 내 컴퓨터에 설치되어 있고 로그인된 다른 하나. 이 실습을 위해 새로 설치할 필요는 없습니다.</li>
+  <li>결과를 적어 둘 메모장. 첫 번째 결과의 첫 글과 링크를 적어 두었다가 두 번째 결과와 견줍니다.</li>
+</ul>
+<p>맡길 일은 ego(lite) 문서가 에이전트 안내마다 똑같이 쓰는 작은 예시입니다. Anthropic의 X 프로필을 열어 글 다섯 개를 읽어 오는 일입니다.</p>
+<div class="note"><b>완료 기준</b><p>두 에이전트가 모두 글 다섯 개를 대화창에 돌려주고, 두 번 모두 ego(lite) 안에 Anthropic의 X 프로필이 열린 채 남아 있으면 완료입니다. 그 사이에 ego(lite)를 다시 설치하거나 설정을 바꾸지 않았다는 점을 확인합니다.</p></div>
+
+<figure class="diagram"><svg viewBox="0 0 760 300" role="img" aria-label="첫 번째 에이전트와 두 번째 에이전트가 같은 ego-browser를 거쳐 같은 ego(lite) 브라우저의 에이전트 Space에서 일합니다.">
+<rect class="box s-amber" x="20" y="40" width="190" height="70" rx="12"/>
+<text x="115" y="70" text-anchor="middle" font-weight="600">첫 번째 에이전트</text>
+<text class="sub" x="115" y="92" text-anchor="middle">예: Claude Code</text>
+<text class="sub" x="115" y="144" text-anchor="middle">같은 문장을 차례로 보냄</text>
+<rect class="box s-pink" x="20" y="170" width="190" height="70" rx="12"/>
+<text x="115" y="200" text-anchor="middle" font-weight="600">두 번째 에이전트</text>
+<text class="sub" x="115" y="222" text-anchor="middle">예: Codex · Cursor</text>
+<path class="line s-amber anim-flow" d="M210 75 H250 V140 H290"/>
+<path class="line s-pink anim-flow" d="M210 205 H250 V140"/>
+<rect class="box s-accent" x="290" y="105" width="150" height="70" rx="12"/>
+<text x="365" y="136" text-anchor="middle" font-weight="600">ego-browser</text>
+<text class="sub" x="365" y="158" text-anchor="middle">같은 스킬 · 같은 명령</text>
+<path class="line s-accent anim-flow" d="M440 140 H500"/>
+<rect class="box s-accent" x="500" y="20" width="240" height="260" rx="16" style="fill:none;stroke-dasharray:4 4"/>
+<text x="620" y="46" text-anchor="middle" font-weight="700" style="fill:var(--accent)">ego(lite) 브라우저</text>
+<rect class="box s-green" x="520" y="62" width="200" height="62" rx="10"/>
+<circle class="f-green anim-pulse" cx="538" cy="93" r="6"/>
+<text x="554" y="88" font-weight="600">에이전트 Space</text>
+<text class="sub" x="554" y="108">Anthropic의 X 프로필</text>
+<rect class="box s-cyan" x="520" y="136" width="200" height="56" rx="10"/>
+<text x="538" y="160" font-weight="600">내 탭</text>
+<text class="sub" x="538" y="180">하던 일 그대로</text>
+<rect class="box" x="520" y="204" width="200" height="60" rx="10" style="stroke-dasharray:3 3"/>
+<text x="620" y="229" text-anchor="middle" font-weight="600">함께 쓰는 것</text>
+<text class="sub" x="620" y="249" text-anchor="middle">ego(lite)에 로그인해 둔 사이트</text>
+</svg><figcaption>에이전트는 둘이지만 조종 도구(ego-browser)와 브라우저(ego(lite))는 하나입니다. 어느 에이전트가 시켜도 일은 에이전트 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>에서 이루어지고 내 탭은 그대로입니다.</figcaption></figure>
+
+<figure class="diagram"><svg viewBox="0 0 740 150" role="img" aria-label="첫 실행, 메모, 두 번째 실행, 비교의 네 순서입니다.">
+<rect class="box s-amber" x="20" y="24" width="160" height="76" rx="12"/><text x="100" y="56" text-anchor="middle" font-weight="600">① 첫 실행</text><text class="sub" x="100" y="80" text-anchor="middle">지금 쓰는 에이전트</text>
+<path class="line s-accent" d="M180 62 H200"/>
+<rect class="box s-accent" x="200" y="24" width="160" height="76" rx="12"/><text x="280" y="56" text-anchor="middle" font-weight="600">② 메모</text><text class="sub" x="280" y="80" text-anchor="middle">첫 글과 링크 적기</text>
+<path class="line s-accent" d="M360 62 H380"/>
+<rect class="box s-pink" x="380" y="24" width="160" height="76" rx="12"/><text x="460" y="56" text-anchor="middle" font-weight="600">③ 두 번째 실행</text><text class="sub" x="460" y="80" text-anchor="middle">다른 에이전트 · 같은 문장</text>
+<path class="line s-accent" d="M540 62 H560"/>
+<rect class="box s-green" x="560" y="24" width="160" height="76" rx="12"/><text x="640" y="56" text-anchor="middle" font-weight="600">④ 비교</text><text class="sub" x="640" y="80" text-anchor="middle">달라진 것 · 그대로인 것</text>
+<path id="pb8-flow" class="line" d="M100 122 H640"/>
+<circle class="f-accent" r="5"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#pb8-flow"/></animateMotion></circle>
+</svg><figcaption>같은 문장을 두 번 보내고, 사이에 메모 한 번, 끝에 비교 한 번입니다.</figcaption></figure>
+
+<h3 id="pb8-steps">따라 하기</h3>
+<div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb8-s1">1단계 · 첫 번째 에이전트에 공통 작업 맡기기</h4>
+<p>지금 쓰는 에이전트에서 새 대화를 열고, <a href="#pb1">실습 1</a>에서 하던 방법으로 ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>을 불러온 뒤 아래 문장을 보냅니다. ego(lite) 문서가 여러 에이전트 안내에서 똑같이 쓰는 작업입니다.</p>
+<pre><code>Use the ego-browser Skill to open Anthropic's official X profile and collect the first five posts shown in the Posts feed.</code></pre>
+<p class="muted">뜻: ego-browser 스킬을 써서 Anthropic의 공식 X 프로필을 열고, Posts(게시물) 목록에 보이는 처음 다섯 개 글을 모아 줘.</p>
+<p>에이전트가 ego-browser로 ego(lite)에서 대상 페이지를 열고, 요청한 정보를 모아, 작업이 끝나면 결과를 돌려줍니다. 그동안 내 탭은 건드리지 않습니다.</p>
+<p><b>확인:</b> ego(lite)에 에이전트 Space가 생기고 그 안에 Anthropic의 X 프로필이 열립니다. 대화창에는 글 다섯 개가 돌아옵니다. X가 로그인이나 인증을 요구하면 <a href="#pb8-stuck">막히면</a>의 첫 줄을 먼저 봅니다.</p>
+</div>
+<div data-step="2"><h4 id="pb8-s2">2단계 · 결과와 열린 페이지 적어 두기</h4>
+<p>답이 오면 닫지 말고 두 가지를 적습니다. 돌아오는 내용은 에이전트마다 조금 다릅니다.</p>
+<div class="table-wrap"><table class="kv diff"><thead><tr><th>에이전트</th><th>문서가 설명하는 결과</th></tr></thead><tbody>
+<tr><td>Claude Code</td><td>글 다섯 개와 각 글의 링크, 페이지에 보이는 좋아요 수, 주요 주제를 간추린 요약</td></tr>
+<tr><td>Codex · Cursor</td><td>글 다섯 개의 보이는 내용, 글로 바로 가는 링크, 글마다 짧은 요약</td></tr>
+</tbody></table></div>
+<ol class="steps"><li><b>첫 글의 링크와 첫 문장을 메모</b><span>나중에 두 번째 결과와 견줄 기준입니다. 다섯 개를 다 적을 필요는 없습니다.</span></li><li><b>ego(lite)에서 에이전트 Space 열어 보기</b><span>작업이 끝나도 Anthropic의 X 프로필은 ego(lite)에 열린 채 남습니다. 에이전트가 어느 페이지를 보고 답했는지 확인할 수 있게 하기 위해서입니다.</span></li></ol>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 에이전트 대화창 — 결과의 모양(예시)</div><div class="body">1. 글 내용 한두 줄 — 링크<br>2. 글 내용 한두 줄 — 링크<br>… (다섯 개)<br><span class="muted">끝에 요약이 붙습니다. 실제 글과 표현은 실행할 때마다 다릅니다.</span></div></div>
+<p><b>확인:</b> 메모에 첫 글의 링크가 있고, ego(lite)의 에이전트 Space에 X 프로필 페이지가 보입니다.</p>
+</div>
+<div data-step="3"><h4 id="pb8-s3">3단계 · 두 번째 에이전트 준비하기</h4>
+<p>ego(lite)는 그대로 두고 두 번째 에이전트만 준비합니다. 아래에서 두 번째로 쓸 에이전트의 탭을 고르세요. 탭마다 먼저 할 준비 한 가지가 있고, 그 아래 표의 세 줄이 에이전트마다 달라지는 것입니다. 폴더 줄은 알아 두기만 하면 되고, 내가 직접 하는 일은 권한 설정과 스킬 부르기입니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="cc">Claude Code</button><button data-tab="cx">Codex</button><button data-tab="cu">Cursor</button></div>
+<div data-panel="cc">
+<p><b>먼저:</b> 데스크톱 앱에는 Cowork와 Code 두 모드가 있습니다. ego-browser 스킬은 Code용이라 Cowork의 스킬 메뉴에는 나오지 않습니다. 왼쪽 위 모드 전환 메뉴에서 <b>Cowork</b>를 <b>Code</b>로 바꾸고, 프로젝트나 폴더를 하나 연 뒤 아래 표로 갑니다.</p>
+<div class="table-wrap"><table class="kv same"><tbody>
+<tr><td>스킬을 읽는 폴더</td><td><code>~/.claude/skills/</code> — 첫 실행 설정<span class="gl">(onboarding)</span>이 ego-browser 스킬을 여기에 써 둡니다.</td></tr>
+<tr><td>권한 설정</td><td>대화 입력 칸 옆의 권한 선택 메뉴에서 <b>Bypass permissions</b>(승인 없이 실행)를 고릅니다.</td></tr>
+<tr><td>스킬을 부르는 입력</td><td><code>/ego-browser</code>를 입력하고 목록에서 스킬을 고릅니다.</td></tr>
+</tbody></table></div>
+</div>
+<div data-panel="cx">
+<p><b>먼저:</b> ChatGPT 데스크톱 앱(예전 Codex 데스크톱 앱)을 쓴다면 왼쪽 위의 모드를 <b>Codex</b>로 바꿉니다. 그다음 프로젝트를 열고 새 작업을 시작한 뒤 아래 표로 갑니다.</p>
+<div class="table-wrap"><table class="kv same"><tbody>
+<tr><td>스킬을 읽는 폴더</td><td><code>~/.agents/skills/</code> — 첫 실행 설정이 ego-browser 스킬을 여기에 써 둡니다.</td></tr>
+<tr><td>권한 설정</td><td>대화 입력 칸 왼쪽 아래의 권한 선택 메뉴에서 <b>Full access</b>(전체 접근)를 고르고 경고를 확인합니다.</td></tr>
+<tr><td>스킬을 부르는 입력</td><td><code>/ego</code>를 입력하고 스킬 목록에서 ego-browser를 고릅니다. <code>/ego-browser</code>를 입력하고 <kbd>Tab</kbd>을 눌러도 됩니다.</td></tr>
+</tbody></table></div>
+</div>
+<div data-panel="cu">
+<p><b>먼저:</b> 믿을 수 있는 프로젝트나 폴더를 Cursor에서 엽니다. Cursor에는 자체 Browser 창이 따로 있지만, 이 실습은 그것이 아니라 ego-browser 스킬로 ego(lite)를 여는 길을 씁니다.</p>
+<div class="table-wrap"><table class="kv same"><tbody>
+<tr><td>스킬을 읽는 폴더</td><td><code>~/.agents/skills/</code> — 첫 실행 설정이 ego-browser 스킬을 여기에 써 둡니다.</td></tr>
+<tr><td>권한 설정</td><td><b>Settings → Agents → Approvals &amp; Execution</b>(설정 → 에이전트 → 승인과 실행)에서 <b>Run Everything</b>(모두 실행)을 고릅니다.</td></tr>
+<tr><td>스킬을 부르는 입력</td><td>Agent 패널을 열고 입력 칸에 <code>/ego</code>를 입력한 뒤 ego-browser를 고릅니다.</td></tr>
+</tbody></table></div>
+</div></div>
+<div class="tip"><b>스킬이 목록에 없다면</b><p>첫 실행 설정을 하는 동안 그 에이전트가 열려 있었다면 스킬 목록이 예전 그대로일 수 있습니다. 에이전트를 완전히 종료했다가 다시 열면 목록이 새로 읽힙니다.</p></div>
+<p><b>확인:</b> 두 번째 에이전트의 입력 칸에서 ego-browser 스킬이 골라지고, 권한 설정이 위 표의 이름(<b>Bypass permissions</b> · <b>Full access</b> · <b>Run Everything</b> 가운데 내 에이전트의 것)으로 골라져 있습니다.</p>
+</div>
+<div data-step="4"><h4 id="pb8-s4">4단계 · 두 번째 에이전트에 같은 문장 보내기</h4>
+<p>스킬을 고른 상태에서 1단계와 <b>글자 하나 다르지 않은</b> 문장을 보냅니다.</p>
+<pre><code>Use the ego-browser Skill to open Anthropic's official X profile and collect the first five posts shown in the Posts feed.</code></pre>
+<p class="muted">뜻: ego-browser 스킬을 써서 Anthropic의 공식 X 프로필을 열고, Posts 목록에 보이는 처음 다섯 개 글을 모아 줘.</p>
+<p>이번에도 에이전트는 ego(lite)의 에이전트 Space에서 페이지를 엽니다. 내 탭을 넘겨받지 않습니다.</p>
+<p><b>확인:</b> 두 번째 에이전트의 대화창에 글 다섯 개가 돌아오고, ego(lite)에 Anthropic의 X 프로필이 열려 있습니다.</p>
+</div>
+<div data-step="5"><h4 id="pb8-s5">5단계 · 달라진 것과 그대로인 것 가려내기</h4>
+<p>2단계의 메모와 두 번째 결과를 나란히 놓고 아래 그림의 양쪽을 하나씩 짚어 봅니다.</p>
+<figure class="diagram"><svg viewBox="0 0 800 250" role="img" aria-label="에이전트마다 달라지는 것은 스킬을 읽는 폴더, 권한 설정의 이름, 스킬을 부르는 입력입니다. 그대로인 것은 ego(lite) 브라우저, 로그인해 둔 사이트, Space에서 일하는 방식입니다.">
+<rect class="box s-amber" x="20" y="20" width="370" height="210" rx="14"/>
+<text x="205" y="48" text-anchor="middle" font-weight="700">에이전트마다 달라지는 것</text>
+<rect class="box" x="36" y="62" width="338" height="46" rx="8"/><text x="50" y="82" font-weight="600">① 스킬을 읽는 폴더</text><text class="sub" x="50" y="99">~/.claude/skills/ 또는 ~/.agents/skills/</text>
+<rect class="box" x="36" y="116" width="338" height="46" rx="8"/><text x="50" y="136" font-weight="600">② 권한 설정의 이름</text><text class="sub" x="50" y="153">Bypass permissions · Full access · Run Everything</text>
+<rect class="box" x="36" y="170" width="338" height="46" rx="8"/><text x="50" y="190" font-weight="600">③ 스킬을 부르는 입력</text><text class="sub" x="50" y="207">/ego-browser 또는 /ego 입력 후 고르기</text>
+<rect class="box s-green" x="410" y="20" width="370" height="210" rx="14"/>
+<text x="595" y="48" text-anchor="middle" font-weight="700">바꿔도 그대로인 것</text>
+<rect class="box s-green" x="426" y="62" width="338" height="46" rx="8"/><circle class="f-green anim-pulse" cx="744" cy="85" r="5"/><text x="440" y="82" font-weight="600">ego(lite) 브라우저</text><text class="sub" x="440" y="99">다시 설치하거나 설정하지 않음</text>
+<rect class="box s-green" x="426" y="116" width="338" height="46" rx="8"/><circle class="f-green anim-pulse" cx="744" cy="139" r="5"/><text x="440" y="136" font-weight="600">로그인해 둔 사이트</text><text class="sub" x="440" y="153">에이전트가 보통 로그인된 채로 엶</text>
+<rect class="box s-green" x="426" y="170" width="338" height="46" rx="8"/><circle class="f-green anim-pulse" cx="744" cy="193" r="5"/><text x="440" y="190" font-weight="600">Space에서 일하는 방식</text><text class="sub" x="440" y="207">내 탭은 그대로, 끝나도 페이지가 남음</text>
+</svg><figcaption>왼쪽 세 가지는 에이전트 쪽 사정이고, 오른쪽 세 가지는 브라우저 쪽 사정입니다. 에이전트를 바꿀 때 다시 챙길 것은 왼쪽뿐입니다.</figcaption></figure>
+<ul>
+  <li><b>달라진 것</b> — 권한 설정의 이름과 위치, 스킬을 부르는 입력, 결과에 붙는 세부(좋아요 수가 붙는지, 요약이 글마다 붙는지).</li>
+  <li><b>그대로인 것</b> — ego(lite)에 로그인해 둔 사이트는 어느 에이전트가 열어도 보통 로그인된 상태로 열립니다. 일은 에이전트 Space에서 이루어지고, 끝난 뒤에도 페이지가 열려 있습니다.</li>
+</ul>
+<p>두 결과의 글 목록이 조금 다를 수 있습니다. 두 실행 사이에 새 글이 올라왔을 수도 있고, 에이전트마다 간추리는 방식이 다르기 때문입니다. 어느 쪽이 맞는지는 ego(lite)에 열려 있는 X 프로필과 직접 견주어 확인합니다.</p>
+<p><b>확인:</b> 메모의 첫 글 링크를 두 번째 결과에서 찾았거나, 다르다면 열린 페이지에서 그 이유(새 글)를 확인했습니다. 그 사이에 ego(lite)를 다시 설정한 적이 없습니다.</p>
+</div></div>
+
+<h3 id="pb8-alt">두 번째 에이전트가 없다면 — 데스크톱 앱 ↔ 터미널 화면</h3>
+<p>Claude Code와 Codex는 데스크톱 앱과 TUI<span class="gl">(터미널 안에서 글자로 쓰는 화면)</span> 두 가지 모습이 있습니다. 한쪽에서 1~2단계를 했다면 다른 쪽에서 4단계를 하면 됩니다. 쓰는 스킬과 보내는 문장은 같고, 권한을 주는 방법만 다릅니다. Cursor 문서에는 터미널 화면 안내가 없으므로 여기서는 다루지 않습니다. 아래 탭은 터미널 화면 쪽 순서입니다(데스크톱 앱 쪽은 3단계의 탭). 터미널 화면을 쓰려면 그 에이전트의 터미널용 프로그램(Codex 문서의 표현으로는 Codex CLI)이 이미 설치되어 있어야 합니다. 없다면 이 대안은 건너뜁니다.</p>
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="cct">Claude Code TUI</button><button data-tab="cxt">Codex TUI</button></div>
+<div data-panel="cct">
+<p>터미널에서 아래 명령으로 Claude Code를 시작합니다.</p>
+<pre><code>claude --dangerously-skip-permissions</code></pre>
+<p>화면이 열리면 상태 줄에 <code>bypass permissions on</code>이 표시됩니다. 그다음 <code>/ego-browser</code>를 입력하고, 스킬 이름 뒤에 <b>한 칸을 띄운 뒤</b> 같은 메시지 안에 작업 문장을 이어 써서 보냅니다.</p>
+</div>
+<div data-panel="cxt">
+<p>프로젝트 폴더에서 터미널을 열고 아래 명령을 실행합니다. 승인 요청과 샌드박스<span class="gl">(격리된 실행 칸)</span>를 건너뛴 채로 Codex를 시작하는 명령입니다.</p>
+<pre><code>codex --dangerously-bypass-approvals-and-sandbox</code></pre>
+<p>화면이 열리면 <code>/ego</code>를 입력해 ego-browser를 고르고 작업 문장을 덧붙입니다. ChatGPT 데스크톱 앱에서 하던 “Codex 모드로 바꾸기”는 TUI에서는 건너뜁니다.</p>
+</div></div>
+<div class="warn"><b>이 명령들은 권한을 크게 넓힙니다</b><p>두 명령 모두 에이전트가 명령을 실행할 때마다 묻지 않게 만듭니다. 믿을 수 있는 에이전트·폴더·작업에만 켭니다. 한 에이전트의 명령을 다른 에이전트에 그대로 옮겨 쓰지 않습니다.</p></div>
+
+<h3 id="pb8-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>X가 로그인이나 계정 인증을 요구함</td><td>ego(lite)의 에이전트 Space에 들어가 로그인이나 인증을 <b>내가 직접</b> 끝냅니다. 그런 다음 에이전트에게 같은 Space에서 이어 하라고 말합니다. 비밀번호나 인증 코드를 대화창에 붙여 넣지 않습니다. 넘겨받는 방법은 <a href="#pb2">실습 2</a>, 자세한 대처는 <a href="#pb10">실습 10</a>.</td></tr>
+<tr><td>두 번째 에이전트에서 스킬이 안 보임</td><td>ego(lite)의 첫 실행 설정을 끝냈는지 확인하고, 에이전트를 완전히 종료했다가 다시 엽니다. Claude Code라면 Cowork가 아니라 Code 모드인지 봅니다. 그래도 없으면 <a href="#pb9">실습 9</a>.</td></tr>
+<tr><td>스킬은 불러왔는데 ego(lite)가 열리지 않음</td><td>3단계 탭의 권한 설정이 켜져 있는지 봅니다. TUI라면 지금 세션을 닫고 위 명령으로 다시 시작합니다. 에이전트별 확인 위치는 <a href="ego-lite-guide.html#ch05-trouble">가이드 5장 문제 해결</a>.</td></tr>
+<tr><td>Claude Code에 Bypass permissions가 없음</td><td><b>Settings → Claude Code</b>에서 <b>Allow bypass permissions mode</b>(승인 없이 실행 모드 허용)를 켭니다. Team·Enterprise 정책이 이 선택지를 숨길 수 있으니, 잠겨 있으면 관리자에게 문의합니다.</td></tr>
+<tr><td>Cursor에 Run Everything이 다른 이름으로 보임</td><td>Cursor 3.6 이상은 <b>Settings → Agents → Approvals &amp; Execution → Run Everything</b>입니다. 예전 화면에서는 <b>Ask Every Time</b> 대신 <b>Run Everything (Unsandboxed)</b>를 고릅니다.</td></tr>
+</tbody></table></div>
+<p>로그인을 직접 끝낸 뒤 에이전트에게 보낼 문장의 예시입니다(문서에 있는 문장이 아니라 이 실습용으로 만든 것입니다).</p>
+<pre><code>I finished the login in the agent Space. Continue the task in the same Space.</code></pre>
+<p class="muted">뜻: 에이전트 Space에서 로그인을 끝냈어. 같은 Space에서 작업을 이어서 해 줘.</p>
+
+<h3 id="pb8-next">다음에 할 것</h3>
+<ul>
+  <li>스킬이 안 보이거나 ego(lite)가 열리지 않아 실습을 끝내지 못했다면 <a href="#pb9">실습 9 — 막힘 해결 ①</a>로 갑니다.</li>
+  <li>세 에이전트 말고 OpenCode, WorkBuddy, Hermes Agent, OpenClaw, DeepSeek Harness를 쓴다면 <a href="ego-lite-guide.html#ch05-table">가이드 5장 에이전트별 한눈 표</a>에서 같은 세 줄을 찾습니다.</li>
+  <li>에이전트별 전체 순서는 <a href="ego-lite-guide.html#ch05-claude-code">Claude Code</a> · <a href="ego-lite-guide.html#ch05-codex">Codex</a> · <a href="ego-lite-guide.html#ch05-cursor">Cursor</a> 소절에 있습니다.</li>
+</ul>
+
+<div class="summary-box"><b>한눈에 정리</b><ul>
+<li>같은 문장을 두 에이전트에 보내면 둘 다 ego(lite)의 에이전트 Space에서 같은 페이지를 열고 결과를 돌려줍니다.</li>
+<li>에이전트마다 다시 챙길 것은 세 가지 — 스킬을 읽는 폴더, 권한 설정의 이름, 스킬을 부르는 입력입니다.</li>
+<li>ego(lite) 브라우저, 로그인해 둔 사이트, Space에서 일하는 방식은 에이전트를 바꿔도 그대로입니다.</li>
+<li>두 번째 에이전트가 없으면 Claude Code나 Codex의 데스크톱 앱과 터미널 화면으로 같은 확인을 합니다.</li>
+<li>사이트가 로그인·인증을 요구하면 에이전트 Space에서 내가 직접 처리합니다. 비밀번호와 인증 코드는 대화창에 넣지 않습니다.</li>
+</ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/claude-code · codex · cursor · custom-agent-harness(공통 작업 문장) · space(로그인 상태). 수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준. 가이드 <a href="ego-lite-guide.html#ch05-common">5장 에이전트별 연결 방법</a>. “로그인을 끝냈어” 문장과 결과 모양 상자는 실습용 예시입니다.</p>
+</section>
+<section class="chapter" id="pb9">
+<style>
+  #pb9 .where td:first-child{white-space:nowrap;font-weight:600}
+  #pb9 .sym td:first-child{white-space:nowrap;font-weight:600}
+</style>
+<div class="ch-head"><div class="ch-no">SCENARIO 9</div><h2>막힘 해결 ① — 스킬이 안 보이거나 ego(lite)가 안 열릴 때</h2><p class="lead">에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>와 ego(lite)가 이어지지 않을 때, 원인을 위에서부터 하나씩 좁혀 가는 순서입니다. 스킬이 목록에 없는 경우와, 스킬은 불러왔는데 브라우저가 열리지 않는 경우는 원인이 다릅니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>증상을 “스킬이 안 보인다 / ego(lite)가 안 열린다 / 승인을 계속 묻는다 / 다른 기기에서 돈다”로 구분합니다.</li><li>내가 쓰는 에이전트에서 스킬 폴더와 권한 설정을 어디서 확인하는지 찾습니다.</li><li>연결 시험 문장 하나로 고쳐졌는지 확인합니다.</li></ul><p class="muted">예상 소요 시간: 10~30분 (원인이 앞 단계에서 잡힐수록 짧습니다)</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb9-prep">준비물</a>에서 증상을 한 줄로 적고, 아래 갈림길 그림에서 해당하는 단계를 찾아 <a href="#pb9-steps">따라 하기</a>로 갑니다. 에이전트 이름이 붙은 증상은 <a href="#pb9-stuck">막히면</a> 표에 모았습니다.</p></div>
+
+<h3 id="pb9-prep">준비물과 완료 기준</h3>
+<ul>
+  <li>설치를 마친 ego(lite)와, 연결이 안 되는 에이전트. 설치 자체를 아직 안 했다면 <a href="#pb0">시작 전 준비</a>가 먼저입니다.</li>
+  <li>증상 메모 한 줄 — 에이전트 이름, 데스크톱 앱인지 TUI<span class="gl">(터미널 안에서 글자로 쓰는 화면)</span>인지, 어디서 멈췄는지. 예: “Codex 데스크톱 앱 / 스킬은 골라짐 / ego(lite)가 안 뜸”.</li>
+</ul>
+<div class="note"><b>완료 기준</b><p>5단계의 연결 시험 문장을 보냈을 때 ego(lite)가 에이전트 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>를 열고, 페이지가 뜨고, 에이전트가 페이지 제목을 돌려주면 완료입니다.</p></div>
+
+<figure class="diagram"><svg viewBox="0 0 780 410" role="img" aria-label="진단 갈림길: 스킬이 목록에 보이는지, 권한을 넓혔는지, ego-browser 명령이 보이는지, 연결 시험이 통과하는지를 차례로 묻고, 아니오인 곳의 단계로 갑니다.">
+<rect class="box s-accent" x="30" y="20" width="330" height="52" rx="10"/><text x="195" y="42" text-anchor="middle" font-weight="600">스킬이 목록에 보이나요?</text><text class="sub" x="195" y="60" text-anchor="middle">/ego-browser 또는 /ego 를 입력했을 때</text>
+<path class="line s-amber anim-flow" d="M360 46 H430"/><text class="sub" x="395" y="38" text-anchor="middle">아니오</text>
+<rect class="box s-amber" x="430" y="20" width="330" height="52" rx="10"/><text x="595" y="42" text-anchor="middle" font-weight="600">1·2단계 · 설정 · 재시작 · 스킬 폴더</text><text class="sub" x="595" y="60" text-anchor="middle">Claude Code는 Code 모드인지도 확인</text>
+<path class="line s-green" d="M195 72 V100"/><text class="sub" x="207" y="90">예</text>
+<rect class="box s-accent" x="30" y="100" width="330" height="52" rx="10"/><text x="195" y="122" text-anchor="middle" font-weight="600">권한을 넓혀 두었나요?</text><text class="sub" x="195" y="140" text-anchor="middle">Bypass permissions · Full access 등</text>
+<path class="line s-amber anim-flow" d="M360 126 H430"/><text class="sub" x="395" y="118" text-anchor="middle">아니오</text>
+<rect class="box s-amber" x="430" y="100" width="330" height="52" rx="10"/><text x="595" y="122" text-anchor="middle" font-weight="600">3단계 · 에이전트별 권한 설정</text><text class="sub" x="595" y="140" text-anchor="middle">이름과 위치가 에이전트마다 다름</text>
+<path class="line s-green" d="M195 152 V180"/><text class="sub" x="207" y="170">예</text>
+<rect class="box s-accent" x="30" y="180" width="330" height="52" rx="10"/><text x="195" y="202" text-anchor="middle" font-weight="600">ego-browser 명령이 보이나요?</text><text class="sub" x="195" y="220" text-anchor="middle">command -v ego-browser 가 경로를 돌려줌</text>
+<path class="line s-amber anim-flow" d="M360 206 H430"/><text class="sub" x="395" y="198" text-anchor="middle">아니오</text>
+<rect class="box s-amber" x="430" y="180" width="330" height="52" rx="10"/><text x="595" y="202" text-anchor="middle" font-weight="600">4단계 · 첫 실행 설정 · 실행 환경</text><text class="sub" x="595" y="220" text-anchor="middle">평소 터미널과 실행 환경이 다른지 비교</text>
+<path class="line s-green" d="M195 232 V260"/><text class="sub" x="207" y="250">예</text>
+<rect class="box s-accent" x="30" y="260" width="330" height="52" rx="10"/><text x="195" y="282" text-anchor="middle" font-weight="600">5단계 연결 시험이 통과하나요?</text><text class="sub" x="195" y="300" text-anchor="middle">example.com 이 열리고 제목이 돌아옴</text>
+<path class="line s-amber anim-flow" d="M360 286 H430"/><text class="sub" x="395" y="278" text-anchor="middle">아니오</text>
+<rect class="box s-red" x="430" y="260" width="330" height="52" rx="10"/><text x="595" y="282" text-anchor="middle" font-weight="600">6단계 · 승인 정책인가, 실행 위치인가</text><text class="sub" x="595" y="300" text-anchor="middle">승인하면 열리는지, 다른 기기에서 도는지</text>
+<path class="line s-green" d="M195 312 V340"/><text class="sub" x="207" y="330">예</text>
+<rect class="box s-green" x="30" y="340" width="330" height="50" rx="10"/><circle class="f-green anim-pulse" cx="56" cy="365" r="6"/><text x="195" y="370" text-anchor="middle" font-weight="600">해결 — 하던 작업으로 돌아가기</text>
+</svg><figcaption>위에서부터 묻고, “아니오”가 나오는 곳의 단계로 갑니다. 스킬이 보이지 않는 문제는 대개 1·2단계에서, 브라우저가 열리지 않는 문제는 3단계에서 풀립니다.</figcaption></figure>
+
+<h3 id="pb9-steps">따라 하기</h3>
+<div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb9-s1">1단계 · 스킬이 안 보일 때 — 첫 실행 설정과 완전히 다시 열기</h4>
+<p>ego-browser 스킬<span class="gl">(Skill — 에이전트에게 주는 사용 설명서 묶음)</span>은 ego(lite)의 첫 실행 설정<span class="gl">(onboarding)</span>이 내 컴퓨터에 써 넣습니다. 그래서 에이전트 문서들이 먼저 확인하라는 것은 둘입니다. 첫 실행 설정을 끝냈는지, 그리고 설정하는 동안 에이전트가 켜져 있어서 목록이 예전 그대로인 것은 아닌지입니다.</p>
+<ol class="steps"><li><b>ego(lite)를 열어 첫 실행 설정을 끝까지 마치기</b><span>중간에 닫았다면 다시 열어 마칩니다.</span></li><li><b>에이전트 앱을 완전히 종료하고 다시 열기</b><span>지금 대화나 창만 닫아서는 스킬이 다시 읽히지 않을 수 있습니다. 앱 자체를 끝냈다가 다시 실행합니다.</span></li><li><b>입력 칸에 <code>/ego-browser</code> 입력하기</b><span>목록에 ego-browser가 나오는지 봅니다. Claude Code · Codex · Cursor는 <code>/ego</code>까지만 입력해도 됩니다. OpenClaw는 <code>/ego</code>가 통하지 않으니 2단계 끝의 “목록에 없어도 쓸 수 있는 경우” 상자를 봅니다.</span></li></ol>
+<div class="tip"><b>Claude Code라면 모드부터</b><p>Claude 데스크톱 앱의 Cowork와 Code는 서로 다른 모드입니다. ego-browser 스킬은 Code용이라 Cowork의 스킬 메뉴에는 나오지 않습니다. Cowork에서 안 보인다고 설치가 실패한 것은 아닙니다. 왼쪽 위 모드 전환 메뉴에서 <b>Code</b>로 바꾸고 다시 찾아봅니다.</p></div>
+<p><b>확인:</b> <code>/ego-browser</code>(Claude Code · Codex · Cursor는 <code>/ego</code>)를 입력하면 ego-browser가 목록에 나옵니다. 나오면 5단계의 연결 시험으로 건너뜁니다.</p>
+</div>
+<div data-step="2"><h4 id="pb9-s2">2단계 · 스킬 폴더에 SKILL.md가 있는지 보기</h4>
+<p>다시 열어도 없다면, 에이전트가 스킬을 읽는 폴더에 ego-browser 폴더와 그 안의 SKILL.md<span class="gl">(스킬의 설명서 파일)</span>가 실제로 들어 있는지 봅니다. 폴더는 에이전트마다 다릅니다. 경로 맨 앞의 <code>~</code>는 내 홈 폴더<span class="gl">(내 계정의 기본 폴더)</span>를 뜻합니다.</p>
+<div class="table-wrap"><table class="kv where"><thead><tr><th>에이전트</th><th>스킬이 있어야 하는 곳</th><th>함께 볼 것</th></tr></thead><tbody>
+<tr><td>Claude Code</td><td><code>~/.claude/skills/</code></td><td>Cowork가 아니라 Code 모드인지.</td></tr>
+<tr><td>Codex · Cursor · OpenCode</td><td><code>~/.agents/skills/</code></td><td>첫 실행 설정을 마치고 에이전트를 종료했다가 다시 엽니다.</td></tr>
+<tr><td>WorkBuddy</td><td><code>~/.codebuddy/skills/ego-browser/SKILL.md</code></td><td>WorkBuddy는 이 폴더에서 스킬을 읽습니다. 없으면 아래 접힌 상자의 명령으로 복사한 뒤 완전히 종료하고 다시 엽니다.</td></tr>
+<tr><td>Hermes Agent</td><td><code>~/.hermes/skills/ego-browser/SKILL.md</code></td><td>없으면 복사한 뒤 Hermes를 다시 시작합니다. 열려 있는 TUI에서는 <code>/reload-skills</code>를 실행하고 새 세션을 시작해도 됩니다.</td></tr>
+<tr><td>OpenClaw</td><td><code>~/.agents/skills/ego-browser/SKILL.md</code></td><td>데스크톱 앱의 <b>Settings → Skills</b>(설정 → 스킬)에서 <b>Refresh</b>(새로 고침)를 누르고 ego-browser가 켜져 있는지 본 뒤 새 세션을 시작합니다.</td></tr>
+<tr><td>DeepSeek Harness</td><td><code>~/.agents/skills/ego-browser/SKILL.md</code></td><td>일하려는 프로젝트 폴더에서 시작하고 새 세션을 만듭니다. <code>&lt;project&gt;/.agents/skills/</code>도 함께 읽습니다.</td></tr>
+</tbody></table></div>
+<p>파일이 있는지 직접 찾기 어렵다면 에이전트에게 읽어 보게 합니다. 아래는 이 실습용으로 만든 예시 문장입니다.</p>
+<pre><code>Read ~/.agents/skills/ego-browser/SKILL.md and tell me whether the file exists.</code></pre>
+<p class="muted">뜻: ~/.agents/skills/ego-browser/SKILL.md 를 읽고, 그 파일이 있는지 알려 줘. (경로는 위 표에서 내 에이전트의 것으로 바꿉니다.)</p>
+<details class="adv"><summary>WorkBuddy · Hermes Agent — 스킬 복사 명령</summary><p>ego(lite)는 ego-browser를 <code>~/.agents/skills/</code> 아래에 설치하는데, 두 에이전트는 자기 폴더에서 스킬을 읽습니다. <code>/ego-browser</code>가 안 나오면 문서가 안내하는 아래 명령을 터미널<span class="gl">(명령을 글자로 입력해 실행하는 앱)</span>에 붙여 넣어 실행해 복사하고, 에이전트를 다시 시작합니다.</p>
+<pre><code>mkdir -p ~/.codebuddy/skills/ego-browser
+cp -R ~/.agents/skills/ego-browser/. ~/.codebuddy/skills/ego-browser/</code></pre>
+<p class="muted">WorkBuddy(CodeBuddy Code)용입니다.</p>
+<pre><code>mkdir -p ~/.hermes/skills/ego-browser
+cp -R ~/.agents/skills/ego-browser/. ~/.hermes/skills/ego-browser/</code></pre>
+<p class="muted">Hermes Agent용입니다.</p></details>
+<div class="note"><b>목록에 없어도 쓸 수 있는 경우</b><p><code>/ego-browser</code> 같은 슬래시 명령은 에이전트 프로그램의 화면 기능이지 ego(lite)가 요구하는 조건이 아닙니다. OpenClaw에서는 <code>/ego</code>가 명령 목록에 없는 것이 정상입니다 — 데스크톱 앱에서는 <code>/skill ego</code>를 입력해 <code>/ego_browser</code>를 고르고, TUI에서는 <code>/skill ego-browser</code>를 씁니다. 슬래시 명령이 아예 없는 에이전트 프로그램이라면 SKILL.md를 읽으라고 말로 부탁하면 됩니다.</p></div>
+<p><b>확인:</b> 표의 경로에 SKILL.md가 있고, 에이전트를 다시 연 뒤 스킬이 골라집니다.</p>
+</div>
+<div data-step="3"><h4 id="pb9-s3">3단계 · 스킬은 불러왔는데 ego(lite)가 안 열릴 때 — 권한 확인</h4>
+<p>스킬은 사용 설명서일 뿐입니다. ego(lite)를 실제로 띄우려면 에이전트가 내 컴퓨터에서 명령을 실행할 수 있어야 합니다. 예를 들어 Codex 문서는 Full access가 없으면 실행이 샌드박스<span class="gl">(격리된 실행 칸)</span>에 막히거나 승인 요청에서 멈출 수 있다고 설명합니다. 내 에이전트의 줄을 찾아 지금 상태를 확인합니다.</p>
+<div class="table-wrap"><table class="kv where"><thead><tr><th>에이전트</th><th>데스크톱 앱 · 화면</th><th>터미널</th></tr></thead><tbody>
+<tr><td>Claude Code</td><td>입력 칸 옆 권한 선택 메뉴에서 <b>Bypass permissions</b></td><td>세션을 닫고 <code>claude --dangerously-skip-permissions</code></td></tr>
+<tr><td>Codex</td><td>입력 칸 옆에 <b>Full access</b>가 보이는지</td><td>세션을 닫고 <code>codex --dangerously-bypass-approvals-and-sandbox</code></td></tr>
+<tr><td>Cursor</td><td><b>Settings → Agents → Approvals &amp; Execution → Run Everything</b> (3.6 이상). 예전 화면은 <b>Ask Every Time</b> 대신 <b>Run Everything (Unsandboxed)</b></td><td>문서에 안내 없음</td></tr>
+<tr><td>OpenCode</td><td><b>Settings → General → Auto-accept permissions</b></td><td>세션을 닫고 <code>opencode --auto</code></td></tr>
+<tr><td>WorkBuddy</td><td>권한 메뉴에 <b>Allow full access</b>가 보이는지</td><td>세션을 닫고 CodeBuddy Code를 <code>--dangerously-skip-permissions</code>로 다시 시작</td></tr>
+<tr><td>Hermes Agent</td><td><b>Settings → Safety → Approval Mode</b>가 <b>Smart</b>인지</td><td>세션을 닫고 <code>hermes --tui --yolo</code></td></tr>
+<tr><td>OpenClaw</td><td>Exec Approvals의 세 설정 (<a href="ego-lite-guide.html#ch05-openclaw">가이드 5장 OpenClaw</a>)</td><td>세션을 끝내고 <code>openclaw exec-policy preset yolo</code> 실행 후 <code>openclaw tui</code></td></tr>
+<tr><td>DeepSeek Harness</td><td>Web UI의 현재 세션에 <b>Full access</b>가 보이는지</td><td>같은 명령 안에서 <code>dsh</code> 앞에 <code>DSH_PERMISSION_MODE=danger-full-access</code>가 있는지</td></tr>
+</tbody></table></div>
+<div class="warn"><b>남의 명령을 옮겨 쓰지 않습니다</b><p>위 설정은 에이전트마다 따로입니다. 한 제품의 명령이나 옵션을 다른 제품에 그대로 쓰지 않습니다. 또 이 설정들은 에이전트가 내 컴퓨터에서 할 수 있는 일을 넓히므로, 믿을 수 있는 에이전트·작업 폴더·작업에만 켭니다.</p></div>
+<p><b>확인:</b> 표에 적힌 이름이 화면에 보입니다. Claude Code TUI라면 상태 줄에 <code>bypass permissions on</code>이 표시됩니다. 그다음 5단계의 연결 시험을 합니다.</p>
+</div>
+<div data-step="4"><h4 id="pb9-s4">4단계 · ego-browser 명령이 보이는지 확인</h4>
+<p>권한도 맞는데 열리지 않으면, 브라우저 작업을 맡길 <b>바로 그 대화</b>에서 에이전트에게 아래 명령을 실행하게 합니다.</p>
+<pre><code>command -v ego-browser</code></pre>
+<p class="muted">뜻: ego-browser 라는 명령이 어디에 있는지 경로를 보여 줘. 에이전트에게는 “Run command -v ego-browser in this session and show me the output.”(예시 문장)처럼 부탁합니다.</p>
+<ul>
+  <li><b>경로가 나온다</b> — 이 대화가 ego-browser를 찾을 수 있다는 뜻입니다. 다만 명령이 내 컴퓨터에서 실행된다는 증명까지는 아닙니다. 그 확인은 5단계가 합니다.</li>
+  <li><b>아무것도 안 나온다</b> — 먼저 ego(lite) 첫 실행 설정이 끝났는지 보고, 에이전트를 다시 시작한 뒤 브라우저 작업을 맡길 그 대화에서 한 번 더 실행합니다. 평소 쓰는 터미널에서는 되는데 에이전트에서만 안 된다면, 둘의 PATH<span class="gl">(명령을 찾는 폴더 목록)</span>와 실행 환경이 다른지 비교합니다.</li>
+</ul>
+<p class="muted">이 확인은 매번 할 필요가 없습니다. 문서는 첫 실행이 실제로 오류를 냈을 때만 이런 사전 점검을 하라고 안내합니다.</p>
+<p><b>확인:</b> 명령이 경로 한 줄을 돌려줍니다.</p>
+</div>
+<div data-step="5"><h4 id="pb9-s5">5단계 · 연결 시험 — 공개 페이지 하나 열기</h4>
+<p>로그인이 필요한 사이트로 가기 전에, 누구나 볼 수 있는 간단한 페이지로 연결만 시험합니다. 문서가 주는 문장 그대로입니다.</p>
+<pre><code>Use the ego-browser Skill to open https://example.com in ego (lite), report the page title, and leave the page open.</code></pre>
+<p class="muted">뜻: ego-browser 스킬을 써서 ego(lite)에서 https://example.com 을 열고, 페이지 제목을 알려 주고, 페이지는 열어 둬.</p>
+<figure class="diagram"><svg viewBox="0 0 780 230" role="img" aria-label="연결 시험의 세 가지 결과: 바로 열리면 통과, 승인하면 열리면 승인 정책만 남은 것, 내 컴퓨터에 닿지 않으면 호스트 실행 권한이나 다리를 확인합니다.">
+<rect class="box s-accent" x="265" y="16" width="250" height="44" rx="10"/><text x="390" y="43" text-anchor="middle" font-weight="600">연결 시험 문장 보내기</text>
+<path class="line s-green anim-flow" d="M390 60 V84 H137 V110"/>
+<path class="line s-amber anim-flow" d="M390 84 V110"/>
+<path class="line s-red anim-flow" d="M390 84 H642 V110"/>
+<rect class="box s-green" x="20" y="110" width="235" height="96" rx="12"/><text x="137" y="138" text-anchor="middle" font-weight="600">바로 열림</text><text class="sub" x="137" y="162" text-anchor="middle">Space가 열리고 제목이 돌아옴</text><text class="sub" x="137" y="184" text-anchor="middle">→ 통과</text>
+<rect class="box s-amber" x="272" y="110" width="236" height="96" rx="12"/><text x="390" y="138" text-anchor="middle" font-weight="600">승인하면 열림</text><text class="sub" x="390" y="162" text-anchor="middle">남은 것은 승인 정책뿐</text><text class="sub" x="390" y="184" text-anchor="middle">→ 계속 승인하거나 설정 변경</text>
+<rect class="box s-red" x="525" y="110" width="235" height="96" rx="12"/><text x="642" y="138" text-anchor="middle" font-weight="600">내 컴퓨터에 닿지 않음</text><text class="sub" x="642" y="162" text-anchor="middle">호스트 실행 권한 · 다리 확인</text><text class="sub" x="642" y="184" text-anchor="middle">→ 6단계</text>
+</svg><figcaption>결과는 셋 중 하나입니다. 가운데 경우는 고장이 아니라 “물어보고 실행하는” 설정이 남아 있을 뿐입니다. 오른쪽의 “호스트 실행 권한”과 “다리”가 무엇인지는 6단계에서 풉니다.</figcaption></figure>
+<p><b>확인:</b> ego(lite)가 에이전트 Space를 열고, 페이지가 뜨고, 에이전트가 페이지 제목을 돌려줍니다. 여기까지 되면 연결은 정상입니다.</p>
+</div>
+<div data-step="6"><h4 id="pb9-s6">6단계 · 승인만 계속 묻는가, 다른 기기에서 도는가</h4>
+<p>5단계가 통과하지 못했다면 둘을 구분합니다. 묻는 것과 갇힌 것은 다른 문제입니다.</p>
+<ul>
+  <li><b>에이전트가 계속 승인을 묻는다</b> — 승인 정책이 적용되고 있다는 뜻일 뿐, 에이전트가 샌드박스에 갇혔다는 증거는 아닙니다. 승인한 뒤 ego(lite)가 열리면, 계속 직접 승인하거나 믿을 수 있는 세션에 한해 그 제품 문서에 있는 “승인 없이 실행” 설정을 씁니다.</li>
+  <li><b>승인해도 내 컴퓨터에 닿지 않는다</b> — 호스트 실행<span class="gl">(명령이 ego(lite)가 설치된 바로 그 컴퓨터에서 실행되는 것)</span> 권한이나 호스트로 잇는 다리<span class="gl">(host bridge — 격리된 곳의 에이전트가 내 컴퓨터에서 명령을 실행하게 해 주는 연결)</span>를 확인합니다. 거꾸로, 승인 묻기를 꺼 두었다고 호스트 실행이 되는 것도 아닙니다.</li>
+  <li><b>에이전트가 Docker · SSH · 클라우드에서 돈다</b> — Docker<span class="gl">(프로그램을 격리된 상자에 담아 돌리는 도구)</span>, SSH<span class="gl">(다른 컴퓨터에 원격으로 접속하는 방법)</span>, 클라우드 같은 원격 실행 환경은 호스트로 잇는 다리 없이는 내 컴퓨터의 ego(lite)를 조종할 수 없습니다. 그곳에 스킬을 설치하거나 불러오는 것만으로는 부족합니다.</li>
+</ul>
+<figure class="diagram"><svg viewBox="0 0 780 290" role="img" aria-label="명령이 실행되는 곳 세 가지: 내 컴퓨터에서 바로 실행하면 그대로 통하고, 샌드박스 안이면 호스트 실행 권한이, 다른 기기면 호스트로 잇는 다리가 있어야 내 컴퓨터의 ego(lite)에 닿습니다.">
+<rect class="box s-green" x="20" y="24" width="250" height="60" rx="12"/><text x="145" y="50" text-anchor="middle" font-weight="600">내 컴퓨터에서 바로 실행</text><text class="sub" x="145" y="70" text-anchor="middle">샌드박스 없음 · 추가 권한 불필요</text>
+<path class="line s-green anim-flow" d="M270 54 H560"/><text class="sub" x="415" y="46" text-anchor="middle">그대로 통함</text>
+<rect class="box s-amber" x="20" y="110" width="250" height="60" rx="12"/><text x="145" y="136" text-anchor="middle" font-weight="600">내 컴퓨터 안의 샌드박스</text><text class="sub" x="145" y="156" text-anchor="middle">격리된 칸 안에서 명령 실행</text>
+<path class="line s-amber anim-flow" d="M270 140 H320"/>
+<rect class="box s-amber" x="320" y="118" width="170" height="44" rx="8" style="stroke-dasharray:4 4"/><text x="405" y="145" text-anchor="middle">호스트 실행 권한</text>
+<path class="line s-amber anim-flow" d="M490 140 H560"/>
+<text class="sub" x="405" y="182" text-anchor="middle">에이전트 프로그램이 공식 제공해야 함</text>
+<rect class="box s-red" x="20" y="196" width="250" height="60" rx="12"/><text x="145" y="222" text-anchor="middle" font-weight="600">Docker · SSH · 클라우드</text><text class="sub" x="145" y="242" text-anchor="middle">다른 기기에서 명령 실행</text>
+<path class="line s-red anim-flow" d="M270 226 H320"/>
+<rect class="box s-red" x="320" y="204" width="170" height="44" rx="8" style="stroke-dasharray:4 4"/><text x="405" y="231" text-anchor="middle">호스트로 잇는 다리</text>
+<path class="line s-red anim-flow" d="M490 226 H560"/>
+<text class="sub" x="405" y="268" text-anchor="middle">없으면 스킬을 불러와도 조종 불가</text>
+<rect class="box s-accent" x="560" y="24" width="200" height="232" rx="14"/>
+<circle class="f-green anim-pulse" cx="660" cy="100" r="8"/>
+<text x="660" y="140" text-anchor="middle" font-weight="700">내 컴퓨터의 ego(lite)</text>
+<text class="sub" x="660" y="162" text-anchor="middle">ego-browser 명령이</text><text class="sub" x="660" y="178" text-anchor="middle">여기서 실행되어야 열림</text>
+</svg><figcaption>스킬을 불러오는 것은 에이전트에게 설명서를 주는 일입니다. 명령이 실행되는 자리를 샌드박스나 다른 기기에서 내 컴퓨터로 옮겨 주지는 않습니다.</figcaption></figure>
+<p>다른 기기에서 돈다면 길은 셋입니다. 에이전트 프로그램을 내 컴퓨터에서 직접 돌리거나, 그 프로그램이 지원하는 다리를 설정하거나, 에이전트가 도는 그 기기에 맞는 브라우저 환경을 설치해 거기서 돌립니다. 에이전트가 어디서 도는지 모르겠다면 문서의 점검 문장을 첫 메시지로 보냅니다.</p>
+<pre><code>First determine whether your command runtime is running directly on this computer or inside a sandbox, container, or remote environment. If it uses a sandbox, confirm that you have an official permission or bridge that lets commands run on this computer. Do not treat disabled approval prompts as proof of host execution.
+
+Then locate and read the ego-browser Skill. First check ~/.agents/skills/ego-browser/SKILL.md. If you cannot execute ego-browser on this computer, stop and explain what host-execution permission or bridge is missing.</code></pre>
+<p class="muted">뜻: 먼저 네 명령이 이 컴퓨터에서 바로 실행되는지, 샌드박스·컨테이너·원격 환경 안에서 실행되는지 판단해 줘. 샌드박스를 쓴다면 이 컴퓨터에서 명령을 실행하게 해 주는 공식 권한이나 다리가 있는지 확인해 줘. 승인 묻기가 꺼져 있다는 것을 호스트 실행의 증거로 삼지 마. 그다음 ego-browser 스킬을 찾아 읽어 줘(먼저 ~/.agents/skills/ego-browser/SKILL.md). 이 컴퓨터에서 ego-browser를 실행할 수 없다면 멈추고, 어떤 호스트 실행 권한이나 다리가 빠졌는지 설명해 줘.</p>
+<p><b>확인:</b> 에이전트가 자기 실행 위치를 답하고, 조치 뒤 5단계의 연결 시험이 통과합니다.</p>
+</div></div>
+
+<h3 id="pb9-stuck">막히면</h3>
+<p>에이전트 문서마다 따로 적힌 증상을 모았습니다. 내 에이전트 이름이 붙은 줄만 보면 됩니다.</p>
+<div class="table-wrap"><table class="kv sym"><thead><tr><th>에이전트</th><th>증상</th><th>해 볼 것</th></tr></thead><tbody>
+<tr><td>Claude Code</td><td>Bypass permissions가 선택지에 없음</td><td><b>Settings → Claude Code</b>에서 <b>Allow bypass permissions mode</b>를 켭니다. Team·Enterprise 정책이 숨길 수 있으니 잠겨 있으면 관리자에게 문의합니다.</td></tr>
+<tr><td>Claude Code</td><td>권한도 켰는데 끝내 조종이 안 됨</td><td>문서는 Discord로 문의해 달라고 안내합니다.</td></tr>
+<tr><td>OpenCode · WorkBuddy · Hermes Agent</td><td>TUI가 엉뚱한 프로젝트에서 열림</td><td>종료하고 터미널에서 맞는 프로젝트 폴더로 옮긴 뒤 다시 실행합니다(OpenCode <code>opencode --auto</code>, Hermes <code>hermes --tui --yolo</code>). 실행한 폴더가 작업 폴더가 됩니다.</td></tr>
+<tr><td>WorkBuddy</td><td>터미널이 <code>codebuddy</code> 명령을 못 찾음</td><td>WorkBuddy 앱에 들어 있는 CLI<span class="gl">(터미널에서 명령으로 쓰는 프로그램)</span>를 <code>codebuddy</code> 대신 전체 경로 <code>/Applications/WorkBuddy AI.app/Contents/Resources/app.asar.unpacked/cli/bin/codebuddy</code>로 실행하거나(경로에 빈칸이 있어 문서의 명령은 경로 전체를 큰따옴표로 감쌉니다), 짧은 <code>codebuddy</code> 명령을 쓰려면 CodeBuddy Code를 전역(어느 폴더에서나 쓸 수 있게)으로 먼저 설치합니다.</td></tr>
+<tr><td>Hermes Agent</td><td><code>/ego-browserUse</code> 같은 모르는 명령이라고 함</td><td><code>/ego-browser</code> 뒤에 한 칸을 띄우거나, 제안 목록에서 스킬을 먼저 고른 뒤 작업을 씁니다. 띄우지 않으면 스킬 이름과 작업의 첫 단어를 한 명령으로 읽습니다.</td></tr>
+<tr><td>OpenClaw</td><td>TUI가 Gateway에 연결하지 못함</td><td><code>openclaw gateway status</code>로 상태를 보고, 꺼져 있으면 <code>openclaw gateway start</code>로 켠 뒤 <code>openclaw tui</code>를 다시 실행합니다.</td></tr>
+<tr><td>DeepSeek Harness</td><td>터미널이 <code>dsh</code>를 못 찾음</td><td>패키지 실행 형태(<code>npx @deepseek-ai/dsh</code>)로 바꿉니다. 전체 명령은 <a href="ego-lite-guide.html#ch05-deepseek">가이드 5장 DeepSeek Harness</a>.</td></tr>
+<tr><td>직접 만든 에이전트</td><td>Bypass permissions 같은 설정이 아예 없음</td><td>정상일 수 있습니다. 명령이 이미 샌드박스 없이 내 컴퓨터에서 실행된다면 넓힐 권한이 없습니다. 4단계와 5단계로 확인하고, 명령마다 승인만 묻는다면 직접 승인하면 됩니다. <a href="ego-lite-guide.html#ch06-trouble">가이드 6장 문제 해결</a>.</td></tr>
+</tbody></table></div>
+
+<h3 id="pb9-next">다음에 할 것</h3>
+<ul>
+  <li>연결 시험이 통과했다면 하던 실습으로 돌아갑니다. 처음이라면 <a href="#pb1">실습 1</a>.</li>
+  <li>연결은 되는데 작업 도중 로그인 요구나 번호표 오류로 막힌다면 <a href="#pb10">실습 10 — 막힘 해결 ②</a>.</li>
+  <li>더 자세한 설명: <a href="ego-lite-guide.html#ch05-trouble">가이드 5장 에이전트별 문제 해결</a> · <a href="ego-lite-guide.html#ch06-check">6장 명령이 어디서 실행되나</a> · <a href="ego-lite-guide.html#ch06-test">6장 연결 시험</a>.</li>
+</ul>
+
+<div class="summary-box"><b>한눈에 정리</b><ul>
+<li>스킬이 안 보이면 — 첫 실행 설정을 마치고, 에이전트를 완전히 종료했다가 다시 열고, 스킬 폴더에 SKILL.md가 있는지 봅니다.</li>
+<li>스킬은 불러왔는데 ego(lite)가 안 열리면 — 에이전트별 권한 설정을 확인합니다. 이름과 위치는 에이전트마다 다르고, 서로 옮겨 쓰지 않습니다.</li>
+<li>고쳤는지는 example.com 연결 시험으로 확인합니다. Space가 열리고 제목이 돌아오면 정상입니다.</li>
+<li>계속 승인을 묻는 것은 승인 정책일 뿐, 갇혔다는 증거가 아닙니다.</li>
+<li>에이전트가 다른 기기에서 돈다면 내 컴퓨터로 잇는 다리가 있어야 합니다. 스킬을 불러오는 것만으로는 닿지 않습니다.</li>
+</ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/custom-agent-harness(Step 1 · Step 3 점검 문장 · Step 4 · Troubleshooting) · claude-code · codex · cursor · opencode · workbuddy · hermes-agent · openclaw · deepseek-harness(각 Troubleshooting) · ego-browser(Notes). 수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준. SKILL.md를 읽어 보라는 문장과 command -v 를 부탁하는 문장은 실습용 예시입니다.</p>
+</section>
+<section class="chapter" id="pb10">
+<style>
+  #pb10 .sym td:first-child{font-weight:600}
+  #pb10 .diagram svg .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+</style>
+<div class="ch-head"><div class="ch-no">SCENARIO 10</div><h2>막힘 해결 ② — 로그인·인증 요구, 번호표 오류, 결과가 이상할 때</h2><p class="lead">에이전트<span class="gl">(내 대신 명령을 실행하며 일하는 AI 프로그램)</span>와 ego(lite)는 잘 이어졌는데, 작업 도중 <b>페이지 쪽에서</b> 막히는 경우입니다. 다섯 가지 상황마다 내가 할 일과 에이전트에게 보낼 한 문장을 정리했습니다.</p></div>
+<div class="learn"><b>이 실습으로 할 수 있게 되는 것</b><ul><li>사이트가 로그인·인증을 요구하면 에이전트 Space에서 직접 처리하고 이어 하게 합니다.</li><li>번호표 오류나 미심쩍은 결과에는 “지금 페이지를 다시 읽게” 합니다.</li><li>에이전트가 읽지 못하는 내용과 넘으면 안 되는 선을 분명히 말해 줍니다.</li></ul><p class="muted">예상 소요 시간: 상황 하나에 3~5분 (전체를 한 번 읽어 두는 데 15분)</p></div>
+<div class="start-here"><b>처음이라면 이것만</b><p><a href="#pb10-prep">준비물</a>을 확인하고, 아래 그림에서 내 증상의 번호를 찾아 <a href="#pb10-steps">따라 하기</a>의 같은 번호 단계로 갑니다. 찾는 증상이 없으면 <a href="#pb10-stuck">막히면</a> 표를 봅니다.</p></div>
+
+<h3 id="pb10-prep">준비물과 완료 기준</h3>
+<ul>
+  <li>작업을 맡긴 에이전트 대화와, 그 작업이 열려 있는 에이전트 Space<span class="gl">(스페이스 — 에이전트 전용 작업 공간)</span>. 연습이라면 <a href="#pb1">실습 1</a>이나 <a href="#pb4">실습 4</a>의 작업을 다시 맡겨도 됩니다.</li>
+  <li>에이전트 Space에 들어가 직접 조작하는 방법. 아직 해 보지 않았다면 <a href="#pb2">실습 2</a>가 먼저입니다.</li>
+  <li>ego(lite)가 아예 열리지 않거나 스킬이 안 보이는 문제는 여기가 아니라 <a href="#pb9">실습 9</a>에서 다룹니다.</li>
+</ul>
+<div class="note"><b>완료 기준</b><p>내 상황이 다섯 가지 중 어느 것인지 고르고, 그 단계의 문장을 보낸 뒤, 에이전트가 지금 페이지를 근거로 작업을 이어 가거나 멈춰서 내 확인을 기다리면 완료입니다.</p></div>
+
+<figure class="diagram"><svg viewBox="0 0 780 350" role="img" aria-label="다섯 가지 증상과 처방: 로그인·인증 요구는 내가 Space에서 직접 처리, 번호표 오류는 스냅샷 새로 찍기, 이상한 결과는 지금 페이지를 다시 스냅샷해 확인, 못 읽는 내용은 스크린샷·글 추출·사람 확인을 섞기, 하면 안 되는 일은 경계를 다시 말하기.">
+<rect class="box s-amber" x="20" y="20" width="340" height="52" rx="10"/><text x="36" y="42" font-weight="600">① 로그인·인증·CAPTCHA를 요구함</text><text class="sub" x="36" y="60">에이전트가 멈추고 나를 부름</text>
+<path class="line s-accent anim-flow" d="M360 46 H420"/>
+<rect class="box s-green" x="420" y="20" width="340" height="52" rx="10"/><text x="436" y="42" font-weight="600">에이전트 Space에서 내가 직접 처리</text><text class="sub" x="436" y="60">끝나면 이어 하라고 말함</text>
+<rect class="box s-amber" x="20" y="84" width="340" height="52" rx="10"/><text x="36" y="106" font-weight="600">② 번호표가 유효하지 않다고 함</text><text class="sub" x="36" y="124">Unknown ref · ref is invalid</text>
+<path class="line s-accent anim-flow" d="M360 110 H420"/>
+<rect class="box s-green" x="420" y="84" width="340" height="52" rx="10"/><text x="436" y="106" font-weight="600">스냅샷을 새로 찍게 함</text><text class="sub" x="436" y="124">번호표는 가장 최근 스냅샷에서만 유효</text>
+<rect class="box s-amber" x="20" y="148" width="340" height="52" rx="10"/><text x="36" y="170" font-weight="600">③ 결과가 이상하거나 지어낸 듯함</text><text class="sub" x="36" y="188">확인할 근거가 답에 없음</text>
+<path class="line s-accent anim-flow" d="M360 174 H420"/>
+<rect class="box s-green" x="420" y="148" width="340" height="52" rx="10"/><text x="436" y="170" font-weight="600">지금 페이지를 다시 스냅샷해 확인</text><text class="sub" x="436" y="188">제목·ID·URL·금액·시각을 함께 요구</text>
+<rect class="box s-amber" x="20" y="212" width="340" height="52" rx="10"/><text x="36" y="234" font-weight="600">④ 페이지 일부를 읽지 못함</text><text class="sub" x="36" y="252">화면 밖 · 이미지 속 글 · canvas · 일부 iframe</text>
+<path class="line s-accent anim-flow" d="M360 238 H420"/>
+<rect class="box s-green" x="420" y="212" width="340" height="52" rx="10"/><text x="436" y="234" font-weight="600">스크린샷·글 추출·사람 확인을 섞음</text><text class="sub" x="436" y="252">못 읽은 부분을 밝히게 함</text>
+<rect class="box s-red" x="20" y="276" width="340" height="52" rx="10"/><text x="36" y="298" font-weight="600">⑤ 하면 안 되는 일을 하려 함</text><text class="sub" x="36" y="316">수정 · 제출 · 삭제 등</text>
+<path class="line s-accent anim-flow" d="M360 302 H420"/>
+<rect class="box s-green" x="420" y="276" width="340" height="52" rx="10"/><text x="436" y="298" font-weight="600">경계를 다시 말함</text><text class="sub" x="436" y="316">read-only · stop and confirm</text>
+</svg><figcaption>왼쪽이 증상, 오른쪽이 내가 할 일입니다. 번호는 아래 따라 하기의 단계 번호와 같습니다.</figcaption></figure>
+
+<h3 id="pb10-steps">따라 하기</h3>
+<div class="stepper" data-stepper>
+<div data-step="1"><h4 id="pb10-s1">1단계 · 사이트가 로그인·인증·CAPTCHA를 요구할 때</h4>
+<p><b>보이는 것:</b> 에이전트가 멈추고 “로그인이 필요하다”고 알리거나, 에이전트 Space에 로그인 화면·인증 번호 입력 칸·CAPTCHA<span class="gl">(사람인지 확인하는 검사)</span>가 떠 있습니다.</p>
+<p><b>할 일:</b> ego(lite)의 그 에이전트 Space에 들어가 로그인이나 인증을 내가 직접 끝냅니다. 그런 다음 대화창으로 돌아와 이어 하라고 말합니다. ego(lite)는 CAPTCHA나 사이트의 보안 확인을 우회하지 않으므로, 이 단계는 사람이 합니다.</p>
+<figure class="diagram"><svg viewBox="0 0 760 170" role="img" aria-label="에이전트가 멈추면 내가 Space로 들어가 직접 로그인하고, 이어 하라고 말하면 에이전트가 같은 Space에서 계속합니다.">
+<rect class="box s-amber" x="20" y="24" width="160" height="80" rx="12"/><text x="100" y="58" text-anchor="middle" font-weight="600">에이전트가 멈춤</text><text class="sub" x="100" y="82" text-anchor="middle">로그인·인증 화면</text>
+<path class="line s-accent" d="M180 64 H206"/>
+<rect class="box s-cyan" x="206" y="24" width="160" height="80" rx="12"/><text x="286" y="58" text-anchor="middle" font-weight="600">내가 Space로 들어감</text><text class="sub" x="286" y="82" text-anchor="middle">직접 로그인·인증</text>
+<path class="line s-accent" d="M366 64 H392"/>
+<rect class="box s-accent" x="392" y="24" width="160" height="80" rx="12"/><text x="472" y="58" text-anchor="middle" font-weight="600">이어 하라고 말함</text><text class="sub" x="472" y="82" text-anchor="middle">대화창에 한 문장</text>
+<path class="line s-accent" d="M552 64 H578"/>
+<rect class="box s-green" x="578" y="24" width="160" height="80" rx="12"/><text x="658" y="58" text-anchor="middle" font-weight="600">에이전트가 계속</text><text class="sub" x="658" y="82" text-anchor="middle">같은 Space에서</text>
+<path id="pb10-flow" class="line" d="M100 126 H658"/>
+<circle class="f-accent" r="5"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#pb10-flow"/></animateMotion></circle>
+<text class="sub" x="380" y="150" text-anchor="middle">비밀번호와 인증 코드는 사이트 화면에만 입력합니다</text>
+</svg><figcaption>에이전트가 못 하는 단계를 내가 넘겨받아 처리하고 돌려주는 흐름입니다.</figcaption></figure>
+<p>이어 하라고 말하는 문장의 예시입니다(문서에 있는 문장이 아니라 이 실습용으로 만든 것입니다).</p>
+<pre><code>I finished the login in the agent Space. Continue the task in the same Space.</code></pre>
+<p class="muted">뜻: 에이전트 Space에서 로그인을 끝냈어. 같은 Space에서 작업을 이어서 해 줘.</p>
+<div class="warn"><b>비밀번호·인증 코드를 대화창에 붙여 넣지 않습니다</b><p>에이전트에게 대신 입력하라고 비밀번호나 인증 코드를 보내지 마세요. 로그인은 언제나 에이전트 Space의 사이트 화면에서 내가 직접 합니다.</p></div>
+<details class="adv"><summary>에이전트가 멈추고 나를 불러야 하는 상황 목록</summary><ul><li>문자·이메일 인증 코드, QR 코드 로그인, 하드웨어 보안 키.</li><li>결제, 주문, 송금, 환불.</li><li>게시, 삭제, 보관처럼 되돌리기 어려운 수정이나 한꺼번에 여러 건을 바꾸는 일.</li><li>다른 앱이 내 계정에 접근하도록 허용하는 일.</li></ul><p>자세한 설명은 <a href="ego-lite-guide.html#ch02-login">가이드 2장 로그인 상태와 멈춰야 하는 순간</a>.</p></details>
+<p><b>확인:</b> 에이전트가 로그인 뒤의 페이지에서 작업을 이어 가고, 대화창에는 비밀번호나 코드가 한 글자도 남아 있지 않습니다.</p>
+</div>
+<div data-step="2"><h4 id="pb10-s2">2단계 · 번호표가 유효하지 않다고 할 때 (Unknown ref)</h4>
+<p><b>보이는 것:</b> 에이전트가 번호표<span class="gl">(@1, @2 … — 누를 수 있는 요소에 붙는 임시 번호)</span>가 유효하지 않다거나 <code>Unknown ref</code>라고 알립니다.</p>
+<p><b>왜 생기나:</b> 번호표는 스냅샷<span class="gl">(Snapshot — 에이전트가 읽는 페이지의 글 버전)</span>을 찍은 그 순간에만 맞습니다. 그 뒤에 페이지가 바뀌면 옛 번호가 가리키는 곳이 없어질 수 있습니다. 고장이 아니라 페이지가 달라졌다는 신호입니다.</p>
+<figure class="diagram"><svg viewBox="0 0 780 240" role="img" aria-label="조금 전 스냅샷의 번호표는 페이지가 바뀌면 가리키는 곳이 없어질 수 있습니다. 스냅샷을 새로 찍으면 번호표를 다시 받습니다.">
+<rect class="box s-amber" x="20" y="20" width="220" height="160" rx="12"/>
+<text x="36" y="46" font-weight="600">스냅샷 ① (조금 전)</text>
+<text class="mono" x="36" y="76">@1 [input]  "Search"</text>
+<text class="mono" x="36" y="100">@2 [button] "Submit"</text>
+<text class="mono" x="36" y="124">@3 [link]   "Next page"</text>
+<text class="sub" x="36" y="160">이 번호는 이때만 유효</text>
+<path class="line s-amber anim-flow" d="M240 100 H290"/>
+<rect class="box s-red" x="290" y="60" width="200" height="80" rx="12"/>
+<text x="390" y="92" text-anchor="middle" font-weight="600">페이지가 바뀜</text>
+<text class="sub" x="390" y="116" text-anchor="middle">이동 · 새로 고침 · 제출 · 탭 전환</text>
+<path class="line s-green anim-flow" d="M490 100 H540"/>
+<rect class="box s-green" x="540" y="20" width="220" height="160" rx="12"/>
+<text x="556" y="46" font-weight="600">스냅샷 ② (새로 찍음)</text>
+<text class="mono" x="556" y="76">@1 [input]  "Search"</text>
+<text class="mono" x="556" y="100">@6 [button] "Confirm"</text>
+<text class="mono" x="556" y="124">@7 [link]   "Back"</text>
+<text class="sub" x="556" y="160">지금 페이지의 번호표</text>
+<circle class="f-red anim-pulse" cx="172" cy="210" r="5"/>
+<text x="186" y="214">옛 번호(@2)를 누르려 하면 가리키는 곳이 없음 → Unknown ref</text>
+</svg><figcaption>왼쪽 세 줄은 문서의 스냅샷 예시이고, 오른쪽은 설명을 위해 지어낸 모양입니다. 같은 요소는 대개 같은 번호를 받지만, 쓸 수 있는 번호는 가장 최근 스냅샷에 나온 것뿐입니다.</figcaption></figure>
+<p>문서가 꼽는 흔한 원인은 셋입니다.</p>
+<ul>
+  <li>그 요소가 화면 밖으로 스크롤되어 나갔습니다.</li>
+  <li>페이지의 구조가 다시 그려졌습니다.</li>
+  <li>앞에서는 “화면에 보이는 부분만” 스냅샷을 찍었고, 다음 스냅샷이 그 요소를 담지 못했습니다.</li>
+</ul>
+<p><b>할 일:</b> 스냅샷을 새로 찍으라고 합니다. 아래는 예시 문장입니다.</p>
+<pre><code>The page changed. Take a fresh snapshot of the current page and continue from there.</code></pre>
+<p class="muted">뜻: 페이지가 바뀌었어. 지금 페이지의 스냅샷을 새로 찍고 거기서부터 이어서 해 줘.</p>
+<p>번호를 내가 외우거나 알려 줄 필요는 없습니다. 번호는 에이전트가 쓰는 것이고, 나는 목표와 경계를 정하면 됩니다. 원리는 <a href="ego-lite-guide.html#ch03-refs">가이드 3장 번호표</a>와 <a href="ego-lite-guide.html#ch04-refscope">4장 번호표가 통하는 범위</a>에 있습니다.</p>
+<p><b>확인:</b> 에이전트가 “다시 스냅샷을 찍었다”고 알리고 다음 동작으로 넘어갑니다.</p>
+</div>
+<div data-step="3"><h4 id="pb10-s3">3단계 · 결과가 이상하거나 지어낸 것 같을 때</h4>
+<p><b>보이는 것:</b> 답에 나온 숫자·제목이 내가 아는 것과 다르거나, 어디서 봤는지 근거가 없습니다.</p>
+<p><b>할 일:</b> “아까 답을 고쳐 줘”라고 하지 않습니다. 그러면 에이전트가 앞선 답에서 추측을 이어 갈 수 있습니다. 문서의 안내는 <b>지금 페이지를 다시 스냅샷하게 하라</b>는 것입니다. 스냅샷은 페이지를 읽기만 하고 아무것도 바꾸지 않으므로 몇 번을 다시 찍게 해도 됩니다. 아래는 예시 문장입니다.</p>
+<pre><code>Don't extrapolate from your earlier answer. Re-snapshot the current page and check the result again. Include titles, URLs, and timestamps I can verify.</code></pre>
+<p class="muted">뜻: 앞선 답에서 미루어 짐작하지 마. 지금 페이지를 다시 스냅샷해서 결과를 다시 확인해 줘. 내가 확인할 수 있는 제목, URL, 시각을 함께 적어 줘.</p>
+<p>답이 다시 오면 아래 다섯 가지를 봅니다. 문서가 작업이 끝났을 때 확인하라고 꼽는 신호입니다.</p>
+<ol>
+  <li>어느 페이지를 방문했고 어떤 주요 동작을 했는지 말했나요?</li>
+  <li>내가 확인할 수 있는 것 — 제목, ID, URL, 금액, 시각 — 이 들어 있나요?</li>
+  <li>내려받기였다면 파일이 저장된 위치를 알려 주었나요?</li>
+  <li>수정하거나 제출하는 일이었다면 마지막 단계 전에 멈춰 확인을 받았나요?</li>
+  <li>관련 페이지가 Space에 아직 열려 있어 내가 볼 수 있나요?</li>
+</ol>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 확인할 수 있는 답의 모양(예시)</div><div class="body">방문한 페이지: (URL)<br>한 일: 목록 열기 → 어제 날짜로 거르기<br>결과: (제목) · (ID) · (금액) · (시각)<br><span class="muted">괄호 자리에 실제 값이 있어야 Space에 열린 페이지와 견줄 수 있습니다.</span></div></div>
+<p><b>확인:</b> 답에 든 제목이나 URL 하나를 골라 에이전트 Space에 열려 있는 페이지에서 직접 찾았습니다. 작업이 끝나도 탭은 바로 닫히지 않고 남으므로 그대로 견줄 수 있습니다(<a href="ego-lite-guide.html#ch02-after">언제까지 남는지</a>). 대조하는 연습은 <a href="#pb3">실습 3</a>, 원리는 <a href="ego-lite-guide.html#ch03-review">가이드 3장 결과 확인</a>.</p>
+</div>
+<div data-step="4"><h4 id="pb10-s4">4단계 · 스냅샷이 읽지 못하는 내용일 때</h4>
+<p><b>보이는 것:</b> 화면에는 분명히 있는 내용을 에이전트가 “보이지 않는다”고 하거나 빠뜨립니다.</p>
+<p><b>왜 생기나:</b> 스냅샷이 모든 것을 읽지는 못합니다. 문서가 꼽는 것은 넷입니다 — 화면 밖에 있는 내용, 이미지 속 글, 복잡한 canvas<span class="gl">(그림판처럼 직접 그려 넣은 화면 영역)</span>, 샌드박스된 교차 출처 iframe<span class="gl">(다른 사이트의 페이지를 격리해 끼워 넣은 칸)</span>. 이런 곳에서 에이전트는 스냅샷에 스크린샷, 글 추출, 사람의 확인을 섞어 씁니다.</p>
+<p><b>할 일:</b> 다른 방법을 쓰게 하고, 못 읽은 부분을 숨기지 말고 밝히게 합니다. 아래는 예시 문장입니다.</p>
+<pre><code>If the snapshot doesn't show that part, use a screenshot or text extraction, and tell me which parts you could not read.</code></pre>
+<p class="muted">뜻: 스냅샷에 그 부분이 안 나오면 스크린샷이나 글 추출을 써 줘. 그리고 읽지 못한 부분이 어디인지 알려 줘.</p>
+<p>그래도 안 읽히는 값은 내가 에이전트 Space에서 직접 보고 알려 주면 됩니다. 이것이 “사람의 확인”입니다. 읽지 못하는 범위는 <a href="ego-lite-guide.html#ch03-limits">가이드 3장 스냅샷의 한계</a>에 정리되어 있습니다.</p>
+<p><b>확인:</b> 에이전트가 어느 부분을 못 읽었는지 밝히고, 다른 방법으로 얻은 값이나 내게 확인을 부탁하는 질문을 돌려줍니다.</p>
+</div>
+<div data-step="5"><h4 id="pb10-s5">5단계 · 에이전트가 하면 안 되는 일을 하려 할 때</h4>
+<p><b>보이는 것:</b> 읽기만 하라고 했는데 무언가를 누르려 하거나, 확인 없이 제출·삭제·보내기로 넘어가려 합니다.</p>
+<p><b>왜 생기나:</b> ego(lite)는 에이전트가 어떤 일을 해도 되는지 정해 주지 않습니다. 스냅샷은 에이전트가 페이지를 또렷이 보게 도울 뿐이고, 작업의 경계는 내가 정합니다. 처음 부탁에 경계가 없었다면 지금 다시 말합니다.</p>
+<p><b>할 일:</b> 먼저 멈추게 하고 경계를 다시 말합니다. 문서가 예로 드는 경계 표현은 <code>read-only, don't modify</code>(읽기만, 고치지 마)와 <code>stop and confirm before submitting</code>(제출하기 전에 멈추고 확인받아)입니다. 아래는 이 둘을 넣어 만든 예시 문장입니다.</p>
+<pre><code>Stop. This task is read-only, don't modify anything. Stop and confirm with me before submitting.</code></pre>
+<p class="muted">뜻: 멈춰. 이 작업은 읽기만 하는 거야, 아무것도 고치지 마. 제출하기 전에는 멈추고 나에게 확인받아.</p>
+<p>급하면 말로 기다리지 말고 에이전트 Space에 들어가 내가 넘겨받습니다(<a href="#pb2">실습 2</a>). 다음 작업부터는 처음 부탁에 경계를 넣습니다. 문서의 작업 예시 두 개가 좋은 본보기입니다.</p>
+<pre><code>Open my GitHub Notifications and list the PRs that need my review — repo name, title, URL.
+Don't archive, don't mark anything as read.</code></pre>
+<p class="muted">뜻: 내 GitHub 알림을 열어 내가 검토해야 하는 PR을 저장소 이름·제목·URL로 정리해 줘. 보관하지 말고, 읽음으로 표시하지도 마.</p>
+<pre><code>Open the orders dashboard, filter yesterday's orders, and download the CSV.
+Pause if you hit a login challenge or an export confirmation, and tell me where the file landed.</code></pre>
+<p class="muted">뜻: 주문 관리 화면을 열어 어제 주문만 걸러 CSV로 내려받아 줘. 로그인 확인이나 내보내기 확인이 나오면 멈추고, 파일이 어디에 저장됐는지 알려 줘.</p>
+<details class="adv"><summary>좋은 작업 설명에 들어가는 다섯 가지</summary><ul><li>대상 페이지나 사이트.</li><li>무엇을 읽고, 채우고, 누르고, 내려받을지.</li><li>하면 안 되는 것(삭제, 게시, 결제, 메일 보내기 등).</li><li>CAPTCHA·결제·권한 허용 화면에서 멈출지.</li><li>받고 싶은 결과의 모양(표, 요약, 스크린샷, 저장된 파일 위치).</li></ul></details>
+<p><b>확인:</b> 에이전트가 멈추고, 하려던 일을 설명하고, 내 확인을 기다립니다.</p>
+</div></div>
+
+<h3 id="pb10-stuck">막히면</h3>
+<div class="table-wrap"><table class="kv sym"><thead><tr><th>증상</th><th>해 볼 것과 확인 기준</th></tr></thead><tbody>
+<tr><td>로그인을 끝냈는데 에이전트가 계속 기다림</td><td>대화창에서 같은 Space에서 이어 하라고 분명히 말합니다. DeepSeek Harness 문서는 인증을 끝낸 뒤 작업을 다시 실행하라고 안내합니다.</td></tr>
+<tr><td>로그인되어 있을 줄 알았는데 로그인 화면이 나옴</td><td>ego(lite)에 로그인해 둔 사이트는 <b>보통</b> 로그인된 채로 열리지만 언제나는 아닙니다. 1단계대로 에이전트 Space에서 직접 로그인합니다.</td></tr>
+<tr><td>CAPTCHA를 에이전트가 풀어 주지 않음</td><td>정상입니다. ego(lite)는 CAPTCHA나 보안 확인을 우회하지 않습니다. 내가 직접 풉니다.</td></tr>
+<tr><td>에이전트가 “re-snapshot”, “page snapshot”이라고 말함</td><td>오류가 아닙니다. 페이지가 바뀐 것을 알아차리고 지금 상태를 다시 읽는 중이라는 뜻입니다.</td></tr>
+<tr><td>스냅샷을 새로 찍어도 번호표 오류가 되풀이됨</td><td>2단계의 원인 셋을 차례로 의심합니다. 여러 단계에 걸쳐 같은 요소를 가리켜야 하는 작업이라면, 에이전트가 번호표 대신 스냅샷에 함께 나오는 <code>loc=…</code> 선택자<span class="gl">(페이지 안의 요소를 가리키는 주소 같은 표기)</span>나 CSS 선택자를 쓰게 합니다(<a href="ego-lite-guide.html#ch04-refscope">가이드 4장</a>). 예시 문장: “Use the loc=... selector from the snapshot instead of @N refs for that element.”(뜻: 그 요소는 번호표 대신 스냅샷의 loc=… 선택자로 가리켜 줘.)</td></tr>
+<tr><td>다시 확인시켜도 근거가 없음</td><td>3단계의 다섯 가지 중 빠진 것을 짚어 다시 요구하고, Space에 열린 페이지에서 직접 확인합니다.</td></tr>
+<tr><td>ego(lite)가 열리지 않거나 스킬이 안 보임</td><td>페이지 문제가 아니라 연결 문제입니다. <a href="#pb9">실습 9</a>.</td></tr>
+</tbody></table></div>
+
+<h3 id="pb10-next">다음에 할 것</h3>
+<ul>
+  <li>결과를 원문과 대조하는 연습은 <a href="#pb3">실습 3</a>, 처음부터 경계를 넣어 맡기는 연습은 <a href="#pb4">실습 4</a>와 <a href="#pb6">실습 6</a>.</li>
+  <li>넘겨받고 돌려주는 흐름이 아직 낯설다면 <a href="#pb2">실습 2</a>를 다시 해 봅니다.</li>
+  <li>원리를 더 알고 싶다면 <a href="ego-lite-guide.html#ch02-login">가이드 2장 로그인 상태</a> · <a href="ego-lite-guide.html#ch03-review">3장 결과 확인</a> · <a href="ego-lite-guide.html#ch03-limits">3장 스냅샷의 한계</a>.</li>
+</ul>
+
+<div class="summary-box"><b>한눈에 정리</b><ul>
+<li>로그인·인증·CAPTCHA는 에이전트 Space에서 내가 직접 처리하고, 이어 하라고 말합니다. 비밀번호와 인증 코드는 대화창에 넣지 않습니다.</li>
+<li>번호표 오류는 페이지가 바뀌었다는 신호입니다. 스냅샷을 새로 찍게 합니다.</li>
+<li>결과가 미심쩍으면 앞선 답을 고치게 하지 말고, 지금 페이지를 다시 스냅샷해 확인할 수 있는 근거와 함께 답하게 합니다.</li>
+<li>스냅샷이 못 읽는 내용은 스크린샷·글 추출·사람의 확인으로 메웁니다.</li>
+<li>작업의 경계는 내가 정합니다. “read-only, don't modify”, “stop and confirm before submitting”을 다시 말합니다.</li>
+</ul></div>
+<p class="sources">출처: lite.ego.app/document/en/docs/snapshot(How @N refs work · Writing a task · Reviewing · Common questions) · space(How you and the agent collaborate · Logged-in state · FAQ) · ego-browser(Ref scope) · claude-code · codex · cursor · deepseek-harness(로그인·인증 항목) · product-introduce(우회하지 않는 것). 수집일 2026-11-09, ego(lite) 0.6.2.7 무렵 문서 기준. “예시 문장”이라고 밝힌 여섯 문장과 상자 속 답의 모양은 실습용으로 만든 것입니다.</p>
+</section>
+</main></div>
+<script>
+
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('[data-theme-set]');
+  function cur(){return root.getAttribute('data-theme')||'auto'}
+  function mark(){var c=cur();btns.forEach(function(b){b.classList.toggle('on',b.dataset.themeSet===c);b.setAttribute('aria-pressed',b.dataset.themeSet===c)})}
+  btns.forEach(function(b){b.onclick=function(){var t=b.dataset.themeSet;
+    if(t==='auto'){root.removeAttribute('data-theme');try{localStorage.setItem('ego-lite-guide-theme','auto')}catch(e){}}
+    else{root.setAttribute('data-theme',t);try{localStorage.setItem('ego-lite-guide-theme',t)}catch(e){}}
+    mark()}});
+  mark();
+})();
+(function(){
+  var stepControllers=new WeakMap();
+  document.querySelectorAll('[data-stepper]').forEach(function(st){
+    var steps=[].slice.call(st.querySelectorAll(':scope > [data-step]')); if(!steps.length) return;
+    var chapter=st.closest('section.chapter');
+    if(chapter && /^pb\d+$/.test(chapter.id)){
+      var current=0, expanded=false;
+      var tools=document.createElement('div'); tools.className='stepper-tools';
+      var label=document.createElement('label'); label.textContent='단계 바로 가기';
+      var select=document.createElement('select');
+      steps.forEach(function(step,k){
+        var heading=step.querySelector('h4, :scope > b');
+        var option=document.createElement('option'); option.value=k;
+        option.textContent=heading ? heading.textContent.trim() : (k+1)+'단계'; select.appendChild(option);
+      });
+      label.appendChild(select);
+      var all=document.createElement('button'); all.type='button';
+      var nav=document.createElement('div'); nav.className='stepper-nav';
+      var prev=document.createElement('button'); prev.type='button'; prev.textContent='◀ 이전';
+      var next=document.createElement('button'); next.type='button'; next.textContent='다음 ▶';
+      var status=document.createElement('span'); status.className='muted'; status.setAttribute('role','status');
+      function show(n){
+        current=Math.max(0,Math.min(n,steps.length-1)); select.value=current;
+        st.classList.toggle('show-all',expanded);
+        steps.forEach(function(step,k){step.classList.toggle('active',k===current)});
+        all.textContent=expanded ? '한 단계씩 보기' : '전체 단계 펼치기';
+        all.setAttribute('aria-pressed',String(expanded));
+        prev.disabled=expanded || current===0; next.disabled=expanded || current===steps.length-1;
+        status.textContent=expanded ? '전체 '+steps.length+'단계를 보여 줍니다.' :
+          (current+1)+' / '+steps.length+(current===steps.length-1 ? ' · 마지막 단계입니다. 아래 완료 기준을 확인하세요.' : '');
+      }
+      function move(n){
+        expanded=false; show(n); st.scrollIntoView({block:'start'});
+      }
+      prev.onclick=function(){move(current-1)}; next.onclick=function(){move(current+1)};
+      select.onchange=function(){move(Number(select.value))};
+      all.onclick=function(){expanded=!expanded;show(current)};
+      tools.append(label,all); st.prepend(tools); nav.append(prev,next,status); st.appendChild(nav);
+      st.classList.add('stepper-ready'); show(0);
+      stepControllers.set(st,function(step){expanded=false;show(steps.indexOf(step))});
+      return;
+    }
+    var i=0, nav=document.createElement('div'); nav.className='stepper-nav';
+    var prev=document.createElement('button'); prev.textContent='◀ 이전';
+    var next=document.createElement('button'); next.textContent='다음 ▶';
+    var dots=document.createElement('span'); dots.className='dots';
+    var lab=document.createElement('span'); lab.className='muted'; lab.style.fontSize='13px';
+    steps.forEach(function(){dots.appendChild(document.createElement('i'));});
+    function show(n){i=(n+steps.length)%steps.length;steps.forEach(function(s,k){s.classList.toggle('active',k===i)});
+      [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)}); lab.textContent=(i+1)+' / '+steps.length;}
+    prev.onclick=function(){show(i-1)}; next.onclick=function(){show(i+1)};
+    nav.append(prev,dots,next,lab); st.appendChild(nav); show(0);
+  });
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    var btns=[].slice.call(t.querySelectorAll(':scope > .tab-bar button[data-tab]'));
+    var panels=[].slice.call(t.querySelectorAll(':scope > [data-panel]'));
+    function on(k){btns.forEach(function(b){b.classList.toggle('on',b.dataset.tab===k)});panels.forEach(function(p){p.classList.toggle('on',p.dataset.panel===k)});}
+    btns.forEach(function(b){b.onclick=function(){on(b.dataset.tab)}}); if(btns[0]) on(btns[0].dataset.tab);
+    t.classList.add('tabs-ready');
+  });
+  function revealHash(){
+    var id; try{id=decodeURIComponent(location.hash.slice(1))}catch(e){return}
+    var target=document.getElementById(id); if(!target) return;
+    var chapter=target.closest('section.chapter'); if(!chapter || !/^pb\d+$/.test(chapter.id)) return;
+    var step=target.closest('[data-step]'), st=step && step.closest('[data-stepper]');
+    if(st && stepControllers.has(st)) stepControllers.get(st)(step);
+    var parent=target.parentElement;
+    while(parent && parent!==chapter){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
+    requestAnimationFrame(function(){target.scrollIntoView({block:'start'})});
+  }
+  addEventListener('hashchange',revealHash); revealHash();
+  document.querySelectorAll('section.chapter[id^="pb"] .diagram > svg').forEach(function(svg){
+    var frame=document.createElement('div'); frame.className='diagram-scroll';
+    frame.tabIndex=0; frame.setAttribute('role','region');
+    frame.setAttribute('aria-label',(svg.getAttribute('aria-label') || '실습 그림')+' — 좌우로 스크롤할 수 있습니다.');
+    var width=svg.viewBox.baseVal.width; if(width)svg.style.minWidth=width+'px';
+    svg.parentNode.insertBefore(frame,svg); frame.appendChild(svg);
+    var hint=document.createElement('p'); hint.className='diagram-hint';
+    hint.textContent='그림이 한눈에 보이지 않으면 좌우로 밀어 보세요. 키보드는 그림 영역을 선택하고 ← / →를 누릅니다.';
+    frame.after(hint);
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  var bar=document.querySelector('.progress');
+  var links={}; document.querySelectorAll('.sidenav a[data-ch]').forEach(function(a){links[a.dataset.ch]=a});
+  var chs=[].slice.call(document.querySelectorAll('section.chapter'));
+  function rev(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*0.95) el.classList.add('in')})}
+  function onScroll(){rev();var h=document.documentElement; bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=chs[0]; chs.forEach(function(c){if(c.getBoundingClientRect().top<120) cur=c});
+    Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===cur.id)});}
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script></body></html>
