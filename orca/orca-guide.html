@@ -165,7 +165,7 @@ details.adv[open]{border-style:solid}
 @media print{.home-link{display:none!important}}
 </style></head>
 <body><div class="progress"></div><div class="theme-toggle" role="group" aria-label="화면 테마"><button data-theme-set="auto" title="시스템 설정 따라가기">🖥 자동</button><button data-theme-set="light" title="밝은 화면">☀️ 라이트</button><button data-theme-set="dark" title="어두운 화면">🌙 다크</button></div>
-<div class="layout"><nav class="sidenav"><span class="brand">Orca 완전 가이드</span><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="orca-easy.html" class="">쉬운 설명</a><a href="orca-overview.html" class="">한눈에 보기</a><a href="orca-essentials.html" class="">필수판</a><a href="orca-playbook.html" class="">활용편</a><a href="orca-guide.html" class="cur">완전 가이드</a></div><a href="#ch00" data-ch="ch00"><b>소개 · 전체 그림</b></a><div class="sub"><a href="#ch00-glossary">먼저 알아 두면 좋은 용어</a><a href="#ch00-picture">Orca 한 장 그림</a><a href="#ch00-why">왜 이런 도구가 필요한가</a><a href="#ch00-loop">하루 작업의 기본 순환</a><a href="#ch00-map">이 가이드의 구성</a></div><a href="#ch01" data-ch="ch01"><b>1. 시작하기</b></a><div class="sub"><a href="#ch01-what">1. Orca란?</a><a href="#ch01-install">2. 설치</a><a href="#ch01-ways">3. 실행 방식(Ways to run Orca)</a><a href="#ch01-first">4. 첫 3-에이전트 세션</a><a href="#ch01-activity">5. Agents 피드(Activity)</a><a href="#ch01-notify">6. 알림과 받은 편지함(Notifications &amp; Inbox)</a><a href="#ch01-settings">7. 설정(Settings) 전체 지도</a><a href="#ch01-telemetry">8. 개인정보와 텔레메트리</a><a href="#ch01-trouble">9. 문제 해결과 자주 묻는 질문</a><a href="#ch01-github">10. GitHub 오류 해결</a></div><a href="#ch02" data-ch="ch02"><b>2. Orca의 핵심 모델</b></a><div class="sub"><a href="#ch02-git-basics">먼저 알아 둘 것 — 브랜치·체크아웃·워크트리</a><a href="#ch02-wt-model">워크트리 모델 — 기준점·출발점·삭제</a><a href="#ch02-lifecycle">워크트리의 일생 — 기능 하나가 태어나서 정리되기까지</a><a href="#ch02-create">워크트리 만들기 — 백그라운드 생성과 출발점</a><a href="#ch02-create-dialog">생성 대화상자 — Project · Run on · 에이전트 · 연결 · 이름</a><a href="#ch02-shared">새 워크트리에 빠진 파일 채우기 — 공유 경로</a><a href="#ch02-sidebar">사이드바 — 워크트리를 정리하고 찾기</a><a href="#ch02-cleanup">정리 도구와 보존 브랜치</a><a href="#ch02-groups">여러 저장소 묶음과 폴더 워크스페이스</a><a href="#ch02-plain-git">평범한 git 명령도 그대로</a><a href="#ch02-agent-status">에이전트 세션과 상태 표시</a><a href="#ch02-dashboard">에이전트 대시보드 실험 기능</a><a href="#ch02-launch">실행 기본값 — 에이전트가 허락을 묻는가</a><a href="#ch02-tabs">탭·창·분할 레이아웃</a><a href="#ch02-restore">세션 복원 — 껐다 켜도 그대로</a><a href="#ch02-quick">빠른 이동 — Cmd-P · + 검색창 · Cmd-J</a><a href="#ch02-recipe">실전 — 워크트리 10개를 오가기</a></div><a href="#ch03" data-ch="ch03"><b>3. 에이전트와 터미널</b></a><div class="sub"><a href="#ch03-basics">코딩 에이전트와 터미널, 먼저 쉽게 알기</a><a href="#ch03-supported">지원 에이전트 한눈에 보기</a><a href="#ch03-permissions">권한 기본값 — 왜 “확인 없이” 실행할까</a><a href="#ch03-per-agent">에이전트별 특이사항</a><a href="#ch03-hotswap">계정 바꿔 끼우기 (Hot-swap Codex · Claude 계정)</a><a href="#ch03-chat">네이티브 채팅 UI (Chat UI)</a><a href="#ch03-history">에이전트 세션 기록 (Agent Session History)</a><a href="#ch03-hibernation">에이전트 휴면 (Agent hibernation) 실험 기능</a><a href="#ch03-hooks">에이전트 훅과 메모리</a><a href="#ch03-usage">사용량과 한도 추적 (Usage &amp; rate-limit tracking)</a><a href="#ch03-terminal">터미널 — 기본기와 에이전트용 추가 기능</a><a href="#ch03-floating">플로팅 터미널과 Quick Commands</a></div><a href="#ch04" data-ch="ch04"><b>4. 워크트리별 내장 브라우저와 디자인 모드</b></a><div class="sub"><a href="#ch04-what">워크트리마다 하나씩 있는 브라우저</a><a href="#ch04-controls">화면 구성과 조작법</a><a href="#ch04-scoping">워크트리별 분리(Worktree scoping)</a><a href="#ch04-cookies">쿠키 가져오기와 Google 로그인</a><a href="#ch04-remote">원격 워크트리에서 화면 그리기</a><a href="#ch04-links">링크 라우팅(Link routing) — 링크를 어느 브라우저로 열까</a><a href="#ch04-extensions">Chrome 확장 실험 기능</a><a href="#ch04-downloads">다운로드</a><a href="#ch04-artifact">아티팩트로 공유(Share as artifact)</a><a href="#ch04-viewport">뷰포트 크기 흉내(Viewport-size emulation)</a><a href="#ch04-profiles">브라우저 프로필(Browser-use profiles)</a><a href="#ch04-design">디자인 모드(Design Mode)</a><a href="#ch04-recipe">레시피: 디자인 모드로 UI 버그 고치기</a><a href="#ch04-agent">에이전트가 브라우저를 조작하는 원리</a></div><a href="#ch05" data-ch="ch05"><b>5. 파일 편집과 보기</b></a><div class="sub"><a href="#ch05-overview">한눈에 보는 편집 영역</a><a href="#ch05-monaco">코드 에디터(Monaco)와 자동 저장</a><a href="#ch05-keys">단축키와 변경 보기(Changes view)</a><a href="#ch05-display">화면 설정 — 줄 바꿈·미니맵·글꼴·언어 지원</a><a href="#ch05-markdown">마크다운 문서 에디터(리치 에디터)</a><a href="#ch05-mdwrite">마크다운 쓰기 도구 — 슬래시 메뉴·콜아웃·링크·검색</a><a href="#ch05-mdreview">마크다운 검토·정리 도구 — 리뷰 노트·프런트 매터·표·목차</a><a href="#ch05-share">아티팩트로 공유 — 공개 보기 링크 만들기</a><a href="#ch05-viewers">파일 종류별 뷰어 고르기</a><a href="#ch05-html">HTML 미리보기</a><a href="#ch05-mpi">Mermaid · PDF · 이미지 · 오디오/비디오</a><a href="#ch05-csv">CSV · TSV 표</a><a href="#ch05-jupyter">Jupyter 노트북</a><a href="#ch05-explorer">파일 탐색기</a><a href="#ch05-dragdrop">바깥에서 끌어다 놓기</a><a href="#ch05-gitstatus">git 상태 색 — 파일 이름 색이 다른 이유</a><a href="#ch05-context">오른쪽 클릭 메뉴 — 버리기·올리기·경로 복사·내려받기·찾기</a></div><a href="#ch06" data-ch="ch06"><b>6. 리뷰와 배포</b></a><div class="sub"><a href="#ch06-basics">먼저 알아 둘 말: diff · 스테이징 · 커밋 · 푸시 · PR · CI</a><a href="#ch06-diff">Diff viewer — AI가 만든 코드를 제대로 읽는 화면</a><a href="#ch06-annotate">Annotate AI Diff — 코멘트를 모아 한 번에 돌려보내기</a><a href="#ch06-attribution">Attribution — 이 줄은 사람이 썼나, AI가 썼나</a><a href="#ch06-commit">커밋 · 푸시 · PR 만들기 — Orca를 떠나지 않고</a><a href="#ch06-github">호스팅 리뷰 · 이슈 · Actions (GitHub · GitLab · Bitbucket 외)</a><a href="#ch06-jira">Jira 연동 — Jira 이슈 패널</a><a href="#ch06-linear">Linear 연동 — Linear 이슈 패널</a><a href="#ch06-recipe">레시피: AI diff를 줄 단위로 리뷰하기</a></div><a href="#ch07" data-ch="ch07"><b>7. Orca CLI와 자동화</b></a><div class="sub"><a href="#ch07-what">CLI란 무엇이고, 왜 에이전트가 Orca를 조작하나</a><a href="#ch07-install">설치·등록과 동작 확인</a><a href="#ch07-selectors">선택자(selector)와 호스트 고르기</a><a href="#ch07-reference">명령 레퍼런스 — 분야별</a><a href="#ch07-automations">예약 자동화 — 정해진 시간에 프롬프트 실행</a><a href="#ch07-orch">오케스트레이션 — 여러 에이전트를 감독하며 일 나누기 Experimental</a><a href="#ch07-computer">Computer Use — 데스크톱 앱 조작 Beta</a><a href="#ch07-skills">스킬 레지스트리와 MCP</a><a href="#ch07-checkpoints">워크트리 체크포인트 — 진행 상황 남기기</a></div><a href="#ch08" data-ch="ch08"><b>8. 원격과 모바일</b></a><div class="sub"><a href="#ch08-concepts">먼저 알아 둘 말: SSH · 원격 서버 · 페어링</a><a href="#ch08-choose">어떤 방식을 고를까: SSH 워크트리 vs 원격 Orca 서버</a><a href="#ch08-ssh-add">SSH 대상 추가하기</a><a href="#ch08-hostkey">호스트 키 확인 — &quot;이 서버가 진짜 그 서버인가?&quot;</a><a href="#ch08-ssh-use">SSH 대상 사용하기 — 원격 워크트리 레시피</a><a href="#ch08-ssh-auth">고급 연결 옵션과 인증(암호 · MFA · Kerberos · 보안키)</a><a href="#ch08-ssh-status">연결 상태, 끊김, 재연결</a><a href="#ch08-ssh-cli">SSH 호스트에서 쓰는 orca CLI</a><a href="#ch08-ssh-files">원격 파일 내려받기와 VS Code로 열기</a><a href="#ch08-managed">관리형 Orca 서버(Managed Orca server)</a><a href="#ch08-ports">포트 포워딩 — 원격 웹서버를 내 브라우저로</a><a href="#ch08-server">원격 Orca 서버 Beta</a><a href="#ch08-mobile">모바일 앱(Orca Mobile) Beta</a><a href="#ch08-android">Android에 Orca Mobile 설치하기 (APK)</a></div><a href="#ch09" data-ch="ch09"><b>부록</b></a><div class="sub"><a href="#ch09-sitemap">사이트맵 — www.onorca.dev</a><a href="#ch09-plugins">플러그인 전체 목록</a><a href="#ch09-changelog">최근 변경 (2026-11-04에 읽은 Changelog 맨 위 세 항목)</a><a href="#ch09-sources">출처와 기준</a></div></nav>
+<div class="layout"><nav class="sidenav"><span class="brand">Orca 완전 가이드</span><div class="docnav-wrap"><a class="home-link" href="../index.html" title="전체 문서 목록으로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a></div><div class="docnav"><a href="orca-easy.html" class="">쉬운 설명</a><a href="orca-overview.html" class="">한눈에 보기</a><a href="orca-essentials.html" class="">필수판</a><a href="orca-playbook.html" class="">활용편</a><a href="orca-guide.html" class="cur">완전 가이드</a></div><a href="#ch00" data-ch="ch00"><b>소개 · 전체 그림</b></a><div class="sub"><a href="#ch00-glossary">먼저 알아 두면 좋은 용어</a><a href="#ch00-picture">Orca 한 장 그림</a><a href="#ch00-why">왜 이런 도구가 필요한가</a><a href="#ch00-loop">하루 작업의 기본 순환</a><a href="#ch00-map">이 가이드의 구성</a></div><a href="#ch01" data-ch="ch01"><b>1. 시작하기</b></a><div class="sub"><a href="#ch01-what">1. Orca란?</a><a href="#ch01-install">2. 설치</a><a href="#ch01-ways">3. 실행 방식(Ways to run Orca)</a><a href="#ch01-first">4. 첫 3-에이전트 세션</a><a href="#ch01-activity">5. Agents 피드(Activity)</a><a href="#ch01-notify">6. 알림과 받은 편지함(Notifications &amp; Inbox)</a><a href="#ch01-settings">7. 설정(Settings) 전체 지도</a><a href="#ch01-telemetry">8. 개인정보와 텔레메트리</a><a href="#ch01-trouble">9. 문제 해결과 자주 묻는 질문</a><a href="#ch01-github">10. GitHub 오류 해결</a></div><a href="#ch02" data-ch="ch02"><b>2. Orca의 핵심 모델</b></a><div class="sub"><a href="#ch02-git-basics">먼저 알아 둘 것 — 브랜치·체크아웃·워크트리</a><a href="#ch02-wt-model">워크트리 모델 — 기준점·출발점·삭제</a><a href="#ch02-lifecycle">워크트리의 일생 — 기능 하나가 태어나서 정리되기까지</a><a href="#ch02-create">워크트리 만들기 — 백그라운드 생성과 출발점</a><a href="#ch02-create-dialog">생성 대화상자 — Project · Run on · 에이전트 · 연결 · 이름</a><a href="#ch02-shared">새 워크트리에 빠진 파일 채우기 — 공유 경로</a><a href="#ch02-sidebar">사이드바 — 워크트리를 정리하고 찾기</a><a href="#ch02-cleanup">정리 도구와 보존 브랜치</a><a href="#ch02-groups">여러 저장소 묶음과 폴더 워크스페이스</a><a href="#ch02-plain-git">평범한 git 명령도 그대로</a><a href="#ch02-agent-status">에이전트 세션과 상태 표시</a><a href="#ch02-dashboard">에이전트 대시보드 실험 기능</a><a href="#ch02-launch">실행 기본값 — 에이전트가 허락을 묻는가</a><a href="#ch02-tabs">탭·창·분할 레이아웃</a><a href="#ch02-restore">세션 복원 — 껐다 켜도 그대로</a><a href="#ch02-quick">빠른 이동 — Cmd-P · + 검색창 · Cmd-J</a><a href="#ch02-recipe">실전 — 워크트리 10개를 오가기</a></div><a href="#ch03" data-ch="ch03"><b>3. 에이전트와 터미널</b></a><div class="sub"><a href="#ch03-basics">코딩 에이전트와 터미널, 먼저 쉽게 알기</a><a href="#ch03-supported">지원 에이전트 한눈에 보기</a><a href="#ch03-permissions">권한 기본값 — 왜 “확인 없이” 실행할까</a><a href="#ch03-per-agent">에이전트별 특이사항</a><a href="#ch03-hotswap">계정 바꿔 끼우기 (Hot-swap Codex · Claude 계정)</a><a href="#ch03-chat">네이티브 채팅 UI (Chat UI)</a><a href="#ch03-history">에이전트 세션 기록 (Agent Session History)</a><a href="#ch03-hibernation">에이전트 휴면 (Agent hibernation) 실험 기능</a><a href="#ch03-hooks">에이전트 훅과 메모리</a><a href="#ch03-usage">사용량과 한도 추적 (Usage &amp; rate-limit tracking)</a><a href="#ch03-terminal">터미널 — 기본기와 에이전트용 추가 기능</a><a href="#ch03-floating">플로팅 터미널과 Quick Commands</a></div><a href="#ch04" data-ch="ch04"><b>4. 워크트리별 내장 브라우저와 디자인 모드</b></a><div class="sub"><a href="#ch04-what">워크트리마다 하나씩 있는 브라우저</a><a href="#ch04-controls">화면 구성과 조작법</a><a href="#ch04-scoping">워크트리별 분리(Worktree scoping)</a><a href="#ch04-cookies">쿠키 가져오기와 Google 로그인</a><a href="#ch04-remote">원격 워크트리에서 화면 그리기</a><a href="#ch04-links">링크 라우팅(Link routing) — 링크를 어느 브라우저로 열까</a><a href="#ch04-extensions">Chrome 확장 실험 기능</a><a href="#ch04-downloads">다운로드</a><a href="#ch04-artifact">아티팩트로 공유(Share as artifact)</a><a href="#ch04-viewport">뷰포트 크기 흉내(Viewport-size emulation)</a><a href="#ch04-profiles">브라우저 프로필(Browser-use profiles)</a><a href="#ch04-design">디자인 모드(Design Mode)</a><a href="#ch04-recipe">레시피: 디자인 모드로 UI 버그 고치기</a><a href="#ch04-agent">에이전트가 브라우저를 조작하는 원리</a></div><a href="#ch05" data-ch="ch05"><b>5. 파일 편집과 보기</b></a><div class="sub"><a href="#ch05-overview">한눈에 보는 편집 영역</a><a href="#ch05-monaco">코드 에디터(Monaco)와 자동 저장</a><a href="#ch05-keys">단축키와 변경 보기(Changes view)</a><a href="#ch05-display">화면 설정 — 줄 바꿈·미니맵·글꼴·언어 지원</a><a href="#ch05-markdown">마크다운 문서 에디터(리치 에디터)</a><a href="#ch05-mdwrite">마크다운 쓰기 도구 — 슬래시 메뉴·콜아웃·링크·검색</a><a href="#ch05-mdreview">마크다운 검토·정리 도구 — 리뷰 노트·프런트 매터·표·목차</a><a href="#ch05-share">아티팩트로 공유 — 공개 보기 링크 만들기</a><a href="#ch05-viewers">파일 종류별 뷰어 고르기</a><a href="#ch05-html">HTML 미리보기</a><a href="#ch05-mpi">Mermaid · PDF · 이미지 · 오디오/비디오</a><a href="#ch05-csv">CSV · TSV 표</a><a href="#ch05-jupyter">Jupyter 노트북</a><a href="#ch05-explorer">파일 탐색기</a><a href="#ch05-dragdrop">바깥에서 끌어다 놓기</a><a href="#ch05-gitstatus">git 상태 색 — 파일 이름 색이 다른 이유</a><a href="#ch05-context">오른쪽 클릭 메뉴 — 버리기·올리기·경로 복사·내려받기·찾기</a></div><a href="#ch06" data-ch="ch06"><b>6. 리뷰와 배포</b></a><div class="sub"><a href="#ch06-basics">먼저 알아 둘 말: diff · 스테이징 · 커밋 · 푸시 · PR · CI</a><a href="#ch06-diff">Diff viewer — AI가 만든 코드를 제대로 읽는 화면</a><a href="#ch06-annotate">Annotate AI Diff — 코멘트를 모아 한 번에 돌려보내기</a><a href="#ch06-attribution">Attribution — 이 줄은 사람이 썼나, AI가 썼나</a><a href="#ch06-commit">커밋 · 푸시 · PR 만들기 — Orca를 떠나지 않고</a><a href="#ch06-github">호스팅 리뷰 · 이슈 · Actions (GitHub · GitLab · Bitbucket 외)</a><a href="#ch06-jira">Jira 연동 — Jira 이슈 패널</a><a href="#ch06-linear">Linear 연동 — Linear 이슈 패널</a><a href="#ch06-recipe">레시피: AI diff를 줄 단위로 리뷰하기</a></div><a href="#ch07" data-ch="ch07"><b>7. Orca CLI와 자동화</b></a><div class="sub"><a href="#ch07-what">CLI란 무엇이고, 왜 에이전트가 Orca를 조작하나</a><a href="#ch07-install">설치·등록과 동작 확인</a><a href="#ch07-selectors">선택자(selector)와 호스트 고르기</a><a href="#ch07-reference">명령 레퍼런스 — 분야별</a><a href="#ch07-automations">예약 자동화 — 정해진 시간에 프롬프트 실행</a><a href="#ch07-orch">오케스트레이션 — 여러 에이전트를 감독하며 일 나누기 Experimental</a><a href="#ch07-computer">Computer Use — 데스크톱 앱 조작 Beta</a><a href="#ch07-skills">스킬 레지스트리와 MCP</a><a href="#ch07-checkpoints">워크트리 체크포인트 — 진행 상황 남기기</a></div><a href="#ch08" data-ch="ch08"><b>8. 원격과 모바일</b></a><div class="sub"><a href="#ch08-concepts">먼저 알아 둘 말: SSH · 원격 서버 · 페어링</a><a href="#ch08-choose">어떤 방식을 고를까: SSH 워크트리 vs 원격 Orca 서버</a><a href="#ch08-ssh-add">SSH 대상 추가하기</a><a href="#ch08-hostkey">호스트 키 확인 — &quot;이 서버가 진짜 그 서버인가?&quot;</a><a href="#ch08-ssh-use">SSH 대상 사용하기 — 원격 워크트리 레시피</a><a href="#ch08-ssh-auth">고급 연결 옵션과 인증(암호 · MFA · Kerberos · 보안키)</a><a href="#ch08-ssh-status">연결 상태, 끊김, 재연결</a><a href="#ch08-ssh-cli">SSH 호스트에서 쓰는 orca CLI</a><a href="#ch08-ssh-files">원격 파일 내려받기와 VS Code로 열기</a><a href="#ch08-managed">관리형 Orca 서버(Managed Orca server)</a><a href="#ch08-ports">포트 포워딩 — 원격 웹서버를 내 브라우저로</a><a href="#ch08-server">원격 Orca 서버 Beta</a><a href="#ch08-mobile">모바일 앱(Orca Mobile) Beta</a><a href="#ch08-android">Android에 Orca Mobile 설치하기 (APK)</a></div><a href="#ch10" data-ch="ch10"><b>10. 봇(Bots)</b></a><div class="sub"><a href="#ch10-what">봇이란 무엇인가</a><a href="#ch10-before">시작 전 준비</a><a href="#ch10-create">봇 만들기</a><a href="#ch10-first-job">첫 일 맡기기</a><a href="#ch10-talk">대화하기와 「Needs you」</a><a href="#ch10-schedule">일정·이벤트로 돌리기</a><a href="#ch10-step-in">중간에 끼어들기</a><a href="#ch10-connectors">연결(Connectors) — Slack · GitHub · Linear · Google · 웹훅</a><a href="#ch10-who">누가 시킬 수 있나 (Who can ask)</a><a href="#ch10-auto">시키지 않아도 하는 일 — 둘러보기와 기억 정리</a><a href="#ch10-security">권한과 보안 — Orca가 막는 것과 봇이 지시만 받는 것</a><a href="#ch10-import">다른 앱의 봇 가져오기</a><a href="#ch10-usecases">쓰임새 8가지와 템플릿 24종</a></div><a href="#ch09" data-ch="ch09"><b>부록</b></a><div class="sub"><a href="#ch09-sitemap">사이트맵 — www.onorca.dev</a><a href="#ch09-plugins">플러그인 전체 목록</a><a href="#ch09-changelog">최근 변경 (Changelog — 봇 관련 두 항목은 2026-11-22에, 나머지 셋은 11-04에 읽음)</a><a href="#ch09-sources">출처와 기준</a></div></nav>
 <main><a class="home-link home-top" href="../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>전체 문서 목록</a><section class="chapter" id="ch00" style="border-top:none;margin-top:0">
   <style>
     #ch00 .hero{padding:28px 0 8px}
@@ -305,6 +305,7 @@ details.adv[open]{border-style:solid}
     <a href="#ch06"><div class="no">CHAPTER 06</div><b>리뷰와 배포</b><span>바뀐 곳 보기 · 메모 묶어 보내기 · 누가 쓴 줄인지 · 저장·올리기 · GitHub·Jira·Linear 연결</span></a>
     <a href="#ch07"><div class="no">CHAPTER 07</div><b>CLI와 자동화</b><span>orca 명령 읽는 법 · 예약 실행 · 에이전트끼리 일 나누기 · 데스크톱 앱 조작 · 스킬 · 진행 메모</span></a>
     <a href="#ch08"><div class="no">CHAPTER 08</div><b>원격과 모바일</b><span>다른 컴퓨터에서 돌리기(SSH·원격 서버) · 폰 앱 · Android 설치</span></a>
+    <a href="#ch10"><div class="no">CHAPTER 10</div><b>봇(Bots)</b><span>Slack·GitHub·Linear·일정에서 일 받는 에이전트 · 연결 · 누가 시킬 수 있나 · 보안 · 가져오기 · 템플릿</span></a>
     <a href="#ch09"><div class="no">APPENDIX</div><b>부록</b><span>사이트맵 · 플러그인 · 최근 변경 · 출처</span></a>
   </div>
 
@@ -8220,6 +8221,560 @@ orca serve service uninstall</code></pre>
 
 <p class="sources">출처: onorca.dev/docs/ssh · onorca.dev/docs/remote-servers · onorca.dev/docs/recipes/remote-worktrees · onorca.dev/docs/mobile · onorca.dev/docs/android-apk</p>
 </section>
+<section class="chapter" id="ch10">
+<style>
+#ch10 .diagram svg .big{font-size:15px;font-weight:600}
+#ch10 .diagram svg .mid{font-size:13px;font-weight:600}
+#ch10 .diagram svg .thick{stroke-width:2.2}
+#ch10 .diagram svg .dot-a{fill:var(--accent)}
+#ch10 .diagram svg .dot-g{fill:var(--green)}
+#ch10 .diagram svg .dot-p{fill:var(--pink)}
+#ch10 .chip{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;border:1px solid var(--border);margin-right:4px}
+#ch10 .chip.g{color:var(--green);border-color:var(--green)}
+#ch10 .chip.y{color:var(--amber);border-color:var(--amber)}
+#ch10 .chip.r{color:var(--red);border-color:var(--red)}
+</style>
+
+<div class="ch-head"><div class="ch-no">CHAPTER 10</div><h2>봇(Bots) — 일을 받아 오고, 일정대로 돌고, 사람 대신 보고하는 에이전트</h2><p class="lead">봇은 이름·목적·기억을 가진 에이전트입니다. Slack·GitHub·Linear·자기 채팅·정해 둔 일정에서 일을 받아, 내 컴퓨터의 Claude Code나 Codex로 처리하고, 부탁받은 곳에 결과를 보고합니다. 결정이 필요하면 Orca에서 나를 기다립니다.</p></div>
+
+<div class="learn"><b>이 장에서 배우는 것</b><ul>
+<li>봇이 무엇이고, 그냥 에이전트 채팅과 무엇이 다른지</li>
+<li>봇 만들기, 첫 일 맡기기, 대화하기, 일정·이벤트로 돌리기, 중간에 끼어들기</li>
+<li>Slack·GitHub·Linear·Google·웹훅(webhook) 연결과, 봇이 <b>누구의 이름으로</b> 일하는지</li>
+<li>누가 봇에게 일을 시킬 수 있는지(Who can ask)와 권한·보안 — Orca가 강제하는 것과 봇이 지시만 받는 것</li>
+<li>봇이 시키지 않아도 하는 일(둘러보기·기억 정리), 다른 앱의 봇 가져오기, 쓰임새 8가지와 템플릿 24종</li>
+</ul></div>
+
+<div class="start-here"><b>처음이라면 이것만</b>
+<ul>
+<li><a href="#ch10-what">봇이란 무엇인가</a> — 그림 한 장으로 "일이 어디서 와서 어디로 가는지"</li>
+<li><a href="#ch10-create">봇 만들기</a> — 사이드바 Bots 칸에서 다섯 단계</li>
+<li><a href="#ch10-first-job">첫 일 맡기기</a> — 진짜 할 일 하나를 말하면 봇이 작은 조각부터 해 봅니다</li>
+<li><a href="#ch10-who">누가 시킬 수 있나 (Who can ask)</a> — 동료를 넣기 전에 꼭 읽을 곳</li>
+</ul>
+<p>건너뛰어도 되는 곳: 「<a href="#ch10-connectors">연결(Connectors)</a>」의 서비스별 설정, 「<a href="#ch10-import">다른 앱의 봇 가져오기</a>」. 「🔧」로 접힌 상자는 접어 둔 채 읽어도 됩니다.</p>
+</div>
+
+<!-- ============ 1. 무엇인가 ============ -->
+<h3 id="ch10-what">봇이란 무엇인가</h3>
+
+<div class="eli5"><b>쉽게 비유하면</b>
+봇은 <b>내 컴퓨터에 사는 비서</b>입니다. 비서에게는 이름표(이름·사진), 업무 설명서(목적), 수첩(기억), 일정표(자동화)가 있습니다. 동료가 Slack에서 "@scout 이것 좀 봐 줘" 하고 부르거나, 정해 둔 시간이 되면 비서가 일을 시작합니다. 손이 많이 가는 코드 작업은 <b>조수(작업자)</b>에게 따로 책상(워크트리)을 내줘서 맡깁니다. 중요한 결정은 혼자 하지 않고 "이렇게 할까요?" 하고 나에게 물어봅니다.</div>
+
+<p>봇은 <b>자기 채팅, Slack, Linear, GitHub, 정해 둔 일정</b>에서 일을 받습니다. 일은 <b>내 컴퓨터에서</b>, 내가 이미 쓰는 Claude Code나 Codex(또는 다른 지원 에이전트)로 합니다. 그래서 봇이 한 일은 그 에이전트 요금제 사용량으로 잡힙니다. 끝나면 부탁받은 곳에 보고하고, 결정이 필요하면 Orca 안에서 나를 기다립니다.</p>
+
+<div class="grid">
+<div class="card"><h4>이름과 사진</h4><p>Slack에서는 <code>@scout</code>처럼 자기 이름으로 보입니다.</p></div>
+<div class="card"><h4>목적(soul)</h4><p>"무엇을 하는 봇인지" 적은 설명. 첫 대화 뒤 봇이 스스로 적어 두어, 이후 모든 대화가 같은 곳에서 시작합니다.</p></div>
+<div class="card"><h4>기억(memory)</h4><p>일하며 배운 것을 적어 두는 곳. 새 일마다 새 채팅을 열어도 같은 설명을 반복할 필요가 없습니다.</p></div>
+<div class="card"><h4>자동화</h4><p>"평일 9시마다", "PR이 열리면"처럼 정해 둔 때에 스스로 시작하는 일.</p></div>
+</div>
+<p>봇은 <b>한 컴퓨터의 폴더 하나</b>에 삽니다. 목적·기억·능력은 그 폴더 안의 평범한 Markdown 파일이라 직접 읽고 고칠 수 있습니다.</p>
+
+<figure class="diagram reveal">
+<svg viewBox="0 0 780 340" role="img" aria-label="봇이 일을 받는 곳, 일하는 곳, 보고하는 곳">
+  <!-- sources -->
+  <rect class="box s-cyan" x="20" y="20" width="170" height="44" rx="10"/><text x="105" y="40" text-anchor="middle" class="mid">💬 봇 채팅</text><text x="105" y="56" text-anchor="middle" class="sub">Orca 안에서 직접</text>
+  <rect class="box s-cyan" x="20" y="76" width="170" height="44" rx="10"/><text x="105" y="96" text-anchor="middle" class="mid"># Slack</text><text x="105" y="112" text-anchor="middle" class="sub">@봇이름 · DM</text>
+  <rect class="box s-cyan" x="20" y="132" width="170" height="44" rx="10"/><text x="105" y="152" text-anchor="middle" class="mid">GitHub · Linear</text><text x="105" y="168" text-anchor="middle" class="sub">이슈·PR에서 부름</text>
+  <rect class="box s-cyan" x="20" y="188" width="170" height="44" rx="10"/><text x="105" y="208" text-anchor="middle" class="mid">⏰ 일정 · 이벤트</text><text x="105" y="224" text-anchor="middle" class="sub">평일 9시, CI 실패 등</text>
+  <text x="105" y="258" text-anchor="middle" class="sub">일을 받는 곳</text>
+  <!-- lines to bot -->
+  <path class="line anim-flow" d="M190 42 L300 120"/>
+  <path class="line anim-flow" d="M190 98 L300 125"/>
+  <path class="line anim-flow" d="M190 154 L300 135"/>
+  <path class="line anim-flow" d="M190 210 L300 140"/>
+  <!-- bot -->
+  <rect class="box s-accent thick" x="300" y="70" width="190" height="130" rx="14"/>
+  <text x="395" y="98" text-anchor="middle" class="big">🤖 봇 (예: Scout)</text>
+  <text x="395" y="122" text-anchor="middle" class="sub">내 컴퓨터의 폴더 하나</text>
+  <text x="395" y="140" text-anchor="middle" class="sub">목적 · 기억 · 자동화</text>
+  <text x="395" y="158" text-anchor="middle" class="sub">내 Claude Code / Codex로 일함</text>
+  <circle class="dot-a anim-pulse" cx="320" cy="92" r="6"/>
+  <!-- worker -->
+  <path class="line" d="M395 200 L395 250"/>
+  <rect class="box s-green" x="300" y="250" width="190" height="64" rx="12"/>
+  <text x="395" y="276" text-anchor="middle" class="mid">🛠 작업자 (worker)</text>
+  <text x="395" y="296" text-anchor="middle" class="sub">자기 워크트리에서 코드 수정</text>
+  <!-- outputs -->
+  <path class="line anim-flow" d="M490 110 L580 70"/>
+  <path class="line anim-flow" d="M490 160 L580 200"/>
+  <path class="line anim-flow" d="M490 282 L580 282"/>
+  <rect class="box s-green" x="580" y="40" width="180" height="60" rx="10"/><text x="670" y="64" text-anchor="middle" class="mid">📣 보고</text><text x="670" y="84" text-anchor="middle" class="sub">부탁받은 스레드·이슈·채팅</text>
+  <rect class="box s-amber" x="580" y="170" width="180" height="60" rx="10"/><text x="670" y="194" text-anchor="middle" class="mid">? Needs you</text><text x="670" y="214" text-anchor="middle" class="sub">결정·승인은 나를 기다림</text>
+  <rect class="box s-pink" x="580" y="252" width="180" height="60" rx="10"/><text x="670" y="276" text-anchor="middle" class="mid">🔀 PR</text><text x="670" y="296" text-anchor="middle" class="sub">검토하고 합칠지 결정</text>
+</svg>
+<figcaption>일은 여러 곳에서 오지만, 처리는 언제나 <b>내 컴퓨터의 봇</b>이 합니다. 코드 수정은 작업자가 자기 워크트리에서 하고, 결과는 PR로 돌아옵니다.</figcaption>
+</figure>
+
+<div class="note"><b>언제 나왔나</b>
+Bots는 <b>1.4.265(2026-11-19)</b>에 나왔습니다("Work with Orca Bots"). <b>1.4.268(11-21)</b>부터 봇의 에이전트로 <b>Cursor · GitHub Copilot · Hermes</b>도 고를 수 있고, 봇 그룹 채팅에 이미지를 넣을 수 있습니다.</div>
+
+<!-- ============ 2. 준비 ============ -->
+<h3 id="ch10-before">시작 전 준비</h3>
+<ol class="steps">
+<li><b>최신 Orca</b><span>봇을 둘 컴퓨터에 최신 버전 Orca를 설치합니다.</span></li>
+<li><b>에이전트 설치·로그인</b><span>그 컴퓨터에 Claude Code·Codex 등 지원 에이전트를 설치하고 로그인해 둡니다. 봇은 그 에이전트로 일하므로 사용량도 그 요금제에서 나갑니다.</span></li>
+<li><b>(선택) Orca 로그인</b><span>Slack·GitHub·Linear에서 봇을 부르려면 Orca에 로그인<span class="gl">(Sign in to Orca)</span>해야 합니다. 봇 채팅·일정·Google은 로그인 없이도 됩니다.</span></li>
+</ol>
+
+<!-- ============ 3. 만들기 ============ -->
+<h3 id="ch10-create">봇 만들기</h3>
+<div class="stepper" data-stepper>
+<div data-step="1"><p><b>1. 새 봇 시작</b> — 사이드바의 <b>Bots</b> 칸에서 <b>+</b>(New bot or group) → <b>New bot</b> → <b>Start from scratch</b>(처음부터). 템플릿 24종 중에서 고르려면 <b>Browse templates</b>를 누릅니다.</p></div>
+<div data-step="2"><p><b>2. 이름과 사진</b> — 봇의 이름과 사진을 정합니다. Slack 등에서 이 이름으로 불립니다.</p></div>
+<div data-step="3"><p><b>3. 하는 일 적기(선택)</b> — <b>Who it is and what it does</b>(누구이고 무엇을 하나) 칸에 할 일을 한 문장으로 적습니다. 비워 두고 첫 채팅에서 말해도 됩니다.</p></div>
+<div data-step="4"><p><b>4. 어디서 돌지 확인</b> — 어느 컴퓨터에서, 어느 에이전트로 돌지 적힌 줄을 확인합니다. 바꾸려면 <b>Change</b>. 봇은 고른 컴퓨터에 계속 머뭅니다.</p></div>
+<div data-step="5"><p><b>5. 만들기</b> — <b>Create</b>를 누릅니다. 누르기 전까지는 아무것도 만들어지지 않습니다.</p></div>
+</div>
+
+<div class="tip"><b>Bots 칸이 안 보이면</b>
+Bots는 기본으로 켜져 있습니다. 사이드바에 Bots 칸이 없으면 <b>Settings → Bots → Enable bots</b>(설정 → 봇 → 봇 켜기)를 켭니다. 봇을 끄면 봇이 숨겨지고 새 메시지와 자동화 실행이 멈춥니다. 봇 폴더·기억·채팅은 그대로 남습니다.</div>
+
+<!-- ============ 4. 첫 일 ============ -->
+<h3 id="ch10-first-job">첫 일 맡기기</h3>
+<p>처음부터 만든 봇은 인사를 하고 "무엇부터 할까요?" 하고 묻습니다. <b>진짜 할 일 하나</b>로 답합니다.</p>
+<div class="mock"><div class="bar"><i></i><i></i><i></i> 봇 채팅 — 첫 일 예시</div><div class="body">
+<p>🤖 <b>봇</b>: 안녕하세요! 무엇부터 할까요?</p>
+<p>🙂 <b>나</b>: "매일 아침 acme/web에서 무엇이 바뀌었고 내가 검토할 것이 무엇인지 요약해 줘."</p>
+<p>🙂 <b>또는</b>: "PR에서 CI<span class="gl">(코드를 올릴 때마다 자동으로 돌아가는 검사)</span>가 실패하면, 우연히 한 번 실패한 것(flaky)인지 진짜 문제인지 알려 줘."</p>
+</div></div>
+<p>봇은 그 일에 무엇이 필요한지 살펴보고, <b>작은 조각 하나를 바로 해서</b> 결과를 보여 줍니다. 그다음 자기 목적을 적어 두고, 배운 것은 기억에 남깁니다.</p>
+<div class="note"><b>코드 수정은 작업자가</b>
+코드를 바꿔야 하면 봇은 일을 <b>작업자(worker)</b>에게 넘깁니다. 작업자는 새 워크트리<span class="gl">(작업마다 따로 쓰는 작업 폴더)</span>에서 도는 Claude Code나 Codex 세션이라, 그 변경이 내 작업 폴더에 섞이지 않습니다. 작업자는 사이드바에서 봇 아래에 보이고, 작업자가 연 PR<span class="gl">(Pull Request — "이 변경을 합쳐 주세요" 요청)</span>은 봇에게 돌아옵니다.</div>
+<p><b>템플릿</b>으로 만든 봇은 목적이 이미 있고, 일부는 능력과 일정도 갖고 있습니다. 템플릿의 일정은 <b>꺼진 채로</b> 시작합니다. 어느 저장소·채널을 쓸지 첫 채팅에서 정하면, 그때 자동화와 연결이 설정됩니다.</p>
+
+<!-- ============ 5. 대화 ============ -->
+<h3 id="ch10-talk">대화하기와 「Needs you」</h3>
+<p>사이드바에서 봇을 누르면 봇 채팅이 열립니다. 무엇이든 물어보면 됩니다. 다른 Orca 채팅에서도 <kbd>@</kbd>를 입력해 봇을 부르면 그 대화에 봇을 데려올 수 있습니다.</p>
+<p>봇이 나를 필요로 할 때(결정·로그인·승인)는 그렇게 말하고, 그 요청은 봇 <b>Home</b>의 <b>Needs you</b>(내 차례) 아래에서 내가 답할 때까지 기다립니다. 봇이 제안한 답 중 하나를 누르거나 내 말로 답합니다.</p>
+
+<div class="mock"><div class="bar"><i></i><i></i><i></i> Scout — Home (예시 화면)</div><div class="body">
+<p><b>Needs you</b> <span class="chip y">1</span> — Pay button ignores first tap on Safari</p>
+<p><b>In progress</b> <span class="chip g">작업 중</span> — Search shows stale results… · Coupon field accepts expired codes…</p>
+<p><b>Automations</b> — Triage new bugs (New Linear bug) · Morning bug digest (Weekdays 9:00 AM)</p>
+</div></div>
+<p class="muted">봇 Home은 위에서부터 "나를 기다리는 것 → 봇이 하는 일 → 자동화" 순서로 보여 줍니다. 위 화면은 공식 문서의 예시 데이터를 옮긴 것입니다.</p>
+<p><b>폰에서도</b>: iOS·Android Orca 앱이 Needs you를 한 목록으로 보여 줍니다. 한 번 눌러 답하거나 승인하고, 밖에서도 새 일을 맡길 수 있습니다. 모바일 앱 자체는 <a href="#ch08-mobile">8장 모바일 앱</a>을 보세요.</p>
+
+<!-- ============ 6. 일정 ============ -->
+<h3 id="ch10-schedule">일정·이벤트로 돌리기</h3>
+<p>봇 채팅에서 <b>일정</b>("평일 9시마다")이나 <b>이벤트</b>("acme/web에 PR이 열리면")를 말하면, 봇이 자동화를 만들고 어디서 돌며 결과가 어디로 가는지 알려 줍니다. 자동화는 봇 패널에 보이고 거기서 멈추거나 다시 켤 수 있습니다.</p>
+<ul>
+<li>일정 종류: 매시간 · 매일 · 평일 · 매주 · cron · RRULE<span class="gl">(둘 다 "매달 첫째 월요일"처럼 복잡한 반복을 글자로 적는 방식)</span>.</li>
+<li>시작할 수 있는 이벤트는 붙인 연결에 따라 다릅니다(→ <a href="#ch10-connectors">연결</a>). 예약 자동화 자체는 <a href="#ch07-automations">7장 예약 자동화</a>에 있습니다.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 200" role="img" aria-label="봇 컴퓨터가 깨어 있어야 일한다">
+  <rect class="box s-cyan" x="20" y="60" width="200" height="80" rx="12"/>
+  <text x="120" y="92" text-anchor="middle" class="mid">Slack · GitHub · Linear 요청</text>
+  <text x="120" y="114" text-anchor="middle" class="sub">컴퓨터가 잠들면 최대 하루 기다림</text>
+  <path class="line anim-flow" d="M220 100 L300 100"/>
+  <rect class="box s-accent thick" x="300" y="40" width="190" height="120" rx="14"/>
+  <text x="395" y="74" text-anchor="middle" class="big">💻 봇의 컴퓨터</text>
+  <text x="395" y="98" text-anchor="middle" class="sub">깨어 있고 온라인일 때만 일함</text>
+  <text x="395" y="118" text-anchor="middle" class="sub">Mac은 덮개를 닫으면 잠듦</text>
+  <circle class="dot-g anim-pulse" cx="322" cy="62" r="6"/>
+  <path class="line" d="M490 100 L560 100"/>
+  <rect class="box s-green" x="560" y="50" width="180" height="100" rx="12"/>
+  <text x="650" y="82" text-anchor="middle" class="mid">늘 닿게 하려면</text>
+  <text x="650" y="104" text-anchor="middle" class="sub">Orca와 페어링한 서버에</text>
+  <text x="650" y="122" text-anchor="middle" class="sub">봇을 두고 깨워 둠</text>
+</svg>
+<figcaption>봇은 사는 컴퓨터가 깨어 있어야 일합니다. Orca의 <b>Keep computer awake</b> 설정은 에이전트가 일하는 동안 저절로 잠드는 것을 막지만, Mac 덮개를 닫으면 그래도 잠듭니다.</figcaption>
+</figure>
+
+<!-- ============ 7. 끼어들기 ============ -->
+<h3 id="ch10-step-in">중간에 끼어들기</h3>
+<p>봇의 일은 모두 Orca 안에 남으므로 언제든 이어받을 수 있습니다.</p>
+<table class="kv">
+<tr><th>보고 싶은 것</th><th>여는 법</th></tr>
+<tr><td>작업자의 작업 공간</td><td>사이드바에서 봇 아래의 작업자를 누릅니다. 작업자가 멈춘 곳 그대로 그 워크트리의 에디터·터미널·브라우저가 열립니다.</td></tr>
+<tr><td>Slack·GitHub·Linear에서 온 대화</td><td>봇 아래에 대화마다 채팅이 따로 있습니다. Slack 스레드의 <b>Open this thread in Orca</b> 링크, Linear 이슈의 봇 세션에서 <b>Open in Orca</b>로도 엽니다.</td></tr>
+<tr><td>봇의 PR</td><td>다른 PR처럼 검토합니다. 내 작업 폴더가 아니라 작업자의 브랜치에서 옵니다.</td></tr>
+</table>
+
+<!-- ============ 8. 연결 ============ -->
+<h3 id="ch10-connectors">연결(Connectors) — Slack · GitHub · Linear · Google · 웹훅</h3>
+<p>연결은 세 가지 일을 합니다. ① 사람들이 Slack·GitHub·Linear에서 봇을 부르게 하고, ② 그곳에서 무슨 일이 생기거나 웹훅이 호출되면 자동화를 시작하고, ③ Google 같은 다른 앱에서 봇이 일하게 합니다.</p>
+<p>봇의 <b>Connectors</b> 탭에서 <b>Add a connector</b>(이미 하나 있으면 <b>Add</b>)를 누르고 서비스를 고릅니다. Slack·GitHub·Linear 카드에는 그 봇을 정확히 어떻게 부르는지 적힌 <b>How to ask</b> 줄이 있습니다. 봇에게 "연결해 줘"라고 해도 되는데, 그러면 채팅에 <b>Connect</b> 카드가 뜨고 내가 끝까지 진행하기 전에는 아무것도 연결되지 않습니다.</p>
+
+<div class="table-wrap"><table class="kv">
+<tr><th>연결</th><th>부르는 법</th><th>봇이 누구로 일하나</th><th>거치는 길</th></tr>
+<tr><td>Slack</td><td>채널에서 <code>@봇이름</code>, 또는 DM</td><td>봇 자신(봇마다 따로 만든 Slack 앱)</td><td>Orca Cloud</td></tr>
+<tr><td>GitHub</td><td>이슈·PR에서 How to ask 줄대로 언급</td><td>부른 곳의 답은 Orca 앱, 그 밖의 GitHub 일은 <b>나</b>(push도 내 git 로그인)</td><td>Orca Cloud</td></tr>
+<tr><td>Linear</td><td>이슈에 <code>@Orca &lt;handle&gt;</code>, 또는 라벨 <code>bot:&lt;handle&gt;</code></td><td>부른 곳의 답은 Orca 앱, 그 밖의 Linear 일은 <b>나</b></td><td>Orca Cloud</td></tr>
+<tr><td>Google</td><td>부르는 곳은 아님. 새 메일·다가오는 일정으로 자동화 시작</td><td><b>나</b>(Gmail·Calendar·Drive·Docs·Sheets)</td><td>내 컴퓨터 → Google 직접</td></tr>
+<tr><td>웹훅</td><td>어떤 도구·스크립트든 봇의 주소(URL)를 호출</td><td>자동화만 시작, 자기 신분 없음</td><td>Orca Cloud</td></tr>
+</table></div>
+<p class="muted"><code>&lt;handle&gt;</code>은 봇의 짧은 이름으로, How to ask 줄에 나옵니다.</p>
+
+<figure class="diagram reveal">
+<svg viewBox="0 0 780 250" role="img" aria-label="요청이 내 컴퓨터에 닿는 길">
+  <rect class="box s-cyan" x="20" y="30" width="180" height="90" rx="12"/>
+  <text x="110" y="62" text-anchor="middle" class="mid">Slack · GitHub</text>
+  <text x="110" y="82" text-anchor="middle" class="mid">Linear · 웹훅</text>
+  <text x="110" y="104" text-anchor="middle" class="sub">사람이 부름</text>
+  <path class="line anim-flow" d="M200 75 L290 75"/>
+  <rect class="box s-accent" x="290" y="30" width="190" height="90" rx="12"/>
+  <text x="385" y="62" text-anchor="middle" class="mid">☁ Orca Cloud</text>
+  <text x="385" y="82" text-anchor="middle" class="sub">누가 부를 수 있는지 검사</text>
+  <text x="385" y="100" text-anchor="middle" class="sub">컴퓨터가 가져갈 때까지 보관</text>
+  <path class="line anim-flow" d="M590 75 L480 75"/>
+  <rect class="box s-green thick" x="590" y="30" width="170" height="190" rx="14"/>
+  <text x="675" y="62" text-anchor="middle" class="big">💻 봇의 컴퓨터</text>
+  <text x="675" y="86" text-anchor="middle" class="sub">스스로 밖으로 접속해</text>
+  <text x="675" y="104" text-anchor="middle" class="sub">새 요청을 가져감</text>
+  <text x="675" y="126" text-anchor="middle" class="sub">(열어 둘 포트 없음)</text>
+  <circle class="dot-g anim-pulse" cx="610" cy="52" r="6"/>
+  <rect class="box s-pink" x="290" y="150" width="190" height="70" rx="12"/>
+  <text x="385" y="178" text-anchor="middle" class="mid">Google</text>
+  <text x="385" y="198" text-anchor="middle" class="sub">Orca Cloud를 거치지 않음</text>
+  <path class="line anim-flow" d="M590 185 L480 185"/>
+  <text x="535" y="140" text-anchor="middle" class="sub">화살표: 컴퓨터 쪽이 먼저 연결</text>
+</svg>
+<figcaption>바깥에서 내 컴퓨터로 들어오는 길은 없습니다. 내 컴퓨터가 Orca Cloud에 먼저 접속해 요청을 가져가고, 부탁받은 스레드·PR·이슈에 답합니다. Google만은 내 컴퓨터가 Google에 직접 접속합니다.</figcaption>
+</figure>
+
+<div class="warn"><b>Slack·GitHub·Linear·웹훅은 Orca 로그인이 먼저</b>
+이 넷은 Orca Cloud를 거치므로 연결하기 전에 <b>Sign in to Orca</b>가 필요합니다. 로그아웃하면 봇 채팅과 일정은 그대로 두고, 바깥 이벤트만 다시 로그인할 때까지 멈춥니다.</div>
+
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="slack">Slack</button><button data-tab="gh">GitHub</button><button data-tab="linear">Linear</button><button data-tab="google">Google</button><button data-tab="hook">웹훅</button><button data-tab="other">그 밖</button></div>
+<div data-panel="slack">
+<p>봇마다 <b>자기 Slack 앱</b>이 생겨서, 사람들은 <code>@봇이름</code>으로 채널에서 부르거나 DM을 보냅니다. 부르면 봇이 자기 컴퓨터에서 일을 시작합니다.</p>
+<p>한 Slack 워크스페이스에 봇을 처음 넣을 때 <b>App Configuration Token</b><span class="gl">(Slack이 "이 도구가 나 대신 앱을 만들어도 된다"고 내주는 비밀 문자열)</span>을 한 번 넣습니다. Orca는 이걸로 봇마다 이름·사진이 다른 Slack 앱을 만듭니다. 워크스페이스에 따라 관리자가 봇 앱을 승인해야 들어옵니다.</p>
+<details class="adv"><summary>🔧 토큰 넣는 순서와 지우기</summary>
+<ol>
+<li>Orca에서 <b>Get your configuration token</b>을 누릅니다. Slack 앱 설정에서 <b>Your App Configuration Tokens</b>를 찾아 <b>Generate Token</b>.</li>
+<li>봇을 둘 워크스페이스를 고릅니다.</li>
+<li><b>Refresh Token</b>(<code>xoxe-</code>로 시작)을 복사해 Orca에 붙여 넣습니다.</li>
+</ol>
+<p>Orca Cloud는 이 토큰을 내 Orca 계정·그 워크스페이스용으로 암호화해 보관하므로, 같은 워크스페이스의 다음 봇부터는 다시 넣지 않습니다. 그다음 Slack에서 나로서 봇 앱을 승인합니다. 관리자 승인이 필요한 워크스페이스면 승인 뒤에 봇이 들어옵니다.</p>
+<p>워크스페이스 토큰은 언제든 지울(forget) 수 있습니다. 이미 Slack에 있는 봇은 남고, 새 봇은 새 토큰이 필요합니다. Slack 연결을 지우면 Slack에서 오는 새 일만 멈추고, Slack의 앱 자체는 지워지지 않습니다.</p>
+</details>
+</div>
+<div data-panel="gh">
+<ol class="steps">
+<li><b>연결</b><span>Orca에 로그인한 뒤 봇의 Connectors에서 GitHub → <b>Connect GitHub</b>. 브라우저에서 GitHub로 로그인합니다.</span></li>
+<li><b>앱 설치</b><span><b>Install the Orca app</b>으로 봇이 일할 저장소에 Orca 앱을 설치합니다. 조직(organization)에서는 소유자 승인이 필요할 수 있습니다.</span></li>
+<li><b>켜기</b><span><b>Turn on</b>으로 봇에 켭니다. 나중에 <b>Add repositories or organizations</b>로 일할 곳을 늘립니다.</span></li>
+</ol>
+<p>부른 곳에는 Orca 앱으로 답하고, 그 밖의 GitHub 일은 그 컴퓨터의 내 <code>gh</code> 로그인으로 합니다. 봇은 "내가 시킬 때만 승인·변경 요청·병합(merge)하라"는 지시를 받지만, <b>Orca가 강제하지는 않습니다</b>(→ <a href="#ch10-security">권한과 보안</a>).</p>
+<details class="adv"><summary>🔧 자동화를 시작할 수 있는 GitHub 이벤트</summary>
+<ul>
+<li>새 이슈·PR, push, 댓글·리뷰, 리뷰 요청, 라벨.</li>
+<li>CI 실패·통과, 병합 충돌(merge conflict), 병합, 배포, 보안 경고, 끝난 워크플로 실행.</li>
+</ul>
+<p>내가 GitHub에서 직접 한 일(댓글·리뷰·push)은 봇을 깨우지 않습니다. 봇이 거기서 나로 일하기 때문입니다. 예외는 "내 새 PR을 리뷰해 줘"처럼 내가 연 PR을 대상으로 한 규칙입니다. GitHub가 알려 주는 변화(CI 결과·병합 충돌·병합·닫힌 PR·배포·보안 경고·끝난 워크플로)는 내가 일으켰어도 켜 둔 규칙을 시작합니다.</p>
+</details>
+</div>
+<div data-panel="linear">
+<ol class="steps">
+<li><b>연결</b><span>Orca에 로그인한 뒤 봇의 Connectors에서 Linear → <b>Connect Linear</b>. 브라우저에서 Linear로 로그인하고 워크스페이스를 고릅니다.</span></li>
+<li><b>앱 설치(한 번)</b><span>그 워크스페이스에 Orca가 아직 없으면 Linear 관리자가 모두를 위해 한 번 설치합니다.</span></li>
+<li><b>켜기</b><span><b>Turn on</b>으로 봇에 켭니다.</span></li>
+</ol>
+<p>사람들은 이슈에 <code>@Orca &lt;handle&gt;</code>(예: <code>@Orca scout</code> — <code>@scout</code>가 아님)을 쓰거나 라벨 <code>bot:&lt;handle&gt;</code>을 붙입니다. Linear 언급은 Orca 앱을 거치기 때문입니다. 자동화 이벤트: 이슈 배정, 언급, 새 이슈, 이슈 이동.</p>
+</div>
+<div data-panel="google">
+<p>봇이 내 <b>Gmail·Calendar·Drive·Docs·Sheets</b>에서 일하고, 새 메일이나 곧 시작할 일정으로 자동화를 시작하게 합니다. 봇마다 <b>꺼진 채로</b> 시작하며, 그 봇의 Connectors에서 켭니다.</p>
+<p>설정할 때는 <b>나만의 Google Cloud 앱</b>을 만들고, 봇이 채팅에서 안내합니다. Orca 브라우저에서 클릭을 대신 해 주거나, 그곳에서 안내하거나, 내 브라우저에서 안내할 수 있습니다. Google 약관 동의 칸은 내가 직접 체크합니다.</p>
+<p>앱이 내 것이라 Google 로그인은 내 컴퓨터에 머물고, 봇은 거기서 Google로 바로 호출합니다. 그래도 봇이 읽은 내용은 에이전트의 모델 회사로 갈 수 있고, 봇이 Slack·GitHub·Linear에 올리는 답에 들어갈 수 있습니다. 새 메일·일정 규칙은 내 컴퓨터에서 약 1분마다 확인합니다.</p>
+<p>봇은 "시키지 않았으면 메일은 보내지 말고 초안만 쓰라"는 지시를 받지만, Orca가 강제하지는 않습니다. 봇의 Google은 언제든 끌 수 있고, 그 컴퓨터의 다른 봇에는 Google 연결이 그대로 남습니다.</p>
+</div>
+<div data-panel="hook">
+<p>웹훅(webhook)<span class="gl">(다른 프로그램이 "일 생겼어" 하고 주소 하나를 호출해 알려 주는 방식)</span>은 어떤 도구·스크립트든 웹 요청 하나로 봇을 시작하게 합니다. 봇 채팅에서 만들어 달라고 하고, 자동화 카드의 <b>Copy URL</b>로 주소를 복사합니다. 호출은 Orca Cloud를 거쳐 내 컴퓨터로 오고, Orca는 호출 내용을 <b>지시가 아니라 정보</b>로 봇에게 넘깁니다.</p>
+<div class="warn"><b>웹훅 주소는 비밀번호처럼</b>
+주소를 가진 사람은 누구나 그 자동화를 시작할 수 있습니다. 주소만으로 부족하면 <b>signing secret</b>(서명용 비밀값)을 더합니다. 주소가 새면 웹훅의 <b>Rotate key…</b>(키 바꾸기)나 <b>Delete hook…</b>(지우기)을 씁니다.</div>
+</div>
+<div data-panel="other">
+<ul>
+<li><b>Composio</b>: Orca가 직접 연결하지 않는 앱(예: Outlook·Notion·HubSpot)은 내 Composio 키를 넣어 씁니다. 앱 로그인은 Composio가, 키는 Orca가 갖고 있어 봇은 키를 보지 못합니다.</li>
+<li><b>MCP 서버</b><span class="gl">(에이전트에게 새 도구를 붙여 주는 표준 플러그인)</span>: 봇에게 "그 봇만 쓰는 MCP 서버"를 붙여 달라고 합니다. 웹으로 닿는 서버는 Orca가 키·로그인을 암호화해 보관하고 호출할 때마다 직접 붙이므로 봇이 키를 갖지 않습니다. 명령으로 실행하는 서버는 저장된 설정에서 키를 받는데, 그 설정은 암호화되지 않습니다.</li>
+</ul>
+<p>Bots 소개 쪽에는 이 밖에 Sentry·Vercel·Notion·Datadog·PostHog·Supabase·Stripe·Atlassian·HubSpot 등이 "봇이 일할 수 있는 곳"으로 나옵니다. MCP 서버나 Composio로 연결하는 곳들입니다.</p>
+</div>
+</div>
+
+<details class="adv"><summary>🔧 「누가 시켰는지」 기록 줄</summary>
+<p>Orca가 나 아닌 사람이 시킨 일임을 알 수 있으면, 봇이 Orca를 통해 쓰는 <b>새 Linear 댓글, Gmail 초안, 설명이 있는 새 캘린더 일정, Docs 댓글</b> 글에 "asked by Maya via Scout" 같은 줄을 넣습니다. 초안은 누가 먼저 고치지 않는 한 보낼 때도 그 줄이 남습니다. 봇이 만든 Drive 파일·폴더·Docs의 설명과 Drive 공유 메일에도 누가 시켰는지 적습니다. 누가 시켰는지 모르면 아무것도 넣지 않고, 이슈 수정 같은 편집에는 넣지 않습니다.</p>
+</details>
+
+<!-- ============ 9. 누가 시킬 수 있나 ============ -->
+<h3 id="ch10-who">누가 시킬 수 있나 (Who can ask)</h3>
+<p>기본으로는 <b>나만</b> 내 봇에게 일을 시킬 수 있습니다. 동료가 Slack·Linear·GitHub에서 시키게 하려면 봇 설정의 <b>Who can ask</b>에 그 사람을 넣습니다. 넣기 전에 알아 둘 것:</p>
+<figure class="diagram">
+<svg viewBox="0 0 780 250" role="img" aria-label="누가 봇에게 일을 시킬 수 있나">
+  <rect class="box s-green" x="20" y="20" width="200" height="56" rx="10"/><text x="120" y="44" text-anchor="middle" class="mid">🙂 나</text><text x="120" y="62" text-anchor="middle" class="sub">기본으로 나만</text>
+  <rect class="box s-amber" x="20" y="92" width="200" height="56" rx="10"/><text x="120" y="116" text-anchor="middle" class="mid">👥 Who can ask에 넣은 사람</text><text x="120" y="134" text-anchor="middle" class="sub">내가 넣은 동료</text>
+  <rect class="box s-red" x="20" y="164" width="200" height="56" rx="10"/><text x="120" y="188" text-anchor="middle" class="mid">🚫 목록에 없는 사람</text><text x="120" y="206" text-anchor="middle" class="sub">"주인에게 물어보세요"</text>
+  <path class="line anim-flow" d="M220 48 L320 110"/>
+  <path class="line anim-flow" d="M220 120 L320 120"/>
+  <path class="line" d="M220 192 L320 140"/>
+  <rect class="box s-accent" x="320" y="80" width="170" height="80" rx="12"/><text x="405" y="110" text-anchor="middle" class="mid">☁ Orca Cloud</text><text x="405" y="130" text-anchor="middle" class="sub">요청마다 목록 검사</text>
+  <path class="line anim-flow" d="M490 120 L570 120"/>
+  <rect class="box s-green thick" x="570" y="70" width="190" height="100" rx="14"/><text x="665" y="102" text-anchor="middle" class="big">🤖 봇</text><text x="665" y="124" text-anchor="middle" class="sub">누가 시켜도</text><text x="665" y="142" text-anchor="middle" class="sub"><tspan font-weight="600">내 권한 · 내 컴퓨터</tspan>로 일함</text>
+</svg>
+<figcaption>목록에 넣은 사람의 요청도 <b>내 권한</b>으로 돕니다. 목록에 없는 사람의 요청은 Orca Cloud에서 걸러집니다.</figcaption>
+</figure>
+<div class="two">
+<div class="warn"><b>그 사람의 요청은 「내 권한」으로 돕니다</b>
+<ul>
+<li>그 사람 자기 권한이 아니라 <b>내 권한, 내 컴퓨터</b>로 일합니다. 봇이 할 수 있는 일이면 그 사람도 시킬 수 있습니다.</li>
+<li>봇을 원격으로 조종할 수 있습니다: 시작·방향 바꾸기·승인·멈추기.</li>
+<li>그래서 <b>내 키보드 앞에 앉혀도 믿을 사람만</b> 넣습니다.</li>
+</ul></div>
+<div class="note"><b>목록에 없는 사람이 부르면</b>
+<ul>
+<li>Orca가 보통 "주인에게 물어보세요"라는 메모로 답하고, 결정은 내가 Orca에서 합니다. Slack에서는 그 사람에게만 보이고, GitHub·Linear에서는 공개 답글입니다.</li>
+<li>봇이 이미 있는 스레드에서 그 사람들의 메시지는 봇이 <b>맥락으로 읽습니다</b>. 다만 일을 시작하거나 방향을 바꾸지는 못합니다.</li>
+</ul></div>
+</div>
+<p><b>이벤트 자동화와 웹훅은 Who can ask와 따로입니다.</b> "#eng에 누가 글을 올리면" 같은 규칙을 켜면, 나만 봇을 부를 수 있어도 <b>나와 봇이 함께 있는 곳의 누구든</b> 그 규칙을 시작시킵니다. 봇에게 듣는 곳을 좁혀 달라고 하거나, 일부 이벤트는 "Maya나 Sam이 올릴 때만"처럼 사람을 정할 수 있습니다. 쓰지 않는 규칙은 멈춰 둡니다. 웹훅은 signing secret이 없으면 주소를 가진 누구나 시작시킵니다.</p>
+<div class="tip"><b>팀이 쓸 봇이면 따로 하나</b>
+팀용으로는 별도의 봇을 만드는 것을 고려하세요. 그 봇은 자기 권한·Google 스위치·도구를 따로 갖습니다. 다만 여전히 그 컴퓨터에서 <b>나로</b> 돕니다.</div>
+
+<!-- ============ 10. 알아서 하는 일 ============ -->
+<h3 id="ch10-auto">시키지 않아도 하는 일 — 둘러보기와 기억 정리</h3>
+<p>내가 시킨 일과 자동화 말고도, 봇은 작은 일 두 가지를 스스로 합니다. 둘 다 에이전트 요금제를 씁니다.</p>
+<div class="grid">
+<div class="card"><h4>👀 Look around (둘러보기)</h4><p>Claude Code나 Codex로 도는 봇이 하루 몇 번 Slack·Linear·GitHub와 내 프로젝트에서 나를 기다리는 것을 읽고, <b>Suggestions</b>(제안)에 다음 할 일을 적습니다. <b>읽기만</b> 하며 글을 올리거나 파일을 바꾸지 못합니다. 기본은 <b>평일 오전 8시~오후 8시, 4시간마다</b>이고, 봇 컴퓨터에서 Orca가 켜져 있을 때 돕니다. 봇 설정의 <b>Look around</b>에서 횟수를 바꾸거나 끕니다.</p></div>
+<div class="card"><h4>🧹 Memory upkeep (기억 정리)</h4><p>기본으로, 새 채팅이 있었던 날이면 Claude Code나 Codex 봇이 <b>그날 밤 3시 이후</b>(멈춰 있거나 바쁘지 않을 때) 기억을 정리합니다. 컴퓨터가 자느라 놓친 정리는 깨어난 뒤 따라잡을 수 있습니다. 바뀐 내용을 검토할 수 있고, 가능할 때는 <b>Undo</b>로 <code>MEMORY.md</code>를 되돌립니다. 봇 설정의 <b>Memory upkeep</b>에서 주 1회로 바꾸거나 끕니다.</p></div>
+</div>
+
+<!-- ============ 11. 보안 ============ -->
+<h3 id="ch10-security">권한과 보안 — Orca가 막는 것과 봇이 지시만 받는 것</h3>
+<p>봇은 <b>내 권한으로, 나를 대신해</b> 일합니다. 다른 사람이 봇을 부르게 하거나, 바깥에서 오는 메일·이슈·메시지를 봇에 연결하기 전에 이 소절을 읽으세요.</p>
+
+<h4>봇이 닿을 수 있는 곳</h4>
+<table class="kv">
+<tr><th>어디</th><th>무엇을 할 수 있나</th></tr>
+<tr><td>자기 컴퓨터</td><td>그곳의 내 파일·명령·계정을, 나로서, 권한이 허락하는 만큼</td></tr>
+<tr><td>Slack</td><td>자기 앱(<code>@봇이름</code>)으로 글 올리기</td></tr>
+<tr><td>GitHub</td><td>부른 곳에는 Orca 앱으로 답, 그 밖의 댓글·리뷰·push는 나로</td></tr>
+<tr><td>Linear</td><td>부른 곳에는 Orca 앱으로 답, 이슈 댓글·수정·생성은 나로</td></tr>
+<tr><td>Google</td><td>켜 준 서비스만 — 메일 읽기·보내기, 캘린더, Drive 파일·Docs·Sheets 읽기·고치기 등</td></tr>
+</table>
+<p class="muted">연결은 붙인 뒤에만 닿는 곳을 늘립니다.</p>
+
+<h4>권한 모드</h4>
+<p>봇 대화도 다른 Orca 채팅과 같은 권한 모드로 돕니다: <b>Ask for approval</b>(매번 승인 받기) · <b>Accept edits</b>(편집은 허용) · <b>Approve for me</b>(나 대신 승인) · <b>Full access</b>(전부 허용). 쓸 수 있는 모드는 에이전트마다 다릅니다(→ <a href="#ch03-permissions">3장 권한 기본값</a>).</p>
+<ul>
+<li>봇의 새 대화는 따로 정하지 않으면 <b>내 채팅 권한 설정</b>으로 시작합니다. Orca 채팅 기본값이 <b>Full access</b>라서, 바꾸지 않으면 새 봇도 Full access — 명령 실행·파일 수정 전에 묻지 않습니다.</li>
+<li>다른 사람이 부르는 봇, 바깥 메일·이슈·메시지를 읽는 봇은 봇 설정에서 <b>Ask for approval</b>로 바꿉니다. Codex라면 요청이 승인될 때까지 읽기 전용으로 일합니다. 이미 열린 대화는 원래 권한을 유지합니다.</li>
+<li>승인 모드가 없는 에이전트로 도는 봇은 늘 Full access입니다. 승인이 필요하면 Claude Code나 Codex처럼 승인 모드가 있는 에이전트를 고릅니다.</li>
+<li>봇이 승인을 구하면 <b>그 일을 시킨 사람</b>이 승인할 수 있습니다.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 780 300" role="img" aria-label="Orca가 강제하는 것과 봇이 지시받는 것">
+  <rect class="box s-green thick" x="20" y="20" width="360" height="260" rx="14"/>
+  <text x="200" y="48" text-anchor="middle" class="big">🔒 Orca가 막는 것 (강제)</text>
+  <text x="40" y="80" class="sub">· Who can ask — Orca Cloud가 요청마다 검사</text>
+  <text x="40" y="106" class="sub">· 둘러보기는 읽기만 (쓰기·실행·전송 거부)</text>
+  <text x="40" y="132" class="sub">· 기억 정리는 도구 없음 (명령 실행 불가)</text>
+  <text x="40" y="158" class="sub">· 가져오기는 키·로그인 파일을 건너뜀</text>
+  <text x="40" y="184" class="sub">· 새 봇은 내가 Create bot을 눌러야 생김</text>
+  <text x="40" y="210" class="sub">· 누가 시켰는지 기록</text>
+  <circle class="dot-g anim-pulse" cx="44" cy="44" r="6"/>
+  <rect class="box s-amber" x="400" y="20" width="360" height="260" rx="14"/>
+  <text x="580" y="48" text-anchor="middle" class="big">📝 봇이 지시만 받는 것</text>
+  <text x="420" y="80" class="sub">· PR 승인·변경 요청·병합은 시킬 때만</text>
+  <text x="420" y="106" class="sub">· 시키지 않았으면 메일은 초안만</text>
+  <text x="420" y="132" class="sub">· 메일·메시지·이슈·파일·웹훅은 정보일 뿐</text>
+  <text x="432" y="150" class="sub">지시로 따르거나 기억에 넣지 않기</text>
+  <text x="420" y="176" class="sub">· 토큰을 묻거나 로그인을 우회하지 않기</text>
+  <text x="420" y="202" class="sub">· 가져온 자동화는 멈춘 채로</text>
+  <text x="580" y="250" text-anchor="middle" class="sub">모델이 따르지만, 반드시 지킨다는 보장은 없음</text>
+</svg>
+<figcaption>왼쪽은 Orca가 구조적으로 막는 것, 오른쪽은 봇이 받은 규칙입니다. 오른쪽은 모델이 속을 수도 있으므로, 위험을 줄이려면 <b>Ask for approval</b> · <b>Google 끄기</b> · <b>필요한 연결만</b>을 함께 씁니다.</figcaption>
+</figure>
+
+<div class="warn"><b>다른 사람의 글은 봇을 조종하려 할 수 있습니다</b>
+봇이 읽는 메일·이슈·메시지·파일·웹훅 호출은 다른 사람이 쓴 글이라, 봇의 방향을 바꾸려 할 수 있습니다. Orca는 Google 메일·파일과 웹훅 호출처럼 일부를 "정보"로 표시해 넘기고, 나머지(봇이 직접 연 파일 포함)도 같은 식으로 다루라고 봇에게 지시합니다. 그래도 모델은 속을 수 있습니다. 믿을 수 없는 글을 읽거나 다른 사람이 부르는 봇은, 에이전트가 지원하면 새 대화를 <b>Ask for approval</b>로 시작하고 필요 없는 것은 끕니다.</div>
+
+<p><b>작업자는 자기 워크트리 안에서만</b>: 봇이 코드 일을 넘기면 작업자는 내 작업 폴더가 아니라 봇 아래의 새 워크트리에서 돌고, 변경은 내가 검토할 브랜치와 PR로 들어옵니다.</p>
+
+<details class="adv"><summary>🔧 데이터가 머무는 곳과 비밀값 보관</summary>
+<ul>
+<li>봇은 한 컴퓨터(이 컴퓨터 또는 Orca와 페어링한 서버)의 폴더에 삽니다. 목적·기억·능력은 그 폴더의 평범한 파일이고, 채팅 기록은 그 컴퓨터의 Orca 저장소에 있습니다.</li>
+<li>봇은 내가 고른 에이전트의 내 로그인으로 돕니다. 다른 에이전트 세션처럼, 봇이 읽은 것은 그 에이전트의 모델 회사로 갑니다.</li>
+<li>Slack·GitHub·Linear·웹훅은 Orca Cloud를 거칩니다. Orca Cloud는 컴퓨터가 가져갈 때까지(잠들어 있으면 최대 하루) 요청을 보관합니다. 전달 뒤에도 일부 글이 한동안 남습니다 — 봇이 맥락으로 쓰는 최근 스레드 메시지, 전달되지 않은 요청(다시 보낼 수 있게), 웹훅 호출 본문(살펴볼 수 있게 최대 7일).</li>
+<li>Slack용으로 Orca Cloud는 내 Orca 계정·워크스페이스마다 암호화한 configuration token 하나를 보관합니다.</li>
+<li>Google은 내가 만든 Google Cloud 앱을 쓰고, 로그인은 내 컴퓨터에 머뭅니다. 새 메일·일정 규칙도 내 컴퓨터에서 확인합니다.</li>
+<li>Google·Composio 로그인은 봇 컴퓨터에 OS 키체인(keychain — 운영체제의 비밀번호 금고)으로 암호화해 저장합니다. 키체인이 없으면 내 사용자만 읽을 수 있는 파일(0600)에 암호화 없이 둡니다.</li>
+<li>웹으로 닿는 MCP 서버의 헤더·로그인은 Orca가 암호화해 보관하고 호출마다 붙입니다. 키체인이 없으면 저장하지 않습니다.</li>
+<li>명령으로 실행하는 MCP 서버의 설정(환경 변수에 넣은 키 포함)은 봇의 도구 설정에 암호화 없이, 내 사용자만 읽을 수 있게 저장됩니다.</li>
+<li>봇은 비밀값을 기억에 저장하지 말라는 지시를 받습니다. 가져오기는 키·로그인 파일을 건너뛰고 서비스마다 다시 연결하게 합니다.</li>
+</ul>
+</details>
+
+<div class="two">
+<div class="card"><h4>검토할 수 있는 것</h4><ul>
+<li>봇의 모든 채팅(자동화·이벤트로 시작한 실행 포함)이 기록에 남습니다.</li>
+<li>자동화마다 실행 기록, 웹훅마다 받은 호출 목록이 있습니다.</li>
+<li>목적·기억은 봇 폴더의 Markdown 파일 — 읽고 고치고, 밤 정리가 바꾼 것을 검토합니다.</li>
+<li>코드 일은 브랜치와 PR로 옵니다.</li>
+</ul></div>
+<div class="card"><h4>권한 되돌리기 (봇 설정에서 언제든)</h4><ul>
+<li><b>Keep only me</b>: Who can ask에 넣은 사람을 뺍니다. 이벤트 자동화·웹훅은 멈추지 않으니 따로 멈춥니다.</li>
+<li>봇의 Google 끄기(다음 Google 요청부터 모두에게).</li>
+<li>새 대화를 Ask for approval로 시작.</li>
+<li>Connectors 탭에서 연결 지우기, Slack 워크스페이스 토큰 지우기.</li>
+<li>자동화 멈추기, 또는 <b>Settings → Bots</b>에서 봇 끄기.</li>
+<li>웹훅 주소가 샜으면 키 바꾸기·웹훅 지우기.</li>
+</ul></div>
+</div>
+
+<!-- ============ 12. 가져오기 ============ -->
+<h3 id="ch10-import">다른 앱의 봇 가져오기</h3>
+<p>다른 봇 앱에서 쓰던 봇이 있으면 그 봇의 <b>성격(persona)·기억·능력·일정</b>을 가져올 수 있습니다. 새 Orca 봇이 옛 봇을 읽고, 계획을 보여 주고, 내가 승인하면 스스로 설정합니다. 옛 봇은 <b>읽기만</b> 하고 바꾸지 않습니다. Bots 소개 쪽은 OpenClaw·Hermes에서 가져오는 경우를 예로 듭니다.</p>
+<ol class="steps">
+<li><b>시작</b><span>사이드바 Bots 칸에서 <b>+</b> → <b>New bot</b> → <b>Import from another app…</b>. Orca가 이 컴퓨터에서 지원하는 봇 앱의 봇을 찾아 목록으로 보여 줍니다(찾으면 먼저 가져오기를 권할 수도 있습니다).</span></li>
+<li><b>고르기</b><span>찾은 봇이면 골라서 새 이름을 주고 만듭니다. 못 찾은 봇은 <b>Another app…</b>: Orca가 주는 메시지를 옛 봇에게 보내면 옛 봇이 자기 파일을 한 폴더에 복사합니다. 그 폴더를 넣고, 옛 봇이 답을 썼으면 붙여 넣고, 이름을 주고 만듭니다.</span></li>
+<li><b>계획 검토</b><span>새 봇이 찾은 것을 묶어서 보여 줍니다. 채팅에서 "전부 가져와" 또는 "이건 빼"라고 답할 때까지 아무것도 설정하지 않습니다.</span></li>
+</ol>
+
+<figure class="diagram">
+<svg viewBox="0 0 780 230" role="img" aria-label="가져오기 계획의 세 묶음">
+  <rect class="box s-green" x="20" y="20" width="240" height="190" rx="12"/>
+  <text x="140" y="46" text-anchor="middle" class="mid">✅ 가져옴 (Comes over)</text>
+  <text x="36" y="76" class="sub">· 성격 → 봇의 목적(soul)</text>
+  <text x="36" y="100" class="sub">· 나에 대한 사실 → 기억</text>
+  <text x="36" y="124" class="sub">· 능력(skills) → 같은 형식</text>
+  <text x="36" y="148" class="sub">· 일정 → 자동화</text>
+  <rect class="box s-amber" x="270" y="20" width="240" height="190" rx="12"/>
+  <text x="390" y="46" text-anchor="middle" class="mid">🔄 바뀜 (Changes)</text>
+  <text x="286" y="76" class="sub">· Orca에 없는 채팅 앱으로 가던</text>
+  <text x="298" y="94" class="sub">결과 → Orca 봇 채팅으로</text>
+  <text x="286" y="118" class="sub">· 작은 메모 여럿 → 기억 주제 몇 개</text>
+  <text x="286" y="142" class="sub">· Slack 연결 → 봇 자기 Slack 앱</text>
+  <rect class="box s-red" x="520" y="20" width="240" height="190" rx="12"/>
+  <text x="640" y="46" text-anchor="middle" class="mid">⛔ 남겨 둠 (Stays behind)</text>
+  <text x="536" y="76" class="sub">· Telegram·WhatsApp 같은 채팅 앱</text>
+  <text x="536" y="100" class="sub">· 채팅 기록 · 모델 설정</text>
+  <text x="536" y="124" class="sub">· 옛 앱에 딸려 온 능력</text>
+  <text x="536" y="148" class="sub">· 스크립트만 돌리는 루틴</text>
+  <text x="536" y="172" class="sub">· 키와 로그인</text>
+  <circle class="dot-g anim-pulse" cx="36" cy="42" r="5"/>
+</svg>
+<figcaption>가져오기 계획은 세 묶음으로 나옵니다. 옛 앱이 기본으로 주던 능력은 넘어오지 않고, 내가 추가한 능력만 넘어옵니다.</figcaption>
+</figure>
+
+<div class="warn"><b>키와 로그인은 넘어오지 않습니다 — 붙여 넣는 글은 직접 확인</b>
+가져오기 판독기는 키·로그인·세션 파일을 건너뛰고 비밀값처럼 보이는 줄을 뺍니다. 다만 최선을 다할 뿐이라 비밀값처럼 안 보이는 비밀은 놓칠 수 있습니다. 옛 봇에게서 붙여 넣은 답은 <b>붙여 넣은 그대로</b> 저장됩니다. 가져오기 전에 그 답과 내보낸 폴더에서 키·토큰을 지우세요. 각 서비스는 Orca에서 다시 연결합니다.</div>
+
+<p><b>가져온 뒤</b></p>
+<ul>
+<li>자동화는 <b>멈춘 채로</b> 옵니다. 옛 봇과 새 봇이 같은 일을 두 번 하지 않게, 옛 앱에서 옛 봇을 끈 뒤 새 봇에게 자동화를 켜 달라고 합니다. 옛 앱이 아직 돌고 있으면 봇이 어떤 일이 두 번 돌지 알려 줍니다.</li>
+<li>옛 봇이 쓴 말은 참고용으로 새 봇의 기억에 남되, <b>지시가 아닌 메모</b>로 표시됩니다.</li>
+<li>옛 봇이 쓰던 도구는 키 없이 옵니다. 봇이 물어보면 다시 로그인합니다.</li>
+<li>Slack·GitHub·Linear가 필요한 것이 있으면 봇이 연결을 권합니다. 이벤트로 시작하는 자동화는 그 연결이 붙을 때까지 기다립니다.</li>
+<li>새 봇은 옛 앱의 모델 설정이 아니라 내 Claude Code·Codex(또는 다른 지원 에이전트) 로그인으로 돕니다.</li>
+<li>이 컴퓨터에서 찾은 봇이면, 나중에 같은 옛 봇으로 가져오기를 다시 시작해 <b>Update</b>할 수 있습니다. 새로 생기거나 바뀐 것만 더하고, Orca에서 내가 고친 것은 지킵니다.</li>
+</ul>
+
+<!-- ============ 13. 쓰임새 ============ -->
+<h3 id="ch10-usecases">쓰임새 8가지와 템플릿 24종</h3>
+<p>모든 쓰임새는 같은 모양입니다: <b>내가 부탁</b>(Slack·Linear·GitHub·봇 채팅·일정) → <b>봇이 내 컴퓨터에서 일함</b> → <b>부탁받은 곳에 보고</b> → <b>사람이 정할 곳에서 기다림</b>. 대부분의 템플릿은 <b>먼저 보고하고, 바꾸기 전에 묻습니다</b>. 봇이 스스로 하는 범위는 채팅에서 넓힐 수 있습니다.</p>
+<p class="muted">아래 예는 공식 문서의 예시 봇 Scout, 예시 저장소 acme/web, Slack 채널 #eng를 씁니다.</p>
+
+<div class="tabs" data-tabs><div class="tab-bar"><button data-tab="bug">Slack 버그</button><button data-tab="tri">Linear 분류</button><button data-tab="ci">CI 실패</button><button data-tab="stand">스탠드업</button><button data-tab="pr">PR 리뷰</button><button data-tab="rel">릴리스 노트</button><button data-tab="docs">문서 맞추기</button><button data-tab="wh">웹훅</button></div>
+<div data-panel="bug"><p><b>시작</b>: Bug investigation 템플릿 + GitHub, 사람들이 부를 Slack.</p><ol class="steps">
+<li><b>부탁</b><span>#eng에서 Maya: "@scout checkout breaks on Safari, can you look?"</span></li>
+<li><b>봇이 하는 일</b><span>새 워크트리에서 작업자가 버그를 재현하고 단계를 적은 뒤 시작점을 찾습니다. 수정 전에 묻고, 동의하면 작업자가 고치고 테스트를 돌려 내 git 로그인으로 PR을 엽니다.</span></li>
+<li><b>돌아오는 것</b><span>Slack 스레드에 원인·테스트 결과·PR.</span></li>
+<li><b>내가 끼는 곳</b><span>"Start a fix?" 질문이 Needs you에서 기다립니다. PR은 다른 PR처럼 검토합니다.</span></li>
+</ol></div>
+<div data-panel="tri"><p><b>시작</b>: Linear를 연결한 봇(템플릿 없음 — 채팅에서 설명).</p><ol class="steps">
+<li><b>부탁</b><span>"ENG 팀에 새 이슈가 오면 재현 단계가 있는지 보고, 중복을 찾고, 라벨과 담당자를 제안해. 닫기 전엔 물어봐."</span></li>
+<li><b>봇이 하는 일</b><span>Linear 새 이슈 이벤트로 시작하는 자동화를 만들고, 이슈마다 설명을 읽고 중복을 찾고, 허락한 변경을 나로서 합니다.</span></li>
+<li><b>돌아오는 것</b><span>봇 채팅에 이슈마다 짧은 한 줄.</span></li>
+<li><b>내가 끼는 곳</b><span>중복 닫기처럼 묻기로 한 일은 Needs you에서 기다립니다.</span></li>
+</ol></div>
+<div data-panel="ci"><p><b>시작</b>: CI failures 템플릿 + GitHub.</p><ol class="steps">
+<li><b>부탁</b><span>템플릿에 이미 "검사가 실패하면 flaky인지 진짜인지 말해 줘"가 있습니다. 채팅에서 "진짜면 고치기 전에 물어봐"를 더합니다.</span></li>
+<li><b>봇이 하는 일</b><span>실패를 읽고 설명하며 flaky인지 진짜인지 말합니다. flaky 검사 목록을 모아 매주 월요일 오전 9시에 올립니다.</span></li>
+<li><b>돌아오는 것</b><span>봇 채팅에 설명.</span></li>
+<li><b>내가 끼는 곳</b><span>진짜 실패면 Needs you에서 수정 작업자를 시작할지 묻고, 수정은 PR로 옵니다.</span></li>
+</ol></div>
+<div data-panel="stand"><p><b>시작</b>: Daily standup notes 템플릿 + GitHub·Linear(올리려면 Slack).</p><ol class="steps">
+<li><b>부탁</b><span>템플릿 일정은 평일 오전 9시. 봇 패널에서 켭니다. 공유하려면 "#standup에도 올려 줘".</span></li>
+<li><b>봇이 하는 일</b><span>워크트리·PR·이슈를 보고, 어제 나와 에이전트들이 한 일과 다음 할 일을 씁니다.</span></li>
+<li><b>돌아오는 것</b><span>봇 채팅에, 부탁했으면 #standup에도 봇의 Slack 앱으로.</span></li>
+<li><b>내가 끼는 곳</b><span>틀린 것은 채팅에서 고칩니다. 배운 것은 기억에 남아 다음 날부터 반영됩니다. 일정은 봇 컴퓨터가 깨어 있을 때만 돕니다.</span></li>
+</ol></div>
+<div data-panel="pr"><p><b>시작</b>: Pull request review 템플릿 + GitHub.</p><ol class="steps">
+<li><b>부탁</b><span>고른 저장소에서 누군가 내 리뷰를 요청하면 시작(템플릿 설정).</span></li>
+<li><b>봇이 하는 일</b><span>PR을 검토해 위험한 변경과 빠진 테스트를 파일·줄과 함께 적습니다.</span></li>
+<li><b>돌아오는 것</b><span>봇 채팅에 결과. 예: "#4121: 재시도 횟수가 초기화되지 않아 두 번째 장애 때 재시도가 멈춥니다."</span></li>
+<li><b>내가 끼는 곳</b><span>내가 허락할 때까지 GitHub에 댓글을 달지 않습니다. 올릴 항목을 말하면 나로서 올립니다.</span></li>
+</ol></div>
+<div data-panel="rel"><p><b>시작</b>: Release notes 템플릿 + GitHub.</p><ol class="steps">
+<li><b>부탁</b><span>봇 채팅에서 "4.12 노트 초안 써 줘" (Slack이 있으면 채널에서 "@scout draft the notes for 4.12").</span></li>
+<li><b>봇이 하는 일</b><span>지난 릴리스 뒤 병합된 PR을 읽고 사용자용 노트를 새 기능·고친 것·바뀐 것 세 묶음으로 씁니다.</span></li>
+<li><b>돌아오는 것</b><span>부탁한 스레드나 채팅에 초안.</span></li>
+<li><b>내가 끼는 곳</b><span>채팅에서 문구를 고치고, 마음에 들면 changelog에 넣는 PR을 열어 달라고 하거나 직접 복사합니다.</span></li>
+</ol></div>
+<div data-panel="docs"><p><b>시작</b>: Docs upkeep 템플릿 + GitHub.</p><ol class="steps">
+<li><b>부탁</b><span>템플릿 일정은 매주 수요일 오전 10시, 고른 저장소 대상.</span></li>
+<li><b>봇이 하는 일</b><span>최근 병합된 PR과 문서를 비교해, 더는 맞지 않는 쪽과 틀린 줄을 적습니다.</span></li>
+<li><b>돌아오는 것</b><span>봇 채팅에 목록.</span></li>
+<li><b>내가 끼는 곳</b><span>고칠 쪽을 고르면 작업자가 자기 워크트리에서 고쳐 PR을 엽니다.</span></li>
+</ol></div>
+<div data-panel="wh"><p><b>시작</b>: Deploy watch 템플릿 + GitHub(배포마다 실린 PR을 읽으려고).</p><ol class="steps">
+<li><b>부탁</b><span>"배포용 웹훅 만들어 줘." 자동화 카드의 Copy URL로 주소를 복사해 배포 도구에 넣고, 지원하면 signing secret도 넣습니다.</span></li>
+<li><b>봇이 하는 일</b><span>도구가 호출할 때마다 실린 PR로 배포를 요약하고 실패한 배포를 표시합니다. 호출 내용은 지시가 아니라 정보로 받습니다.</span></li>
+<li><b>돌아오는 것</b><span>배포마다 봇 채팅에 요약.</span></li>
+<li><b>내가 끼는 곳</b><span>이상해 보이면 물어봅니다. 주소가 새면 Rotate key….</span></li>
+</ol></div>
+</div>
+
+<details><summary>나머지 템플릿 16종 (위 8가지에 쓰인 것 말고)</summary>
+<div class="table-wrap"><table class="kv">
+<tr><th>템플릿</th><th>하는 일</th><th>보고 시점</th></tr>
+<tr><td>Bug report intake</td><td>Slack 채널에 올라온 버그마다 재현 단계가 있는 Linear 이슈 초안을 쓰고, 승인하면 등록</td><td>버그가 올라올 때</td></tr>
+<tr><td>GitHub issue triage</td><td>새 이슈마다 라벨·중복을 제안하고 빠진 정보를 적음</td><td>이슈가 열릴 때</td></tr>
+<tr><td>Support triage</td><td>고른 Slack 채널의 답 없는 질문과, 이미 Linear 이슈가 있는지 적음</td><td>평일 오전 9시~오후 5시, 2시간마다</td></tr>
+<tr><td>Feedback digest</td><td>Slack 피드백을 주제별로 묶고 인용·개수를 붙임</td><td>월요일 오전 9시</td></tr>
+<tr><td>Backlog cleanup</td><td>오래된 이슈, 중복 의심, 담당자 없는 이슈</td><td>매달 1일</td></tr>
+<tr><td>Dependency updates</td><td>오래되거나 취약한 패키지를 급한 순으로. 동의하면 묶음마다 PR 하나</td><td>월요일 오전 9시</td></tr>
+<tr><td>Security check</td><td>병합된 변경에서 새어 나간 비밀값·주입(injection)·빠진 인증·위험한 기본값 확인</td><td>월요일 오전 9시, PR 병합 때</td></tr>
+<tr><td>Release readiness</td><td>실패한 검사, 리뷰 기다리는 PR, 열린 걸림돌 짧은 목록</td><td>평일 아침</td></tr>
+<tr><td>Incident notes</td><td>장애 채널에서 타임라인을 쓰고, 탓하지 않는 회고 초안</td><td>장애 중과 뒤</td></tr>
+<tr><td>On-call handoff</td><td>한 주의 경보·장애 요약과 남은 후속 일</td><td>금요일 오후 4시</td></tr>
+<tr><td>Replies you owe</td><td>Slack·Linear에서 내가 답하지 않은 질문과 하겠다고 한 일</td><td>매일 오후 4시</td></tr>
+<tr><td>Email digest</td><td>내가 답해야 할 메일 목록. 메일은 절대 보내지 않음</td><td>평일 오전 9시·오후 2시</td></tr>
+<tr><td>Meeting prep</td><td>회의 주제인 이슈·PR·문서를 한 메모로</td><td>각 회의 15분 전</td></tr>
+<tr><td>Project briefing</td><td>바뀐 것, 막힌 것, 결정이 필요한 것</td><td>금요일 오후 3시</td></tr>
+<tr><td>Spec drafting</td><td>Slack 스레드나 문서를 한 쪽짜리 명세로</td><td>부탁할 때</td></tr>
+<tr><td>Unreviewed agent work</td><td>리뷰나 PR이 아직 없는 끝난 에이전트 작업</td><td>평일 오전 9시</td></tr>
+<tr><td>Workspace cleanup</td><td>끝났거나 버려진 워크트리 목록. 고른 것만 지움</td><td>금요일 오후 4시</td></tr>
+</table></div>
+</details>
+
+<div class="tip"><b>내 봇에게 첫 부탁 쓰는 법 — 네 가지를 넣기</b>
+<ul>
+<li><b>언제</b>: 일정("평일 9시마다"), 이벤트("acme/web에서 검사가 실패하면"), 또는 "지금".</li>
+<li><b>무엇을</b>: 한 문장으로 일 하나.</li>
+<li><b>어디에 보고</b>: 봇 채팅, Slack 채널, 또는 부탁받은 이슈·PR.</li>
+<li><b>무엇을 물어볼지</b>: 행동하기 전에 나에게 물어야 할 것.</li>
+</ul>
+예: "acme/web에 PR이 열리면 고친 것마다 테스트가 있는지 확인해. 없는 것은 #eng에 알려 줘. GitHub에는 댓글 달지 마."</div>
+
+<div class="summary-box"><b>한눈에 정리</b><ul>
+<li>봇 = 이름·목적·기억·자동화를 가진 에이전트. 한 컴퓨터의 폴더에 살고, 내 Claude Code·Codex 등으로 일합니다(1.4.265부터).</li>
+<li>사이드바 Bots 칸 <b>+ → New bot</b>으로 처음부터 또는 템플릿 24종에서 만들고, 첫 채팅에 진짜 할 일 하나를 줍니다.</li>
+<li>결정·승인은 봇 Home의 <b>Needs you</b>에서 기다립니다. 코드 수정은 작업자가 자기 워크트리에서 하고 PR로 돌아옵니다.</li>
+<li>봇의 컴퓨터가 깨어 있어야 일합니다. Slack·GitHub·Linear 요청은 최대 하루 기다립니다.</li>
+<li>Slack·GitHub·Linear·웹훅은 Orca 로그인과 Orca Cloud가 필요하고, Google은 내 컴퓨터에서 직접 연결합니다.</li>
+<li>Who can ask에 넣은 사람은 <b>내 권한</b>으로 봇을 씁니다. 이벤트 자동화·웹훅은 Who can ask와 따로입니다.</li>
+<li>새 봇은 기본 <b>Full access</b>로 시작합니다. 다른 사람이 부르거나 바깥 글을 읽는 봇은 <b>Ask for approval</b>로 바꿉니다.</li>
+</ul></div>
+
+<p class="sources">출처: orca.dev/docs/bots · /docs/bots/connectors · /docs/bots/import · /docs/bots/security · /docs/bots/use-cases · orca.dev/bots · orca.dev/changelog (1.4.265 · 1.4.268) — 2026-11-22 수집</p>
+</section>
 <section class="chapter" id="ch09">
   <style>
     #ch09 .sm-root{display:inline-block;margin-top:8px;padding:8px 14px;border-radius:8px;background:var(--accent);color:#fff;font-weight:600}
@@ -8242,7 +8797,7 @@ orca serve service uninstall</code></pre>
   </style>
   <div class="ch-head"><div class="ch-no">APPENDIX</div><h2>부록 — 사이트맵 · 플러그인 · 최근 변경 · 출처</h2>
     <p class="lead">onorca.dev 사이트가 어떻게 짜여 있는지, 어떤 플러그인이 있는지, 최근에 무엇이 바뀌었는지 정리합니다.</p></div>
-  <div class="learn"><b>이 장에서 배우는 것</b><ul><li>사이트의 페이지 120개가 어떤 구역으로 나뉘는지</li><li>공식·커뮤니티 플러그인 전체 목록</li><li>최근 세 버전의 주요 변경</li></ul></div>
+  <div class="learn"><b>이 장에서 배우는 것</b><ul><li>사이트의 페이지 120개가 어떤 구역으로 나뉘는지</li><li>공식·커뮤니티 플러그인 전체 목록</li><li>최근 다섯 버전의 주요 변경(봇이 나온 1.4.265 포함)</li></ul></div>
 
   <h3 id="ch09-sitemap">사이트맵 — www.onorca.dev</h3>
   <p>사이트가 공개한 <code>sitemap.xml</code>(검색엔진에게 알려 주는 페이지 목록)에 등재된 URL 120개를 구역별로 묶었습니다.</p>
@@ -8259,6 +8814,13 @@ orca serve service uninstall</code></pre>
     </svg>
     <figcaption>Docs와 Plugins가 거의 전부입니다. Changelog의 버전별 상세(“Read more”) 페이지는 sitemap에 없어 세지 않았습니다.</figcaption>
   </figure>
+  <div class="note"><b>2026-11-22에 다시 받은 사이트맵</b>
+  <ul>
+  <li>사이트 주소가 <code>www.onorca.dev</code>에서 <b><code>orca.dev</code></b>로 바뀌었습니다(옛 주소는 새 주소로 넘어갑니다). URL은 493개로 늘었습니다.</li>
+  <li><b>Docs 63쪽</b>: 위 57쪽에 <code>bots/</code> 5쪽(→ <a href="#ch10">10장</a>)과 <code>migrate-from-conductor</code> 1쪽이 더해졌습니다. <code>migrate-from-conductor</code>는 아직 받지 않아 이 가이드에 없습니다.</li>
+  <li>새 구역 <b>/bots</b>: 봇 소개 쪽 1개(→ 10장).</li>
+  <li><b>Plugins 425개</b>(공식 stablyai 43개 포함): 아래 「플러그인 전체 목록」은 11-04 기준 59개 그대로이며 새로 늘어난 플러그인은 반영하지 않았습니다.</li>
+  </ul></div>
 
   <span class="sm-root">www.onorca.dev /</span> <span class="path">&nbsp;홈 (소개 · 기능 탭 · 사용자 후기 · FAQ)</span>
   <div class="grid">
@@ -8275,6 +8837,7 @@ orca serve service uninstall</code></pre>
         <div><b>editing/ (4) → 5장</b><span>file-explorer, markdown, monaco, viewers</span></div>
         <div><b>review/ (7) → 6장</b><span>diff-viewer, annotate-ai-diff, attribution, commit-push, github, jira, linear</span></div>
         <div><b>cli/ (7) → 7장</b><span>overview, reference, automations, orchestration, computer-use, skills, worktree-checkpoints</span></div>
+        <div><b>bots/ (5) → 10장 · 2026-11-22 추가</b><span>(index), use-cases, connectors, import, security</span></div>
         <div><b>recipes/ (5) → 각 장</b><span>parallel-agents(1장), jump-worktrees(2장), design-mode-fix(4장), review-ai-diff(6장), remote-worktrees(8장)</span></div>
       </div></div>
   </div>
@@ -8296,8 +8859,12 @@ orca serve service uninstall</code></pre>
       <span class="t">vale-c/orca-tokyonight</span><span class="t">vale-c/orca-catppuccin</span><span class="t">thailoc-dev/orca-rose-pine</span><span class="t">piter75/orca-gruvbox-material-theme</span><span class="t">lkgilgamesh/orca-ayu</span><span class="t">dawidwetzler/orca-cobalt2-theme</span><span class="x">thailoc-dev/orca-pptx-viewer</span><span class="x">mbirepinte/orca-asciidoc-viewer</span><span class="x">thailoc-dev/orca-dev-toolbox</span><span class="x">kolebayev/orca-md-layout</span><span class="x">senadaruc/orca-grazr</span><span class="x">upstash/box-orca-plugin</span><span class="x">insforge/orca-instabox-plugin</span><span class="x">cemalkilic/lima-orca-vm-recipes</span></div></div>
   </div>
 
-  <h3 id="ch09-changelog">최근 변경 (2026-11-04에 읽은 Changelog 맨 위 세 항목)</h3>
+  <h3 id="ch09-changelog">최근 변경 (Changelog — 봇 관련 두 항목은 2026-11-22에, 나머지 셋은 11-04에 읽음)</h3>
   <div class="timeline">
+    <div class="item reveal"><div class="ver">1.4.268 · 2026-11-21</div><b>봇 선택지 확대, 원격 페이지 피드백</b>
+      <ul><li>Orca 봇의 에이전트로 Cursor · GitHub Copilot · Hermes 선택, 봇 그룹 채팅에 이미지 추가</li><li>원격 브라우저 페이지에서도 요소를 골라 메모를 달고 복사하거나 에이전트에게 보내기(원격 호스트가 새 메모 도구를 지원해야 함)</li><li>Activity 카드에서 에이전트 질문에 답하기, 조정자 채팅에서 작업자 권한 요청에 답하기(페어링 서버 포함)</li></ul></div>
+    <div class="item reveal"><div class="ver">1.4.265 · 2026-11-19</div><b>Orca Bots, Chat의 Hermes, 브라우저 확장 패널</b>
+      <ul><li><b>Orca Bots</b> 출시 — 관리되는 에이전트 세션이 도구와 신분을 갖고, 봇이 나 대신 공유하며, Slack 스레드에서 봇이 무엇을 하는지 보임. 봇 연결 시 접근 경고가 더 분명해짐(→ <a href="#ch10">10장</a>)</li><li>Hermes와 채팅: 새 채팅 시작, Session History에서 터미널 대화 이어 가기. Hermes 0.23.0 이상 필요, 페어링 서버는 되고 SSH 워크스페이스는 안 됨</li><li>지원하는 Chrome 확장의 사이드 패널을 Orca 브라우저 옆 크기 조절 패널로 열기</li></ul></div>
     <div class="item reveal"><div class="ver">1.4.246 · 2026-11-02</div><b>Automations in Chat, 폰에서 병합 충돌 해결, 개인 설정 확대</b>
       <ul><li>자동화를 Chat 또는 Terminal로 실행하도록 고르고, 실행 기록에서 녹화된 대화를 열어 결과 검토</li><li>폰에서 충돌 파일 해결 방식을 고르고 Source Control에서 병합 완료 — 데스크톱과 같은 조작</li><li>데스크톱에서 “응답 필요”와 “완료” 알림을 따로 제어, 폰은 “응답 필요” 알림만 받도록 설정 가능</li></ul></div>
     <div class="item reveal"><div class="ver">1.4.245 · 2026-10-30</div><b>플러그인, 백그라운드 Computer Use, 더 강해진 폰 앱</b>
@@ -8309,11 +8876,12 @@ orca serve service uninstall</code></pre>
   <h3 id="ch09-sources">출처와 기준</h3>
   <ul>
     <li>2026-11-04에 Orca 내장 브라우저로 읽은 <a href="https://www.onorca.dev/">onorca.dev</a> 홈, <a href="https://www.onorca.dev/changelog">Changelog</a>, <a href="https://www.onorca.dev/docs">Docs</a> 57쪽 전체, <code>sitemap.xml</code></li>
+    <li>2026-11-22에 Orca 내장 브라우저로 읽은 <a href="https://orca.dev/docs/bots">orca.dev Bots 문서</a> 5쪽, <a href="https://orca.dev/bots">Bots 소개 쪽</a>, <a href="https://orca.dev/changelog">Changelog</a>(맨 위 1.4.268), <code>sitemap.xml</code> — 10장과 이 부록의 봇 관련 내용의 근거. 나머지 장은 11-04 수집본 기준입니다.</li>
     <li>로컬 Orca CLI 안내서 <code>orca skills get orca-cli</code> (브라우저 조작 참고)</li>
     <li>설명은 위 자료를 쉬운 말로 풀어 쓴 것이며, 원문에 없는 내용은 추가하지 않았습니다. 화면 이름·단축키·옵션은 읽은 시점(약 1.4.246~1.4.247) 기준이고 이후 버전에서 바뀔 수 있습니다.</li>
   </ul>
-  <div class="summary-box"><b>한눈에 정리</b><ul><li>사이트는 Docs(57)·Plugins(59)가 대부분이고, Docs의 각 구역이 이 가이드의 1~8장에 대응합니다.</li><li>플러그인은 공식 43개(테마·언어·도구)와 커뮤니티 14개가 있습니다.</li><li>최근에는 플러그인, 백그라운드 Computer Use, 폰 앱, 브라우저 확장, 채팅 기능이 크게 늘었습니다.</li></ul></div>
-  <p class="sources">출처: onorca.dev/sitemap.xml, onorca.dev/changelog</p>
+  <div class="summary-box"><b>한눈에 정리</b><ul><li>사이트는 Docs(57)·Plugins(59)가 대부분이고, Docs의 각 구역이 이 가이드의 1~8장에 대응합니다. 11-22 기준으로는 주소가 orca.dev로 바뀌고 Docs 63쪽(봇 5쪽 → 10장)·Plugins 425개입니다.</li><li>플러그인은 공식 43개(테마·언어·도구)와 커뮤니티 14개가 있습니다.</li><li>최근에는 플러그인, 백그라운드 Computer Use, 폰 앱, 브라우저 확장, 채팅 기능이 크게 늘었고, 1.4.265(11-19)에 <b>Orca Bots</b>가 나왔습니다.</li></ul></div>
+  <p class="sources">출처: onorca.dev/sitemap.xml, onorca.dev/changelog (2026-11-04) · orca.dev/sitemap.xml, orca.dev/changelog (2026-11-22)</p>
 </section>
 </main></div>
 <script>

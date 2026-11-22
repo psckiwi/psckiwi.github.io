@@ -194,7 +194,7 @@ details.adv[open]{border-style:solid}
 </style>
 
 <div class="hero">
-  <div class="eyebrow">ORCA 한눈에 보기 · 2026-11-04 기준</div>
+  <div class="eyebrow">ORCA 한눈에 보기 · 2026-11-04 기준 · 봇은 11-22 추가</div>
   <h1>Orca — AI 코딩 에이전트 여러 명을<br><em>한 앱에서 동시에</em> 지휘하는 작업장</h1>
   <p class="lead">Orca는 Stably AI가 만든 무료 데스크톱 앱이고, 오픈소스<span class="gl">(프로그램 설계도인 코드가 공개됨)</span>입니다. Claude Code·Codex 같은 AI 코딩 에이전트에게 <b>일을 여러 개 동시에</b> 맡기고, 각자 <b>다른 작업 폴더(워크트리)</b>에서 일하게 한 뒤, 결과를 한곳에서 확인·검토해 내보냅니다.</p>
   <div class="pills"><span class="pill">무료 · 오픈소스</span><span class="pill">macOS · Windows · Linux</span><span class="pill">iOS · Android 앱</span><span class="pill">쓰던 Claude·Codex 구독을 그대로 사용</span></div>
@@ -328,7 +328,7 @@ details.adv[open]{border-style:solid}
 </div>
 
 </details>
-<details class="ov-more" open><summary><h3 id="ov-features">주요 기능</h3><span class="hint">Orca로 할 수 있는 일 6가지</span></summary>
+<details class="ov-more" open><summary><h3 id="ov-features">주요 기능</h3><span class="hint">Orca로 할 수 있는 일 7가지</span></summary>
 <div class="grid">
   <div class="card"><h4><span class="ic">💬</span>에이전트와 터미널</h4><p>40여 개 에이전트를 쓸 수 있습니다(Claude Code·Codex 등). 터미널 대신 채팅 화면으로 지시하고, 지난 대화를 이어 가고, 계정을 바꿔 끼우고, 사용량·한도를 확인합니다.</p><a class="go" href="orca-guide.html#ch03">3장</a></div>
   <div class="card"><h4><span class="ic">🌐</span>내장 브라우저 · 디자인 모드</h4><p>앱 안에 있는 웹 브라우저를 워크트리마다 따로 씁니다. 화면 요소를 클릭하면 그 정보가 에이전트 채팅으로 들어가 “이거 고쳐 줘”가 됩니다. 에이전트도 이 브라우저를 직접 조작합니다.</p><a class="go" href="orca-guide.html#ch04">4장</a></div>
@@ -336,6 +336,7 @@ details.adv[open]{border-style:solid}
   <div class="card"><h4><span class="ic">🔍</span>리뷰와 배포</h4><p>바뀐 줄마다 메모를 달아 <b>한꺼번에</b> 에이전트에게 돌려보냅니다(화면 이름 Annotate AI Diff). 커밋, 서버로 올리기<span class="gl">(푸시)</span>, PR, 같은 곳을 고친 변경끼리 부딪칠 때 해결하기<span class="gl">(병합 충돌)</span>, GitHub·Jira·Linear<span class="gl">(코드·할 일 관리 서비스)</span> 연결까지 앱 안에서 합니다.</p><a class="go" href="orca-guide.html#ch06">6장</a></div>
   <div class="card"><h4><span class="ic">⌨️</span>CLI · 자동화</h4><p><code>orca</code> 명령으로 사람도 에이전트도 Orca를 조작합니다. 정해진 시간에 지시를 실행하는 예약 자동화, 팀장 에이전트가 일을 나누는 오케스트레이션<span class="pill exp">실험</span>, 에이전트가 데스크톱 앱을 조작하는 Computer Use도 있습니다.</p><a class="go" href="orca-guide.html#ch07">7장</a></div>
   <div class="card"><h4><span class="ic">📡</span>원격 · 모바일</h4><p>SSH<span class="gl">(다른 컴퓨터에 원격으로 접속하는 방법)</span>로 다른 컴퓨터에서 에이전트를 돌리거나, 늘 켜 둔 컴퓨터(서버)에 Orca를 띄워 둘 수 있습니다. 휴대폰 앱(iOS·Android)으로 알림을 받고 이어서 지시합니다.</p><a class="go" href="orca-guide.html#ch08">8장</a></div>
+  <div class="card"><h4><span class="ic">🤖</span>봇(Bots)</h4><p>이름·목적·기억을 가진 에이전트를 만들어 둡니다. Slack·GitHub·Linear<span class="gl">(팀 채팅·코드·할 일 관리 서비스)</span>에서 부르거나 정해 둔 일정이 되면 내 컴퓨터에서 일하고, 부탁받은 곳에 보고합니다. 결정은 <b>Needs you</b>에서 나를 기다립니다. 다른 사람이 부르면 <b>내 권한</b>으로 일하니 주의합니다.</p><a class="go" href="orca-guide.html#ch10">10장</a></div>
 </div>
 
 </details>
@@ -368,6 +369,7 @@ details.adv[open]{border-style:solid}
   <div class="card"><h4>6. 리뷰와 배포</h4><p>diff · 코멘트 묶어 보내기 · 커밋·PR · 이슈 연동</p><a class="go" href="orca-guide.html#ch06">열기</a></div>
   <div class="card"><h4>7. CLI와 자동화</h4><p>명령 읽는 법 · 예약 실행 · 오케스트레이션 · 스킬</p><a class="go" href="orca-guide.html#ch07">열기</a></div>
   <div class="card"><h4>8. 원격과 모바일</h4><p>SSH · 원격 서버 · 폰 앱 · Android 설치</p><a class="go" href="orca-guide.html#ch08">열기</a></div>
+  <div class="card"><h4>10. 봇(Bots)</h4><p>봇 만들기 · 연결 · Who can ask · 보안 · 가져오기 · 템플릿</p><a class="go" href="orca-guide.html#ch10">열기</a></div>
 </div>
 <div class="grid">
   <div class="card"><h4>📗 필수판</h4><p>각 장의 꼭 필요한 소절만 모은 판. 처음 쓰는 사람이 이해하고 바로 활용하는 범위.</p><a class="go" href="orca-essentials.html">필수판 열기</a></div>
@@ -378,11 +380,11 @@ details.adv[open]{border-style:solid}
 </details>
 <details class="ov-more" open><summary><h3 id="ov-site">공식 사이트와 최근 변경</h3><span class="hint">처음엔 안 봐도 됩니다</span></summary>
 <div class="two">
-  <div><p><b>www.onorca.dev</b> — 페이지 120개</p><ul><li>Docs 57쪽 (이 가이드의 1~8장 출처)</li><li>Plugins 59개 (공식 43 · 커뮤니티 14 · 등록 페이지)</li><li>Changelog · Enterprise · Download</li></ul><p class="muted">→ <a href="orca-guide.html#ch09-sitemap">가이드 부록 사이트맵</a></p></div>
-  <div><p><b>최근 변경</b></p><ul><li><b>1.4.246</b> (11-02) 자동화를 Chat으로, 폰에서 병합 충돌 해결, 알림 세분화</li><li><b>1.4.245</b> (10-30) 플러그인, 백그라운드 Computer Use, 폰 앱 강화</li><li><b>1.4.244</b> (10-29) 브라우저 확장(실험), 채팅 이어가기, 원격 파일 강화</li></ul><p class="muted">→ <a href="orca-guide.html#ch09-changelog">가이드 부록 최근 변경</a></p></div>
+  <div><p><b>www.onorca.dev</b> — 페이지 120개</p><ul><li>Docs 57쪽 (이 가이드의 1~8장 출처)</li><li>2026-11-22: 주소가 <b>orca.dev</b>로 바뀌고 Bots 문서 5쪽이 생김 (10장 출처)</li><li>Plugins 59개 (공식 43 · 커뮤니티 14 · 등록 페이지)</li><li>Changelog · Enterprise · Download</li></ul><p class="muted">→ <a href="orca-guide.html#ch09-sitemap">가이드 부록 사이트맵</a></p></div>
+  <div><p><b>최근 변경</b></p><ul><li><b>1.4.268</b> (11-21) 봇 에이전트로 Cursor·GitHub Copilot·Hermes 선택</li><li><b>1.4.265</b> (11-19) <b>Orca Bots</b> 출시</li><li><b>1.4.246</b> (11-02) 자동화를 Chat으로, 폰에서 병합 충돌 해결, 알림 세분화</li><li><b>1.4.245</b> (10-30) 플러그인, 백그라운드 Computer Use, 폰 앱 강화</li><li><b>1.4.244</b> (10-29) 브라우저 확장(실험), 채팅 이어가기, 원격 파일 강화</li></ul><p class="muted">→ <a href="orca-guide.html#ch09-changelog">가이드 부록 최근 변경</a></p></div>
 </div>
 </details>
-<p class="sources">출처: Orca 완전 가이드(orca-guide.html)의 개정본 요약 — 원자료는 2026-11-04에 읽은 onorca.dev 홈·Docs 57쪽·Changelog·sitemap.xml. 버전 1.4.246 무렵 기준.</p>
+<p class="sources">출처: Orca 완전 가이드(orca-guide.html)의 개정본 요약 — 원자료는 2026-11-04에 읽은 onorca.dev 홈·Docs 57쪽·Changelog·sitemap.xml(버전 1.4.246 무렵), 그리고 2026-11-22에 읽은 orca.dev Bots 문서 5쪽·Bots 소개 쪽·Changelog(1.4.268).</p>
 </section>
 </main>
 <script>
